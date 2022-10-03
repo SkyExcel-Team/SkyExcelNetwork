@@ -1,0 +1,8 @@
+name: PlayerProfile
+main: net.skyexcel.server.SkyExcelNetwork
+authors: [SkyExcel Team]
+description: SkyExcel Network Plugin
+
+version: 0.1
+api-version: 1.19
+

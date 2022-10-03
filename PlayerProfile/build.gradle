@@ -16,5 +16,5 @@ dependencies {
 }
 
 jar {
-    destinationDirectory.set(file('D:\\개발서버\\개발서버 [1.19.2]\\plugins'))
+    destinationDirectory.set(file('D:\\개발서버\\SkyExcel Network\\plugins'))
 }
