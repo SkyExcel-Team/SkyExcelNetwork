@@ -1,0 +1,1 @@
+mv Menu/build/libs/*.jar "D:\\Project\\minecraft\\Commission\\플러그인테스트\\1.19.2\\plugins"
