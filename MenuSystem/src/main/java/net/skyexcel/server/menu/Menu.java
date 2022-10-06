@@ -14,9 +14,8 @@ import skyexcel.data.file.Section;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class Menu {
+public abstract class Menu {
 
     private String name;
     private int size;
@@ -31,28 +30,20 @@ public class Menu {
 
     private Inventory inv;
 
-    public Menu(String name) {
-        this.name = name;
-        config = new Config("menu/" + name);
+    public Menu(String name){
+        config = new Config(name);
         config.setPlugin(SkyExcelNetwork.plugin);
     }
 
-    public void create() {
-
-        config.getConfig().setDefaults(Objects.requireNonNull(SkyExcelNetwork.defaultConfig.getConfig().getDefaults()));
-        config.saveConfig();
-
-    }
-
-    public void load() {
+    public void load(){
         size = config.getInteger("size") * 9;
         title = config.getString("menu_title");
 
-        inv = Bukkit.createInventory(null, size, title);
+        inv = Bukkit.createInventory(null,size,title);
 
-        for (String items : config.getConfig().getConfigurationSection("items.").getKeys(false)) {
+        for(String items : config.getConfig().getConfigurationSection("items.").getKeys(false)){
 
-            section = config.getConfig().getConfigurationSection("items." + items);
+            section = config.getConfig().getConfigurationSection("items."+ items);
 
             Material material = Material.valueOf(section.getString("material"));
             @NotNull List<Integer> slot = section.getIntegerList("slot");
@@ -61,7 +52,7 @@ public class Menu {
 
             List<String> lore = section.getStringList("lore");
             String name = section.getString("display_name");
-            ItemStack item = new ItemStack(material, amount);
+            ItemStack item = new ItemStack(material,amount);
 
             item.setCustomModelData(modeldata);
 
@@ -71,9 +62,31 @@ public class Menu {
             meta.setLore(lore);
             item.setItemMeta(meta);
 
-            slot.forEach(slots -> {
+            slot.forEach(slots ->{
                 this.inv.setItem(slots, item);
             });
+        }
+    }
+
+    /**
+     * 아이템의 모든 정보를 담은 내부 클래스.
+     */
+    public class Items{
+        private ItemStack item;
+
+
+    }
+
+    /**
+     * 커맨드
+     */
+    public class command{
+        private String label;
+        private String[] args;
+        private Player player;
+
+        public void run(){
+            player.performCommand("");
         }
     }
 }

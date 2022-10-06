@@ -11,3 +11,7 @@ commands:
     usage: /<command>
     description: 쓰레기통
     aliases: [trash]
+  test:
+    usage: /<command>
+    description: 쓰레기통
+    aliases: [trash]

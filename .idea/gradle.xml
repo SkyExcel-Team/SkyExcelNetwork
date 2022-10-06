@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Menu" />
+            <option value="$PROJECT_DIR$/MenuSystem" />
             <option value="$PROJECT_DIR$/PlayerProfile" />
             <option value="$PROJECT_DIR$/Trash" />
           </set>

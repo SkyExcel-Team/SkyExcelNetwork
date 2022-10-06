@@ -2,4 +2,5 @@ rootProject.name = 'SkyExcelNetwork'
 include 'Trash'
 include 'PlayerProfile'
 include 'Menu'
+include 'MenuSystem'
 
