@@ -16,6 +16,9 @@ dependencies {
     implementation 'com.github.SkyExcel-Team:SkyExcelCore:v1.1.17'
 
 }
+compileJava.options.encoding 'UTF-8'
+
+
 
 jar {
     destinationDirectory.set(file('D:\\Project\\minecraft\\Commission\\플러그인테스트\\1.19.2\\plugins'))

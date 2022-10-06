@@ -19,10 +19,8 @@ public class SkyExcelNetwork extends JavaPlugin {
 
         defaultConfig = new Config("defualt");
         defaultConfig.setPlugin(this);
+
         defaultConfig.loadDefaultPluginConfig();
-
-        System.out.println(defaultConfig.getConfig().getDefaults().getInt("size"));
-
     }
 
     @Override
