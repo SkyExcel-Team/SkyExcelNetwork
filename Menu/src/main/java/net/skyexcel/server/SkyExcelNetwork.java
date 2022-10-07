@@ -1,9 +1,13 @@
 package net.skyexcel.server;
 
 import net.skyexcel.server.cmd.MenuCommand;
+import net.skyexcel.server.event.ClickEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
+
+import java.util.Arrays;
 
 public class SkyExcelNetwork extends JavaPlugin {
 
@@ -21,6 +25,12 @@ public class SkyExcelNetwork extends JavaPlugin {
         defaultConfig.setPlugin(this);
 
         defaultConfig.loadDefaultPluginConfig();
+        Listener[] listeners = {new ClickEvent()};
+        Arrays.stream(listeners).forEach(listener -> {
+                    Bukkit.getPluginManager().registerEvents(listener, this);
+                }
+        );
+
     }
 
     @Override

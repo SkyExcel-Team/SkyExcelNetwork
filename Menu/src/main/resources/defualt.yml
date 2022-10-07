@@ -1,1 +1,58 @@
-test: '테'
+size: 6 #GUI 사이즈
+menu_title: "메뉴" # 메뉴 타이틀
+
+open_settings:
+  - '[sound] block_chest_open'
+
+items:
+  '1': #가상 이름
+    material: PLAYER_HEAD # 아이템이름
+    slots: # 슬롯
+      - 0
+    amount: 1
+#    custommodeldata: 1 # 커스텀 모델 데이터 번호
+    display_name: "테스트" # 아이템 이름
+    lore: # 아이템 로어
+      - ""
+      - "&e→ &f테스트 로어 입니다!"
+      - ""
+    left_click_commands: # 좌클릭시 커맨드
+      - '[player] say 1' # 좌클릭시 플레이어한테 명령어를 실행시킴
+      - '[sound] entity_item_pickup' # 좌클릭시 들리는 소리
+    right_click_commands: # 우클릭시 커맨드
+      - '[player] say 2'
+      - '[sound] entity_item_pickup'
+  '2': #가상 이름
+    material: GRASS_BLOCK # 아이템이름
+    slots: # 슬롯
+      - 3
+    amount: 1
+#    custommodeldata: 1 # 커스텀 모델 데이터 번호
+    display_name: "테스트" # 아이템 이름
+    lore: # 아이템 로어
+      - ""
+      - "&e→ &f테스트 로어 입니다!"
+      - ""
+    left_click_commands: # 좌클릭시 커맨드
+      - '[player] say 1' # 좌클릭시 플레이어한테 명령어를 실행시킴
+      - '[sound] entity_item_pickup' # 좌클릭시 들리는 소리
+    right_click_commands: # 우클릭시 커맨드
+      - '[player] say 2'
+      - '[sound] entity_item_pickup'
+  '3': #가상 이름
+    material: GRASS_BLOCK # 아이템이름
+    slots: # 슬롯
+      - 5
+    amount: 1
+#    custommodeldata: 1 # 커스텀 모델 데이터 번호
+    display_name: "테스트" # 아이템 이름
+    lore: # 아이템 로어
+      - ""
+      - "&e→ &f테스트 로어 입니다!"
+      - ""
+    left_click_commands: # 좌클릭시 커맨드
+      - '[player] say 1' # 좌클릭시 플레이어한테 명령어를 실행시킴
+      - '[sound] entity_item_pickup' # 좌클릭시 들리는 소리
+    right_click_commands: # 우클릭시 커맨드
+      - '[player] say 2'
+      - '[sound] entity_item_pickup'
