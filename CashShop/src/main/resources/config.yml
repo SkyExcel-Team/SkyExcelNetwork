@@ -1,0 +1,73 @@
+shop_message: #구매/판매/설정 시 메세지
+  1_buy: '%item_order%을 1개를 %buy_price%캐시로 구매하였습니다!'
+  1_sell: '%item_order% 1개를 %sell_price%캐시로 구매하였습니다!'
+  64_buy: '%item_order%을 64개를 %buy_price%캐시로 판매하였습니다!'
+  64_sell: '%item_order% 64개를 %sell_price%캐시로 판매하였습니다!'
+  chat_setting_buy_price: '&a구매가격을 입력해주세요!'
+  chat_setting_sell_price: '&a판매가격을 입력해주세요!'
+  reload_message: '&a콘피그를 정상적으로 리로드하였습니다!'
+
+cash_message: #캐시관련 메세지
+  check: '보유중인 캐시: %cash%'
+  check_user: '%player%님의 보유중인 캐시: %cash%'
+  send: '%player%님에게 %cash%만큼의 캐시를 지급하였습니다!%'
+  remove: '%player%님의 캐시를 %cash%만큼 제거하였습니다!%'
+  initalization: '%player%님의 캐시를 초기화하였습니다!%
+  set: '%player%님의 캐시를 %cash%로 설정하였습니다!'
+
+error_message: #에러 메세지
+  overflow: '보유중인 캐시가 2147483648이상이 될 수 없습니다!'
+  cant_buy_cash: '당신은 캐시가 부족하여 구매가 불가능합니다!'
+  cant_buy_item: '당신은 아이템이 부족하여 판매가 불가능합니다!'
+  cant_inventory_slot: '인벤토리에 빈공간이 없어, 구매가 불가능합니다!'
+  command_none_player: '플레이어 닉네임을 입력해주세요!'
+  command_none_cash: '금액을 입력해주세요!'
+  cant_buy_impossible_item: '구매가 불가능한 상품입니다!'
+  cant_sell_impossible_item: '판매가 불가능한 상품입니다!'
+
+cash_shop_message: #/캐시상점 쳤을 때 메세지
+  main:
+    - ""
+    - "/캐시상점 생성 [이름] : 캐시상점을 생성합니다."
+    - "/캐시상점 제거 [이름] : 캐시상점을 제거합니다."
+    - "/캐시상점 줄 [이름] [1~6] : 캐시상점 줄을 설정합니다."
+    - "/캐시상점 GUI이름 [이름] [GUI이름] : GUI이름을 설정합니다."
+    - "/캐시상점 편집 [이름] : 캐시상점을 편집합니다."
+    - ""
+  create_shop: '%shopname%의 캐시상점을 생성하였습니다!'
+  delete_shop: '%shopname%의 캐시상점을 제거하였습니다!'
+  setting_gui_size: '%shopname%의 GUI 사이즈를 %gui_size%로 설정하였습니다!'
+  setting_gui_name: '%shopname% GUI이름을 %changename%으로 변경하였습니다!'
+  setting_buy_price: '아이템 구매 가격을 %buy_price%캐시로 설정하였습니다!'
+  setting_sell_price: '아이템 판매 가격을 %sell_price%캐시로 설정하였습니다!'
+
+shops_item_lore: #캐시상점 아이템 로어
+  lore:
+    - ""
+    - "&f[&b!&f] 구매 가격: %buy_price% 캐시"
+    - "&f[&b!&f] 판매 가격: %sell_price% 캐시"
+    - ""
+    - "&f[&b!&f] 쉬프트 + 좌클릭: 64개 구매"
+    - "&f[&b!&f] 쉬프트 + 우클릭: 64개 판매"
+    - ""
+  buy_sound: ENTITY_VILLAGER_YES
+  sell_sound: ENTITY_VILLAGER_YES
+  imposibble_sound: ENTITY_VILLAGER_NO
+  imposibble: '불가능'
+shop_settings:
+  gui: 구매가격/판매가격 #GUI 이름
+  gui_size: 27
+  buy_settings:
+      item: LIME_WOOL
+      slot: 13
+      lore:
+        - ""
+        - "&f[&b!&f] 클릭시 구매가격을 설정합니다!"
+        - ""
+  sell_settings:
+    item: LIME_WOOL
+    slot: 13
+    lore:
+      - ""
+      - "&f[&b!&f] 클릭시 판매가격을 설정합니다!"
+      - ""
