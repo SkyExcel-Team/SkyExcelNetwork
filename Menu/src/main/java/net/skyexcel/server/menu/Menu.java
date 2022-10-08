@@ -1,6 +1,7 @@
 package net.skyexcel.server.menu;
 
 import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.event.ClickEvent;
 import net.skyexcel.server.util.Item;
 import net.skyexcel.server.util.Translate;
 import org.bukkit.Bukkit;
@@ -58,6 +59,10 @@ public class Menu {
         title = config.getString("menu_title");
 
         inv = Bukkit.createInventory(null, size, title);
+
+        config.getConfig().getStringList("open_settings").forEach(line ->{
+            ClickEvent.runCommand(player,line);
+        });
 
 
         for (String items : config.getConfig().getConfigurationSection("items.").getKeys(false)) {
@@ -151,13 +156,13 @@ public class Menu {
         return null;
     }
 
-    public List<String> getLeftCommands(int slot) {
+    public List<String> getLeftCommands(String slot) {
         section = config.getConfig().getConfigurationSection("items." + slot);
 
         return section.getStringList("left_click_commands");
     }
 
-    public List<String> getRightCommands(int slot) {
+    public List<String> getRightCommands(String slot) {
         section = config.getConfig().getConfigurationSection("items." + slot);
 
         return section.getStringList("right_click_commands");
