@@ -20,9 +20,9 @@ public class MenuCommand {
         Config config = new Config("menu/");
         config.setPlugin(SkyExcelNetwork.plugin);
 
-        for (String names : config.fileListName()) {
-            tab.args("열기", names);
-        }
+        config.fileListName().forEach(name ->{
+            tab.args("열기", name);
+        });
 
         tab.args("생성", "[이름]", "1234");
 

@@ -3,6 +3,7 @@ package net.skyexcel.server.event;
 import net.skyexcel.server.menu.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,23 +17,34 @@ public class ClickEvent implements Listener {
     public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
+        String title = event.getView().getTitle();
         if (inv != null) {
             try {
                 Menu menu = new Menu(event.getView().getTitle());
-
-
-                if (menu.getSlots(event.getSlot()).contains(event.getSlot())) {
-
-                    if (event.getClick().isLeftClick()) {
-                        menu.getLeftCommands(event.getSlot()).forEach(line -> {
-                            runCommand(player, line);
-                        });
-                    } else if (event.getClick().isRightClick()) {
-                        menu.getRightCommands(event.getSlot()).forEach(line -> {
-                            runCommand(player, line);
-                        });
-                    }
+                if (menu.getTitle() == title) {
                     event.setCancelled(true);
+                    ConfigurationSection section;
+                    for (String items : menu.getConfig().getConfig().getConfigurationSection("items.").getKeys(false)) {
+                        section = menu.getConfig().getConfig().getConfigurationSection("items." + items);
+
+                        if (section.getIntegerList("slots").contains(event.getSlot())) {
+
+                            if (event.getClick().isLeftClick()) {
+                                section.getIntegerList("slots").forEach(slot->{
+                                    menu.getLeftCommands(slot).forEach(line -> {
+                                        runCommand(player, line);
+                                    });
+                                });
+
+                            } else if (event.getClick().isRightClick()) {
+                                section.getIntegerList("slots").forEach(slot->{
+                                    menu.getRightCommands(slot).forEach(line -> {
+                                        runCommand(player, line);
+                                    });
+                                });
+                            }
+                        }
+                    }
                 }
             } catch (NullPointerException e) {
 

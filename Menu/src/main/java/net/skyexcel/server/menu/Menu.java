@@ -138,7 +138,6 @@ public class Menu {
         meta.setLore(lore);
         meta.setDisplayName(name);
 
-
         item.setItemMeta(meta);
 
         return item;
@@ -167,5 +166,9 @@ public class Menu {
 
     public String getTitle() {
         return title;
+    }
+
+    public Config getConfig() {
+        return config;
     }
 }
