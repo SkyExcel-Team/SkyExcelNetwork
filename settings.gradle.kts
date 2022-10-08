@@ -5,4 +5,5 @@ include(
     "Menu",
     "MenuSystem"
 )
-
+include("CashShop")
+include("CashShop")
