@@ -16,7 +16,7 @@ public class Translate {
             newArray.add(line);
 
         }
-        newArray.forEach(line -> System.out.println(line));
+
         return newArray;
     }
 }
