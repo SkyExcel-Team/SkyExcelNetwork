@@ -1,5 +1,6 @@
 package net.skyexcel.server;
 
+import net.skyexcel.server.island.IslandAdminCmdTab;
 import net.skyexcel.server.island.IslandCmd;
 import net.skyexcel.server.island.IslandCmdTab;
 import org.bukkit.plugin.Plugin;
@@ -15,6 +16,8 @@ public class SkyExcelNetwork extends JavaPlugin {
         plugin = this;
         new IslandCmd();
         new IslandCmdTab();
+
+        new IslandAdminCmdTab();
 
     }
 

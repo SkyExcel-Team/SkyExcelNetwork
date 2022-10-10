@@ -1,16 +1,17 @@
-package net.skyexcel.server.data;
+package net.skyexcel.server.data.island;
 
 import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.data.player.PlayerData;
+import net.skyexcel.server.data.player.Request;
+import net.skyexcel.server.data.vault.Vault;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class IslandData {
 
@@ -25,7 +26,16 @@ public class IslandData {
     public IslandData(String name) {
         this.name = name;
 
-        vault = new Vault(name);
+
+        config = new Config("island/" + name + "/" + name);
+        config.setPlugin(SkyExcelNetwork.plugin);
+
+    }
+
+    public IslandData(Player player, String name) {
+        this.name = name;
+
+        vault = new Vault(player, name);
         config = new Config("island/" + name + "/" + name);
         config.setPlugin(SkyExcelNetwork.plugin);
 
@@ -55,10 +65,89 @@ public class IslandData {
         config.saveConfig();
     }
 
+    public void quickIsland(Player player) {
+
+        List<String> members = getMembers();
+
+        if (!getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
+
+            if (members.contains(player.getUniqueId().toString())) {
+                player.sendMessage("당신은 해당 섬의 멤버가 아닙니다!");
+            } else {
+                player.sendMessage("성공적으로 섬을 탈퇴 했습니당");
+            }
+        } else {
+            player.sendMessage("섬 주인은 탈퇴 못함 ㅅㄱ");
+        }
+    }
+
+    public boolean accept(Player player, Player target) {
+
+        IslandRecord record = new IslandRecord(name);
+
+        Request request = new Request();
+
+        request.newRequest();
+
+        record.record(player, target, null, IslandRecord.Type.JOIN);
+
+        return false;
+    }
+
+    public boolean deny(Player target) {
+
+        return false;
+    }
+
+    public boolean kickMember(Player player, Player target, String reason) {
+        if (getMembers().contains(target.getUniqueId().toString())) {
+            IslandRecord record = new IslandRecord(name);
+
+            record.record(player, target, reason, IslandRecord.Type.KICK);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean invite(Player player, Player target) {
+
+
+        return true;
+    }
+
+    public boolean delete() {
+        return config.delete();
+    }
+
+
+    public boolean teleportIsland(Player player) {
+
+        if (getSpawn() != null) {
+            Location loc = getSpawn();
+            player.teleport(loc);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setVaultLock() {
+        vault.setLock(true);
+        return true;
+    }
 
     public void setDiscord(String link) {
         config.setString("island.discord", link);
         config.saveConfig();
+    }
+
+    public boolean setOwner(Player owner) {
+
+        if (config != null) {
+            config.setString("island.owner", owner.getUniqueId().toString());
+            config.saveConfig();
+            return true;
+        }
+        return false;
     }
 
     public void removeDiscord() {
@@ -67,12 +156,14 @@ public class IslandData {
     }
 
     public boolean onQuit(Player player) {
-        List<OfflinePlayer> members = getMembers();
-        if (members.contains(player)) {
-            for (OfflinePlayer member : members) {
-                if (member.isOnline()) {
-                    member.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 퇴장하였습니다!");
-                }
+        List<String> members = getMembers();
+
+        if (members.contains(player.getUniqueId().toString())) {
+            for (String member : members) {
+
+                Player online = Bukkit.getPlayer(member);
+                online.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 퇴장하였습니다!");
+
             }
             return true;
         }
@@ -80,12 +171,13 @@ public class IslandData {
     }
 
     public boolean onJoin(Player player) {
-        List<OfflinePlayer> members = getMembers();
-        if (members.contains(player)) {
-            for (OfflinePlayer member : members) {
-                if (member.isOnline()) {
-                    member.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 하였습니다!");
-                }
+        List<String> members = getMembers();
+
+        if (members.contains(player.getUniqueId().toString())) {
+            for (String member : members) {
+
+                Player online = Bukkit.getPlayer(member);
+                online.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 하였습니다!");
             }
             return true;
         }
@@ -108,13 +200,17 @@ public class IslandData {
         return false;
     }
 
-    public void addMember(Player player) {
+    public boolean addMember(Player player) {
+        if (config != null) {
+            List<String> members = getMembers();
+            members.add(player.getUniqueId().toString());
 
-        List<OfflinePlayer> members = getMembers();
-        members.add(player);
+            config.getConfig().set("island.member", members);
+            config.saveConfig();
+            return true;
+        }
 
-        config.getConfig().set("island.member", members);
-        config.saveConfig();
+        return false;
     }
 
     public boolean addRule(String newRule) {
@@ -143,15 +239,15 @@ public class IslandData {
 
     public boolean rename(String name) {
         if (getMembers() != null) {
-            for (OfflinePlayer player : getMembers()) {
-                PlayerData data = new PlayerData(Objects.requireNonNull(player.getPlayer()));
+            for (String player : getMembers()) {
+                PlayerData data = new PlayerData(Bukkit.getPlayer(player));
                 data.setName(name);
             }
-            config.renameFile("island/" + name + "/" + name);
+
             config.saveConfig();
             return true;
         } else {
-            config.moveTo("island/" + name + "/" + name);
+
 
             config.saveConfig();
             return true;
@@ -174,8 +270,8 @@ public class IslandData {
         return config.getInteger("island.level");
     }
 
-    public OfflinePlayer getOwner() {
-        return Bukkit.getOfflinePlayer(config.getString("island.owner"));
+    public String getOwner() {
+        return config.getString("island.owner");
     }
 
 
@@ -189,11 +285,11 @@ public class IslandData {
 
     }
 
-    public List<OfflinePlayer> getMembers() {
-        List<OfflinePlayer> members = new ArrayList<>();
+    public List<String> getMembers() {
+        List<String> members = new ArrayList<>();
 
         for (String name : config.getConfig().getStringList("island.member")) {
-            members.add(Bukkit.getOfflinePlayer(name));
+            members.add(name);
         }
 
         return members;
@@ -249,10 +345,5 @@ public class IslandData {
 
     public Vault getVault() {
         return vault;
-    }
-
-
-    private static enum Type {
-        DEPOSIT, WITHDRAW
     }
 }

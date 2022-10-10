@@ -5,7 +5,7 @@ import skyexcel.command.tab.Tab;
 
 public class IslandCmdTab {
 
-    public static Tab<String, String> tab;
+    public static Tab<Object> tab;
 
     public IslandCmdTab() {
 
@@ -19,7 +19,8 @@ public class IslandCmdTab {
         tab.args("규칙", "제거", "[번호]");
 
         tab.args("금고", "입금", "<Amount>");
-        tab.args("금고", "출금", "<Amount>");
+        tab.args("금고", "잠금");
+        tab.args("금고", "출금", "<tsetst>");
 
         tab.args("디스코드", "설정", "[링크]");
         tab.args("디스코드", "삭제");
@@ -44,7 +45,4 @@ public class IslandCmdTab {
         tab.args("순위", "[페이지]");
     }
 
-    public static void addArg(String previous, String... next) {
-        tab.args(previous, next);
-    }
 }

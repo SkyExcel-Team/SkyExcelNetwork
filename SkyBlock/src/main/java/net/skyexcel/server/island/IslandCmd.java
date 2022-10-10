@@ -1,15 +1,15 @@
 package net.skyexcel.server.island;
 
 import net.skyexcel.server.SkyExcelNetwork;
-import net.skyexcel.server.data.IslandData;
-import net.skyexcel.server.data.PlayerData;
-import net.skyexcel.server.data.Vault;
+import net.skyexcel.server.data.island.IslandData;
+import net.skyexcel.server.data.player.PlayerData;
+import net.skyexcel.server.data.vault.VaultRecord;
+import net.skyexcel.server.data.vault.Vault;
 import net.skyexcel.server.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import skyexcel.command.function.Cmd;
-import skyexcel.data.file.Config;
 
 public class IslandCmd {
     public IslandCmd() {
@@ -18,7 +18,156 @@ public class IslandCmd {
 
         cmd.label(action -> {
             Player player = (Player) action.getSender();
+
+            PlayerData playerData = new PlayerData(player);
+            IslandData data = new IslandData(playerData.getIsland());
+
+            if (data.teleportIsland(player)) {
+                player.sendMessage("텔레포트 하였습니다!");
+            } else {
+                player.sendMessage("텔레포트 실패!");
+            }
+        });
+
+        cmd.action("도움말", 0, action -> {
+            Player player = (Player) action.getSender();
             player.sendMessage("test");
+        });
+
+
+        cmd.action("양도", 0, action -> {
+            Player player = (Player) action.getSender();
+
+            String name = Translate.msgCollapse(action.getArgs(), 1);
+
+            PlayerData playerData = new PlayerData(player);
+
+            Player target = Bukkit.getPlayer(action.getArgs()[1]);
+
+            IslandData data = new IslandData(playerData.getIsland());
+
+            if (data.setOwner(target)) {
+                player.sendMessage("양도 완료");
+            }
+        });
+
+
+        cmd.action("탈퇴", 0, action -> {
+            Player player = (Player) action.getSender();
+            PlayerData playerData = new PlayerData(player);
+
+            IslandData data = new IslandData(playerData.getIsland());
+
+            data.quickIsland(player);
+
+        });
+
+
+        cmd.action("추방", 0, action -> {
+            Player player = (Player) action.getSender();
+
+            PlayerData playerData = new PlayerData(player);
+
+            Player target = Bukkit.getPlayer(action.getArgs()[1]);
+
+            IslandData island = new IslandData(playerData.getIsland());
+
+            String reason = Translate.msgCollapse(action.getArgs(), 2);
+
+            if (island.kickMember(player, target, reason)) {
+                player.sendMessage("해당 플레이어를 '" + reason + "' 사유로 추방 하였습니다!");
+            } else {
+                player.sendMessage("해당 플레이어는 섬원이 아닙니다!");
+            }
+
+        });
+
+
+        cmd.action("초대", 0, action -> {
+            Player player = (Player) action.getSender();
+            String name = Translate.msgCollapse(action.getArgs(), 1);
+            PlayerData playerData = new PlayerData(player);
+
+            Player target = Bukkit.getPlayer(action.getArgs()[1]);
+            playerData.setName(name);
+            IslandData data = new IslandData(name);
+
+
+            assert target != null;
+            if (data.invite(player, target)) {
+                player.sendMessage("초대를 보냈습니다!");
+            } else {
+                player.sendMessage("초대에 문제가 생겼습니다!");
+            }
+        });
+
+        cmd.action("수락", 0, action -> {
+            Player player = (Player) action.getSender();
+
+            String name = Translate.msgCollapse(action.getArgs(), 1);
+            PlayerData playerData = new PlayerData(player);
+
+
+            Player target = Bukkit.getPlayer(action.getArgs()[1]);
+
+            IslandData data = new IslandData(playerData.getIsland());
+
+
+            assert target != null;
+            if (data.accept(Bukkit.getPlayer(data.getOwner()), target)) {
+
+                player.sendMessage("수락을 했습니다!");
+            } else {
+                player.sendMessage("수락에 문제가 생겼습니다!");
+            }
+        });
+
+        cmd.action("거절", 0, action -> {
+            Player player = (Player) action.getSender();
+            String name = Translate.msgCollapse(action.getArgs(), 1);
+            PlayerData playerData = new PlayerData(player);
+
+            Player target = Bukkit.getPlayer(action.getArgs()[1]);
+            playerData.setName(name);
+            IslandData data = new IslandData(name);
+
+            assert target != null;
+            if (data.deny(target)) {
+                player.sendMessage("초대를 거절 하였습니다!");
+            }
+        });
+
+
+        cmd.action("홈", 0, action -> {
+            Player player = (Player) action.getSender();
+
+            PlayerData playerData = new PlayerData(player);
+
+            playerData.setSpawn();
+        });
+
+        cmd.action("스폰변경", 0, action -> {
+            Player player = (Player) action.getSender();
+
+            PlayerData playerData = new PlayerData(player);
+
+            if (playerData.setSpawn()) {
+                player.sendMessage("스폰 설정");
+            }
+        });
+
+        cmd.action("제거", 0, action -> {
+            Player player = (Player) action.getSender();
+            String name = Translate.msgCollapse(action.getArgs(), 1);
+            PlayerData playerData = new PlayerData(player);
+
+
+            playerData.setName(name);
+            IslandData data = new IslandData(name);
+
+            if (data.delete()) {
+                player.sendMessage("제거 완료");
+            }
         });
 
         cmd.action("생성", 0, action -> {
@@ -31,7 +180,7 @@ public class IslandCmd {
 
             data.create(player);
 
-            IslandCmdTab.addArg("제거", name);
+
 
         });
         cmd.action("제거", 0, action -> {
@@ -60,17 +209,49 @@ public class IslandCmd {
             PlayerData playerData = new PlayerData(player);
 
             IslandData data = new IslandData(playerData.getIsland());
-
+            Vault vault;
+            int amount;
 
             switch (args[1]) {
                 case "입금":
-                    Vault vault = data.getVault();
-                    int amount = Integer.parseInt(args[2]);
+                    data = new IslandData(player, playerData.getIsland());
+                    vault = data.getVault();
+                    amount = Integer.parseInt(args[2]);
+
                     if (vault.deposit(amount)) {
+                        VaultRecord record = new VaultRecord(playerData.getIsland());
+
+                        record.record(player, amount, VaultRecord.Type.DEPOSIT);
+
                         player.sendMessage("입금 완료");
                     } else {
                         player.sendMessage("입금 실패!");
                     }
+                    break;
+
+                case "출금":
+                    data = new IslandData(player, playerData.getIsland());
+
+                    vault = data.getVault();
+                    amount = Integer.parseInt(args[2]);
+                    vault.setPlayer(player);
+
+                    if (vault.withdraw(amount)) {
+                        VaultRecord record = new VaultRecord(playerData.getIsland());
+
+                        record.record(player, amount, VaultRecord.Type.WITHDRAW);
+
+                        player.sendMessage("출금 완료");
+                    } else {
+                        player.sendMessage("출금 실패!");
+                    }
+                    break;
+                case "잠금":
+
+                    if (data.setVaultLock()) {
+                        player.sendMessage("금고를 잠궜습니다.");
+                    }
+
                     break;
             }
         });
