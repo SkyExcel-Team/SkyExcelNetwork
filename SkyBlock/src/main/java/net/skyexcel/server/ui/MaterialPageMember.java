@@ -22,7 +22,6 @@ public class MaterialPageMember {
     private int totalPage = 15;
     private Inventory inv;
     private String title;
-    private String world;
 
     public void increaseCurrentPage() {
         if (CurrentPage < totalPage) {
@@ -49,11 +48,14 @@ public class MaterialPageMember {
         increaseCurrentPage();
 
         title = "";
-        title = getWorld() + "";
-        Inventory inv = Show(player, title);
+        
+        PlayerData playerData = new PlayerData(player);
+        IslandData islandData = new IslandData(playerData.getIsland());
 
-        previoussign();
-        nextsign();
+        Inventory inv = Show(player, islandData.getName());
+
+        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 48, inv);
+        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 50, inv);
 
         if (CurrentPage == 15) {
             inv.setItem(50, new ItemStack(Material.AIR));
@@ -62,16 +64,9 @@ public class MaterialPageMember {
         player.openInventory(inv);
     }
 
-    public void nextsign() {
-        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 50, inv);
-    }
-
-    public void previoussign() {
-        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 48, inv);
-    }
 
     public Inventory Show(Player player, String name) {
-        setWorld(name);
+
         Inventory inv2 = Bukkit.createInventory(null, 54, setTitle(name));
         List<Material> materials = Arrays.stream(Material.values()).filter(Material::isSolid).collect(Collectors.toList());
 
@@ -105,18 +100,11 @@ public class MaterialPageMember {
         return title;
     }
 
-    public void setWorld(String world) {
-        this.world = world;
-    }
-
-    public String getWorld() {
-        return world;
-    }
 
     public void decrease(Player player) {
         decreaseCurrentPage();
         title = "";
-        title = getWorld() + "";
+
         Inventory inv = Show(player, title);
 
         Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 50, inv);
