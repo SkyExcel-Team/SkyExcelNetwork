@@ -5,8 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-
 import java.util.List;
+
 
 public class Item {
 
@@ -24,4 +24,5 @@ public class Item {
         stack.setItemMeta(meta);
         return stack;
     }
+
 }
