@@ -5,7 +5,7 @@
 - add jarDirectory property to `env.properties` 
 - add core-version property to `core-version` 
 
-## Example For Java
+## Example For SkyBlock 
 
 ```java
 
