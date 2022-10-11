@@ -7,6 +7,7 @@ import net.skyexcel.server.data.vault.Vault;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.WeatherType;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
@@ -18,7 +19,6 @@ public class IslandData {
     private String name;
 
     private Config config;
-
 
     private Vault vault;
 
@@ -56,13 +56,23 @@ public class IslandData {
         config.getConfig().set("island.rule", new ArrayList<>());
         config.getConfig().set("island.parttime.player", new ArrayList<>());
         config.getConfig().set("island.parttime.money", new ArrayList<>());
-        config.getConfig().set("island.option", new ArrayList<>());
+
+        config.getConfig().set("island.option.pvp", false);
+        config.getConfig().set("island.option.member.banblock", new ArrayList<>());
+        config.getConfig().set("island.option.parttime.banblock", new ArrayList<>());
+        config.getConfig().set("island.option.weather", WeatherType.CLEAR.name());
+
+        // 1000 = day, noon = 6000 night = 13000 midnight = 18000
+        config.getConfig().set("island.option.time", 1000);
+
 
         config.setLocation("island.spawn", new Location(Bukkit.getWorld("world"), 1, 1, 1));
 
-        config.getConfig().set("island.banblock.parttime", new ArrayList<>());
-        config.getConfig().set("island.banblock.member", new ArrayList<>());
         config.saveConfig();
+    }
+
+    public void reset() {
+
     }
 
     public void quickIsland(Player player) {
@@ -320,7 +330,7 @@ public class IslandData {
     public List<Material> getBanBlockMember() {
         List<Material> members = new ArrayList<>();
 
-        for (String name : config.getConfig().getStringList("island.banblock.member")) {
+        for (String name : config.getConfig().getStringList("island.option.member.banblock")) {
             members.add(Material.valueOf(name));
         }
 
@@ -330,7 +340,7 @@ public class IslandData {
     public List<Material> getBanBlockPartTime() {
         List<Material> members = new ArrayList<>();
 
-        for (String name : config.getConfig().getStringList("island.banblock.parttime")) {
+        for (String name : config.getConfig().getStringList("island.option.parttime.banblock")) {
             members.add(Material.valueOf(name));
         }
 
