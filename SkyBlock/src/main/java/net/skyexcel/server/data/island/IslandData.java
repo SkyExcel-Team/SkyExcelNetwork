@@ -2,16 +2,13 @@ package net.skyexcel.server.data.island;
 
 import net.skyexcel.server.SkyExcelNetwork;
 import net.skyexcel.server.data.player.PlayerData;
-import net.skyexcel.server.data.player.Request;
 import net.skyexcel.server.data.vault.Vault;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.WeatherType;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class IslandData {
@@ -22,18 +19,21 @@ public class IslandData {
 
     private Vault vault;
 
-
     public IslandData(String name) {
         this.name = name;
 
-
         config = new Config("island/" + name + "/" + name);
         config.setPlugin(SkyExcelNetwork.plugin);
-
     }
 
     public IslandData(Player player, String name) {
         this.name = name;
+
+        String[] split = name.split("&", 1);
+        for (int i = 0; i < split.length; i++) {
+            System.out.println(split[i]);
+        }
+
 
         vault = new Vault(player, name);
         config = new Config("island/" + name + "/" + name);
@@ -43,36 +43,45 @@ public class IslandData {
 
     public void create(Player player) {
 
-        vault.create();
+        PlayerData data = new PlayerData(player);
+        if (data.getIsland() == null) {
+            data.setName(name);
+            vault.create();
 
-        config.setString("island.name", name);
-        config.setString("island.discord", "");
-        config.setLong("island.worldtime", 0);
-        config.setLong("island.level", 0);
+            config.setString("island.name", name);
+            config.setString("island.discord", "");
+            config.setLong("island.worldtime", 0);
+            config.setLong("island.level", 0);
 
-        config.setString("island.owner", player.getUniqueId().toString());
+            config.setString("island.owner", player.getUniqueId().toString());
 
-        config.getConfig().set("island.member", new ArrayList<>());
-        config.getConfig().set("island.rule", new ArrayList<>());
-        config.getConfig().set("island.parttime.player", new ArrayList<>());
-        config.getConfig().set("island.parttime.money", new ArrayList<>());
+            config.getConfig().set("island.member", new ArrayList<>());
+            config.getConfig().set("island.rule", new ArrayList<>());
+            config.getConfig().set("island.parttime.player", new ArrayList<>());
+            config.getConfig().set("island.parttime.money", new ArrayList<>());
 
-        config.getConfig().set("island.option.pvp", false);
-        config.getConfig().set("island.option.member.banblock", new ArrayList<>());
-        config.getConfig().set("island.option.parttime.banblock", new ArrayList<>());
-        config.getConfig().set("island.option.weather", WeatherType.CLEAR.name());
+            config.getConfig().set("island.option.pvp", false);
+            config.getConfig().set("island.option.banblock.member", new ArrayList<>());
+            config.getConfig().set("island.option.banblock.parttime", new ArrayList<>());
+            config.getConfig().set("island.option.weather", WeatherType.CLEAR.name());
 
-        // 1000 = day, noon = 6000 night = 13000 midnight = 18000
-        config.getConfig().set("island.option.time", 1000);
+            // 1000 = day, noon = 6000 night = 13000 midnight = 18000
+            config.getConfig().set("island.option.time", 1000);
 
 
-        config.setLocation("island.spawn", new Location(Bukkit.getWorld("world"), 1, 1, 1));
+            config.setLocation("island.spawn", new Location(Bukkit.getWorld("world"), 1, 1, 1));
 
-        config.saveConfig();
+            config.saveConfig();
+
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', name) + ChatColor.GREEN + " 섬 생성에 성공 하였습니다!");
+        } else {
+            player.sendMessage("섬을 탈퇴 하거나, 삭제 하세요!");
+        }
     }
 
-    public void reset() {
-
+    public void reset(Player player) {
+        delete(player);
+        create(player);
     }
 
     public void quickIsland(Player player) {
@@ -91,17 +100,13 @@ public class IslandData {
         }
     }
 
-    public boolean accept(Player player, Player target) {
+    public void accept(Player player, Player target) {
 
         IslandRecord record = new IslandRecord(name);
 
-        Request request = new Request();
-
-        request.newRequest();
-
+        addMember(target);
         record.record(player, target, null, IslandRecord.Type.JOIN);
 
-        return false;
     }
 
     public boolean deny(Player target) {
@@ -119,10 +124,9 @@ public class IslandData {
         return false;
     }
 
-    public boolean invite(Player player, Player target) {
-
-
-        return true;
+    public void invite(Player player) {
+        List<String> member = getMembers();
+        member.add(player.getUniqueId().toString());
     }
 
     public boolean delete() {
@@ -183,10 +187,11 @@ public class IslandData {
     public boolean onJoin(Player player) {
         List<String> members = getMembers();
 
-        if (members.contains(player.getUniqueId().toString())) {
+        if (members.contains(player.getUniqueId().toString()) || getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
             for (String member : members) {
-
+                System.out.println(member);
                 Player online = Bukkit.getPlayer(member);
+
                 online.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 하였습니다!");
             }
             return true;
@@ -223,11 +228,11 @@ public class IslandData {
         return false;
     }
 
-    public boolean addRule(String newRule) {
+    public boolean addRule(String[] newRule) {
         if (config.getConfig().get("island.rule") != null) {
             List<String> rule = config.getConfig().getStringList("island.rule");
-            if (rule.size() != 11) {
-                rule.add(newRule);
+            if (rule.size() + 1 != 11) {
+                rule.add(String.join(" ", Arrays.copyOfRange(newRule, 2, newRule.length)));
                 config.getConfig().set("island.rule", rule);
                 config.saveConfig();
                 return true;
@@ -237,13 +242,20 @@ public class IslandData {
     }
 
     public boolean removeRule(int index) {
-        if (config.getConfig().get("island.rule") != null) {
-            List<String> rule = config.getConfig().getStringList("island.rule");
-            rule.remove(index);
-            config.getConfig().set("island.rule", rule);
-            config.saveConfig();
-            return true;
+        try {
+            if (config.getConfig().get("island.rule") != null) {
+                List<String> rule = config.getConfig().getStringList("island.rule");
+                if (rule.get(index) != null) {
+                    rule.remove(index);
+                    config.getConfig().set("island.rule", rule);
+                    config.saveConfig();
+                }
+                return true;
+            }
+        } catch (IndexOutOfBoundsException e) {
+
         }
+
         return false;
     }
 
@@ -289,10 +301,17 @@ public class IslandData {
         return config.getLocation("island.spawn");
     }
 
-    public List<String> getRule() {
+    public void getRule(Player player) {
 
-        return config.getConfig().getStringList("island.rule");
+        List<String> rule = config.getConfig().getStringList("island.rule");
+        if (rule.size() == 0) {
+            player.sendMessage("규칙이 없습니다!");
+        }
 
+        for (int i = 0; i < rule.size(); i++) {
+            int index = i;
+            player.sendMessage(++index + ". " + rule.get(i));
+        }
     }
 
     public List<String> getMembers() {
@@ -352,6 +371,7 @@ public class IslandData {
         config.deleteFile();
         player.sendMessage("제거 하였습니다!");
     }
+
 
     public Vault getVault() {
         return vault;
