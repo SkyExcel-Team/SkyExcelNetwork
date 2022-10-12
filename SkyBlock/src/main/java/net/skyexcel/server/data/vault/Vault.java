@@ -14,6 +14,7 @@ public class Vault {
 
     public Vault(Player player, String name) {
         this.name = name;
+        this.player = player;
         config = new Config("island/" + name + "/vault");
         config.setPlugin(SkyExcelNetwork.plugin);
     }
