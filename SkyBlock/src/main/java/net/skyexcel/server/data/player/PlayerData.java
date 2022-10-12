@@ -4,6 +4,8 @@ import net.skyexcel.server.SkyExcelNetwork;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
+import java.util.List;
+
 public class PlayerData {
 
 
@@ -30,6 +32,10 @@ public class PlayerData {
             return true;
         }
         return false;
+    }
+
+    public boolean hasIsland() {
+        return config.getConfig().get("island.name") != null;
     }
 
     public String getIsland() {
