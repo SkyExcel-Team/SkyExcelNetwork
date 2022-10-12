@@ -1,8 +1,10 @@
 package net.skyexcel.server.island;
 
+import net.md_5.bungee.api.chat.*;
 import net.skyexcel.server.SkyExcelNetwork;
 import net.skyexcel.server.data.island.IslandData;
 import net.skyexcel.server.data.player.PlayerData;
+import net.skyexcel.server.data.player.Request;
 import net.skyexcel.server.data.vault.VaultRecord;
 import net.skyexcel.server.data.vault.Vault;
 import net.skyexcel.server.util.Translate;
@@ -11,9 +13,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import skyexcel.command.function.Cmd;
 
+
 public class IslandCmd {
     public IslandCmd() {
         Cmd cmd = new Cmd(SkyExcelNetwork.plugin, "섬");
+
+        Request request = new Request();
 
 
         cmd.label(action -> {
@@ -79,62 +84,91 @@ public class IslandCmd {
             } else {
                 player.sendMessage("해당 플레이어는 섬원이 아닙니다!");
             }
-
         });
-
 
         cmd.action("초대", 0, action -> {
             Player player = (Player) action.getSender();
             String name = Translate.msgCollapse(action.getArgs(), 1);
-            PlayerData playerData = new PlayerData(player);
 
             Player target = Bukkit.getPlayer(action.getArgs()[1]);
-            playerData.setName(name);
-            IslandData data = new IslandData(name);
-
 
             assert target != null;
-            if (data.invite(player, target)) {
-                player.sendMessage("초대를 보냈습니다!");
+            PlayerData targetData = new PlayerData(target);
+            PlayerData playerData = new PlayerData(player);
+
+
+            if (!targetData.hasIsland() || playerData.hasIsland()) {
+                if (Request.send(request, target, player)) {
+
+
+
+                    TextComponent accept = new TextComponent("§a수락");
+
+                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a클릭하여 수락하세요!").create()));
+                    accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/섬 수락 " + player.getDisplayName()));
+
+                    TextComponent deny = new TextComponent("§c거절");
+
+                    deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§c클릭하여 거절하세요").create()));
+                    deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/섬 거절 " + player.getDisplayName()));
+
+                    TextComponent result = new TextComponent(player.getDisplayName() + " 님에게 섬 초대 요청이 왔습니다! ");
+                    result.addExtra(accept);
+                    result.addExtra("|");
+                    result.addExtra(deny);
+
+                    target.spigot().sendMessage(result);
+                    player.sendMessage("초대를 보냈습니다!");
+
+                } else {
+                    player.sendMessage("상대방이 수락할때 까지 기달려 주세요.");
+                }
             } else {
-                player.sendMessage("초대에 문제가 생겼습니다!");
+                player.sendMessage(ChatColor.RED + "해당 플레이어는 이미 섬에 소속 되어 있습니다!");
             }
         });
+
 
         cmd.action("수락", 0, action -> {
             Player player = (Player) action.getSender();
 
-            String name = Translate.msgCollapse(action.getArgs(), 1);
-            PlayerData playerData = new PlayerData(player);
-
-
             Player target = Bukkit.getPlayer(action.getArgs()[1]);
 
-            IslandData data = new IslandData(playerData.getIsland());
+            if (Request.accept(request, player, target)) {
 
+                assert target != null;
+                PlayerData targetData = new PlayerData(target);
+                PlayerData playerData = new PlayerData(player);
 
-            assert target != null;
-            if (data.accept(Bukkit.getPlayer(data.getOwner()), target)) {
+                playerData.setName(targetData.getIsland());
 
-                player.sendMessage("수락을 했습니다!");
+                IslandData islandData = new IslandData(targetData.getIsland());
+
+                islandData.accept(target, player);
+
+                player.sendMessage(targetData.getIsland() + " 섬에 입장하였습니다!");
             } else {
-                player.sendMessage("수락에 문제가 생겼습니다!");
+                player.sendMessage("초대 수락에 실패 하였습니다! ");
             }
         });
 
+
         cmd.action("거절", 0, action -> {
             Player player = (Player) action.getSender();
-            String name = Translate.msgCollapse(action.getArgs(), 1);
+
             PlayerData playerData = new PlayerData(player);
 
             Player target = Bukkit.getPlayer(action.getArgs()[1]);
-            playerData.setName(name);
-            IslandData data = new IslandData(name);
 
-            assert target != null;
-            if (data.deny(target)) {
-                player.sendMessage("초대를 거절 하였습니다!");
+
+            IslandData data = new IslandData(playerData.getIsland());
+            if (Request.deny(request, player, target)) {
+                target.sendMessage(player.getDisplayName() + " 님이 초대 요청을 거절 하였습니다!");
+                player.sendMessage("초대 요청을 거절 하였습니다!");
+            } else {
+                player.sendMessage("초대 요청 거절을 실패 하였습니다! ");
             }
+
         });
 
 
@@ -173,15 +207,10 @@ public class IslandCmd {
         cmd.action("생성", 0, action -> {
             Player player = (Player) action.getSender();
             String name = Translate.msgCollapse(action.getArgs(), 1);
-            PlayerData playerData = new PlayerData(player);
 
-            playerData.setName(name);
-            IslandData data = new IslandData(name);
+            IslandData data = new IslandData(player, name);
 
             data.create(player);
-
-
-
         });
         cmd.action("제거", 0, action -> {
             Player player = (Player) action.getSender();
@@ -308,12 +337,15 @@ public class IslandCmd {
                         player.sendMessage("이름을 입력해 주세요!");
                     }
                     break;
-                case "삭제":
+                case "제거":
                     data.removeDiscord();
                     break;
+                case "밴블록":
+
+                    break;
+
             }
         });
-
 
         cmd.action("규칙", 0, action -> {
             Player player = (Player) action.getSender();
@@ -324,8 +356,7 @@ public class IslandCmd {
 
             switch (args[1]) {
                 case "추가":
-                    String rule = args[2];
-                    if (data.addRule(rule)) {
+                    if (data.addRule(args)) {
                         player.sendMessage("성공적으로 추가가 되었습니다!");
                     } else {
                         player.sendMessage("규칙 추가 실패!");
@@ -336,14 +367,12 @@ public class IslandCmd {
                     if (data.removeRule(index)) {
                         player.sendMessage("성공적으로 제거가 되었습니다!");
                     } else {
-                        player.sendMessage("규칙 추가 실패!");
+                        player.sendMessage("규칙 삭제 실패!");
                     }
                     break;
 
                 case "보기":
-                    for (String line : data.getRule()) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
-                    }
+                    data.getRule(player);
                     break;
             }
         });
