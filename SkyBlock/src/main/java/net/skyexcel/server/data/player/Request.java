@@ -1,61 +1,109 @@
 package net.skyexcel.server.data.player;
 
-import org.bukkit.entity.Player;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
+/***
+ * 요청과 수락을 관리하는 클래스 입니다.
+ *
+ */
 public class Request {
 
 
-    private List<Action> action;
+    private List<Object> from = new ArrayList<>();
+    private List<Object> to = new ArrayList<>();
 
-    public void newRequest() {
 
-        Action newAction = new Action();
-        action.add(newAction);
+    /**
+     * Request 클래스에게 요청을 보냅니다.
+     *
+     * @param request
+     * @return
+     */
+    public static boolean send(Request request, Object to, Object from) {
+
+
+        if (!request.to.contains(to) && !request.from.contains(from)) {
+
+            request.from.add(from);
+            request.to.add(to);
+
+
+            return true;
+        }
+
+        return false;
     }
 
-    public class Action {
-        private Consumer<Node> acceptAction;
-        private Consumer<Node> denyAction;
 
-        private Node node;
+    /**
+     * Request 클래스에게 요청을 보냅니다.
+     *
+     * @param request
+     * @return
+     */
+    public static boolean is(Request request, Object to, Object from) {
 
-
-        public void setNode(Node node) {
-            this.node = node;
+        if (request.from.contains(to) && request.to.contains(from)) {
+            return true;
         }
 
-        public void accept(Consumer<Node> action) {
-            this.acceptAction = action;
-
-            Node node = new Node();
-
-        }
-
-        public void deny(Consumer<Node> action) {
-            this.denyAction = action;
-        }
-
-        public Node getNode() {
-            return node;
-        }
+        return false;
     }
 
-    public class Node {
-        private Player player;
+    /**
+     * Request 클래스에게 요청을 보냅니다.
+     *
+     * @param request
+     * @return
+     */
+    public boolean accept(Object to, Object from) {
 
-        public void setPlayer(Player player) {
-            this.player = player;
+
+        if (this.to.contains(to) && this.from.contains(from)) {
+
+            this.from.remove(from);
+            this.to.remove(to);
+            return true;
         }
 
-        public void remove() {
-            player = null;
+        return false;
+    }
+
+    /**
+     * Request 클래스에게 요청을 보냅니다.
+     *
+     * @param request
+     * @return
+     */
+    public static boolean accept(Request request, Object to, Object from) {
+
+
+        if (request.to.contains(to) && request.from.contains(from)) {
+
+            request.from.remove(from);
+            request.to.remove(to);
+            return true;
         }
 
-        public Player getPlayer() {
-            return player;
+        return false;
+    }
+
+
+    /**
+     * Request 클래스에게 요청을 보냅니다.
+     *
+     * @param request
+     * @return
+     */
+    public static boolean deny(Request request, Object to, Object from) {
+        if (request.to.contains(to) && request.from.contains(from)) {
+
+            request.from.remove(from);
+            request.to.remove(to);
+            return true;
         }
+
+        return false;
     }
 }
