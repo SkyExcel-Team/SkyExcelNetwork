@@ -11,8 +11,12 @@ import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
+import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.data.player.PlayerData;
+import net.skyexcel.server.util.chunk.EmptyChunkCreator;
+import org.bukkit.*;
+import org.bukkit.entity.Player;
+import skyexcel.data.file.Config;
 
 
 import java.io.File;
@@ -20,15 +24,43 @@ import java.io.FileInputStream;
 
 public class WorldManager {
 
+    private final String[] paths = {"islands/Based/large.schem", "islands/Based/middle.schem", "islands/Based/small.schem"};
 
+    private World world;
 
+    public void create(Player player, int index) {
+        org.bukkit.WorldCreator c = new org.bukkit.WorldCreator("plugins/island/world/" + player.getUniqueId().toString());
+        Config config = new Config("world/" + player.getUniqueId().toString() + "/" + player.displayName());
 
-    public boolean paste(World world, String path) {
+        config.setPlugin(SkyExcelNetwork.plugin);
+        config.getConfig().set("owner", player.getDisplayName());
+        config.saveConfig();
 
+        c.generator(new EmptyChunkCreator());
+        World created = c.createWorld();
+        c.type(WorldType.FLAT);
+        c.generatorSettings("2;0;1;");
+        player.teleport(new Location(created, 0, 0
+                , 0));
+
+        paste(created, paths[index]);
+
+        assert created != null;
+        created.setGameRule(GameRule.KEEP_INVENTORY, false);
+        created.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        created.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+
+        player.teleport(new Location(created, 0, 0, 0));
+
+        this.world = created;
+        worldBorder(player);
+    }
+
+    public void paste(World world, String path) {
         BukkitWorld weWorld = new BukkitWorld(world);
         Clipboard clipboard;
         File file = new File(path);
-        Bukkit.getConsoleSender().sendMessage("복사할 월드 " + weWorld.getWorld().getName());
+
         ClipboardFormat format = ClipboardFormats.findByFile(file);
         try {
             assert format != null;
@@ -43,12 +75,29 @@ public class WorldManager {
                             .build();
 
                     Operations.complete(operation);
-                    return true;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+    }
+
+    public void worldBorder(Player player) {
+        WorldBorder border = player.getWorld().getWorldBorder();
+        border.setDamageBuffer(0);
+        border.setSize(100);
+    }
+
+    public void removeBorder(Player player) {
+        WorldBorder border = player.getWorld().getWorldBorder();
+        border.reset();
+    }
+
+    public String getPath(Player player) {
+        return "plugins/island/world/" + player.getUniqueId();
+    }
+
+    public World getWorld() {
+        return world;
     }
 }
