@@ -1,8 +1,10 @@
 package net.skyexcel.server.data.island;
 
 import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.data.event.*;
 import net.skyexcel.server.data.player.PlayerData;
 import net.skyexcel.server.data.vault.Vault;
+import net.skyexcel.server.util.WorldManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
@@ -44,38 +46,59 @@ public class IslandData {
     public void create(Player player) {
 
         PlayerData data = new PlayerData(player);
-        if (data.getIsland() == null) {
-            data.setName(name);
-            vault.create();
+        IslandCreateEvent event = new IslandCreateEvent(name, this, player);
 
-            config.setString("island.name", name);
-            config.setString("island.discord", "");
-            config.setLong("island.worldtime", 0);
-            config.setLong("island.level", 0);
+        if (!event.isCancelled()) {
+            if (data.getIsland() == null) {
 
-            config.setString("island.owner", player.getUniqueId().toString());
+                data.setName(name);
 
-            config.getConfig().set("island.member", new ArrayList<>());
-            config.getConfig().set("island.rule", new ArrayList<>());
-            config.getConfig().set("island.parttime.player", new ArrayList<>());
-            config.getConfig().set("island.parttime.money", new ArrayList<>());
+                vault.create();
 
-            config.getConfig().set("island.option.pvp", false);
-            config.getConfig().set("island.option.banblock.member", new ArrayList<>());
-            config.getConfig().set("island.option.banblock.parttime", new ArrayList<>());
-            config.getConfig().set("island.option.weather", WeatherType.CLEAR.name());
+                config.setString("island.name", name);
+                config.setString("island.discord", "");
+                config.getConfig().set("island.worldtime", 0);
 
-            // 1000 = day, noon = 6000 night = 13000 midnight = 18000
-            config.getConfig().set("island.option.time", 1000);
+                config.getConfig().set("island.level.level", 0);
+                config.getConfig().set("island.level.size", 0);
+                config.getConfig().set("island.level.member", 0);
+                config.getConfig().set("island.level.banblock", 0);
+                config.getConfig().set("island.level.stand", 0);
+                config.getConfig().set("island.level.hopper", 0);
+
+                config.setString("island.owner", player.getUniqueId().toString());
+
+                config.getConfig().set("island.member", new ArrayList<>());
+                config.getConfig().set("island.rule", new ArrayList<>());
+
+                config.getConfig().set("island.parttime.player", new ArrayList<>());
+                config.getConfig().set("island.parttime.money", new ArrayList<>());
+
+                config.getConfig().set("island.option.pvp", false);
+                config.getConfig().set("island.option.banblock.member", new ArrayList<>());
+                config.getConfig().set("island.option.banblock.parttime", new ArrayList<>());
+                config.getConfig().set("island.option.weather", WeatherType.CLEAR.name());
+
+                // 1000 = day, noon = 6000 night = 13000 midnight = 18000
+                config.getConfig().set("island.option.time", 1000);
 
 
-            config.setLocation("island.spawn", new Location(Bukkit.getWorld("world"), 1, 1, 1));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', name) + ChatColor.GREEN + " 섬 생성에 성공 하였습니다!");
+                player.sendMessage(ChatColor.GRAY + "섬 채팅을 사용 하실 수 있습니다! ");
 
-            config.saveConfig();
 
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', name) + ChatColor.GREEN + " 섬 생성에 성공 하였습니다!");
-        } else {
-            player.sendMessage("섬을 탈퇴 하거나, 삭제 하세요!");
+                WorldManager world = new WorldManager();
+
+                world.create(player, 0);
+
+                config.setLocation("island.spawn", new Location(world.getWorld(), 0, 0, 0));
+
+                config.saveConfig();
+
+                Bukkit.getPluginManager().callEvent(new IslandCreateEvent(name, this, player));
+            } else {
+                player.sendMessage("섬을 탈퇴 하거나, 삭제 하세요!");
+            }
         }
     }
 
@@ -85,18 +108,23 @@ public class IslandData {
     }
 
     public void quickIsland(Player player) {
+        IslandQuickEvent event = new IslandQuickEvent(name, this, player);
 
-        List<String> members = getMembers();
+        if (!event.isCancelled()) {
+            List<String> members = getMembers();
 
-        if (!getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
+            if (!getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
 
-            if (members.contains(player.getUniqueId().toString())) {
-                player.sendMessage("당신은 해당 섬의 멤버가 아닙니다!");
+                if (members.contains(player.getUniqueId().toString())) {
+
+                    player.sendMessage("당신은 해당 섬의 멤버가 아닙니다!");
+                } else {
+                    Bukkit.getPluginManager().callEvent(event);
+                    player.sendMessage("성공적으로 섬을 탈퇴 했습니당");
+                }
             } else {
-                player.sendMessage("성공적으로 섬을 탈퇴 했습니당");
+                player.sendMessage("섬 주인은 탈퇴 못함 ㅅㄱ");
             }
-        } else {
-            player.sendMessage("섬 주인은 탈퇴 못함 ㅅㄱ");
         }
     }
 
@@ -109,24 +137,25 @@ public class IslandData {
 
     }
 
-    public boolean deny(Player target) {
-
-        return false;
-    }
 
     public boolean kickMember(Player player, Player target, String reason) {
-        if (getMembers().contains(target.getUniqueId().toString())) {
-            IslandRecord record = new IslandRecord(name);
+        IslandKickEvent event = new IslandKickEvent(name, this, player);
 
-            record.record(player, target, reason, IslandRecord.Type.KICK);
-            return true;
+        if (!event.isCancelled()) {
+            List<String> members = getMembers();
+            if (members.contains(target.getUniqueId().toString()) && removeMember(target)) {
+                IslandRecord record = new IslandRecord(name);
+
+                record.record(player, target, reason, IslandRecord.Type.KICK);
+
+                PlayerData playerData = new PlayerData(target);
+                playerData.setName("");
+                Bukkit.getPluginManager().callEvent(event);
+                return true;
+            }
         }
-        return false;
-    }
 
-    public void invite(Player player) {
-        List<String> member = getMembers();
-        member.add(player.getUniqueId().toString());
+        return false;
     }
 
     public boolean delete() {
@@ -135,12 +164,20 @@ public class IslandData {
 
 
     public boolean teleportIsland(Player player) {
+        IslandJoinEvent event = new IslandJoinEvent(name, this, player);
 
-        if (getSpawn() != null) {
-            Location loc = getSpawn();
-            player.teleport(loc);
-            return true;
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (!event.isCancelled()) {
+            if (getSpawn() != null) {
+                Location loc = getSpawn();
+                player.teleport(loc);
+
+
+                return true;
+            }
         }
+
         return false;
     }
 
@@ -219,6 +256,20 @@ public class IslandData {
         if (config != null) {
             List<String> members = getMembers();
             members.add(player.getUniqueId().toString());
+
+            config.getConfig().set("island.member", members);
+            config.saveConfig();
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public boolean removeMember(Player player) {
+        if (config != null) {
+            List<String> members = getMembers();
+            members.remove(player.getUniqueId().toString());
 
             config.getConfig().set("island.member", members);
             config.saveConfig();
@@ -367,11 +418,30 @@ public class IslandData {
     }
 
     public void delete(Player player) {
+        WorldManager world = new WorldManager();
+
+        world.delete(player);
 
         config.deleteFile();
+
         player.sendMessage("제거 하였습니다!");
+
+        Bukkit.getPluginManager().callEvent(new IslandDeleteEvent(name, this, player));
     }
 
+
+    public void removeAll() {
+        Config islandConfig = new Config("island/");
+        islandConfig.setPlugin(SkyExcelNetwork.plugin);
+
+        for (String name : islandConfig.fileListName()) {
+            Config record = new Config("island/" + name + "/record/");
+            for (String records : record.fileListName()) {
+                Config recordConfig = new Config("island/" + name + "/record/" + records);
+                recordConfig.deleteFile();
+            }
+        }
+    }
 
     public Vault getVault() {
         return vault;
