@@ -25,18 +25,16 @@ public class IslandRecord {
 
         try {
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
-            if (section != null) {
-                section.set("time", Translate.getDate());
-                section.set("player", player.getName());
-                section.set("target", target.getName());
-                assert reason != null;
-                section.set("reason", reason);
-                section.set("action", type.getName());
-                record.saveConfig();
-            }
+            section.set("time", Translate.getDate());
+            section.set("player", player.getName());
+            section.set("target", target.getName());
+            assert reason != null;
+            section.set("reason", reason);
+            section.set("action", type.getName());
+            record.saveConfig();
 
         } catch (NullPointerException e) {
-            System.out.println("test");
+
             ConfigurationSection newSection = record.getConfig().createSection("record.0");
             newSection.set("time", Translate.getDate());
             newSection.set("player", player.getName());
