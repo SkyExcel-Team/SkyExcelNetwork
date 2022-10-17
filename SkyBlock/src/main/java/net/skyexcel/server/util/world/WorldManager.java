@@ -1,4 +1,4 @@
-package net.skyexcel.server.util;
+package net.skyexcel.server.util.world;
 
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -12,8 +12,8 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import net.skyexcel.server.SkyExcelNetwork;
-import net.skyexcel.server.data.player.PlayerData;
-import net.skyexcel.server.util.chunk.EmptyChunkCreator;
+import net.skyexcel.server.util.FileUtils;
+import net.skyexcel.server.util.world.chunk.EmptyChunkCreator;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
@@ -21,6 +21,7 @@ import skyexcel.data.file.Config;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Objects;
 
 public class WorldManager {
 
@@ -29,7 +30,8 @@ public class WorldManager {
     private World world;
 
     public void create(Player player, int index) {
-        org.bukkit.WorldCreator c = new org.bukkit.WorldCreator("plugins/island/world/" + player.getUniqueId().toString());
+        org.bukkit.WorldCreator c = new org.bukkit.WorldCreator(player.getUniqueId().toString());
+
         Config config = new Config("world/" + player.getUniqueId().toString() + "/" + player.displayName());
 
         config.setPlugin(SkyExcelNetwork.plugin);
@@ -38,6 +40,7 @@ public class WorldManager {
 
         c.generator(new EmptyChunkCreator());
         World created = c.createWorld();
+
         c.type(WorldType.FLAT);
         c.generatorSettings("2;0;1;");
         player.teleport(new Location(created, 0, 0
@@ -46,15 +49,27 @@ public class WorldManager {
         paste(created, paths[index]);
 
         assert created != null;
-        created.setGameRule(GameRule.KEEP_INVENTORY, false);
+        created.setGameRule(GameRule.KEEP_INVENTORY, true);
         created.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         created.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
 
-        player.teleport(new Location(created, 0, 0, 0));
 
         this.world = created;
+        created.setSpawnLocation(new Location(created, 0, 0, 0));
         worldBorder(player);
     }
+
+    public void delete(Player player) {
+        player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+
+        File file = Objects.requireNonNull(Bukkit.getWorld("plugins/SkyBlock/world/" + player.getUniqueId())).getWorldFolder();
+
+        FileUtils.deleteFolder(file);
+
+        File newFile = new File("plugins/SkyBlock/world/" + player.getUniqueId());
+        newFile.delete();
+    }
+
 
     public void paste(World world, String path) {
         BukkitWorld weWorld = new BukkitWorld(world);
@@ -67,7 +82,6 @@ public class WorldManager {
             try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
                 clipboard = reader.read();
 
-                Bukkit.getConsoleSender().sendMessage("오리진 좌표 : " + clipboard.getOrigin());
                 try (EditSession editSession = WorldEdit.getInstance().newEditSession(weWorld)) {
                     Operation operation = new ClipboardHolder(clipboard)
                             .createPaste(editSession)
@@ -93,9 +107,6 @@ public class WorldManager {
         border.reset();
     }
 
-    public String getPath(Player player) {
-        return "plugins/island/world/" + player.getUniqueId();
-    }
 
     public World getWorld() {
         return world;
