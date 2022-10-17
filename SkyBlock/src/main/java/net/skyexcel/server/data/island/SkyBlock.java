@@ -2,33 +2,31 @@ package net.skyexcel.server.data.island;
 
 import net.skyexcel.server.SkyExcelNetwork;
 import net.skyexcel.server.data.event.*;
-import net.skyexcel.server.data.player.PlayerData;
-import net.skyexcel.server.data.vault.Vault;
-import net.skyexcel.server.util.WorldManager;
+import net.skyexcel.server.data.player.SkyBlockPlayerData;
+import net.skyexcel.server.data.vault.SkyBlockVault;
+import net.skyexcel.server.util.world.WorldManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class IslandData {
+public class SkyBlock {
 
     private String name;
 
     private Config config;
 
-    private Vault vault;
+    private SkyBlockVault vault;
 
-    public IslandData(String name) {
+    public SkyBlock(String name) {
         this.name = name;
 
-        config = new Config("island/" + name + "/" + name);
+        config = new Config("SkyBlock/" + name + "/" + name);
         config.setPlugin(SkyExcelNetwork.plugin);
     }
 
-    public IslandData(Player player, String name) {
+    public SkyBlock(Player player, String name) {
         this.name = name;
 
         String[] split = name.split("&", 1);
@@ -37,16 +35,18 @@ public class IslandData {
         }
 
 
-        vault = new Vault(player, name);
-        config = new Config("island/" + name + "/" + name);
+        vault = new SkyBlockVault(player, name);
+        config = new Config("SkyBlock/" + name + "/" + name);
         config.setPlugin(SkyExcelNetwork.plugin);
 
     }
 
     public void create(Player player) {
 
-        PlayerData data = new PlayerData(player);
-        IslandCreateEvent event = new IslandCreateEvent(name, this, player);
+        SkyBlockPlayerData data = new SkyBlockPlayerData(player);
+        SkyBlockCreateEvent event = new SkyBlockCreateEvent(name, this, player);
+
+        SkyBlockRecord record = new SkyBlockRecord(name);
 
         if (!event.isCancelled()) {
             if (data.getIsland() == null) {
@@ -55,47 +55,46 @@ public class IslandData {
 
                 vault.create();
 
-                config.setString("island.name", name);
-                config.setString("island.discord", "");
-                config.getConfig().set("island.worldtime", 0);
+                config.setString("SkyBlock.name", name);
+                config.setString("SkyBlock.discord", "");
+                config.getConfig().set("SkyBlock.worldtime", 0);
 
-                config.getConfig().set("island.level.level", 0);
-                config.getConfig().set("island.level.size", 0);
-                config.getConfig().set("island.level.member", 0);
-                config.getConfig().set("island.level.banblock", 0);
-                config.getConfig().set("island.level.stand", 0);
-                config.getConfig().set("island.level.hopper", 0);
+                config.getConfig().set("SkyBlock.level.level", 0);
+                config.getConfig().set("SkyBlock.level.size", 0);
+                config.getConfig().set("SkyBlock.level.member", 0);
+                config.getConfig().set("SkyBlock.level.banblock", 0);
+                config.getConfig().set("SkyBlock.level.stand", 0);
+                config.getConfig().set("SkyBlock.level.hopper", 0);
 
-                config.setString("island.owner", player.getUniqueId().toString());
+                config.setString("SkyBlock.owner", player.getUniqueId().toString());
 
-                config.getConfig().set("island.member", new ArrayList<>());
-                config.getConfig().set("island.rule", new ArrayList<>());
+                config.getConfig().set("SkyBlock.member", new ArrayList<>());
+                config.getConfig().set("SkyBlock.rule", new ArrayList<>());
 
-                config.getConfig().set("island.parttime.player", new ArrayList<>());
-                config.getConfig().set("island.parttime.money", new ArrayList<>());
+                config.getConfig().set("SkyBlock.parttime.player", new ArrayList<>());
+                config.getConfig().set("SkyBlock.parttime.money", new ArrayList<>());
 
-                config.getConfig().set("island.option.pvp", false);
-                config.getConfig().set("island.option.banblock.member", new ArrayList<>());
-                config.getConfig().set("island.option.banblock.parttime", new ArrayList<>());
-                config.getConfig().set("island.option.weather", WeatherType.CLEAR.name());
+                config.getConfig().set("SkyBlock.option.pvp", false);
+                config.getConfig().set("SkyBlock.option.open", true);
+                config.getConfig().set("SkyBlock.option.banblock.member", new ArrayList<>());
+                config.getConfig().set("SkyBlock.option.banblock.parttime", new ArrayList<>());
+                config.getConfig().set("SkyBlock.option.weather", WeatherType.CLEAR.name());
 
                 // 1000 = day, noon = 6000 night = 13000 midnight = 18000
-                config.getConfig().set("island.option.time", 1000);
-
-
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', name) + ChatColor.GREEN + " 섬 생성에 성공 하였습니다!");
-                player.sendMessage(ChatColor.GRAY + "섬 채팅을 사용 하실 수 있습니다! ");
-
+                config.getConfig().set("SkyBlock.option.time", 1000);
 
                 WorldManager world = new WorldManager();
 
+
+                event.setType(SkyBlockCreateEvent.Type.SMALL);
+                record.skyblockRecord(player, event.getType().getName(), SkyBlockRecord.Type.CREATE);
                 world.create(player, 0);
 
-                config.setLocation("island.spawn", new Location(world.getWorld(), 0, 0, 0));
+                config.setLocation("SkyBlock.spawn", new Location(world.getWorld(), 0, 0, 0));
 
                 config.saveConfig();
 
-                Bukkit.getPluginManager().callEvent(new IslandCreateEvent(name, this, player));
+                Bukkit.getPluginManager().callEvent(new SkyBlockCreateEvent(name, this, player));
             } else {
                 player.sendMessage("섬을 탈퇴 하거나, 삭제 하세요!");
             }
@@ -107,8 +106,9 @@ public class IslandData {
         create(player);
     }
 
-    public void quickIsland(Player player) {
-        IslandQuickEvent event = new IslandQuickEvent(name, this, player);
+    public void quickSkyBlock(Player player) {
+        SkyBlockQuickEvent event = new SkyBlockQuickEvent(name, this, player);
+        Bukkit.getPluginManager().callEvent(event);
 
         if (!event.isCancelled()) {
             List<String> members = getMembers();
@@ -116,39 +116,38 @@ public class IslandData {
             if (!getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
 
                 if (members.contains(player.getUniqueId().toString())) {
-
-                    player.sendMessage("당신은 해당 섬의 멤버가 아닙니다!");
+                    event.setCancelCause(SkyBlockQuickEvent.CancelCause.NOT_MEMBER);
                 } else {
                     Bukkit.getPluginManager().callEvent(event);
-                    player.sendMessage("성공적으로 섬을 탈퇴 했습니당");
                 }
             } else {
-                player.sendMessage("섬 주인은 탈퇴 못함 ㅅㄱ");
+                event.setCancelCause(SkyBlockQuickEvent.CancelCause.OWNER);
+
             }
         }
     }
 
     public void accept(Player player, Player target) {
 
-        IslandRecord record = new IslandRecord(name);
+        SkyBlockRecord record = new SkyBlockRecord(name);
 
         addMember(target);
-        record.record(player, target, null, IslandRecord.Type.JOIN);
+        record.playerRecord(player, target, null, SkyBlockRecord.Type.JOIN);
 
     }
 
 
     public boolean kickMember(Player player, Player target, String reason) {
-        IslandKickEvent event = new IslandKickEvent(name, this, player);
+        SkyBlockKickEvent event = new SkyBlockKickEvent(name, this, player);
 
         if (!event.isCancelled()) {
             List<String> members = getMembers();
             if (members.contains(target.getUniqueId().toString()) && removeMember(target)) {
-                IslandRecord record = new IslandRecord(name);
+                SkyBlockRecord record = new SkyBlockRecord(name);
 
-                record.record(player, target, reason, IslandRecord.Type.KICK);
+                record.playerRecord(player, target, reason, SkyBlockRecord.Type.KICK);
 
-                PlayerData playerData = new PlayerData(target);
+                SkyBlockPlayerData playerData = new SkyBlockPlayerData(target);
                 playerData.setName("");
                 Bukkit.getPluginManager().callEvent(event);
                 return true;
@@ -163,13 +162,14 @@ public class IslandData {
     }
 
 
-    public boolean teleportIsland(Player player) {
-        IslandJoinEvent event = new IslandJoinEvent(name, this, player);
+    public boolean teleportSkyBlock(Player player) {
+        SkyBlockJoinEvent event = new SkyBlockJoinEvent(name, this, player);
 
         Bukkit.getPluginManager().callEvent(event);
 
         if (!event.isCancelled()) {
             if (getSpawn() != null) {
+
                 Location loc = getSpawn();
                 player.teleport(loc);
 
@@ -187,14 +187,14 @@ public class IslandData {
     }
 
     public void setDiscord(String link) {
-        config.setString("island.discord", link);
+        config.setString("SkyBlock.discord", link);
         config.saveConfig();
     }
 
     public boolean setOwner(Player owner) {
 
         if (config != null) {
-            config.setString("island.owner", owner.getUniqueId().toString());
+            config.setString("SkyBlock.owner", owner.getUniqueId().toString());
             config.saveConfig();
             return true;
         }
@@ -202,7 +202,7 @@ public class IslandData {
     }
 
     public void removeDiscord() {
-        config.setString("island.discord", "");
+        config.setString("SkyBlock.discord", "");
         config.saveConfig();
     }
 
@@ -226,10 +226,11 @@ public class IslandData {
 
         if (members.contains(player.getUniqueId().toString()) || getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
             for (String member : members) {
-                System.out.println(member);
-                Player online = Bukkit.getPlayer(member);
 
+
+                Player online = Bukkit.getPlayer(member);
                 online.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 하였습니다!");
+
             }
             return true;
         }
@@ -238,13 +239,13 @@ public class IslandData {
 
     public boolean addPartTime(Player player, int amount) {
 
-        if (config.getConfig().get("island.parttime.player") != null && config.getConfig().get("island.parttime.money") != null) {
+        if (config.getConfig().get("SkyBlock.parttime.player") != null && config.getConfig().get("SkyBlock.parttime.money") != null) {
             List<String> members = getPartTime();
             List<Integer> money = getPartMoney();
             money.add(amount);
             members.add(player.getUniqueId().toString());
-            config.getConfig().set("island.parttime.player", members);
-            config.getConfig().set("island.parttime.money", money);
+            config.getConfig().set("SkyBlock.parttime.player", members);
+            config.getConfig().set("SkyBlock.parttime.money", money);
 
             config.saveConfig();
             return true;
@@ -257,7 +258,7 @@ public class IslandData {
             List<String> members = getMembers();
             members.add(player.getUniqueId().toString());
 
-            config.getConfig().set("island.member", members);
+            config.getConfig().set("SkyBlock.member", members);
             config.saveConfig();
             return true;
         }
@@ -271,7 +272,7 @@ public class IslandData {
             List<String> members = getMembers();
             members.remove(player.getUniqueId().toString());
 
-            config.getConfig().set("island.member", members);
+            config.getConfig().set("SkyBlock.member", members);
             config.saveConfig();
             return true;
         }
@@ -280,11 +281,11 @@ public class IslandData {
     }
 
     public boolean addRule(String[] newRule) {
-        if (config.getConfig().get("island.rule") != null) {
-            List<String> rule = config.getConfig().getStringList("island.rule");
+        if (config.getConfig().get("SkyBlock.rule") != null) {
+            List<String> rule = config.getConfig().getStringList("SkyBlock.rule");
             if (rule.size() + 1 != 11) {
                 rule.add(String.join(" ", Arrays.copyOfRange(newRule, 2, newRule.length)));
-                config.getConfig().set("island.rule", rule);
+                config.getConfig().set("SkyBlock.rule", rule);
                 config.saveConfig();
                 return true;
             }
@@ -294,11 +295,11 @@ public class IslandData {
 
     public boolean removeRule(int index) {
         try {
-            if (config.getConfig().get("island.rule") != null) {
-                List<String> rule = config.getConfig().getStringList("island.rule");
+            if (config.getConfig().get("SkyBlock.rule") != null) {
+                List<String> rule = config.getConfig().getStringList("SkyBlock.rule");
                 if (rule.get(index) != null) {
                     rule.remove(index);
-                    config.getConfig().set("island.rule", rule);
+                    config.getConfig().set("SkyBlock.rule", rule);
                     config.saveConfig();
                 }
                 return true;
@@ -312,8 +313,9 @@ public class IslandData {
 
     public boolean rename(String name) {
         if (getMembers() != null) {
+
             for (String player : getMembers()) {
-                PlayerData data = new PlayerData(Bukkit.getPlayer(player));
+                SkyBlockPlayerData data = new SkyBlockPlayerData(Objects.requireNonNull(Bukkit.getPlayer(player)));
                 data.setName(name);
             }
 
@@ -328,33 +330,36 @@ public class IslandData {
     }
 
     public String getName() {
-        return config.getString("island.name");
+        return config.getString("SkyBlock.name");
     }
 
     public String getDiscord() {
-        return config.getString("island.discord");
+        return config.getString("SkyBlock.discord");
     }
 
     public long getWorldTime() {
-        return config.getLong("island.worldtime");
+        return config.getLong("SkyBlock.worldtime");
     }
 
     public int getLevel() {
-        return config.getInteger("island.level");
+        return config.getInteger("SkyBlock.level");
     }
 
     public String getOwner() {
-        return config.getString("island.owner");
+        return config.getConfig().getString("SkyBlock.owner");
     }
 
 
     public Location getSpawn() {
-        return config.getLocation("island.spawn");
+        WorldCreator worldCreator = new org.bukkit.WorldCreator(getOwner());
+        World world = worldCreator.createWorld();
+        System.out.println(getOwner());
+        return new Location(world, 0, 0, 0);
     }
 
     public void getRule(Player player) {
 
-        List<String> rule = config.getConfig().getStringList("island.rule");
+        List<String> rule = config.getConfig().getStringList("SkyBlock.rule");
         if (rule.size() == 0) {
             player.sendMessage("규칙이 없습니다!");
         }
@@ -368,7 +373,7 @@ public class IslandData {
     public List<String> getMembers() {
         List<String> members = new ArrayList<>();
 
-        for (String name : config.getConfig().getStringList("island.member")) {
+        for (String name : config.getConfig().getStringList("SkyBlock.member")) {
             members.add(name);
         }
 
@@ -379,7 +384,7 @@ public class IslandData {
     public List<String> getPartTime() {
         List<String> members = new ArrayList<>();
 
-        for (String name : config.getConfig().getStringList("island.parttime.player")) {
+        for (String name : config.getConfig().getStringList("SkyBlock.parttime.player")) {
             members.add(Bukkit.getOfflinePlayer(name).getPlayer().getDisplayName());
         }
 
@@ -389,7 +394,7 @@ public class IslandData {
     public List<Integer> getPartMoney() {
         List<Integer> members = new ArrayList<>();
 
-        for (int name : config.getConfig().getIntegerList("island.parttime.money")) {
+        for (int name : config.getConfig().getIntegerList("SkyBlock.parttime.money")) {
             members.add(name);
         }
 
@@ -400,7 +405,7 @@ public class IslandData {
     public List<Material> getBanBlockMember() {
         List<Material> members = new ArrayList<>();
 
-        for (String name : config.getConfig().getStringList("island.option.member.banblock")) {
+        for (String name : config.getConfig().getStringList("SkyBlock.option.member.banblock")) {
             members.add(Material.valueOf(name));
         }
 
@@ -410,7 +415,7 @@ public class IslandData {
     public List<Material> getBanBlockPartTime() {
         List<Material> members = new ArrayList<>();
 
-        for (String name : config.getConfig().getStringList("island.option.parttime.banblock")) {
+        for (String name : config.getConfig().getStringList("SkyBlock.option.parttime.banblock")) {
             members.add(Material.valueOf(name));
         }
 
@@ -418,6 +423,7 @@ public class IslandData {
     }
 
     public void delete(Player player) {
+
         WorldManager world = new WorldManager();
 
         world.delete(player);
@@ -425,25 +431,26 @@ public class IslandData {
         config.deleteFile();
 
         player.sendMessage("제거 하였습니다!");
-
-        Bukkit.getPluginManager().callEvent(new IslandDeleteEvent(name, this, player));
+        config.removeKey("island.name");
+        Bukkit.getPluginManager().callEvent(new SkyBlockDeleteEvent(name, this, player));
     }
 
 
     public void removeAll() {
-        Config islandConfig = new Config("island/");
-        islandConfig.setPlugin(SkyExcelNetwork.plugin);
+        Config SkyBlockConfig = new Config("SkyBlock/");
+        SkyBlockConfig.setPlugin(SkyExcelNetwork.plugin);
 
-        for (String name : islandConfig.fileListName()) {
-            Config record = new Config("island/" + name + "/record/");
+        for (String name : SkyBlockConfig.fileListName()) {
+            Config record = new Config("SkyBlock/" + name + "/record/");
             for (String records : record.fileListName()) {
-                Config recordConfig = new Config("island/" + name + "/record/" + records);
+                Config recordConfig = new Config("SkyBlock/" + name + "/record/" + records);
                 recordConfig.deleteFile();
             }
         }
     }
 
-    public Vault getVault() {
+
+    public SkyBlockVault getVault() {
         return vault;
     }
 }

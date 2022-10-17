@@ -4,18 +4,17 @@ import net.skyexcel.server.SkyExcelNetwork;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
-
-public class Vault {
+public class SkyBlockVault {
 
     private Config config;
     private String name;
 
     private Player player;
 
-    public Vault(Player player, String name) {
+    public SkyBlockVault(Player player, String name) {
         this.name = name;
         this.player = player;
-        config = new Config("island/" + name + "/vault");
+        config = new Config("SkyBlock/" + name + "/vault");
         config.setPlugin(SkyExcelNetwork.plugin);
     }
 
@@ -71,7 +70,6 @@ public class Vault {
         }
 
     }
-
     public int getAmount() {
         return config.getConfig().getInt("amount");
     }

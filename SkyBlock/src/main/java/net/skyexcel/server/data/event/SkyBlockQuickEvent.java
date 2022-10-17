@@ -1,31 +1,35 @@
 package net.skyexcel.server.data.event;
 
-import net.skyexcel.server.data.island.IslandData;
+import net.skyexcel.server.data.island.SkyBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 
-public class IslandQuickEvent extends Event implements Cancellable {
+public class SkyBlockQuickEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLERS_LIST = new HandlerList();
     private boolean isCancelled;
 
     private String name;
 
-    private IslandData islandData;
+    private SkyBlock islandData;
 
     private Player player;
 
+    private CancelCause cancelCause;
 
-    public IslandQuickEvent(String name, IslandData islandData, Player player) {
+
+    public SkyBlockQuickEvent(String name, SkyBlock islandData, Player player) {
         this.name = name;
         this.islandData = islandData;
         this.player = player;
-
-
         this.isCancelled = false;
+    }
+
+    public void setCancelCause(CancelCause cancelCause) {
+        this.cancelCause = cancelCause;
     }
 
     @Override
@@ -56,11 +60,22 @@ public class IslandQuickEvent extends Event implements Cancellable {
         return name;
     }
 
-    public IslandData getIslandData() {
+    public SkyBlock getIslandData() {
         return islandData;
+    }
+
+    public CancelCause getCancelCause() {
+        return cancelCause;
     }
 
     public Player getPlayer() {
         return player;
     }
+
+    public enum CancelCause {
+        OWNER(), NOT_MEMBER;
+
+    }
+
+
 }

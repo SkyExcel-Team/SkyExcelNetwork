@@ -4,9 +4,7 @@ import net.skyexcel.server.SkyExcelNetwork;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
-import java.util.List;
-
-public class PlayerData {
+public class SkyBlockPlayerData {
 
 
     private Config config;
@@ -14,7 +12,7 @@ public class PlayerData {
     private Player player;
 
 
-    public PlayerData(Player player) {
+    public SkyBlockPlayerData(Player player) {
         this.player = player;
         config = new Config("data/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetwork.plugin);

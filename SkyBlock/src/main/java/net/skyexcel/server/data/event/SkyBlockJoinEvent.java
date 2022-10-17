@@ -1,29 +1,28 @@
 package net.skyexcel.server.data.event;
 
-import net.skyexcel.server.data.island.IslandData;
+import net.skyexcel.server.data.island.SkyBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 
-public class IslandDeleteEvent extends Event implements Cancellable {
+public class SkyBlockJoinEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLERS_LIST = new HandlerList();
     private boolean isCancelled;
 
     private String name;
 
-    private IslandData islandData;
+    private SkyBlock islandData;
+
 
     private Player player;
 
-    public IslandDeleteEvent(String name, IslandData islandData, Player player) {
+    public SkyBlockJoinEvent(String name, SkyBlock islandData, Player player) {
         this.name = name;
         this.islandData = islandData;
         this.player = player;
-
-
         this.isCancelled = false;
     }
 
@@ -46,6 +45,10 @@ public class IslandDeleteEvent extends Event implements Cancellable {
         return HANDLERS_LIST;
     }
 
+    public SkyBlock getIslandData() {
+        return islandData;
+    }
+
     /**
      * 입장한 섬의 이름을 불러옵니다.
      *
@@ -53,10 +56,6 @@ public class IslandDeleteEvent extends Event implements Cancellable {
      */
     public String getName() {
         return name;
-    }
-
-    public IslandData getIslandData() {
-        return islandData;
     }
 
     public Player getPlayer() {

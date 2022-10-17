@@ -7,11 +7,15 @@ import java.util.List;
  * 요청과 수락을 관리하는 클래스 입니다.
  *
  */
-public class Request {
+public class SkyBlockRequest {
 
 
     private List<Object> from = new ArrayList<>();
     private List<Object> to = new ArrayList<>();
+    
+    static {
+        System.out.println("사용중 테스트");
+    }
 
 
     /**
@@ -20,7 +24,7 @@ public class Request {
      * @param request
      * @return
      */
-    public static boolean send(Request request, Object to, Object from) {
+    public static boolean send(SkyBlockRequest request, Object to, Object from) {
 
 
         if (!request.to.contains(to) && !request.from.contains(from)) {
@@ -42,7 +46,7 @@ public class Request {
      * @param request
      * @return
      */
-    public static boolean is(Request request, Object to, Object from) {
+    public static boolean is(SkyBlockRequest request, Object to, Object from) {
 
         if (request.from.contains(to) && request.to.contains(from)) {
             return true;
@@ -76,7 +80,7 @@ public class Request {
      * @param request
      * @return
      */
-    public static boolean accept(Request request, Object to, Object from) {
+    public static boolean accept(SkyBlockRequest request, Object to, Object from) {
 
 
         if (request.to.contains(to) && request.from.contains(from)) {
@@ -96,7 +100,7 @@ public class Request {
      * @param request
      * @return
      */
-    public static boolean deny(Request request, Object to, Object from) {
+    public static boolean deny(SkyBlockRequest request, Object to, Object from) {
         if (request.to.contains(to) && request.from.contains(from)) {
 
             request.from.remove(from);
