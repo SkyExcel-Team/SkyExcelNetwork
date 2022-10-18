@@ -1,0 +1,91 @@
+####################################################################################################
+# +----------------------------------------------------------------------------------------------+ #
+# │                                                                                              │ #
+# │                                                                                              │ #
+# │               ███████╗██╗  ██╗██╗   ██╗███████╗██╗  ██╗ ██████╗███████╗██╗                   │ #
+# │               ██╔════╝██║ ██╔╝╚██╗ ██╔╝██╔════╝╚██╗██╔╝██╔════╝██╔════╝██║                   │ #
+# │               ███████╗█████╔╝  ╚████╔╝ █████╗   ╚███╔╝ ██║     █████╗  ██║                   │ #
+# │               ╚════██║██╔═██╗   ╚██╔╝  ██╔══╝   ██╔██╗ ██║     ██╔══╝  ██║                   │ #
+# │               ███████║██║  ██╗   ██║   ███████╗██╔╝ ██╗╚██████╗███████╗███████╗              │ #
+# │               ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝              │ #
+# │                                                                                              │ #
+# │                          ■ WebSite: https://skyexcel.net                                     │ #
+# │                          ■ Discord: https://discord.gg/TMaAyJsEnQ                            │ #
+# │                          ■ Version: v0.1                                                     │ #
+# │                          ■ Authors: @Yooinseo @idkNicks                                      │ #
+# │                                                                                              │ #
+# │                                                                                              │ #
+# │                  ■  Copyright © 2022 SkyExcel Team - All Rights Reserved  ■                  │ #
+# │                                                                                              │ #
+# +----------------------------------------------------------------------------------------------+ #
+####################################################################################################
+
+
+# +----------------------------------------------------------------------------------------------+ #
+# │                                                                                              │ #
+# │                                   ■  Economy Shop Setting  ■                                    │ #
+# │                         # Things related to Economy shop gui setting #                          │ #
+# │                                                                                              │ #
+# +----------------------------------------------------------------------------------------------+ #
+
+shop_gui_settings:
+
+  # When setting the shop GUI Lore
+  shop_item_lore:
+    lore:
+      - ""
+      - "구매 가격: %price% 돈"
+      - "판매 가격: %price% 돈"
+      - ""
+      - "쉬프트 + 좌클릭: 64개 구매"
+      - "쉬프트 + 우클릭: 64개 판매"
+      - ""
+
+    # Lore displayed when the item is not available for purchase or sale
+    impossible_buy_sell: "불가능"
+
+  # GUI used to set purchase price or sale price
+  shop_settings:
+
+    # You can insert the desired TITLE into the GUI
+    gui_title: 구매가격/판매가격
+
+    # You can change the GUI to any size.
+    gui_size: 27
+
+    buy_sell_settings:
+
+        # You can put the item you want in the GUI.
+        item: OAK_SIGN
+
+        # You can position the item slot in the GUI.
+        slot: 13
+
+        # You can change the GUI to the desired lore.
+        lore:
+          - ""
+          - "좌클릭시 구매 가격을 설정합니다!"
+          - "우클릭시 판매 가격을 설정합니다!"
+          - ""
+
+
+
+
+# +----------------------------------------------------------------------------------------------+ #
+# │                                                                                              │ #
+# │                                ■  Economy Shop Sound Settings  ■                                │ #
+# │                         # Settings related to the sound of shop #                               │ #
+# │                                                                                              │ #
+# +----------------------------------------------------------------------------------------------+ #
+
+
+shop_sound_settings:
+
+  # Sound output when an item is purchased
+  buy_sound: ENTITY_VILLAGER_YES
+
+  # Sound output when an item is sell
+  sell_sound: ENTITY_VILLAGER_YES
+
+  # When an item is not purchased or sold
+  impossible_buy_sell_sound: ENTITY_VILLAGER_NO

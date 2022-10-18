@@ -1,0 +1,11 @@
+name: SEconomy
+main: net.skyexcel.server.SkyExcelNetwork
+version: 1.0
+api-version: 1.13
+
+commands:
+  돈:
+  상점:
+
+softdepend:
+  - SkyExcelCore
