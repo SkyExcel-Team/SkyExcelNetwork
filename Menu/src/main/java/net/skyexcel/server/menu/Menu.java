@@ -1,10 +1,12 @@
 package net.skyexcel.server.menu;
 
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import net.skyexcel.server.SkyExcelNetwork;
 import net.skyexcel.server.event.ClickEvent;
 import net.skyexcel.server.util.Item;
 import net.skyexcel.server.util.Translate;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.Configuration;
@@ -60,15 +62,16 @@ public class Menu {
 
         inv = Bukkit.createInventory(null, size, title);
 
-        config.getConfig().getStringList("open_settings").forEach(line ->{
-            ClickEvent.runCommand(player,line);
+        config.getConfig().getStringList("open_settings").forEach(line -> {
+            ClickEvent.runCommand(player, line);
         });
 
 
-        for (String items : config.getConfig().getConfigurationSection("items.").getKeys(false)) {
+        for (String items : Objects.requireNonNull(config.getConfig().getConfigurationSection("items.")).getKeys(false)) {
 
             section = config.getConfig().getConfigurationSection("items." + items);
 
+            assert section != null;
             Material material = Material.valueOf(section.getString("material"));
 
 
@@ -91,7 +94,7 @@ public class Menu {
 
                 ItemMeta meta = item.getItemMeta();
 
-                meta.setDisplayName(name);
+                meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
                 meta.setLore(Translate.translate(lore));
 
                 item.setItemMeta(meta);
@@ -100,60 +103,78 @@ public class Menu {
                     inv.setItem(slots, item);
                 });
             } else {
-                @NotNull List<Integer> slot = section.getIntegerList("slots");
+                if (section.get("hdb") != null) {
+                    @NotNull List<Integer> slot = section.getIntegerList("slots");
+                    int texture = section.getInt("hdb");
 
-                List<String> lore = section.getStringList("lore");
-                String name = section.getString("display_name");
+                    assert SkyExcelNetwork.hdb != null;
+
+                    ItemStack item = SkyExcelNetwork.hdb.getItemHead(String.valueOf(texture));
 
 
-                if (section.get("custommodeldata") != null) {
-                    int modeldata = section.getInt("custommodeldata");
-
-                    ItemStack item = Item.playerSkull(player.getDisplayName(), name, lore);
+                    List<String> lore = section.getStringList("lore");
+                    String name =  section.getString("display_name");
                     ItemMeta meta = item.getItemMeta();
 
-                    meta.setCustomModelData(modeldata);
-                    item.setItemMeta(meta);
-                    slot.forEach(slots -> {
-                        inv.setItem(slots, item);
-                    });
-                } else {
-                    ItemStack item = Item.playerSkull(player.getDisplayName(), name, lore);
 
-                    slot.forEach(slots -> {
-                        inv.setItem(slots, item);
-                    });
+                    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    meta.setLore(Translate.translate(lore));
+
+                    if (section.get("custommodeldata") != null) {
+
+                        int modeldata = section.getInt("custommodeldata");
+                        meta.setCustomModelData(modeldata);
+
+                        item.setItemMeta(meta);
+
+                        slot.forEach(slots -> {
+                            inv.setItem(slots, item);
+                        });
+
+                    } else {
+                        item.setItemMeta(meta);
+                        slot.forEach(slots -> {
+                            inv.setItem(slots, item);
+                        });
+                    }
+
+
+                } else {
+                    @NotNull List<Integer> slot = section.getIntegerList("slots");
+
+                    List<String> lore = section.getStringList("lore");
+                    String name = section.getString("display_name");
+
+
+                    if (section.get("custommodeldata") != null) {
+                        int modeldata = section.getInt("custommodeldata");
+
+                        ItemStack item = Item.playerSkull(player.getDisplayName(), name, lore);
+                        ItemMeta meta = item.getItemMeta();
+
+                        meta.setCustomModelData(modeldata);
+                        item.setItemMeta(meta);
+                        slot.forEach(slots -> {
+                            inv.setItem(slots, item);
+                        });
+                    } else {
+                        ItemStack item = Item.playerSkull(player.getDisplayName(), ChatColor.translateAlternateColorCodes('&', name), lore);
+
+                        slot.forEach(slots -> {
+                            inv.setItem(slots, item);
+                        });
+                    }
                 }
             }
         }
         player.openInventory(inv);
     }
 
-    public ItemStack getItemStack(int slot) {
+
+    public List<Integer> getSlots(String slot) {
         section = config.getConfig().getConfigurationSection("items." + slot);
 
-        Material material = Material.valueOf(section.getString("material"));
-        int amount = section.getInt("amount");
-
-        ItemStack item = new ItemStack(material, amount);
-        ItemMeta meta = item.getItemMeta();
-
-        List<String> lore = section.getStringList("lore");
-        String name = section.getString("display_name");
-        meta.setLore(lore);
-        meta.setDisplayName(name);
-
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    public List<Integer> getSlots(int slot) {
-        section = config.getConfig().getConfigurationSection("items." + slot);
-        if (section.get("slots") != null)
-            return section.getIntegerList("slots");
-
-        return null;
+        return section.getIntegerList("slots");
     }
 
     public List<String> getLeftCommands(String slot) {

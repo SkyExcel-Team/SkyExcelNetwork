@@ -1,6 +1,7 @@
 package net.skyexcel.server.cmd;
 
 import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.gui.PlayerProfile;
 import net.skyexcel.server.menu.Menu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,23 +11,12 @@ import skyexcel.data.file.Config;
 
 public class MenuCommand {
 
-    private final String label = "메뉴";
-
     public MenuCommand() {
-        Tab<Object, String> tab = new Tab<>(SkyExcelNetwork.plugin, label);
-
-        tab.args("리로드", "[이름]");
-
-        Config config = new Config("menu/");
-        config.setPlugin(SkyExcelNetwork.plugin);
-
-        config.fileListName().forEach(name ->{
-            tab.args("열기", name);
-        });
-
-        tab.args("생성", "[이름]", "1234");
-
+        String label = "메뉴";
         Cmd cmd = new Cmd(SkyExcelNetwork.plugin, label);
+        cmd.label(action -> {
+
+        });
 
         cmd.action("리로드", 0, action -> {
             Player player = (Player) action.getSender();
@@ -66,6 +56,12 @@ public class MenuCommand {
                 Menu menu = new Menu(name);
                 menu.load(player);
             }
+        });
+        cmd.action("test", 0, action -> {
+            Player player = (Player) action.getSender();
+            PlayerProfile gui = new PlayerProfile(player);
+            gui.open();
+
         });
     }
 }
