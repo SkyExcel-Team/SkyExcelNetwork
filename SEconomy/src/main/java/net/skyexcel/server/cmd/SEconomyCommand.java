@@ -15,7 +15,7 @@ public class SEconomyCommand {
 
         cmd.label(action -> {
             Player player = (Player) action.getSender();
-
+            StringData.myMoney(player);
         });
 
 
@@ -35,7 +35,7 @@ public class SEconomyCommand {
 
                         record.setAfter(money.getMoney());
                         record.playerRecord(player, players, amount, SEconomyRecord.Type.ADD);
-
+                        StringData.sendMoney(player, players, amount);
                     }
 
                 } else {
@@ -63,6 +63,8 @@ public class SEconomyCommand {
                         record.setAfter(money.getMoney());
 
                         record.playerRecord(player, target, amount, SEconomyRecord.Type.ADD);
+
+                        StringData.sendMoney(player, target, amount);
                     } else {
                         StringData.noneMoney(player);
                     }
@@ -90,6 +92,8 @@ public class SEconomyCommand {
                         money.setMoney(amount);
                         record.setAfter(money.getMoney());
                         record.playerRecord(player, target, amount, SEconomyRecord.Type.REMOVE);
+
+                        StringData.removeMoney(player, target, amount);
                     } else {
                         StringData.noneMoney(player);
                     }
@@ -116,6 +120,7 @@ public class SEconomyCommand {
                         record.setAfter(money.getMoney());
                         record.playerRecord(player, target, amount, SEconomyRecord.Type.SET);
 
+                        StringData.resetMoney(player, target, amount);
                     } else {
                         StringData.noneMoney(player);
                     }
