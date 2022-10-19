@@ -1,7 +1,9 @@
 package net.skyexcel.server.data;
 
 import net.skyexcel.server.SkyExcelNetwork;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import skyexcel.data.file.Config;
 
 public class CashShop {
@@ -17,9 +19,15 @@ public class CashShop {
         this.config.setPlugin(SkyExcelNetwork.plugin);
     }
 
+    public void open(Player player) {
+        Inventory inv = Bukkit.createInventory(null, 45, "test");
+
+        player.openInventory(inv);
+    }
+
     public void create(Player player) {
 
-        
+
         config.setString("name", name);
         config.saveConfig();
     }

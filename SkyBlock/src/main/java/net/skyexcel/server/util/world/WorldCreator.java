@@ -1,4 +1,4 @@
-package net.skyexcel.server.util;
+package net.skyexcel.server.util.world;
 
 import org.bukkit.Location;
 import org.bukkit.World;

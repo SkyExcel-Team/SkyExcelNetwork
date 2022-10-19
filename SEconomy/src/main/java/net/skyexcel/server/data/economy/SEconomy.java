@@ -36,7 +36,7 @@ public class SEconomy {
     public boolean withdraw(long amount) {
         long result = getMoney() - amount;
 
-        if (result < 0) {
+        if (result > 0) {
             setMoney(getMoney() - amount);
             return true;
         }
@@ -44,7 +44,6 @@ public class SEconomy {
     }
 
     public void setMoney(long amount) {
-        System.out.println(getMoney());
         config.getConfig().set("name", player.getName());
         config.getConfig().set("money", amount);
         config.saveConfig();

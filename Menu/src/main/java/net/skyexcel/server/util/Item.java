@@ -1,6 +1,7 @@
 package net.skyexcel.server.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
@@ -19,8 +20,8 @@ public class Item {
         SkullMeta meta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.PLAYER_HEAD);
 
         meta.setOwner(owner.getName());
-        meta.setDisplayName(display);
-        meta.setLore(Translate.translate(lore));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&',display));
+        meta.setLore(Translate.translate(lore,owner.getPlayer()));
         stack.setItemMeta(meta);
         return stack;
     }

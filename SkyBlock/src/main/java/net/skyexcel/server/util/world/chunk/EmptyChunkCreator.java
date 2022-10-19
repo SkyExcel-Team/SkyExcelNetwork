@@ -1,4 +1,4 @@
-package net.skyexcel.server.util.chunk;
+package net.skyexcel.server.util.world.chunk;
 
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;

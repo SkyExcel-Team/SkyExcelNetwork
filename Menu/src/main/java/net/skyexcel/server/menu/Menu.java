@@ -1,6 +1,7 @@
 package net.skyexcel.server.menu;
 
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.skyexcel.server.SkyExcelNetwork;
 import net.skyexcel.server.event.ClickEvent;
 import net.skyexcel.server.util.Item;
@@ -95,7 +96,7 @@ public class Menu {
                 ItemMeta meta = item.getItemMeta();
 
                 meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-                meta.setLore(Translate.translate(lore));
+                meta.setLore(Translate.translate(lore,player));
 
                 item.setItemMeta(meta);
 
@@ -113,12 +114,13 @@ public class Menu {
 
 
                     List<String> lore = section.getStringList("lore");
+
                     String name =  section.getString("display_name");
                     ItemMeta meta = item.getItemMeta();
 
 
                     meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-                    meta.setLore(Translate.translate(lore));
+                    meta.setLore(Translate.translate(lore,player));
 
                     if (section.get("custommodeldata") != null) {
 

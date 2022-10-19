@@ -26,7 +26,7 @@ dependencies {
 
     compileOnly("org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT") //퍼퍼 버킷
 
-    implementation("com.github.SkyExcel-Team:SkyExcelCore:v1.1.18" )
+    implementation("com.github.SkyExcel-Team:SkyExcelCore:v1.1.24" )
 }
 
 tasks.withType<Jar> {

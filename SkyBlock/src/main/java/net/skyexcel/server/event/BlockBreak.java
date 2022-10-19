@@ -24,10 +24,12 @@ public class BlockBreak implements Listener {
 
         //블록을 캔 플레이어섬이름이 해당 섬 Owner와 같을 경우.
         if (!player.isOp()) {
-            if (Objects.requireNonNull(Bukkit.getWorld(islandData.getOwner())).getName().equalsIgnoreCase(player.getWorld().getName())) {
-                if (islandData.getOwner() != null) {
+            if (islandData.getOwner() != null) {
+                if (Objects.requireNonNull(Bukkit.getWorld(islandData.getOwner())).getName().equalsIgnoreCase(player.getWorld().getName())) {
+
                     if (!islandData.getOwner().equalsIgnoreCase(player.getUniqueId().toString())) { //플레이어가 섬 주인이 아닐 경우
                         if (islandData.getMembers().contains(player.getUniqueId().toString())) {
+
                             if (islandData.getBanBlockMember().contains(block.getType())) {
                                 event.setCancelled(true);
                             }
@@ -44,4 +46,5 @@ public class BlockBreak implements Listener {
             }
         }
     }
+
 }

@@ -32,12 +32,6 @@ public class WorldManager {
     public void create(Player player, int index) {
         org.bukkit.WorldCreator c = new org.bukkit.WorldCreator(player.getUniqueId().toString());
 
-        Config config = new Config("world/" + player.getUniqueId().toString() + "/" + player.displayName());
-
-        config.setPlugin(SkyExcelNetwork.plugin);
-        config.getConfig().set("owner", player.getDisplayName());
-        config.saveConfig();
-
         c.generator(new EmptyChunkCreator());
         World created = c.createWorld();
 
@@ -61,13 +55,10 @@ public class WorldManager {
 
     public void delete(Player player) {
         player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+        org.bukkit.WorldCreator c = new org.bukkit.WorldCreator(player.getUniqueId().toString());
+        World created = c.createWorld();
 
-        File file = Objects.requireNonNull(Bukkit.getWorld("plugins/SkyBlock/world/" + player.getUniqueId())).getWorldFolder();
-
-        FileUtils.deleteFolder(file);
-
-        File newFile = new File("plugins/SkyBlock/world/" + player.getUniqueId());
-        newFile.delete();
+        created.getWorldFolder().delete();
     }
 
 

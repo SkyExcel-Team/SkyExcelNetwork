@@ -42,23 +42,23 @@ public class SkyBlockVault {
     }
 
     public boolean deposit(int amount) {
-        if (player.hasPermission("island.admin")) {
-            if (setAmount(getAmount() + amount)) {
-                return true;
-            }
+
+        if (setAmount(getAmount() + amount)) {
+            return true;
         }
+
         return false;
     }
 
 
     public boolean setAmount(int amount) {
-        if (player.hasPermission("island.admin")) {
-            if (config.getConfig().get("amount") != null) {
-                config.getConfig().set("amount", amount);
-                config.saveConfig();
-                return true;
-            }
+
+        if (config.getConfig().get("amount") != null) {
+            config.getConfig().set("amount", amount);
+            config.saveConfig();
+            return true;
         }
+
 
         return false;
     }
@@ -70,6 +70,7 @@ public class SkyBlockVault {
         }
 
     }
+
     public int getAmount() {
         return config.getConfig().getInt("amount");
     }

@@ -1,6 +1,7 @@
 package net.skyexcel.server.event;
 
 import net.skyexcel.server.data.event.SkyBlockCreateEvent;
+import net.skyexcel.server.data.event.SkyBlockDeleteEvent;
 import net.skyexcel.server.data.event.SkyBlockJoinEvent;
 import net.skyexcel.server.data.event.SkyBlockQuickEvent;
 import net.skyexcel.server.data.island.SkyBlock;
@@ -14,6 +15,14 @@ import org.bukkit.event.Listener;
 import java.util.UUID;
 
 public class SkyBlockEvent implements Listener {
+
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onDelete(SkyBlockDeleteEvent event) {
+        Player player = event.getPlayer();
+
+        player.sendMessage(ChatColor.GRAY + " 섬을 제거 하였습니다!");
+    }
 
 
     @EventHandler(priority = EventPriority.HIGHEST)

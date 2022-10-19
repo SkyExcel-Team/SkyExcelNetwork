@@ -21,6 +21,7 @@ public class MenuCommand {
         cmd.action("리로드", 0, action -> {
             Player player = (Player) action.getSender();
             if (player.isOp()) {
+
                 String[] args = action.getArgs();
                 if (args.length > 1) {
                     String name = args[1];

@@ -18,7 +18,7 @@ public class SEconomyRecord {
 
 
     public SEconomyRecord() {
-        this.record = new Config("shop/log/log");
+        this.record = new Config("data/log/log");
         this.record.setPlugin(SkyExcelNetwork.plugin);
     }
 

@@ -19,7 +19,7 @@ public class SEConomyExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "CashShop";
+        return "SEconomy";
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SEConomyExpansion extends PlaceholderExpansion {
 
     @Override
     public String getRequiredPlugin() {
-        return "CashShop";
+        return "SEconomy";
     }
 
     @Override
@@ -50,12 +50,13 @@ public class SEConomyExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-        if (params.equalsIgnoreCase("cash")) {
+        if (params.equalsIgnoreCase("money_fixed")) {
             SEconomy economy = new SEconomy(player);
             return Translate.decal(economy.getMoney());
+        } else if (params.equalsIgnoreCase("money")) {
+            SEconomy economy = new SEconomy(player);
+            return String.valueOf(economy.getMoney());
         }
-
-
         return null; // Placeholder is unknown by the expansion
     }
 }

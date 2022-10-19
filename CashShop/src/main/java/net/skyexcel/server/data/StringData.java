@@ -1,8 +1,12 @@
 package net.skyexcel.server.data;
 
 import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.util.Translate;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.text.DecimalFormat;
+import java.util.List;
 
 public class StringData {
 
@@ -16,14 +20,14 @@ public class StringData {
     public static String checkPlayerCash(Player target) {
         Cash cash = new Cash(target);
         return ChatColor.translateAlternateColorCodes('&', getCashMessage("check_player_cash")
-                .replaceAll("%cash%", String.valueOf(cash.getAmount()))
+                .replaceAll("%cash%", format(cash.getAmount()))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
     public static String sendCash(Player target, int amount) {
 
         return ChatColor.translateAlternateColorCodes('&', getCashMessage("send_cash")
-                .replaceAll("%cash%", String.valueOf(amount))
+                .replaceAll("%cash%", format(amount))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
@@ -56,13 +60,13 @@ public class StringData {
     public static String buyOne(Player target, int price) {
         return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("buy_one")
                 .replaceAll("%item_order%", target.getDisplayName())
-                .replaceAll("%price%", String.valueOf(price)));
+                .replaceAll("%price%", format(price)));
     }
 
     public static String sellOne(Player target, int price) {
         return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("sell_one")
                 .replaceAll("%item_order%", target.getDisplayName())
-                .replaceAll("%price%", String.valueOf(price)));
+                .replaceAll("%price%", format(price)));
     }
 
     public static String settingBuyPrice() {
@@ -101,9 +105,13 @@ public class StringData {
                 .replaceAll("%set_cashshop_name%", newName));
     }
 
+    public static List<String> main() {
+        return Translate.msgCollapse(SkyExcelNetwork.message.getConfig().getStringList("other_message.command_cashshop"));
+    }
+
     public static String setBuyPriceCashShop(int price) {
         return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("set_buy_price")
-                .replaceAll("%price%", String.valueOf(price)));
+                .replaceAll("%price%", format(price)));
     }
 
     public static String overFlow() {
@@ -132,12 +140,12 @@ public class StringData {
     }
 
     public static String impossibleItemSell() {
-        return ChatColor.translateAlternateColorCodes('&',getErrorMessage("impossibleItem_sell"));
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("impossibleItem_sell"));
     }
 
 
     public static String noneCash() {
-        return ChatColor.translateAlternateColorCodes('&',getErrorMessage("command_none_cash"));
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("command_none_cash"));
     }
 
     private static String getCashMessage(String path) {
@@ -158,5 +166,13 @@ public class StringData {
     private static String getOtherMessage(String path) {
 
         return SkyExcelNetwork.message.getString("other_message." + path);
+    }
+
+
+
+    private static String format(int amount) {
+        DecimalFormat decFormat = new DecimalFormat("###,###");
+
+        return decFormat.format(amount);
     }
 }

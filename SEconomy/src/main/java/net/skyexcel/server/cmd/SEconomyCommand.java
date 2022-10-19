@@ -17,7 +17,15 @@ public class SEconomyCommand {
             Player player = (Player) action.getSender();
             StringData.myMoney(player);
         });
-
+        
+        cmd.action("도움말", 0, action -> {
+            Player player = (Player) action.getSender();
+            if (player.hasPermission("") || player.isOp()) {
+                StringData.command_guide_economy(player);
+            } else {
+                StringData.command_economy(player);
+            }
+        });
 
         cmd.action("모두지급", 0, action -> {
             Player player = (Player) action.getSender();
@@ -50,7 +58,7 @@ public class SEconomyCommand {
             Player player = (Player) action.getSender();
             try {
                 if (action.getArgs().length > 1) {
-                    Player target = Bukkit.getPlayer(action.getArgs()[1]);
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
                     if (action.getArgs().length > 2) {
                         long amount = Long.parseLong(action.getArgs()[2]);
 
@@ -76,11 +84,11 @@ public class SEconomyCommand {
             }
         });
 
-        cmd.action("빼기", 0, action -> {
+        cmd.action("출금", 0, action -> {
             Player player = (Player) action.getSender();
             try {
                 if (action.getArgs().length > 1) {
-                    Player target = Bukkit.getPlayer(action.getArgs()[1]);
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
                     if (action.getArgs().length > 2) {
                         long amount = Long.parseLong(action.getArgs()[2]);
 
@@ -89,7 +97,7 @@ public class SEconomyCommand {
 
                         SEconomyRecord record = new SEconomyRecord();
                         record.setBefore(money.getMoney());
-                        money.setMoney(amount);
+                        money.withdraw(amount);
                         record.setAfter(money.getMoney());
                         record.playerRecord(player, target, amount, SEconomyRecord.Type.REMOVE);
 
@@ -108,7 +116,7 @@ public class SEconomyCommand {
             Player player = (Player) action.getSender();
             try {
                 if (action.getArgs().length > 1) {
-                    Player target = Bukkit.getPlayer(action.getArgs()[1]);
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
                     if (action.getArgs().length > 2) {
                         long amount = Long.parseLong(action.getArgs()[2]);
 
@@ -135,10 +143,10 @@ public class SEconomyCommand {
             Player player = (Player) action.getSender();
             try {
                 if (action.getArgs().length > 1) {
-                    Player target = Bukkit.getPlayer(action.getArgs()[1]);
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
 
                     assert target != null;
-                    StringData.targetMoney(target, target);
+                    StringData.targetMoney(player, target);
 
                 } else {
                     StringData.nonePlayer(player);

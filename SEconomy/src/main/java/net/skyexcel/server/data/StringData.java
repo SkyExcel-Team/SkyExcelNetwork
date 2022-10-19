@@ -1,11 +1,15 @@
 package net.skyexcel.server.data;
 
+import com.google.common.base.Joiner;
 import net.skyexcel.server.SkyExcelNetwork;
 import net.skyexcel.server.util.Translate;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class StringData {
 
@@ -14,27 +18,33 @@ public class StringData {
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.my_money"))));
     }
 
-    public static void targetMoney(Player player, Player target) {
+    public static void targetMoney(Player player, OfflinePlayer target) {
         player.sendMessage(Translate.moneyCheckTarget(target,
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.check_player_money"))));
     }
 
-    public static void sendMoney(Player player, Player target, int amount) {
+    public static void sendMoney(Player player, Player target, long amount) {
         player.sendMessage(Translate.moneyAction(player, target, amount,
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.send_money"))));
     }
 
-    public static void removeMoney(Player player, Player target, int amount) {
+
+    public static void sendMoney(Player player, OfflinePlayer target, long amount) {
+        player.sendMessage(Translate.moneyAction(player, target, amount,
+                Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.send_money"))));
+    }
+
+    public static void removeMoney(Player player, OfflinePlayer target, long amount) {
         player.sendMessage(Translate.moneyAction(player, target, amount,
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.remove_money"))));
     }
 
-    public static void setMoney(Player player, Player target, int amount) {
+    public static void setMoney(Player player, Player target, long amount) {
         player.sendMessage(Translate.moneyAction(player, target, amount,
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.set_money"))));
     }
 
-    public static void resetMoney(Player player, Player target, int amount) {
+    public static void resetMoney(Player player, OfflinePlayer target, long amount) {
         player.sendMessage(Translate.moneyAction(player, target, amount,
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.reset_money"))));
     }
@@ -111,6 +121,7 @@ public class StringData {
         player.sendMessage(
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("error_message.cannot_buy")));
     }
+
     public static void canNotSell(Player player) {
         player.sendMessage(
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("error_message.cannot_sell")));
@@ -130,13 +141,31 @@ public class StringData {
         player.sendMessage(
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("error_message.command_none_money")));
     }
+
     public static void impossibleBuyItem(Player player) {
         player.sendMessage(
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("error_message.cannot_buy_impossible_item")));
     }
+
     public static void impossibleSellItem(Player player) {
         player.sendMessage(
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("error_message.cannot_sell_impossible_item")));
+    }
+
+
+    public static void command_guide_economy(Player player) {
+
+        for (String line : SkyExcelNetwork.message.getConfig().getStringList("other_message.command_guide_economy")) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+        }
+    }
+
+
+    public static void command_economy(Player player) {
+
+        for (String line : SkyExcelNetwork.message.getConfig().getStringList("other_message.command_economy")) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+        }
     }
 
 }

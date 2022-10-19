@@ -7,6 +7,7 @@ import net.skyexcel.server.data.vault.SkyBlockVault;
 import net.skyexcel.server.util.world.WorldManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import skyexcel.data.file.Config;
 
 import java.util.*;
@@ -353,7 +354,7 @@ public class SkyBlock {
     public Location getSpawn() {
         WorldCreator worldCreator = new org.bukkit.WorldCreator(getOwner());
         World world = worldCreator.createWorld();
-        System.out.println(getOwner());
+
         return new Location(world, 0, 0, 0);
     }
 
@@ -402,10 +403,49 @@ public class SkyBlock {
     }
 
 
+    public void removeBanBlockPartTime(Material material) {
+        @NotNull List<String> members = config.getConfig().getStringList("SkyBlock.option.banblock.parttime");
+
+        members.remove(material.name());
+
+        config.getConfig().set("SkyBlock.option.banblock.member", members);
+        config.saveConfig();
+    }
+
+
+    public void addBanBlockPartTime(Material material) {
+        @NotNull List<String> members = config.getConfig().getStringList("SkyBlock.option.banblock.parttime");
+
+        members.add(material.name());
+
+        config.getConfig().set("SkyBlock.option.banblock.member", members);
+        config.saveConfig();
+    }
+
+
+    public void removeBanBlockMember(Material material) {
+        @NotNull List<String> members = config.getConfig().getStringList("SkyBlock.option.banblock.member");
+
+        members.remove(material.name());
+
+        config.getConfig().set("SkyBlock.option.banblock.member", members);
+        config.saveConfig();
+    }
+
+
+    public void addBanBlockMember(Material material) {
+        @NotNull List<String> members = config.getConfig().getStringList("SkyBlock.option.banblock.member");
+
+        members.add(material.name());
+
+        config.getConfig().set("SkyBlock.option.banblock.member", members);
+        config.saveConfig();
+    }
+
     public List<Material> getBanBlockMember() {
         List<Material> members = new ArrayList<>();
 
-        for (String name : config.getConfig().getStringList("SkyBlock.option.member.banblock")) {
+        for (String name : config.getConfig().getStringList("SkyBlock.option.banblock.member")) {
             members.add(Material.valueOf(name));
         }
 
@@ -415,7 +455,7 @@ public class SkyBlock {
     public List<Material> getBanBlockPartTime() {
         List<Material> members = new ArrayList<>();
 
-        for (String name : config.getConfig().getStringList("SkyBlock.option.parttime.banblock")) {
+        for (String name : config.getConfig().getStringList("SkyBlock.option.banblock.parttime")) {
             members.add(Material.valueOf(name));
         }
 
@@ -423,16 +463,15 @@ public class SkyBlock {
     }
 
     public void delete(Player player) {
-
-        WorldManager world = new WorldManager();
-
-        world.delete(player);
-
-        config.deleteFile();
-
-        player.sendMessage("제거 하였습니다!");
-        config.removeKey("island.name");
+        SkyBlockDeleteEvent skyBlockDeleteEvent = new SkyBlockDeleteEvent(name, this, player);
         Bukkit.getPluginManager().callEvent(new SkyBlockDeleteEvent(name, this, player));
+
+        if (!skyBlockDeleteEvent.isCancelled()) {
+            WorldManager world = new WorldManager();
+            world.delete(player);
+            config.deleteFile();
+
+        }
     }
 
 

@@ -1,4 +1,4 @@
-name: Island
+name: SkyBlock
 main: net.skyexcel.server.SkyExcelNetwork
 version: 1.0
 api-version: 1.13
@@ -6,3 +6,9 @@ api-version: 1.13
 commands:
   섬:
   섬어드민:
+  other:
+
+softdepend:
+  - SkyExcelCore
+  - PlaceHolderAPI
+  - WorldEdit

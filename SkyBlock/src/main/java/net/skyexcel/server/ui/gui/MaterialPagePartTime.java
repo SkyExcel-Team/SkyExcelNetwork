@@ -1,14 +1,13 @@
-package net.skyexcel.server.ui;
+package net.skyexcel.server.ui.gui;
 
 import net.skyexcel.server.data.StringData;
-import net.skyexcel.server.data.island.IslandData;
-import net.skyexcel.server.data.player.PlayerData;
+import net.skyexcel.server.data.island.SkyBlock;
+import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.util.Items;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -16,12 +15,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MaterialPageMember {
+public class MaterialPagePartTime {
     private int CurrentPage = 1;
     private int PageSize = 44;
     private int totalPage = 15;
     private Inventory inv;
     private String title;
+    private String world;
+
+    private int NEXT_PAGE_SLOT = 50;
+
+    private int PREVIOUS_PAGE_SLOT = 48;
 
     public void increaseCurrentPage() {
         if (CurrentPage < totalPage) {
@@ -48,14 +52,11 @@ public class MaterialPageMember {
         increaseCurrentPage();
 
         title = "";
-        
-        PlayerData playerData = new PlayerData(player);
-        IslandData islandData = new IslandData(playerData.getIsland());
+        title = getWorld() + "";
+        Inventory inv = Show(player, title);
 
-        Inventory inv = Show(player, islandData.getName());
-
-        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 48, inv);
-        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 50, inv);
+        previoussign();
+        nextsign();
 
         if (CurrentPage == 15) {
             inv.setItem(50, new ItemStack(Material.AIR));
@@ -64,9 +65,16 @@ public class MaterialPageMember {
         player.openInventory(inv);
     }
 
+    public void nextsign() {
+        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), NEXT_PAGE_SLOT, inv);
+    }
+
+    public void previoussign() {
+        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(""), PREVIOUS_PAGE_SLOT, inv);
+    }
 
     public Inventory Show(Player player, String name) {
-
+        setWorld(name);
         Inventory inv2 = Bukkit.createInventory(null, 54, setTitle(name));
         List<Material> materials = Arrays.stream(Material.values()).filter(Material::isSolid).collect(Collectors.toList());
 
@@ -81,14 +89,14 @@ public class MaterialPageMember {
 
                 banblock.setItemMeta(banblockmeta);
                 inv2.setItem(i2, banblock);
-                getBanBlockMember(material, player, inv2, i2);
+                getBanBlockPartTime(material, player, inv2, i2);
                 i2++;
 
             }
         }
 
         this.inv = inv2;
-
+        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), NEXT_PAGE_SLOT, inv);
         player.openInventory(inv2);
         return inv2;
     }
@@ -100,15 +108,22 @@ public class MaterialPageMember {
         return title;
     }
 
+    public void setWorld(String world) {
+        this.world = world;
+    }
+
+    public String getWorld() {
+        return world;
+    }
 
     public void decrease(Player player) {
         decreaseCurrentPage();
         title = "";
-
+        title = getWorld() + "";
         Inventory inv = Show(player, title);
 
-        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 50, inv);
-        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 48, inv);
+        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), NEXT_PAGE_SLOT, inv);
+        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(""), PREVIOUS_PAGE_SLOT, inv);
         player.openInventory(inv);
         if (CurrentPage == 1) {
             inv.setItem(48, new ItemStack(Material.AIR));
@@ -123,9 +138,9 @@ public class MaterialPageMember {
         this.inv = inv;
     }
 
-    private void getBanBlockMember(Material material, Player player, Inventory inv2, int i2) {
-        PlayerData playerData = new PlayerData(player);
-        IslandData islandData = new IslandData(playerData.getIsland());
+    private void getBanBlockPartTime(Material material, Player player, Inventory inv2, int i2) {
+        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+        SkyBlock islandData = new SkyBlock(playerData.getIsland());
 
         if (islandData.getBanBlockMember() != null) {
             for (Material materials : islandData.getBanBlockPartTime()) {
@@ -134,5 +149,33 @@ public class MaterialPageMember {
                 }
             }
         }
+    }
+
+
+    public void addBanBlock(Material material, Player player, Inventory inv2, int i2) {
+        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+        SkyBlock islandData = new SkyBlock(playerData.getIsland());
+
+        if (islandData.getBanBlockMember() != null) {
+            if (!islandData.getBanBlockMember().contains(material)) {
+                islandData.addBanBlockPartTime(material);
+                Items.Enchant(new ItemStack(material), inv2, i2);
+            } else {
+                islandData.removeBanBlockPartTime(material);
+                Items.newItem(material.name(),material, 1, Arrays.asList(""), i2, inv);
+            }
+        }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getNEXT_PAGE_SLOT() {
+        return NEXT_PAGE_SLOT;
+    }
+
+    public int getPREVIOUS_PAGE_SLOT() {
+        return PREVIOUS_PAGE_SLOT;
     }
 }
