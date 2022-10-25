@@ -5,12 +5,14 @@ import net.skyexcel.server.data.event.SkyBlockDeleteEvent;
 import net.skyexcel.server.data.event.SkyBlockJoinEvent;
 import net.skyexcel.server.data.event.SkyBlockQuickEvent;
 import net.skyexcel.server.data.island.SkyBlock;
+import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import skyexcel.data.Item.NBTData;
 
 import java.util.UUID;
 
@@ -56,21 +58,23 @@ public class SkyBlockEvent implements Listener {
     public void onJoin(SkyBlockJoinEvent event) {
         Player player = event.getPlayer();
         SkyBlock data = event.getIslandData();
+        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+        if (playerData.hasIsland()) {
+            Player owner = Bukkit.getPlayer(UUID.fromString(data.getOwner()));
 
-        Player owner = Bukkit.getPlayer(UUID.fromString(data.getOwner()));
+            if (data.getMembers() != null) {
+                for (String uuid : data.getMembers()) {
 
-        if (data.getMembers() != null) {
-            for (String uuid : data.getMembers()) {
-
-                Player member = Bukkit.getPlayer(UUID.fromString(uuid));
-                if (!data.getMembers().contains(player.getUniqueId().toString()))
-                    member.sendMessage(player.getDisplayName() + " 님이 섬 월드에 입장하였습니다!");
+                    Player member = Bukkit.getPlayer(UUID.fromString(uuid));
+                    if (!data.getMembers().contains(player.getUniqueId().toString()))
+                        member.sendMessage(player.getDisplayName() + " 님이 섬 월드에 입장하였습니다!");
+                }
             }
-        }
 
-        if (owner != null) {
-            if (!player.equals(owner)) {
-                owner.sendMessage(player.getDisplayName() + " 님이 섬 월드에 입장하였습니다!");
+            if (owner != null) {
+                if (!player.equals(owner)) {
+                    owner.sendMessage(player.getDisplayName() + " 님이 섬 월드에 입장하였습니다!");
+                }
             }
         }
     }
