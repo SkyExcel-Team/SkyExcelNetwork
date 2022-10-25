@@ -1,154 +1,205 @@
 package net.skyexcel.server.ui.gui;
 
+import net.skyexcel.server.SkyBlockCore;
+import net.skyexcel.server.data.SkyBlockData;
 import net.skyexcel.server.data.StringData;
 import net.skyexcel.server.data.island.SkyBlock;
+import net.skyexcel.server.data.packet.InventoryUpdate;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.util.Items;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MaterialPageMember {
-    private int CurrentPage = 1;
-    private int PageSize = 44;
-    private int totalPage = 15;
     private Inventory inv;
-    private String title;
 
-    private int NEXT_PAGE_SLOT = 50;
+    private int currentPage = 1;
 
-    private int PREVIOUS_PAGE_SLOT = 48;
-    public void increaseCurrentPage() {
-        if (CurrentPage < totalPage) {
-            CurrentPage += 1;
-        }
+    private int totalPage;
+
+    private final int NEXT_PAGE_SLOT = 50;
+
+    private final int PREVIOUS_PAGE_SLOT = 48;
+
+    private final String title;
+
+    private final List<Material> currentMaterial = new ArrayList<>();
+
+
+    private final List<Material> materials;
+
+
+    public MaterialPageMember(String title) {
+        this.title = title;
+        materials = new ArrayList<>(Arrays.stream(Material.values()).filter(Material::isSolid).toList());
     }
 
-    public void decreaseCurrentPage() {
-        if (CurrentPage > 0) {
-            CurrentPage -= 1;
-        }
-    }
 
-    public int getPageSize() {
-        return PageSize;
-    }
+    public void update(Player player) {
 
-    public int getCurrentPage() {
-        return CurrentPage;
-    }
+        Arrays.stream(SkyBlockData.remove).forEach(material -> materials.remove(material));
 
-    public void increase(Player player) {
+        int divide = 44;
+        int MAX = 44;
 
-        increaseCurrentPage();
+        this.totalPage = materials.size() / divide;
+        if (inv == null)
+            inv = Bukkit.createInventory(null, 54, title + " (" + currentPage + "/" + totalPage + ")");
 
-        title = "";
-        
+        setInv(inv);
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
         SkyBlock islandData = new SkyBlock(playerData.getIsland());
 
-        Inventory inv = Show(player, islandData.getName());
+        next(); // 다음 버튼 추가
 
-        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(""), PREVIOUS_PAGE_SLOT, inv);
-        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), NEXT_PAGE_SLOT, inv);
+        int slot = -1;
 
-        if (CurrentPage == 15) {
-            inv.setItem(50, new ItemStack(Material.AIR));
-        }
+        /**
+         * i = 현제 페이지에서 1을 제거 후, 44를 곱한다.(처음 페이지를 인식 하기 위함. (0일경우))
+         * 이후 i가 현제 페이지와 44를 곱한 값보다 작거나 같을때 i값을 계속 더해준다. (materialList의 값을 불러오기 위함.),
+         */
 
-        player.openInventory(inv);
-    }
+        for (int i = (currentPage - 1) * MAX; i <= currentPage * MAX; i++) {
 
-
-    public Inventory Show(Player player, String name) {
-
-        Inventory inv2 = Bukkit.createInventory(null, 54, setTitle(name));
-        List<Material> materials = Arrays.stream(Material.values()).filter(Material::isSolid).toList();
-
-        int i2 = 0;
-
-        for (int i = (getCurrentPage() - 1) * getPageSize(); i <= getCurrentPage() * getPageSize(); i++) {
-            if (i2 <= 44) {
+            if (slot <= MAX) {
                 Material material = materials.get(materials.indexOf(materials.get(i)));
+                this.currentMaterial.add(material);
 
-                ItemStack banblock = new ItemStack(material);
-                ItemMeta banblockmeta = banblock.getItemMeta();
+//                Items.newItem(ChatColor.GRAY + material.name(), material, 1, Arrays.asList("클릭하여 선택하세요!"), ++slot, inv);
+                unSelected(material, ++slot);
 
-                banblock.setItemMeta(banblockmeta);
-                inv2.setItem(i2, banblock);
-                getBanBlockMember(material, player, inv2, i2);
-                i2++;
-
-            }
-            Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 50, inv);
-        }
-
-        this.inv = inv2;
-
-        player.openInventory(inv2);
-        return inv2;
-    }
-
-    public String setTitle(String name) {
-        title = "";
-
-        title = name + " (" + getCurrentPage() + "/15)";
-        return title;
-    }
-
-
-    public void decrease(Player player) {
-        decreaseCurrentPage();
-        title = "";
-
-        Inventory inv = Show(player, title);
-
-        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 50, inv);
-        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(""), 48, inv);
-        player.openInventory(inv);
-        if (CurrentPage == 1) {
-            inv.setItem(48, new ItemStack(Material.AIR));
-        }
-    }
-
-    public Inventory getInv() {
-        return inv;
-    }
-
-    public void setInv(Inventory inv) {
-        this.inv = inv;
-    }
-
-    private void getBanBlockMember(Material material, Player player, Inventory inv2, int i2) {
-        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
-        SkyBlock islandData = new SkyBlock(playerData.getIsland());
-
-        if (islandData.getBanBlockMember() != null) {
-            for (Material materials : islandData.getBanBlockPartTime()) {
-                if (material.equals(materials)) {
-                    Items.Enchant(new ItemStack(material), inv2, i2);
+                /**
+                 * 이미 선택 되어 있는 블록은 Enchant 표시를 해준다.
+                 */
+                if (islandData.getBanBlockMember() != null) {
+                    for (Material banblock : islandData.getBanBlockMember()) {
+                        if (material.equals(banblock)) {
+                            Items.Enchant(new ItemStack(material), inv, slot);
+                        }
+                    }
                 }
             }
         }
+    }
+
+    public void unSelected(Material material, int slot) {
+        Items.newItem(ChatColor.GRAY + material.name(), material, 1, Arrays.asList(ChatColor.WHITE + "클릭하여 선택하세요!"), slot, inv);
+    }
+
+
+    public void select(Player player, int slot, boolean shift) {
+
+        Material material = this.currentMaterial.get(slot);
+
+        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+        SkyBlock islandData = new SkyBlock(playerData.getIsland());
+        List<Material> member = islandData.getBanBlockMember();
+
+
+        if (!shift) {
+            if (!member.contains(material)) {
+                islandData.addBanBlockMember(material);
+                Items.Enchant(new ItemStack(material), Arrays.asList(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
+            } else {
+                player.sendMessage(ChatColor.RED + "이미 밴 블록 입니다!");
+            }
+        } else {
+            if (member.contains(material)) {
+                islandData.removeBanBlockMember(material);
+//                Items.newItem(ChatColor.GRAY + material.name(), material, 1, Arrays.asList(""), slot, inv);
+                unSelected(material, slot);
+            } else {
+                player.sendMessage(ChatColor.RED + "밴 블록이 아닙니다!");
+            }
+        }
+    }
+
+
+    public void nextPage(Player player, boolean isShift) {
+        this.currentMaterial.clear();
+        if (!isShift) {
+            InventoryUpdate.updateInventory(SkyBlockCore.plugin, player, title + " (" + ++currentPage + "/" + totalPage + ")");
+            update(player);
+
+            if (currentPage != totalPage) {
+
+                previous(); //이전 버튼 추가
+
+            } else {
+                clearItem(NEXT_PAGE_SLOT);
+            }
+        } else {
+            this.currentPage = totalPage;
+            previous();
+            InventoryUpdate.updateInventory(SkyBlockCore.plugin, player, title + " (" + currentPage + "/" + totalPage + ")");
+            update(player);
+            clearItem(NEXT_PAGE_SLOT);
+        }
+
+    }
+
+    public void previousPage(Player player, boolean isShift) {
+        this.currentMaterial.clear();
+        if (!isShift) {
+            InventoryUpdate.updateInventory(SkyBlockCore.plugin, player, title + " (" + --currentPage + "/" + totalPage + ")");
+            update(player);
+
+            if (currentPage != 1) {
+                previous(); //이전 버튼 추가
+            } else {
+                clearItem(PREVIOUS_PAGE_SLOT);
+            }
+        } else {
+            currentPage = 1;
+            InventoryUpdate.updateInventory(SkyBlockCore.plugin, player, title + " (" + currentPage + "/" + totalPage + ")");
+            update(player);
+
+            if (currentPage != 1) {
+                previous(); //이전 버튼 추가
+            } else {
+                clearItem(PREVIOUS_PAGE_SLOT);
+            }
+        }
+
+    }
+
+    private void next() {
+        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(ChatColor.GRAY + "쉬프트를 눌러 페이지의 끝으로 갈 수 있습니다."), NEXT_PAGE_SLOT, inv);
+    }
+
+    private void previous() {
+        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(ChatColor.GRAY + "쉬프트를 눌러 페이지의 처음으로 갈 수 있습니다."), PREVIOUS_PAGE_SLOT, inv);
+    }
+
+    private void clearItem(int slot) {
+        ItemStack item = inv.getItem(slot);
+        item.setAmount(0);
+        inv.setItem(slot, item);
+    }
+
+
+    public int getPREVIOUS_PAGE_SLOT() {
+        return PREVIOUS_PAGE_SLOT;
     }
 
     public int getNEXT_PAGE_SLOT() {
         return NEXT_PAGE_SLOT;
     }
 
-    public int getPREVIOUS_PAGE_SLOT() {
-        return PREVIOUS_PAGE_SLOT;
+
+    public void setInv(Inventory inv) {
+        this.inv = inv;
     }
 
-    public String getTitle() {
-        return title;
+    public Inventory getInv() {
+        return inv;
     }
 }
