@@ -1,6 +1,7 @@
 package net.skyexcel.server.data.player;
 
-import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.SkyBlockCore;
+import net.skyexcel.server.data.island.SkyBlock;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
@@ -15,12 +16,25 @@ public class SkyBlockPlayerData {
     public SkyBlockPlayerData(Player player) {
         this.player = player;
         config = new Config("data/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetwork.plugin);
+        config.setPlugin(SkyBlockCore.plugin);
     }
 
     public void setName(String name) {
         config.getConfig().set("island.name", name);
         config.saveConfig();
+    }
+
+
+    public boolean isOwner() {
+        if (config != null) {
+
+
+            if (hasIsland()) {
+                SkyBlock skyBlock = new SkyBlock(getIsland());
+                return this.player.getUniqueId().toString().equalsIgnoreCase(skyBlock.getOwner());
+            }
+        }
+        return false;
     }
 
     public boolean setSpawn() {
@@ -33,7 +47,9 @@ public class SkyBlockPlayerData {
     }
 
     public boolean hasIsland() {
-        return config.getConfig().get("island.name") != null;
+
+        return (config.getConfig().get("island.name") != null ? config.getConfig().get("island.name") == null : false);
+
     }
 
     public String getIsland() {
