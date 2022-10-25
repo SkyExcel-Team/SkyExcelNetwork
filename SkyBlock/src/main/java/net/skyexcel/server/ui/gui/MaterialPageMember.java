@@ -45,7 +45,7 @@ public class MaterialPageMember {
 
     public void update(Player player) {
 
-        Arrays.stream(SkyBlockData.remove).forEach(material -> materials.remove(material));
+        Arrays.stream(SkyBlockData.remove).forEach(materials::remove);
 
         int divide = 44;
         int MAX = 44;
