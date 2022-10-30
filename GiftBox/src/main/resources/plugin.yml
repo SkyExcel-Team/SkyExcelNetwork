@@ -1,0 +1,11 @@
+name: SGiftBox
+main: net.skyexcel.server.SkyExcelNetwork
+version: 1.0
+api-version: 1.13
+
+commands:
+  선물함:
+ 
+
+softdepend:
+  - SkyExcelCore

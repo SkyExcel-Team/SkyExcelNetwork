@@ -1,18 +1,25 @@
 package net.skyexcel.server;
 
 import net.skyexcel.server.cmd.SEconomyCommand;
+import net.skyexcel.server.cmd.ShopCommand;
+import net.skyexcel.server.event.ShopEvent;
 import net.skyexcel.server.event.onJoin;
 import net.skyexcel.server.hook.SEConomyExpansion;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
 
+import java.util.Arrays;
+
 public class SkyExcelNetwork extends JavaPlugin {
 
-    public static Plugin plugin;
+    public static JavaPlugin plugin;
 
     public static Config message;
+
+
 
     public static Config shop;
 
@@ -22,8 +29,11 @@ public class SkyExcelNetwork extends JavaPlugin {
         plugin = this;
 
         init();
+        Listener[] listeners = { new onJoin(),new ShopEvent()};
+        Arrays.stream(listeners).forEach(listener -> {
+            Bukkit.getPluginManager().registerEvents(listener, this);
+        });
 
-        Bukkit.getPluginManager().registerEvents(new onJoin(),this);
 
     }
 
@@ -31,7 +41,8 @@ public class SkyExcelNetwork extends JavaPlugin {
 
         new SEConomyExpansion(this).register();
         new SEconomyCommand();
-
+        new ShopCommand();
+//
         message = new Config("message");
         message.setPlugin(this);
         message.loadDefaultPluginConfig();

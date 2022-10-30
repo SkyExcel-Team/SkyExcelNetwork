@@ -27,4 +27,13 @@ public class Items {
         item.setItemMeta(meta);
         inv.setItem(pos, item);
     }
+
+    public static void Enchant(ItemStack item, List<String> lore, Inventory inv, int pos) {
+        item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(pos, item);
+    }
 }

@@ -40,10 +40,13 @@ public class MaterialPageMember {
     public MaterialPageMember(String title) {
         this.title = title;
         materials = new ArrayList<>(Arrays.stream(Material.values()).filter(Material::isSolid).toList());
+
     }
 
 
     public void update(Player player) {
+        Light light = new Light();
+        materials.add(light.getMaterial());
 
         Arrays.stream(SkyBlockData.remove).forEach(materials::remove);
 
@@ -73,7 +76,6 @@ public class MaterialPageMember {
                 Material material = materials.get(materials.indexOf(materials.get(i)));
                 this.currentMaterial.add(material);
 
-//                Items.newItem(ChatColor.GRAY + material.name(), material, 1, Arrays.asList("클릭하여 선택하세요!"), ++slot, inv);
                 unSelected(material, ++slot);
 
                 /**
@@ -91,7 +93,8 @@ public class MaterialPageMember {
     }
 
     public void unSelected(Material material, int slot) {
-        Items.newItem(ChatColor.GRAY + material.name(), material, 1, Arrays.asList(ChatColor.WHITE + "클릭하여 선택하세요!"), slot, inv);
+        if (material != null)
+            Items.newItem(ChatColor.GRAY + material.name(), material, 1, List.of(ChatColor.WHITE + "클릭하여 선택하세요!"), slot, inv);
     }
 
 
@@ -107,7 +110,7 @@ public class MaterialPageMember {
         if (!shift) {
             if (!member.contains(material)) {
                 islandData.addBanBlockMember(material);
-                Items.Enchant(new ItemStack(material), Arrays.asList(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
+                Items.Enchant(new ItemStack(material), List.of(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
             } else {
                 player.sendMessage(ChatColor.RED + "이미 밴 블록 입니다!");
             }
@@ -126,11 +129,9 @@ public class MaterialPageMember {
     public void nextPage(Player player, boolean isShift) {
         this.currentMaterial.clear();
         if (!isShift) {
-            InventoryUpdate.updateInventory(SkyBlockCore.plugin, player, title + " (" + ++currentPage + "/" + totalPage + ")");
-            update(player);
-
-            if (currentPage != totalPage) {
-
+            if (currentPage + 1 <= totalPage) {
+                InventoryUpdate.updateInventory(SkyBlockCore.plugin, player, title + " (" + ++currentPage + "/" + totalPage + ")");
+                update(player);
                 previous(); //이전 버튼 추가
 
             } else {
@@ -168,19 +169,19 @@ public class MaterialPageMember {
                 clearItem(PREVIOUS_PAGE_SLOT);
             }
         }
-
     }
 
     private void next() {
-        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, Arrays.asList(ChatColor.GRAY + "쉬프트를 눌러 페이지의 끝으로 갈 수 있습니다."), NEXT_PAGE_SLOT, inv);
+        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 끝으로 갈 수 있습니다."), NEXT_PAGE_SLOT, inv);
     }
 
     private void previous() {
-        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, Arrays.asList(ChatColor.GRAY + "쉬프트를 눌러 페이지의 처음으로 갈 수 있습니다."), PREVIOUS_PAGE_SLOT, inv);
+        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 처음으로 갈 수 있습니다."), PREVIOUS_PAGE_SLOT, inv);
     }
 
     private void clearItem(int slot) {
         ItemStack item = inv.getItem(slot);
+        assert item != null;
         item.setAmount(0);
         inv.setItem(slot, item);
     }

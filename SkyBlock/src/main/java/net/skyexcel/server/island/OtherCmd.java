@@ -1,6 +1,6 @@
 package net.skyexcel.server.island;
 
-import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.player.SkyBlockRequest;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,7 +8,7 @@ import skyexcel.command.function.Cmd;
 
 public class OtherCmd {
     public OtherCmd() {
-        Cmd cmd = new Cmd(SkyExcelNetwork.plugin, "other");
+        Cmd cmd = new Cmd(SkyBlockCore.plugin, "other");
         cmd.label(action -> {
         });
 

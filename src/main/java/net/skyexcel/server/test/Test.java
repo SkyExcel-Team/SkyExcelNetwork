@@ -5,13 +5,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-import skyexcel.command.Tab;
+
+import skyexcel.command.tab.Tab;
 
 public class Test implements CommandExecutor {
 
 
     public Test(Plugin plugin) {
-        Tab<Object, String> tab = new Tab<Object, String>(plugin, "test");
+        Tab tab = new Tab(plugin, "test");
 
         tab.args("열기", "[이름]");
         tab.args("생성", "[이름]");

@@ -19,11 +19,22 @@ public class SkyBlockJoinEvent extends Event implements Cancellable {
 
     private Player player;
 
+    private JoinCause joinCause;
+
     public SkyBlockJoinEvent(String name, SkyBlock islandData, Player player) {
         this.name = name;
         this.islandData = islandData;
         this.player = player;
         this.isCancelled = false;
+    }
+
+    public void setJoinCause(JoinCause joinCause) {
+        this.joinCause = joinCause;
+    }
+
+
+    public JoinCause getJoinCause() {
+        return joinCause;
     }
 
     @Override
@@ -61,4 +72,9 @@ public class SkyBlockJoinEvent extends Event implements Cancellable {
     public Player getPlayer() {
         return player;
     }
+
+    public enum JoinCause {
+        VISIT(), MEMBER();
+    }
+
 }

@@ -1,30 +1,47 @@
 package net.skyexcel.server.island;
 
-import net.md_5.bungee.api.chat.*;
-import net.skyexcel.server.SkyExcelNetwork;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.skyexcel.server.Location;
+import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.SkyBlockData;
 import net.skyexcel.server.data.economy.SEconomy;
 import net.skyexcel.server.data.island.SkyBlock;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.data.player.SkyBlockRequest;
-import net.skyexcel.server.data.vault.SkyBlockVaultRecord;
 import net.skyexcel.server.data.vault.SkyBlockVault;
+import net.skyexcel.server.data.vault.SkyBlockVaultRecord;
 import net.skyexcel.server.menu.Menu;
+import net.skyexcel.server.ui.gui.MaterialPageMember;
 import net.skyexcel.server.ui.gui.MaterialPagePartTime;
 import net.skyexcel.server.ui.title.Loading;
-import net.skyexcel.server.util.Translate;
+import net.skyexcel.server.util.world.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+
+import org.bukkit.OfflinePlayer;
+import org.bukkit.WorldBorder;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import skyexcel.command.function.Cmd;
 
-import java.util.Arrays;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 
-public class IslandCmd {
+public class IslandCmd implements TabCompleter {
     public IslandCmd() {
-        Cmd cmd = new Cmd(SkyExcelNetwork.plugin, "섬");
+
+
+        Cmd cmd = new Cmd(SkyBlockCore.plugin, "섬");
+        Bukkit.getServer().getPluginCommand("섬").setTabCompleter(this);
 
         SkyBlockRequest request = new SkyBlockRequest();
 
@@ -36,6 +53,7 @@ public class IslandCmd {
             SkyBlock data = new SkyBlock(playerData.getIsland());
 
             if (data.teleportSkyBlock(player)) {
+                data.enableWorldBorder(player);
                 player.sendMessage("텔레포트 하였습니다!");
             } else {
                 player.sendMessage("텔레포트 실패!");
@@ -54,7 +72,6 @@ public class IslandCmd {
             Player player = (Player) action.getSender();
             player.sendMessage("test");
         });
-
 
         cmd.action("양도", 0, action -> {
             Player player = (Player) action.getSender();
@@ -125,7 +142,7 @@ public class IslandCmd {
             SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
-            if (!targetData.hasIsland() || playerData.hasIsland()) {
+            if (!targetData.hasIsland()) {
                 if (SkyBlockRequest.send(request, target, player)) {
 
 
@@ -225,23 +242,36 @@ public class IslandCmd {
 
             playerData.setName(name);
             SkyBlock data = new SkyBlock(name);
-
-            if (data.delete()) {
-                player.sendMessage("제거 완료");
-            }
+            data.delete(player);
         });
 
         cmd.action("생성", 0, action -> {
             Player player = (Player) action.getSender();
             String name = String.join(" ", Arrays.copyOfRange(action.getArgs(), 1, action.getArgs().length));
-
-            SkyBlockData.loading.put(player.getUniqueId(), new Loading(player, 4));
-
-            SkyBlockData.loading.get(player.getUniqueId()).runTaskTimer(SkyExcelNetwork.plugin, 0, 10);
-
             SkyBlock data = new SkyBlock(player, name);
 
-            data.create(player);
+            if (!data.equalFileName(name)) {
+
+                try {
+                    data.create(player);
+                } catch (InvocationTargetException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Loading loading = new Loading(player, 5);
+
+                loading.runTaskTimer(SkyBlockCore.plugin, 0, 10);
+
+                loading.end(end -> {
+                    data.spawn(player, data.getLocation());
+                });
+
+
+                SkyBlockData.loading.put(player.getUniqueId(), loading);
+            } else {
+                player.sendMessage("이미 이름이 있습니다!");
+            }
+
         });
 
 
@@ -264,6 +294,22 @@ public class IslandCmd {
             }
         });
 
+        cmd.action("방문", 0, action -> {
+            Player player = (Player) action.getSender();
+
+            if (action.getArgs().length > 1) {
+
+                Player target = Bukkit.getPlayer(action.getArgs()[1]);
+
+                assert target != null;
+                SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
+
+                SkyBlock skyBlock = new SkyBlock(targetData.getIsland());
+                skyBlock.teleportSkyBlock(player);
+
+                player.sendMessage(target.getDisplayName() + ChatColor.GREEN + " 님의 섬을 방문 했습니다!");
+            }
+        });
 
         cmd.action("금고", 0, action -> {
             Player player = (Player) action.getSender();
@@ -271,54 +317,58 @@ public class IslandCmd {
 
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
-            SkyBlock data = new SkyBlock(playerData.getIsland());
-            SkyBlockVault vault;
-            int amount;
-            SEconomy money;
-            switch (args[1]) {
-                case "입금":
-                    data = new SkyBlock(player, playerData.getIsland());
-                    vault = data.getVault();
-                    amount = Integer.parseInt(args[2]);
-                    money = new SEconomy(player);
 
-                    if (vault.deposit(amount) && money.withdraw(amount)) {
-                        SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+            if (playerData.hasIsland()) {
+                SkyBlock data = new SkyBlock(playerData.getIsland());
+                SkyBlockVault vault;
+                int amount;
+                SEconomy money;
+                switch (args[1]) {
+                    case "입금":
+                        data = new SkyBlock(player, playerData.getIsland());
+                        vault = data.getVault();
+                        amount = Integer.parseInt(args[2]);
+                        money = new SEconomy(player);
 
-                        record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
+                        if (vault.deposit(amount) && money.withdraw(amount)) {
+                            SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                        player.sendMessage("입금 완료");
-                    } else {
-                        player.sendMessage("입금 실패!");
-                    }
-                    break;
+                            record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
 
-                case "출금":
-                    data = new SkyBlock(player, playerData.getIsland());
+                            player.sendMessage("입금 완료");
+                        } else {
+                            player.sendMessage("입금 실패!");
+                        }
+                        break;
 
-                    vault = data.getVault();
-                    amount = Integer.parseInt(args[2]);
-                    vault.setPlayer(player);
-                    money = new SEconomy(player);
-                    if (vault.withdraw(amount)) {
-                        money.deposit(amount);
-                        SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+                    case "출금":
+                        data = new SkyBlock(player, playerData.getIsland());
 
-                        record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
+                        vault = data.getVault();
+                        amount = Integer.parseInt(args[2]);
+                        vault.setPlayer(player);
+                        money = new SEconomy(player);
+                        if (vault.withdraw(amount)) {
+                            money.deposit(amount);
+                            SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                        player.sendMessage("출금 완료");
-                    } else {
-                        player.sendMessage("출금 실패!");
-                    }
-                    break;
-                case "잠금":
+                            record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
 
-                    if (data.setVaultLock()) {
-                        player.sendMessage("금고를 잠궜습니다.");
-                    }
+                            player.sendMessage("출금 완료");
+                        } else {
+                            player.sendMessage("출금 실패!");
+                        }
+                        break;
+                    case "잠금":
 
-                    break;
+                        if (data.setVaultLock()) {
+                            player.sendMessage("금고를 잠궜습니다.");
+                        }
+
+                        break;
+                }
             }
+
         });
 
         cmd.action("디스코드", 0, action -> {
@@ -379,8 +429,8 @@ public class IslandCmd {
 
             switch (args[1]) {
                 case "추가":
-                    String name = args[2];
                     if (args.length > 2) {
+                        String name = args[2];
                         if (args.length > 3) {
                             try {
                                 int amount = Integer.parseInt(args[3]);
@@ -389,6 +439,7 @@ public class IslandCmd {
 
                                 if (data.addPartTime(target, amount)) {
                                     player.sendMessage("알바 추가가 되었습니다!");
+                                    target.sendMessage(player.getDisplayName() + " 님이 당신을 알바로 고용했습니다!");
                                 } else {
                                     player.sendMessage("알바 추가가 안됨 ㅅㄱ");
                                 }
@@ -456,14 +507,22 @@ public class IslandCmd {
                     if (args.length > 2) {
                         switch (args[2]) {
                             case "알바":
-                                MaterialPagePartTime material = new MaterialPagePartTime();
+                                MaterialPagePartTime partTime = new MaterialPagePartTime("알바 밴블록");
+                                partTime.update(player);
 
-                                material.Show(player, "알바 밴블록");
-                                SkyBlockData.partTimePage.put(player.getUniqueId(),material);
-                                break;
-                            case "맴버":
+                                SkyBlockData.partTimePage.put(player.getUniqueId(), partTime);
 
+                                player.openInventory(partTime.getInv());
                                 break;
+                            case "섬원":
+                                MaterialPageMember member = new MaterialPageMember("섬원 밴블록");
+
+                                member.update(player);
+                                player.openInventory(member.getInv());
+
+                                SkyBlockData.memberPage.put(player.getUniqueId(), member);
+                                break;
+
                         }
                     }
                     break;
@@ -475,6 +534,36 @@ public class IslandCmd {
                         player.sendMessage("규칙 삭제 실패!");
                     }
                     break;
+                case "시간":
+                    if (args.length > 2) {
+                        switch (args[2]) {
+                            case "아침":
+                                data.time(player, 1000);
+                                break;
+                            case "점심":
+                                data.time(player, 6000);
+                                break;
+                            case "저녁":
+                                data.time(player, 1);
+                                break;
+                            case "일몰":
+                                data.time(player, 12000);
+                                break;
+                            case "일출":
+                                data.time(player, 23000);
+                                break;
+                            case "밤":
+                                data.time(player, 18000);
+                                break;
+
+
+                        }
+
+                    }
+                    break;
+                case "월드보더":
+                    data.disableWorldBorder(player);
+                    break;
 
                 case "열기":
 
@@ -482,5 +571,188 @@ public class IslandCmd {
             }
         });
 
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        ArrayList<String> result = new ArrayList<String>();
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            player.sendMessage(args.length + "");
+            SkyBlockPlayerData playerData;
+            if (args.length == 1) {
+                result.add("도움말");
+                result.add("생성");
+                result.add("제거");
+                result.add("초대");
+                result.add("수락");
+                result.add("거절");
+                result.add("탈퇴");
+                result.add("방문");
+                result.add("추방");
+                result.add("규칙");
+                result.add("금고");
+                result.add("디스코드");
+                result.add("방문객");
+                result.add("이름변경");
+                result.add("스폰변경");
+
+                result.add("업그레이드");
+                result.add("양도");
+                result.add("권한");
+                result.add("호퍼");
+                result.add("초기화");
+                result.add("홈");
+                result.add("설정");
+                result.add("옵션");
+                result.add("알바");
+                result.add("순위");
+                result.add("섬원");
+
+            } else if (args.length == 2) {
+                switch (args[0]) {
+                    case "생성":
+                        result.add("[이름]");
+                        break;
+                    case "초대":
+                        for (Player online : Bukkit.getOnlinePlayers()) {
+                            playerData = new SkyBlockPlayerData(online);
+                            if (playerData.hasIsland()) {
+                                result.add(online.getDisplayName());
+                            }
+                        }
+                        break;
+                    case "추방":
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
+
+                            for (String member : skyBlock.getMembers()) {
+                                OfflinePlayer members = Bukkit.getOfflinePlayer(UUID.fromString(member));
+                                result.add(members.getName());
+                            }
+
+                        }
+                        break;
+
+                    case "규칙":
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            result.add("추가");
+                            result.add("제거");
+                        }
+
+                        result.add("보기");
+                        break;
+                    case "금고":
+
+                        result.add("입금");
+                        result.add("출금");
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            result.add("기록");
+                            result.add("잠금");
+                        }
+                        break;
+
+                    case "디스코드":
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            result.add("설정");
+                            result.add("삭제");
+                        }
+
+                        break;
+                    case "이름변경":
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            result.add("[이름]");
+                        }
+                        break;
+                    case "양도":
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            for (Player online : Bukkit.getOnlinePlayers()) {
+                                result.add(online.getDisplayName());
+                            }
+                        }
+                        break;
+
+                    case "옵션":
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            result.add("전투");
+                            result.add("밴블록");
+                            result.add("전투");
+                            result.add("열기");
+                            result.add("잠금");
+                            result.add("시간");
+                        }
+
+                        result.add("전투");
+                        result.add("밴블록");
+                        result.add("전투");
+                        result.add("열기");
+                        result.add("잠금");
+                        result.add("시간");
+
+                        break;
+
+                    case "알바":
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            result.add("추가");
+                            result.add("제거");
+                            result.add("완료");
+                        }
+                        break;
+                }
+            } else if (args.length == 3) {
+
+                if (equalArgs(args, 0, "추방")) {
+                    playerData = new SkyBlockPlayerData(player);
+                    if (playerData.isOwner())
+                        result.add("사유");
+                } else if (equalArgs(args, 0, "금고")) {
+                    if (!equalArgs(args, 1, "잠금") || !equalArgs(args, 1, "기록")) {
+                        result.add("<amount>");
+                    }
+                } else if (equalArgs(args, 0, "디스코드")) {
+                    if (!equalArgs(args, 1, "삭제")) {
+                        playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner())
+                            result.add("[링크]");
+                    }
+                } else if (equalArgs(args, 0, "옵션")) {
+                    if (!equalArgs(args, 1, "열기")) {
+                        if (equalArgs(args, 1, "밴블록")) {
+                            result.add("알바");
+                            result.add("섬원");
+                        } else if (equalArgs(args, 1, "전투")) {
+                            result.add("활성화");
+                            result.add("비활성화");
+                        } else if (equalArgs(args, 1, "알바")) {
+                            if (equalArgs(args, 2, "추가")) {
+                                playerData = new SkyBlockPlayerData(player);
+
+                                SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
+                                List<String> members = skyBlock.getMembers();
+
+                                for (Player online : Bukkit.getOnlinePlayers()) {
+                                    if (members.contains(online.getUniqueId().toString())) {
+                                        result.add(online.getDisplayName());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean equalArgs(String[] args, int index, String other) {
+        return args[index].equalsIgnoreCase(other);
     }
 }

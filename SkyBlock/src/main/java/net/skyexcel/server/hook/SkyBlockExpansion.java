@@ -1,9 +1,7 @@
 package net.skyexcel.server.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.skyexcel.server.SkyExcelNetwork;
-import net.skyexcel.server.data.economy.SEconomy;
-import net.skyexcel.server.data.island.SkyBlock;
+import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.data.vault.SkyBlockVault;
 import net.skyexcel.server.util.Translate;
@@ -14,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class SkyBlockExpansion extends PlaceholderExpansion {
-    private SkyExcelNetwork plugin; // The instance is created in the constructor and won't be modified, so it can be final
+    private SkyBlockCore plugin; // The instance is created in the constructor and won't be modified, so it can be final
 
-    public SkyBlockExpansion(SkyExcelNetwork plugin) {
+    public SkyBlockExpansion(SkyBlockCore plugin) {
         this.plugin = plugin;
     }
 
@@ -48,7 +46,7 @@ public class SkyBlockExpansion extends PlaceholderExpansion {
 
     @Override
     public boolean canRegister() {
-        return (plugin = (SkyExcelNetwork) Bukkit.getPluginManager().getPlugin(Objects.requireNonNull(getRequiredPlugin()))) != null;
+        return (plugin = (SkyBlockCore) Bukkit.getPluginManager().getPlugin(Objects.requireNonNull(getRequiredPlugin()))) != null;
     }
 
     @Override

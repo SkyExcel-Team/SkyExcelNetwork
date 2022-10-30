@@ -4,10 +4,13 @@ import com.google.common.base.Joiner;
 import net.skyexcel.server.SkyExcelNetwork;
 import net.skyexcel.server.util.Translate;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -39,7 +42,7 @@ public class StringData {
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.remove_money"))));
     }
 
-    public static void setMoney(Player player, Player target, long amount) {
+    public static void setMoney(Player player, OfflinePlayer target, long amount) {
         player.sendMessage(Translate.moneyAction(player, target, amount,
                 Objects.requireNonNull(SkyExcelNetwork.message.getConfig().getString("economy_message.set_money"))));
     }
@@ -166,6 +169,40 @@ public class StringData {
         for (String line : SkyExcelNetwork.message.getConfig().getStringList("other_message.command_economy")) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
         }
+    }
+
+    public static String gui_title() {
+        return SkyExcelNetwork.shop.getString("shop_gui_settings.shop_settings.gui_title");
+    }
+
+    public static int gui_size() {
+        return SkyExcelNetwork.shop.getInteger("shop_gui_settings.shop_settings.gui_size");
+    }
+
+    public static Material buy_sell_settings() {
+        return Material.valueOf(SkyExcelNetwork.shop.getString("shop_gui_settings.shop_settings.buy_sell_settings.item"));
+    }
+
+
+    public static int buy_sell_slot() {
+        return SkyExcelNetwork.shop.getInteger("shop_gui_settings.shop_settings.buy_sell_settings.slot");
+    }
+
+    public static List<String> buy_sell_lore() {
+        return SkyExcelNetwork.shop.getConfig().getStringList("shop_gui_settings.shop_settings.buy_sell_settings.lore");
+    }
+
+    public static Sound buy_sound() {
+        return Sound.valueOf(SkyExcelNetwork.shop.getString("shop_gui_settings.shop_sound_settings.buy_sound"));
+    }
+
+
+    public static Sound sell_sound() {
+        return Sound.valueOf(SkyExcelNetwork.shop.getString("shop_gui_settings.shop_sound_settings.sell_sound"));
+    }
+
+    public static Sound impossible_buy_sell_sound() {
+        return Sound.valueOf(SkyExcelNetwork.shop.getString("shop_gui_settings.shop_sound_settings.impossible_buy_sell_sound"));
     }
 
 }

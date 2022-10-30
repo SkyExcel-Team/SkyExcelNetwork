@@ -96,7 +96,7 @@ public class Menu {
                 ItemMeta meta = item.getItemMeta();
 
                 meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-                meta.setLore(Translate.translate(lore,player));
+                meta.setLore(Translate.translate(lore, player));
 
                 item.setItemMeta(meta);
 
@@ -107,20 +107,21 @@ public class Menu {
                 if (section.get("hdb") != null) {
                     @NotNull List<Integer> slot = section.getIntegerList("slots");
                     int texture = section.getInt("hdb");
+                    int amount = section.getInt("amount");
 
                     assert SkyExcelNetwork.hdb != null;
 
                     ItemStack item = SkyExcelNetwork.hdb.getItemHead(String.valueOf(texture));
 
-
+                    item.setAmount(amount);
                     List<String> lore = section.getStringList("lore");
 
-                    String name =  section.getString("display_name");
+                    String name = section.getString("display_name");
                     ItemMeta meta = item.getItemMeta();
 
 
                     meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-                    meta.setLore(Translate.translate(lore,player));
+                    meta.setLore(Translate.translate(lore, player));
 
                     if (section.get("custommodeldata") != null) {
 
@@ -143,7 +144,7 @@ public class Menu {
 
                 } else {
                     @NotNull List<Integer> slot = section.getIntegerList("slots");
-
+                    int amount = section.getInt("amount");
                     List<String> lore = section.getStringList("lore");
                     String name = section.getString("display_name");
 
@@ -153,7 +154,7 @@ public class Menu {
 
                         ItemStack item = Item.playerSkull(player.getDisplayName(), name, lore);
                         ItemMeta meta = item.getItemMeta();
-
+                        item.setAmount(amount);
                         meta.setCustomModelData(modeldata);
                         item.setItemMeta(meta);
                         slot.forEach(slots -> {

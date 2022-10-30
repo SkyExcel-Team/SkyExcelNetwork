@@ -1,14 +1,12 @@
 package net.skyexcel.server.island;
 
-import net.skyexcel.server.SkyExcelNetwork;
-import net.skyexcel.server.data.SkyBlockData;
+import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.island.SkyBlock;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import skyexcel.command.tab.Tab;
@@ -27,7 +25,7 @@ public class IslandCmdTab implements TabCompleter {
 
     public IslandCmdTab() {
 //        Objects.requireNonNull(SkyExcelNetwork.plugin.getServer().getPluginCommand("섬")).setTabCompleter(this);
-        tab = new Tab(SkyExcelNetwork.plugin, "섬");
+        tab = new Tab(SkyBlockCore.plugin, "섬");
 
         tab.args("도움말");
         tab.args("생성", "[이름]");

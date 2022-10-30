@@ -128,7 +128,7 @@ public class SEconomyCommand {
                         record.setAfter(money.getMoney());
                         record.playerRecord(player, target, amount, SEconomyRecord.Type.SET);
 
-                        StringData.resetMoney(player, target, amount);
+                        StringData.setMoney(player, target, amount);
                     } else {
                         StringData.noneMoney(player);
                     }

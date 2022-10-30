@@ -1,6 +1,6 @@
 package net.skyexcel.server.island;
 
-import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.SkyBlockCore;
 import skyexcel.command.tab.Tab;
 
 public class IslandAdminCmdTab {
@@ -9,7 +9,7 @@ public class IslandAdminCmdTab {
 
     public IslandAdminCmdTab() {
 
-        tab = new Tab(SkyExcelNetwork.plugin, "섬어드민");
+        tab = new Tab(SkyBlockCore.plugin, "섬어드민");
 
         tab.args("[자신의 섬 이름]", "금고", "입금", "Amount");
         tab.args("[자신의 섬 이름]", "금고", "출금", "Amount");

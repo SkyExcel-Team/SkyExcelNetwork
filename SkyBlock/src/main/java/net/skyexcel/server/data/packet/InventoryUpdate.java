@@ -83,6 +83,7 @@ public class InventoryUpdate {
         // Initialize fields.
         activeContainer = getField(ENTITY_PLAYER, CONTAINER, "activeContainer", "bV", "bW", "bU", "containerMenu");
         windowId = getField(CONTAINER, int.class, "windowId", "j", "containerId");
+
     }
 
     /**

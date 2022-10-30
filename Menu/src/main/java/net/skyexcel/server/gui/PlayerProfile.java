@@ -7,7 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
-import skyexcel.gui.GUI;
+import skyexcel.data.file.GUI;
+
 
 public class PlayerProfile implements Listener {
 
@@ -26,20 +27,7 @@ public class PlayerProfile implements Listener {
     }
 
     public void open() {
-        if (gui == null) {
-            gui = new GUI(SkyExcelNetwork.plugin);
-            gui.createGUI("PlayerProfile", 45);
 
-            gui.line(new ItemStack(Material.STONE, 1), 0, action -> {
-                player.sendMessage("빼애애애애애애액");
-            });
-
-            gui.line(new ItemStack(Material.GRASS, 1), 1, action -> {
-                action.getPlayer().sendMessage("test");
-            });
-
-            gui.open(player);
-        }
     }
 
     @EventHandler

@@ -1,6 +1,6 @@
 package net.skyexcel.server.data.island;
 
-import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.util.Translate;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ public class SkyBlockRecord {
     public SkyBlockRecord(String name) {
         this.name = name;
         this.record = new Config("SkyBlock/" + name + "/record/IslandRecord");
-        this.record.setPlugin(SkyExcelNetwork.plugin);
+        this.record.setPlugin(SkyBlockCore.plugin);
 
     }
 
@@ -71,7 +71,7 @@ public class SkyBlockRecord {
 
 
     public enum Type {
-        KICK("추방"), WITHDRAW("출금"), JOIN("입장"), CREATE("생성");
+        KICK("추방"), JOIN("입장"), CREATE("생성");
 
         private String name;
 

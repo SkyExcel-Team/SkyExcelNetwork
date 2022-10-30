@@ -46,6 +46,8 @@ public class MaterialPagePartTime {
 
     public void update(Player player) {
 
+
+        materials.add(Material.LIGHT);
         Arrays.stream(SkyBlockData.remove).forEach(materials::remove);
 
         int divide = 44;

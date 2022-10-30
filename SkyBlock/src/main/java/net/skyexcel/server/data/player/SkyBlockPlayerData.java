@@ -48,7 +48,7 @@ public class SkyBlockPlayerData {
 
     public boolean hasIsland() {
 
-        return (config.getConfig().get("island.name") != null ? config.getConfig().get("island.name") == null : false);
+        return (config.getConfig().get("island.name") != null);
 
     }
 

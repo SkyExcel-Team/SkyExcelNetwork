@@ -8,16 +8,23 @@ import net.skyexcel.server.data.island.SkyBlock;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import skyexcel.data.Item.NBTData;
 
 import java.util.UUID;
 
 public class SkyBlockEvent implements Listener {
 
+
+    private double MIN_Y = -60;
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDelete(SkyBlockDeleteEvent event) {
@@ -59,6 +66,10 @@ public class SkyBlockEvent implements Listener {
         Player player = event.getPlayer();
         SkyBlock data = event.getIslandData();
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+
+        if (event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.VISIT)) {
+
+        }
         if (playerData.hasIsland()) {
             Player owner = Bukkit.getPlayer(UUID.fromString(data.getOwner()));
 
@@ -76,6 +87,36 @@ public class SkyBlockEvent implements Listener {
                     owner.sendMessage(player.getDisplayName() + " 님이 섬 월드에 입장하였습니다!");
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent event) {
+
+        Player player = event.getPlayer();
+        Location location = event.getTo();
+
+        if (location.getY() <= MIN_Y) {
+            SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+            SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
+            skyBlock.teleportSkyBlock(player);
+        }
+    }
+
+    @EventHandler
+    public void Farm(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+
+        Location location = player.getLocation();
+        
+    }
+
+    @EventHandler
+    public void damage(EntityDamageEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof Player) {
+            Player player = (Player) entity;
+            event.setCancelled(true);
         }
     }
 }
