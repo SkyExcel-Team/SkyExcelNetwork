@@ -1,0 +1,7 @@
+package net.skyexcel.server;
+
+public class SkyExcelNetwork {
+    public static void main(String[] args) {
+        System.out.println("Hello world!");
+    }
+}

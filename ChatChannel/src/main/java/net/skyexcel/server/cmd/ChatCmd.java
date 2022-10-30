@@ -1,6 +1,6 @@
 package net.skyexcel.server.cmd;
 
-import net.skyexcel.server.ChatChannel;
+import net.skyexcel.server.SkyExcelNetwork;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +17,7 @@ public class ChatCmd implements CommandExecutor, TabExecutor {
     private static final String cmd = "채팅채널";
 
 
-    public ChatCmd(ChatChannel channel) {
+    public ChatCmd(SkyExcelNetwork channel) {
         Objects.requireNonNull(channel.getCommand(cmd)).setExecutor(this);
         Objects.requireNonNull(channel.getCommand(cmd)).setTabCompleter(this);
 
