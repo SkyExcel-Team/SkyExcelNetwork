@@ -1,7 +1,12 @@
 package net.skyexcel.server;
 
-public class SkyExcelNetwork {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class SkyExcelNetwork extends JavaPlugin {
+    public static JavaPlugin plugin;
+
+    @Override
+    public void onEnable() {
+        plugin = this;
     }
 }
