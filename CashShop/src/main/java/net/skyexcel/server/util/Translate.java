@@ -2,6 +2,7 @@ package net.skyexcel.server.util;
 
 import org.bukkit.ChatColor;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,17 +34,11 @@ public class Translate {
         return newArray;
     }
 
+    public static String decal(long amount){
+        DecimalFormat decFormat = new DecimalFormat("###,###");
 
-    public static List<String> msgTranslate(List<String> stringList, int price) {
-        List<String> newArray = new ArrayList<>();
+        String str = decFormat.format(amount);
 
-        for (String line : stringList) {
-            line = ChatColor.translateAlternateColorCodes('&', line);
-
-            newArray.add(line);
-
-        }
-
-        return newArray;
+        return str;
     }
 }

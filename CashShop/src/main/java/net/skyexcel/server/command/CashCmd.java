@@ -15,22 +15,22 @@ import java.util.Objects;
 
 public class CashCmd {
     public CashCmd() {
-        Tab<String, String> cashTab = new Tab<>(SkyExcelNetwork.plugin, "캐시");
-
-        Bukkit.getOnlinePlayers().forEach(players -> {
-            cashTab.args("지급", players.getDisplayName(), "<Amount>");
-
-            cashTab.args("빼기", players.getDisplayName(), "<Amount>");
-            cashTab.args("설정", players.getDisplayName(), "<Amount>");
-            cashTab.args("확인", players.getDisplayName());
-            cashTab.args("초기화", players.getDisplayName());
-
-            cashTab.args("정보보기", players.getDisplayName());
-        });
-
-        cashTab.args("모두지급", "<Amount> ");
-        cashTab.args("관리");
-        cashTab.args("리로드");
+//        Tab<String, String> cashTab = new Tab<>(SkyExcelNetwork.plugin, "캐시");
+//
+//        Bukkit.getOnlinePlayers().forEach(players -> {
+//            cashTab.args("지급", players.getDisplayName(), "<Amount>");
+//
+//            cashTab.args("빼기", players.getDisplayName(), "<Amount>");
+//            cashTab.args("설정", players.getDisplayName(), "<Amount>");
+//            cashTab.args("확인", players.getDisplayName());
+//            cashTab.args("초기화", players.getDisplayName());
+//
+//            cashTab.args("정보보기", players.getDisplayName());
+//        });
+//
+//        cashTab.args("모두지급", "<Amount> ");
+//        cashTab.args("관리");
+//        cashTab.args("리로드");
 
     }
 
@@ -42,17 +42,6 @@ public class CashCmd {
             player.sendMessage(StringData.checkPlayerCash(player));
         });
 
-        cmd.action("test", 0, action -> {
-
-            try {
-                Player player = (Player) action.getSender();
-
-            } catch (NumberFormatException e) {
-
-            }
-
-        });
-
         cmd.action("지급", 0, action -> {
 
             try {
@@ -61,7 +50,7 @@ public class CashCmd {
                 int amount = Integer.parseInt(action.getArgs()[2]);
 
                 Cash cash = new Cash(Objects.requireNonNull(target.getPlayer()));
-                cash.increaseAmount(amount);
+                cash.deposit(amount);
 
                 player.sendMessage(StringData.sendCash(target.getPlayer(), amount));
             } catch (NumberFormatException e) {
@@ -78,7 +67,7 @@ public class CashCmd {
 
                 Bukkit.getOnlinePlayers().forEach(players -> {
                     Cash cash = new Cash(Objects.requireNonNull(players));
-                    cash.increaseAmount(amount);
+                    cash.deposit(amount);
 
                 });
                 player.sendMessage(StringData.sendCashAllPlayer(amount));
@@ -95,7 +84,7 @@ public class CashCmd {
                 int amount = Integer.parseInt(action.getArgs()[2]);
 
                 Cash cash = new Cash(Objects.requireNonNull(target.getPlayer()));
-                cash.decreaseAmount(amount);
+                cash.withdraw(amount);
 
                 player.sendMessage(StringData.removeCash(target.getPlayer(), amount));
             } catch (NumberFormatException e) {
@@ -111,7 +100,7 @@ public class CashCmd {
                 int amount = Integer.parseInt(action.getArgs()[2]);
 
                 Cash cash = new Cash(Objects.requireNonNull(target.getPlayer()));
-                cash.setAmount(amount);
+                cash.Set(amount);
 
                 player.sendMessage(StringData.setCash(target.getPlayer(), amount));
             } catch (NumberFormatException e) {
@@ -131,7 +120,7 @@ public class CashCmd {
             Player player = (Player) action.getSender();
             OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
             Cash cash = new Cash(Objects.requireNonNull(target.getPlayer()));
-            cash.setAmount(0);
+            cash.Set(0);
             player.sendMessage(StringData.checkPlayerCash(target.getPlayer()));
         });
 

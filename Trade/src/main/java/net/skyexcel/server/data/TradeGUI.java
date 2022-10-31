@@ -14,7 +14,6 @@ import java.util.List;
 
 public class TradeGUI {
 
-
     private static Inventory inv;
 
     private Player player;
@@ -63,11 +62,11 @@ public class TradeGUI {
             Items.newItem("", Material.GRAY_STAINED_GLASS_PANE, 1, List.of(""), slots, inv);
         });
 
-
         Arrays.stream(decoration.IRON_BARS).forEach(slots -> {
             Items.newItem("", Material.IRON_BARS, 1, List.of(""), slots, inv);
         });
 
+        Items.newItem("", Material.LIME_WOOL, 1, List.of(""), 10, inv);
         Items.newItem("", Material.LIME_WOOL, 1, List.of(""), decoration.PLAYER_ACCEPT, inv);
         Items.newItem("", Material.GRAY_DYE, 1, List.of(""), decoration.PLAYER_STATUS, inv);
         Items.newItem("", Material.RED_WOOL, 1, List.of(""), decoration.PLAYER_DENY, inv);

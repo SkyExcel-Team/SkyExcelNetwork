@@ -13,10 +13,8 @@ public class JoinEvent implements Listener {
         Player player = event.getPlayer();
         if (!player.hasPlayedBefore()) {
             Cash cash = new Cash(player);
-            cash.setAmount(0);
+            cash.Set(0);
         }
 
-
-        new CashCmd();
     }
 }

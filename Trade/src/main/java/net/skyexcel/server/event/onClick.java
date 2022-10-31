@@ -4,6 +4,7 @@ import net.skyexcel.server.data.Data;
 import net.skyexcel.server.data.TradeGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,80 +12,48 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class onClick implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onClick(InventoryClickEvent event) {
+    public void test(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
         int slot = event.getSlot();
 
+
         if (Data.tradeGui.containsKey(player.getUniqueId())) {
-            TradeGUI trade = Data.tradeGui.get(player.getUniqueId());
+
+            TradeGUI tradeGUI = Data.tradeGui.get(player.getUniqueId());
 
             assert inv != null;
-            if (inv.equals(trade.getInv())) {
-                if (player.equals(trade.getPlayer())) {
+            if (inv.equals(tradeGUI.getInv())) {
 
-                    if (equals(trade, slot)) {
-                        event.setCancelled(true);
-                    } else if (slot == trade.getDecoration().getPLAYER_ACCEPT()) {
-                        trade.setStatusSlot(trade.getDecoration().getPLAYER_STATUS());
-                        trade.setStatus(TradeGUI.Status.ACCEPT);
+                if (player.equals(tradeGUI.getPlayer())) {
 
-                        if (acceptBoth(inv, trade.getDecoration().getTARGET_STATUS())) {
-                            trade.done();
+                    if (equalSlot(tradeGUI.getTargetSlots(), slot)) {
+                        ItemStack item = inv.getItem(slot);
+                        if (item != null) {
+                            player.sendMessage("거긴 아니야 장애야");
                         }
-
-                    } else if (slot == trade.getDecoration().getPLAYER_DENY()) {
-                        trade.setStatusSlot(trade.getDecoration().getPLAYER_STATUS());
-                        trade.setStatus(TradeGUI.Status.DENY);
                     }
-                } else if (player.equals(trade.getTarget())) {
+                } else if (player.equals(tradeGUI.getTarget())) {
 
-                    if (slot == trade.getDecoration().getTARGET_ACCEPT()) {
-                        trade.setStatusSlot(trade.getDecoration().getTARGET_STATUS());
-                        trade.setStatus(TradeGUI.Status.ACCEPT);
-
-                        if (acceptBoth(inv, trade.getDecoration().getPLAYER_STATUS())) {
-                            trade.done();
-                        }
-
-                    } else if (slot == trade.getDecoration().getTARGET_DENY()) {
-                        trade.setStatusSlot(trade.getDecoration().getTARGET_STATUS());
-                        trade.setStatus(TradeGUI.Status.DENY);
+                    if (equalSlot(tradeGUI.getPlayerSlots(), slot)) {
+                        player.sendMessage("test 섹스 ");
                     }
-                    event.setCancelled(true);
                 }
             }
         }
     }
 
-    public void cancel(int slot, int value, InventoryClickEvent event) {
-
-        if (slot == value) {
-            event.setCancelled(true);
+    public boolean equalSlot(int[] Slots, int Slot) {
+        List<Integer> newSlots = new ArrayList<>();
+        for (int slots : Slots) {
+            newSlots.add(slots);
         }
-    }
-
-    public boolean acceptBoth(Inventory inv, int slot) {
-        ItemStack item = inv.getItem(slot);
-        assert item != null;
-        return item.getType().equals(Material.LIME_DYE);
-    }
-
-    public boolean equals(TradeGUI trade, int slot) {
-        for (int i : trade.getPlayerSlots()) {
-            return slot != i;
-        }
-        return false;
-    }
-
-    public boolean equalSlot(int slot, int[] slots) {
-        for (int i = 0; i < slots.length; i++) {
-            System.out.println(i);
-            return slot == i;
-        }
-        return false;
+        return newSlots.contains(Slot);
     }
 }

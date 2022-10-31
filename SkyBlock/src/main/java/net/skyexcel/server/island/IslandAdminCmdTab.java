@@ -1,34 +1,53 @@
 package net.skyexcel.server.island;
 
 import net.skyexcel.server.SkyBlockCore;
-import skyexcel.command.tab.Tab;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import skyexcel.data.file.Config;
 
-public class IslandAdminCmdTab {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    public static Tab tab;
-
+public class IslandAdminCmdTab implements TabCompleter {
     public IslandAdminCmdTab() {
-
-        tab = new Tab(SkyBlockCore.plugin, "섬어드민");
-
-        tab.args("[자신의 섬 이름]", "금고", "입금", "Amount");
-        tab.args("[자신의 섬 이름]", "금고", "출금", "Amount");
-        tab.args("[자신의 섬 이름]", "금고", "잠금");
-
-        tab.args("[자신의 섬 이름]", "밴블록");
-        tab.args("[자신의 섬 이름]", "pvp");
-
-        tab.args("[자신의 섬 이름]", "알바", "추가", "[플레이어]");
-        tab.args("[자신의 섬 이름]", "알바", "제거", "[플레이어]");
-
-        tab.args("[자신의 섬 이름]", "이름변경", "변경할 이름");
-
-        tab.args("[자신의 섬 이름]", "레벨");
-
-        tab.args("[자신의 섬 이름]", "규칙", "추가");
-        tab.args("[자신의 섬 이름]", "규칙", "제거");
-        tab.args("[자신의 섬 이름]", "규칙", "보기");
-
+        Bukkit.getServer().getPluginCommand("섬어드민").setTabCompleter(this);
     }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+
+
+        List<String> result = new ArrayList<>();
+        Config config = new Config("SkyBlock/");
+        config.setPlugin(SkyBlockCore.plugin);
+
+        sender.sendMessage("test " + args.length);
+
+        if (args.length == 1) {
+            result.add("랭킹갱신");
+            result.addAll(config.fileListName());
+        } else if (args.length == 2) {
+            result = List.of("금고", "디스코드", "옵션", "알바", "레벨");
+        } else if (args.length == 3) {
+            if (args[1].equalsIgnoreCase("금고")) {
+                result = List.of("입금", "출금", "설정", "잠금");
+            } else if (args[1].equalsIgnoreCase("레벨")) {
+                result = List.of("인원", "크기", "호퍼", "아머스탠드", "액자", "포탈", "농작물");
+            } else if (args[1].equalsIgnoreCase("규칙")) {
+                result = List.of("추가", "제거", "보기");
+            }
+        } else if (args.length == 4) {
+            if (List.of("입금", "출금", "설정").contains(args[2])) {
+                result = List.of("amount");
+            }
+        }
+        return result;
+    }
+
 
 }

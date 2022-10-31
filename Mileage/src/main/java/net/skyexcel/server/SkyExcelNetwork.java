@@ -19,7 +19,6 @@ public class SkyExcelNetwork extends JavaPlugin {
     public static Config message;
 
 
-
     public static Config shop;
 
     @Override
@@ -28,7 +27,7 @@ public class SkyExcelNetwork extends JavaPlugin {
         plugin = this;
 
         init();
-        Listener[] listeners = { new onJoin(),new ShopEvent()};
+        Listener[] listeners = {new onJoin(), new ShopEvent()};
         Arrays.stream(listeners).forEach(listener -> {
             Bukkit.getPluginManager().registerEvents(listener, this);
         });
@@ -40,6 +39,7 @@ public class SkyExcelNetwork extends JavaPlugin {
 
         new SEConomyExpansion(this).register();
         new MileageCommand();
+        new ShopCommand();
 
 //
         message = new Config("message");

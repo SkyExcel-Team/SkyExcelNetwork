@@ -45,9 +45,6 @@ public class Shop {
 
     public void load(Player player) {
         Inventory inv = gui.getInventory("shop");
-        gui.path("shop.inv.items.1").setLong("sell", 1231231);
-        gui.path("shop.inv.items.1").setLong("buy", 1231231);
-        gui.path("shop.inv.items.1").setLong("sex", 1231231);
         player.openInventory(inv);
     }
 

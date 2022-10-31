@@ -1,4 +1,4 @@
-name: AlphaChest
+name: SBossBar
 main: net.skyexcel.server.SkyExcelNetwork
 version: 1.0
 api-version: 1.19

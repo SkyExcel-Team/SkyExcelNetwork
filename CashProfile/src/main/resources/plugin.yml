@@ -1,0 +1,10 @@
+name: SCashProfile
+main: net.skyexcel.server.SkyExcelNetwork
+version: 1.0
+api-version: 1.19
+
+softdepend:
+  - SkyExcelCore
+
+commands:
+  캐시프로필:

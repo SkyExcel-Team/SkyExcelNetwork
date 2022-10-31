@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/AutoClean" />
             <option value="$PROJECT_DIR$/BGM" />
             <option value="$PROJECT_DIR$/BossBar" />
+            <option value="$PROJECT_DIR$/CashProfile" />
             <option value="$PROJECT_DIR$/CashShop" />
             <option value="$PROJECT_DIR$/ChatChannel" />
             <option value="$PROJECT_DIR$/Cosmetic" />
@@ -25,6 +26,7 @@
             <option value="$PROJECT_DIR$/MenuSystem" />
             <option value="$PROJECT_DIR$/Mileage" />
             <option value="$PROJECT_DIR$/NoMacro" />
+            <option value="$PROJECT_DIR$/PlayTime" />
             <option value="$PROJECT_DIR$/PlayerProfile" />
             <option value="$PROJECT_DIR$/SEconomy" />
             <option value="$PROJECT_DIR$/SkyBlock" />

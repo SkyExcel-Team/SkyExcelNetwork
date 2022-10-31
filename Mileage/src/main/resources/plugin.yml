@@ -5,5 +5,7 @@ api-version: 1.13
 
 commands:
   마일리지:
+  마일리지상점:
+
 softdepend:
   - SkyExcelCore

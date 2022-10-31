@@ -6,6 +6,7 @@ import com.comphenix.protocol.ProtocolManager;
 import com.github.yannicklamprecht.worldborder.api.WorldBorderApi;
 import net.skyexcel.server.event.*;
 import net.skyexcel.server.hook.SkyBlockExpansion;
+import net.skyexcel.server.island.IslandAdminCmd;
 import net.skyexcel.server.island.IslandAdminCmdTab;
 import net.skyexcel.server.island.IslandCmd;
 import net.skyexcel.server.island.OtherCmd;
@@ -57,10 +58,12 @@ public class SkyBlockCore extends JavaPlugin implements Listener {
         new IslandCmd();
 
         new OtherCmd();
+        new IslandAdminCmdTab();
+        new IslandAdminCmd();
 
         new SkyBlockExpansion(this).register();
 
-        Listener[] listeners = { new onJoin(), new SkyBlockEvent(), new banBlockEvent(), new onHit()};
+        Listener[] listeners = {new onJoin(), new SkyBlockEvent(), new banBlockEvent(), new onHit()};
         Arrays.stream(listeners).forEach(listener -> {
             Bukkit.getPluginManager().registerEvents(listener, this);
         });

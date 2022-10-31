@@ -22,8 +22,8 @@ public class ShopCommand implements TabCompleter {
 
     public ShopCommand() {
 
-        Bukkit.getPluginCommand("상점").setTabCompleter(this);
-        Cmd cmd = new Cmd(SkyExcelNetwork.plugin, "상점");
+        Bukkit.getPluginCommand("마일리지상점").setTabCompleter(this);
+        Cmd cmd = new Cmd(SkyExcelNetwork.plugin, "마일리지상점");
 
         cmd.label(action -> {
             Player player = (Player) action.getSender();
@@ -85,7 +85,6 @@ public class ShopCommand implements TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Config config = new Config("shop/");
-
             config.setPlugin(SkyExcelNetwork.plugin);
             if (args.length == 1) {
                 result.add("생성");

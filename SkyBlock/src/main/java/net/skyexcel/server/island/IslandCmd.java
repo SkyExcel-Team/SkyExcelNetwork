@@ -263,7 +263,8 @@ public class IslandCmd implements TabCompleter {
                 loading.runTaskTimer(SkyBlockCore.plugin, 0, 10);
 
                 loading.end(end -> {
-                    data.spawn(player, data.getLocation());
+                    if (data.getLocation() != null)
+                        data.spawn(player, data.getLocation());
                 });
 
 
@@ -348,6 +349,7 @@ public class IslandCmd implements TabCompleter {
                         amount = Integer.parseInt(args[2]);
                         vault.setPlayer(player);
                         money = new SEconomy(player);
+
                         if (vault.withdraw(amount)) {
                             money.deposit(amount);
                             SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());

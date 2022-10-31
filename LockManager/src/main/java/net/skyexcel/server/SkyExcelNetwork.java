@@ -10,7 +10,7 @@ public class SkyExcelNetwork extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        SignGUI.registerSignUpdateListener(this);
+
         Bukkit.getPluginManager().registerEvents(new InteractEvent(), this);
     }
 }

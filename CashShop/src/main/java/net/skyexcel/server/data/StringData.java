@@ -169,8 +169,7 @@ public class StringData {
     }
 
 
-
-    private static String format(int amount) {
+    private static String format(long amount) {
         DecimalFormat decFormat = new DecimalFormat("###,###");
 
         return decFormat.format(amount);

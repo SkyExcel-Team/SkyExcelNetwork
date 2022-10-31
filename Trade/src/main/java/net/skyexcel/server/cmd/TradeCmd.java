@@ -58,7 +58,13 @@ public class TradeCmd implements CommandExecutor {
                     case "수락":
                         target = Bukkit.getPlayer(args[1]);
 
+                        assert target != null;
                         tradeGUI = Data.tradeGui.get(target.getUniqueId());
+                        tradeGUI.setTarget(target);
+                        tradeGUI.openGUI();
+
+                        tradeGUI = Data.tradeGui.get(player.getUniqueId());
+                        tradeGUI.setTarget(player);
                         tradeGUI.openGUI();
 
                         if (Request.accept(request, player, target)) {
