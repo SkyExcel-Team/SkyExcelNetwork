@@ -3,5 +3,9 @@ main: net.skyexcel.server.SkyExcelNetwork
 version: 1.0
 api-version: 1.19
 
+commands:
+  낚시대회:
+  낚시:
+
 softdepend:
   - SkyExcelCore

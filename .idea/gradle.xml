@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/Eglow" />
             <option value="$PROJECT_DIR$/Fish" />
             <option value="$PROJECT_DIR$/GiftBox" />
+            <option value="$PROJECT_DIR$/Items" />
             <option value="$PROJECT_DIR$/LockManager" />
             <option value="$PROJECT_DIR$/Menu" />
             <option value="$PROJECT_DIR$/MenuSystem" />
@@ -33,6 +34,7 @@
             <option value="$PROJECT_DIR$/TabList" />
             <option value="$PROJECT_DIR$/Trade" />
             <option value="$PROJECT_DIR$/Trash" />
+            <option value="$PROJECT_DIR$/WorldGuard" />
           </set>
         </option>
       </GradleProjectSettings>

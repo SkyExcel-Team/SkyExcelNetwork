@@ -2,18 +2,18 @@ package net.skyexcel.server.event;
 
 import net.skyexcel.server.data.Data;
 import net.skyexcel.server.data.TradeGUI;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class onClick implements Listener {
 
@@ -23,26 +23,43 @@ public class onClick implements Listener {
         Inventory inv = event.getClickedInventory();
         int slot = event.getSlot();
 
-
         if (Data.tradeGui.containsKey(player.getUniqueId())) {
 
             TradeGUI tradeGUI = Data.tradeGui.get(player.getUniqueId());
 
             assert inv != null;
             if (inv.equals(tradeGUI.getInv())) {
-
                 if (player.equals(tradeGUI.getPlayer())) {
-
-                    if (equalSlot(tradeGUI.getTargetSlots(), slot)) {
-                        ItemStack item = inv.getItem(slot);
-                        if (item != null) {
-                            player.sendMessage("거긴 아니야 장애야");
-                        }
+                    if (!equalSlot(tradeGUI.getTargetSlots(), slot)) {
+                        event.setCancelled(true);
                     }
                 } else if (player.equals(tradeGUI.getTarget())) {
+                    if (!equalSlot(tradeGUI.getPlayerSlots(), slot)) {
+                        event.setCancelled(true);
+                    }
+                }
+            }
+        }
+    }
 
-                    if (equalSlot(tradeGUI.getPlayerSlots(), slot)) {
-                        player.sendMessage("test 섹스 ");
+    @EventHandler
+    public void onDrag(InventoryDragEvent event) {
+
+        if(event.getWhoClicked() instanceof Player player){
+            @NotNull Set<Integer> slots = event.getRawSlots();
+            if (Data.tradeGui.containsKey(player.getUniqueId())) {
+                TradeGUI tradeGUI = Data.tradeGui.get(player.getUniqueId());
+                if (player.equals(tradeGUI.getPlayer())) {
+                    for(int slot : slots){
+                        if(!equalSlot(tradeGUI.getTargetSlots(),slot)){
+                            event.setCancelled(true);
+                        }
+                    }
+                } else if (player.equals(tradeGUI.getPlayer())) {
+                    for(int slot : slots){
+                        if(!equalSlot(tradeGUI.getPlayerSlots(),slot)){
+                            event.setCancelled(true);
+                        }
                     }
                 }
             }

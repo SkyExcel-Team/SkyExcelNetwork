@@ -23,8 +23,8 @@ dependencies {
     implementation("com.github.SkyExcel-Team:SkyExcelCore:v1.1.21")
 }
 
-tasks.withType<Jar> {
-    val dest = Properties().apply { load(rootProject.file("env.properties").reader())}.getProperty("jarDirectory")
-        ?: throw NullPointerException("jarDirectory not settled inside .gradle/gradle.properties")
-    destinationDirectory.set(file(dest))
-}
+//tasks.withType<Jar> {
+//    val dest = Properties().apply { load(rootProject.file("env.properties").reader())}.getProperty("jarDirectory")
+//        ?: throw NullPointerException("jarDirectory not settled inside .gradle/gradle.properties")
+//    destinationDirectory.set(file(dest))
+//}

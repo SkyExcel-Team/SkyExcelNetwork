@@ -1,4 +1,4 @@
-package net.skyexcel.server.island;
+package net.skyexcel.server.cmd;
 
 import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.player.SkyBlockRequest;

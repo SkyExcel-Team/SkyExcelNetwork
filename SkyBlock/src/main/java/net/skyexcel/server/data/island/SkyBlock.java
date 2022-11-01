@@ -483,39 +483,6 @@ public class SkyBlock {
         return null;
     }
 
-    public List<Player> getVisitors() {
-        List<Player> visitors = new ArrayList<>();
-        if (getLocation() != null) {
-            Location location = getLocation();
-
-
-            if (getSize() != 0) {
-                int size = getSize();
-                List<String> members = getMembers();
-                for (Entity entity : location.getNearbyEntities(size, size, size)) {
-                    if (entity instanceof Player) {
-                        Player player = (Player) entity;
-
-                        if (getOwner() != null) {
-                            if (getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
-                                visitors.add(player);
-                            }
-
-                            if (!player.getUniqueId().toString().equalsIgnoreCase(getOwner())) {
-                                members.forEach(member -> {
-                                    if (!player.getUniqueId().toString().equalsIgnoreCase(member)) {
-                                        visitors.add(player);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return visitors;
-    }
-
 
     public void getRule(Player player) {
 
