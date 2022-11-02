@@ -1,18 +1,22 @@
 package net.skyexcel.server.data.island;
 
 import net.skyexcel.server.SkyBlockCore;
+import net.skyexcel.server.data.SkyBlockData;
 import net.skyexcel.server.data.event.*;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.data.vault.SkyBlockVault;
+import net.skyexcel.server.ui.title.Loading;
 import net.skyexcel.server.util.world.WorldManager;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import skyexcel.data.file.Config;
 import skyexcel.data.location.Region;
 
+import javax.xml.validation.Validator;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
@@ -108,6 +112,74 @@ public class SkyBlock {
     }
 
 
+    public void remove(Player player) {
+        if (getLocation() != null) {
+            if (!getMembers().isEmpty()) { //TODO 맴버가 있을 경우 모든 멤버를 스폰으로 텔레포트 시킨다.
+                for (String uuid : getMembers()) {
+                    Player members = Bukkit.getPlayer(UUID.fromString(uuid));
+                    if (members.isOnline()) {
+                        members.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                        members.sendMessage("당신의 섬이 지워졌습니다!");
+                    }
+                }
+            } else if(!getPartTime().isEmpty()){
+                for (String uuid : getPartTime()) {
+                    Player parttime = Bukkit.getPlayer(UUID.fromString(uuid));
+                    if (parttime.isOnline()) {
+                        parttime.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                        parttime.sendMessage("당신의 섬이 지워졌습니다!");
+                    }
+                }
+            }
+
+            player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+
+            Location spawn = getLocation();
+
+            int size = getSize();
+            org.bukkit.Location pos1 = spawn; //자신의 섬의 영역을 불러온다.
+            pos1.add(size, 256, size);
+            org.bukkit.Location pos2 = spawn;
+            size = -1 * size;
+            pos2.add(size, -256, size);
+
+            for (double x = pos1.getX(); x < pos2.getX(); x++) {
+                for (double y = pos1.getX(); y < pos2.getY(); y++) {
+                    for (double z = pos1.getZ(); z < pos2.getZ(); z++) {
+                        Location newLocation = new Location(Bukkit.getWorld("SkyBlock"), x, y, z);
+                        if (newLocation.getBlock().getType() != Material.AIR) {
+                            Block block = newLocation.getBlock();
+                            block.setType(Material.AIR);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void reset(Player player) {
+        player.sendMessage("초기화 진행중...");
+
+        remove(player);
+        Loading loading = new Loading(player, 5);
+
+        loading.runTaskTimer(SkyBlockCore.plugin, 0, 20);
+
+        loading.end(end -> {
+            try {
+                player.sendMessage("초기화가 완료 되었습니다!");
+                create(player);
+                //TODO 섬 생성 할떄에 플레이어 데이터에 location이 있는지 체크해야함. 있으면 해당 좌표에 섬을 생성 하고,
+                // 없으면 1000좌표를 더한 좌표에 생성 후 텔레포트 시켜준다.
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        SkyBlockData.loading.put(player.getUniqueId(), loading);
+    }
+
+
     public void time(Player player, long time) {
 
         List<String> members = getMembers();
@@ -171,10 +243,6 @@ public class SkyBlock {
 
     }
 
-    public void reset(Player player) {
-        delete(player);
-
-    }
 
     public void quickSkyBlock(Player player) {
         SkyBlockQuickEvent event = new SkyBlockQuickEvent(name, this, player);
