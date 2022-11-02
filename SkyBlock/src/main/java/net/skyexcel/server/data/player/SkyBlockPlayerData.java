@@ -52,6 +52,10 @@ public class SkyBlockPlayerData {
 
     }
 
+    public Config getConfig() {
+        return config;
+    }
+
     public String getIsland() {
         return config.getConfig().getString("island.name");
     }

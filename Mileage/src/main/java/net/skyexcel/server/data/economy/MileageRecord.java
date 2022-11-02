@@ -7,7 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
-public class SEconomyRecord {
+public class MileageRecord {
 
 
     private Config record;
@@ -17,7 +17,7 @@ public class SEconomyRecord {
     private long before;
 
 
-    public SEconomyRecord() {
+    public MileageRecord() {
         this.record = new Config("data/log/log");
         this.record.setPlugin(SkyExcelNetwork.plugin);
     }

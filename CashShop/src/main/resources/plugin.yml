@@ -1,9 +1,11 @@
-name: CashShop
+name: SCashShop
 main: net.skyexcel.server.SkyExcelNetwork
 version: 1.0
 api-version: 1.13
+
 softdepend:
   - SkyExcelCore
+  - PlaceHolderAPI
 commands:
   캐시:
   캐시상점:

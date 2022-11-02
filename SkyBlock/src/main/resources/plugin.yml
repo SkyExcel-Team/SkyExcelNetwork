@@ -7,11 +7,13 @@ commands:
   섬:
   섬어드민:
   other:
+
 worlds:
   SkyBlock:
     generator: SkyBlock
+
 softdepend:
   - SkyExcelCore
-  - PlaceHolderAPI
+  - PlaceholderAPI
   - WorldEdit
   - ProtocolLib

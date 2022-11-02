@@ -11,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class SkyBlockExpansion extends PlaceholderExpansion {
+public class SkyBlockVaultExpansion extends PlaceholderExpansion {
     private SkyBlockCore plugin; // The instance is created in the constructor and won't be modified, so it can be final
 
-    public SkyBlockExpansion(SkyBlockCore plugin) {
+    public SkyBlockVaultExpansion(SkyBlockCore plugin) {
         this.plugin = plugin;
     }
 

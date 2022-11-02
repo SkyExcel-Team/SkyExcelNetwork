@@ -54,7 +54,6 @@ public class CashExpansion extends PlaceholderExpansion {
         if (params.equalsIgnoreCase("Cash")) {
             return String.valueOf(cash.getAmount());
         } else if (params.equalsIgnoreCase("Cash_fixed")) {
-
             return Translate.decal(cash.getAmount());
         }
         return null; // Placeholder is unknown by the expansion

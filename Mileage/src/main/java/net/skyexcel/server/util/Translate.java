@@ -1,6 +1,6 @@
 package net.skyexcel.server.util;
 
-import net.skyexcel.server.data.economy.SEconomy;
+import net.skyexcel.server.data.economy.Mileage;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -13,27 +13,27 @@ import java.util.Date;
 
 public class Translate {
 
-    private static SEconomy economy;
+    private static Mileage economy;
 
 
     public static String moneyCheck(Player player, String msg) {
-        economy = new SEconomy(player);
+        economy = new Mileage(player);
         return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%money%", String.valueOf(economy.getMoney())));
     }
 
     public static String moneyCheckTarget(OfflinePlayer target, String msg) {
-        economy = new SEconomy(target);
+        economy = new Mileage(target);
         return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%money%", String.valueOf(economy.getMoney())));
     }
 
     public static String moneyAction(Player player, Player target, long amount, String msg) {
-        economy = new SEconomy(player);
+        economy = new Mileage(player);
         return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%money%", String.valueOf(amount)).
                 replaceAll("%player%", target.getDisplayName()));
     }
 
     public static String moneyAction(Player player, OfflinePlayer target, long amount, String msg) {
-        economy = new SEconomy(player);
+        economy = new Mileage(player);
         return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%money%", String.valueOf(amount)).
                 replaceAll("%player%", target.getName()));
     }

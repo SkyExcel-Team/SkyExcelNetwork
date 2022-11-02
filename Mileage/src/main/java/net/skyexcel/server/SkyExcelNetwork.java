@@ -4,7 +4,7 @@ import net.skyexcel.server.cmd.MileageCommand;
 import net.skyexcel.server.cmd.ShopCommand;
 import net.skyexcel.server.event.ShopEvent;
 import net.skyexcel.server.event.onJoin;
-import net.skyexcel.server.hook.SEConomyExpansion;
+import net.skyexcel.server.hook.MileageExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,7 +37,7 @@ public class SkyExcelNetwork extends JavaPlugin {
 
     private void init() {
 
-        new SEConomyExpansion(this).register();
+        new MileageExpansion(this).register();
         new MileageCommand();
         new ShopCommand();
 

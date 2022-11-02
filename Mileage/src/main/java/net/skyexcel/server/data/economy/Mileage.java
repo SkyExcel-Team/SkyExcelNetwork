@@ -4,7 +4,7 @@ import net.skyexcel.server.SkyExcelNetwork;
 import org.bukkit.OfflinePlayer;
 import skyexcel.data.file.Config;
 
-public class SEconomy {
+public class Mileage {
 
 
 //    private Config config;
@@ -15,7 +15,7 @@ public class SEconomy {
 
     private Config config;
 
-    public SEconomy(OfflinePlayer player) {
+    public Mileage(OfflinePlayer player) {
         this.player = player;
         this.config = new Config("data/" + player.getUniqueId());
         this.config.setPlugin(SkyExcelNetwork.plugin);

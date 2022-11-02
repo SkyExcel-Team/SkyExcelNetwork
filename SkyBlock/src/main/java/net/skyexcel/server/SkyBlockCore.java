@@ -4,12 +4,12 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
 import com.github.yannicklamprecht.worldborder.api.WorldBorderApi;
+import net.skyexcel.server.cmd.*;
 import net.skyexcel.server.event.*;
-import net.skyexcel.server.hook.SkyBlockExpansion;
-import net.skyexcel.server.cmd.IslandAdminCmd;
-import net.skyexcel.server.cmd.IslandAdminCmdTab;
-import net.skyexcel.server.cmd.IslandCmd;
-import net.skyexcel.server.cmd.OtherCmd;
+import net.skyexcel.server.hook.RankExpansion;
+import net.skyexcel.server.hook.RankLevelExpansion;
+import net.skyexcel.server.hook.RankNameExpansion;
+import net.skyexcel.server.hook.SkyBlockVaultExpansion;
 import net.skyexcel.server.util.world.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,8 +17,10 @@ import org.bukkit.World;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import skyexcel.data.file.Config;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class SkyBlockCore extends JavaPlugin implements Listener {
 
@@ -26,6 +28,8 @@ public class SkyBlockCore extends JavaPlugin implements Listener {
     private static ProtocolManager protocolManager;
 
     private static WorldBorderApi worldBorderApi;
+
+    public static Config config;
 
 
     @Override
@@ -52,6 +56,9 @@ public class SkyBlockCore extends JavaPlugin implements Listener {
 
     public void init() {
 
+        config = new Config("config");
+        config.setPlugin(this);
+        
         WorldManager worldManager = new WorldManager();
         worldManager.create();
 
@@ -61,19 +68,23 @@ public class SkyBlockCore extends JavaPlugin implements Listener {
         new IslandAdminCmdTab();
         new IslandAdminCmd();
 
-        new SkyBlockExpansion(this).register();
+
+        Objects.requireNonNull(Bukkit.getServer().getPluginCommand("섬")).setTabCompleter(new IslandCmdTab());
+        new SkyBlockVaultExpansion(this).register();
+
+
+        new RankExpansion(this).register();
+        new RankLevelExpansion(this).register();
+        new RankNameExpansion(this).register();
 
         Listener[] listeners = {new onJoin(), new SkyBlockEvent(), new banBlockEvent(), new onHit()};
         Arrays.stream(listeners).forEach(listener -> {
             Bukkit.getPluginManager().registerEvents(listener, this);
         });
 
-
         for (World world : Bukkit.getWorlds()) {
-
             System.out.println(ChatColor.GREEN + world.getName() + " 로드 완료!");
         }
-
     }
 
 

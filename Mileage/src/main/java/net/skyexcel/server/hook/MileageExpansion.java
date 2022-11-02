@@ -2,16 +2,18 @@ package net.skyexcel.server.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.skyexcel.server.SkyExcelNetwork;
+import net.skyexcel.server.data.economy.Mileage;
+import net.skyexcel.server.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class SEConomyExpansion extends PlaceholderExpansion {
+public class MileageExpansion extends PlaceholderExpansion {
     private SkyExcelNetwork plugin; // The instance is created in the constructor and won't be modified, so it can be final
 
-    public SEConomyExpansion(SkyExcelNetwork plugin) {
+    public MileageExpansion(SkyExcelNetwork plugin) {
         this.plugin = plugin;
     }
 
@@ -48,13 +50,13 @@ public class SEConomyExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-//        if (params.equalsIgnoreCase("money_fixed")) {
-//            SEconomy economy = new SEconomy(player);
-//            return Translate.decal(economy.getMoney());
-//        } else if (params.equalsIgnoreCase("money")) {
-//            SEconomy economy = new SEconomy(player);
-//            return String.valueOf(economy.getMoney());
-//        }
+        if (params.equalsIgnoreCase("mileage_fixed")) {
+            Mileage economy = new Mileage(player);
+            return Translate.decal(economy.getMoney());
+        } else if (params.equalsIgnoreCase("mileage")) {
+            Mileage economy = new Mileage(player);
+            return String.valueOf(economy.getMoney());
+        }
         return null; // Placeholder is unknown by the expansion
     }
 }

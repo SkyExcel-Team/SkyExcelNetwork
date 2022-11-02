@@ -34,8 +34,6 @@ public class Translate {
     public static String decal(long amount){
         DecimalFormat decFormat = new DecimalFormat("###,###");
 
-        String str = decFormat.format(amount);
-
-        return str;
+        return decFormat.format(amount);
     }
 }

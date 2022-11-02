@@ -1,12 +1,10 @@
-name: SEconomy
+name: SItems
 main: net.skyexcel.server.SkyExcelNetwork
 version: 1.0
 api-version: 1.13
 
 commands:
-  돈:
-  상점:
+  아이템:
 
 softdepend:
   - SkyExcelCore
-  - PlaceHolderAPI

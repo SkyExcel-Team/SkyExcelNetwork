@@ -84,7 +84,7 @@ public class MaterialPageMember {
                 if (islandData.getBanBlockMember() != null) {
                     for (Material banblock : islandData.getBanBlockMember()) {
                         if (material.equals(banblock)) {
-                            Items.Enchant(new ItemStack(material), inv, slot);
+                            Items.Enchant(new ItemStack(material), List.of(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
                         }
                     }
                 }
@@ -169,6 +169,13 @@ public class MaterialPageMember {
                 clearItem(PREVIOUS_PAGE_SLOT);
             }
         }
+    }
+
+    public void deSelectAll() {
+
+    }
+    public void selectAll() {
+
     }
 
     private void next() {

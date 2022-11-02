@@ -7,7 +7,6 @@ import net.skyexcel.server.data.vault.SkyBlockVault;
 import net.skyexcel.server.util.world.WorldManager;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import skyexcel.data.file.Config;
@@ -49,10 +48,9 @@ public class SkyBlock {
         if (!event.isCancelled()) {
 
             if (!data.hasIsland()) {
+
                 data.setName(name);
-
                 vault.create();
-
                 config.setString("SkyBlock.name", name);
                 config.setString("SkyBlock.discord", "");
                 config.getConfig().set("SkyBlock.worldtime", 0);
@@ -66,18 +64,19 @@ public class SkyBlock {
 
                 config.setString("SkyBlock.owner", player.getUniqueId().toString());
 
+                config.getConfig().set("SkyBlock.blacklist", new ArrayList<>());
                 config.getConfig().set("SkyBlock.member", new ArrayList<>());
                 config.getConfig().set("SkyBlock.rule", new ArrayList<>());
-
-
                 config.getConfig().set("SkyBlock.parttime.player", new ArrayList<>());
                 config.getConfig().set("SkyBlock.parttime.money", new ArrayList<>());
 
                 config.getConfig().set("SkyBlock.option.pvp", true);
                 config.getConfig().set("SkyBlock.option.wb", true);
                 config.getConfig().set("SkyBlock.option.open", true);
+
                 config.getConfig().set("SkyBlock.option.banblock.member", new ArrayList<>());
                 config.getConfig().set("SkyBlock.option.banblock.parttime", new ArrayList<>());
+
                 config.getConfig().set("SkyBlock.option.weather", WeatherType.CLEAR.name());
 
                 // 1000 = day, noon = 6000 night = 13000 midnight = 18000
@@ -85,25 +84,67 @@ public class SkyBlock {
 
                 config.saveConfig();
 
-                Random random = new Random();
-
-                double x = 10000000 * random.nextDouble();
-                double z = 10000000 * random.nextDouble();
-
-                net.skyexcel.server.Location loc = new net.skyexcel.server.Location(Bukkit.getWorld("SkyBlock"), x, -60, z);
-
-                WorldManager worldManager = new WorldManager();
-
-                if (loc.canSpawn(1000, 1000, 1000)) {
-
-                    worldManager.paste(loc.getWorld(), loc.add(0, 120, 0), "islands/Based/large.schem");
-                    this.location = loc;
-
-                    config.setLocation("SkyBlock.location", loc);
+                if (SkyBlockCore.config.getConfig().get("location") == null) {
+                    Location location = new Location(Bukkit.getWorld("SkyBlock"), 0.0D, 0.0D, 0.0D);
+                    SkyBlockCore.config.setLocation("location", location);
+                    WorldManager worldManager = new WorldManager();
+                    worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
+                    this.config.setLocation("SkyBlock.location", location);
+                    this.config.saveConfig();
+                } else {
+                    Location location = SkyBlockCore.config.getLocation("location");
+                    if (location.getX() + 1000.0D <= 2.9999984E7D) {
+                        location.add(1000.0D, 0.0D, 0.0D);
+                        this.config.setLocation("SkyBlock.location", location);
+                        WorldManager worldManager = new WorldManager();
+                        worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
+                        SkyBlockCore.config.setLocation("location", location);
+                        this.config.saveConfig();
+                    }
                 }
             } else {
                 player.sendMessage("섬을 탈퇴 하거나, 삭제 하세요!");
             }
+        }
+    }
+
+    public void remove(Player player) {
+
+        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+        player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+
+        if (getLocation() != null) {
+            if (!getMembers().isEmpty()) { //TODO 맴버가 있을 경우 모든 멤버를 스폰으로 텔레포트 시킨다.
+                for (String uuid : getMembers()) {
+                    Player members = Bukkit.getPlayer(UUID.fromString(uuid));
+                    SkyBlockPlayerData memberData = new SkyBlockPlayerData(members);
+                    memberData.getConfig().deleteFile();
+                    if (members.isOnline()) {
+                        members.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                        members.sendMessage("당신의 섬이 지워졌습니다!");
+                    }
+                }
+            } else if (!getPartTime().isEmpty()) {
+                for (String uuid : getPartTime()) {
+                    Player parttime = Bukkit.getPlayer(UUID.fromString(uuid));
+                    if (parttime.isOnline()) {
+                        parttime.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                        parttime.sendMessage("당신의 섬이 지워졌습니다!");
+
+                    }
+                }
+            }
+
+            org.bukkit.Location pos1 = getLocation(); //자신의 섬의 영역을 불러온다.
+            org.bukkit.Location pos2 = getLocation(); //자신의 섬의 영역을 불러온다.
+            int size = getSize() / 2;
+            pos1.subtract(size, 63, size);
+            pos2.add(size, 63, size);
+
+            WorldManager.removeBlocks(pos1, pos2);
+
+            config.deleteFile();
+            playerData.getConfig().deleteFile();
         }
     }
 
@@ -226,14 +267,28 @@ public class SkyBlock {
         }
     }
 
-    public void disableWorldBorder(Player player) {
+    public void setWorldBorderVisibilty(Player player) {
         if (isWorldBorder()) {
-            SkyBlockCore.getWorldBorderApi().resetWorldBorderToGlobal(player);
+            if (!getMembers().isEmpty()) {
+                SkyBlockCore.getWorldBorderApi().resetWorldBorderToGlobal(player);
+            } else {
+                for (String uuid : getMembers()) {
+                    player.sendMessage(uuid);
+                    Player member = Bukkit.getPlayer(UUID.fromString(uuid));
+                    SkyBlockCore.getWorldBorderApi().resetWorldBorderToGlobal(member);
+                }
+            }
             setWorldBorder(false);
         } else {
             int size = getSize();
-
-            SkyBlockCore.getWorldBorderApi().setBorder(player, 50, getLocation());
+            if (!getMembers().isEmpty()) {
+                SkyBlockCore.getWorldBorderApi().setBorder(player, size, getLocation());
+            } else {
+                for (String uuid : getMembers()) {
+                    Player member = Bukkit.getPlayer(UUID.fromString(uuid));
+                    SkyBlockCore.getWorldBorderApi().setBorder(member, size, getLocation());
+                }
+            }
             setWorldBorder(true);
         }
     }
@@ -459,7 +514,7 @@ public class SkyBlock {
     }
 
     public int getLevel() {
-        return config.getInteger("SkyBlock.level");
+        return config.getInteger("SkyBlock.level.level");
     }
 
     public String getOwner() {
@@ -470,16 +525,11 @@ public class SkyBlock {
     public Location getSpawn() {
 
         String owner = getOwner();
-
         if (owner != null) {
 
-
             World world = Bukkit.getWorld(getOwner());
-
             return new Location(world, 0, 0, 0);
         }
-
-
         return null;
     }
 
@@ -507,6 +557,35 @@ public class SkyBlock {
         return members;
     }
 
+
+    public boolean removeBlackList(Player player) {
+        if (config != null) {
+            List<String> members = getMembers();
+            members.remove(player.getUniqueId().toString());
+            config.getConfig().set("SkyBlock.blacklist", members);
+            config.saveConfig();
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean addBlackList(Player player, OfflinePlayer target, String reason) {
+        if (config != null) {
+            List<String> members = getBlackList();
+            members.add(target.getUniqueId().toString());
+            SkyBlockRecord record = new SkyBlockRecord(name);
+            record.playerRecord(player, target, reason, SkyBlockRecord.Type.BLACKLIST);
+            config.getConfig().set("SkyBlock.blacklist", members);
+            config.saveConfig();
+            return true;
+        }
+        return false;
+    }
+
+    public List<String> getBlackList() {
+        return new ArrayList<>(config.getConfig().getStringList("SkyBlock.blacklist"));
+    }
 
     public List<String> getPartTime() {
         List<String> members = new ArrayList<>();

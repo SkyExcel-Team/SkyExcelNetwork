@@ -2,8 +2,8 @@ package net.skyexcel.server.cmd;
 
 import net.skyexcel.server.SkyExcelNetwork;
 import net.skyexcel.server.data.StringData;
-import net.skyexcel.server.data.economy.SEconomy;
-import net.skyexcel.server.data.economy.SEconomyRecord;
+import net.skyexcel.server.data.economy.Mileage;
+import net.skyexcel.server.data.economy.MileageRecord;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -34,15 +34,15 @@ public class MileageCommand {
 
                     long amount = Long.parseLong(action.getArgs()[1]);
                     for (OfflinePlayer players : Bukkit.getOfflinePlayers()) {
-                        SEconomy money = new SEconomy(players);
+                        Mileage money = new Mileage(players);
 
-                        SEconomyRecord record = new SEconomyRecord();
+                        MileageRecord record = new MileageRecord();
                         record.setBefore(money.getMoney());
 
                         money.deposit(amount);
 
                         record.setAfter(money.getMoney());
-                        record.playerRecord(player, players, amount, SEconomyRecord.Type.ADD);
+                        record.playerRecord(player, players, amount, MileageRecord.Type.ADD);
                         StringData.sendMoney(player, players, amount);
                     }
 
@@ -63,14 +63,14 @@ public class MileageCommand {
                         long amount = Long.parseLong(action.getArgs()[2]);
 
                         assert target != null;
-                        SEconomy money = new SEconomy(target);
-                        SEconomyRecord record = new SEconomyRecord();
+                        Mileage money = new Mileage(target);
+                        MileageRecord record = new MileageRecord();
 
                         record.setBefore(money.getMoney());
                         money.deposit(amount);
                         record.setAfter(money.getMoney());
 
-                        record.playerRecord(player, target, amount, SEconomyRecord.Type.ADD);
+                        record.playerRecord(player, target, amount, MileageRecord.Type.ADD);
 
                         StringData.sendMoney(player, target, amount);
                     } else {
@@ -93,13 +93,13 @@ public class MileageCommand {
                         long amount = Long.parseLong(action.getArgs()[2]);
 
                         assert target != null;
-                        SEconomy money = new SEconomy(target);
+                        Mileage money = new Mileage(target);
 
-                        SEconomyRecord record = new SEconomyRecord();
+                        MileageRecord record = new MileageRecord();
                         record.setBefore(money.getMoney());
                         money.withdraw(amount);
                         record.setAfter(money.getMoney());
-                        record.playerRecord(player, target, amount, SEconomyRecord.Type.REMOVE);
+                        record.playerRecord(player, target, amount, MileageRecord.Type.REMOVE);
 
                         StringData.removeMoney(player, target, amount);
                     } else {
@@ -121,12 +121,12 @@ public class MileageCommand {
                         long amount = Long.parseLong(action.getArgs()[2]);
 
                         assert target != null;
-                        SEconomy money = new SEconomy(target);
-                        SEconomyRecord record = new SEconomyRecord();
+                        Mileage money = new Mileage(target);
+                        MileageRecord record = new MileageRecord();
                         record.setBefore(money.getMoney());
                         money.setMoney(amount);
                         record.setAfter(money.getMoney());
-                        record.playerRecord(player, target, amount, SEconomyRecord.Type.SET);
+                        record.playerRecord(player, target, amount, MileageRecord.Type.SET);
 
                         StringData.setMoney(player, target, amount);
                     } else {
@@ -162,12 +162,12 @@ public class MileageCommand {
                     Player target = Bukkit.getPlayer(action.getArgs()[1]);
 
                     assert target != null;
-                    SEconomy money = new SEconomy(target);
-                    SEconomyRecord record = new SEconomyRecord();
+                    Mileage money = new Mileage(target);
+                    MileageRecord record = new MileageRecord();
                     record.setBefore(money.getMoney());
                     money.setMoney(0);
                     record.setAfter(0);
-                    record.playerRecord(player, target, 0, SEconomyRecord.Type.RESET);
+                    record.playerRecord(player, target, 0, MileageRecord.Type.RESET);
 
                     StringData.resetMoney(target, target, 0);
 

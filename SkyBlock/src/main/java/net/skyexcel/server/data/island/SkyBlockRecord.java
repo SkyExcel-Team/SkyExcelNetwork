@@ -2,6 +2,7 @@ package net.skyexcel.server.data.island;
 
 import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.util.Translate;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
@@ -19,7 +20,7 @@ public class SkyBlockRecord {
 
     }
 
-    public void playerRecord(Player player, Player target, String reason, Type type) {
+    public void playerRecord(Player player, OfflinePlayer target, String reason, Type type) {
         String time = Translate.getDate();
         try {
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
@@ -71,7 +72,7 @@ public class SkyBlockRecord {
 
 
     public enum Type {
-        KICK("추방"), JOIN("입장"), CREATE("생성");
+        KICK("추방"), JOIN("입장"), CREATE("생성"), BLACKLIST("블랙리스트");
 
         private String name;
 
