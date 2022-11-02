@@ -1,13 +1,15 @@
 package net.skyexcel.server.data.island;
 
 import net.skyexcel.server.SkyBlockCore;
+import net.skyexcel.server.data.SkyBlockData;
 import net.skyexcel.server.data.event.*;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.data.vault.SkyBlockVault;
+import net.skyexcel.server.ui.title.Loading;
 import net.skyexcel.server.util.world.WorldManager;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
-import org.bukkit.entity.Entity;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import skyexcel.data.file.Config;
@@ -24,7 +26,6 @@ public class SkyBlock {
 
     private SkyBlockVault vault;
 
-    private Location location;
 
     public SkyBlock(String name) {
         this.name = name;
@@ -45,6 +46,7 @@ public class SkyBlock {
 
         SkyBlockPlayerData data = new SkyBlockPlayerData(player);
         SkyBlockCreateEvent event = new SkyBlockCreateEvent(name, this, player);
+        Bukkit.getPluginManager().callEvent(event);
 
         if (!event.isCancelled()) {
 
@@ -83,23 +85,27 @@ public class SkyBlock {
                 // 1000 = day, noon = 6000 night = 13000 midnight = 18000
                 config.getConfig().set("SkyBlock.option.time", 1000);
 
-                config.saveConfig();
 
-                Random random = new Random();
+                if (SkyBlockCore.config.getConfig().get("location") == null) {
+                    Location location = new Location(Bukkit.getWorld("SkyBlock"), 0, 0, 0);
+                    SkyBlockCore.config.setLocation("location", location);
 
-                double x = 10000000 * random.nextDouble();
-                double z = 10000000 * random.nextDouble();
+                    WorldManager worldManager = new WorldManager();
+                    worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
 
-                net.skyexcel.server.Location loc = new net.skyexcel.server.Location(Bukkit.getWorld("SkyBlock"), x, -60, z);
+                    config.setLocation("SkyBlock.location", location);
+                    config.saveConfig();
+                } else {
+                    Location location = SkyBlockCore.config.getLocation("location");
+                    if (!(location.getX() + 1000 > 29999984)) {
+                        location.add(1000, 0, 0);
+                        config.setLocation("SkyBlock.location", location);
+                        WorldManager worldManager = new WorldManager();
+                        worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
 
-                WorldManager worldManager = new WorldManager();
-
-                if (loc.canSpawn(1000, 1000, 1000)) {
-
-                    worldManager.paste(loc.getWorld(), loc.add(0, 120, 0), "islands/Based/large.schem");
-                    this.location = loc;
-
-                    config.setLocation("SkyBlock.location", loc);
+                        SkyBlockCore.config.setLocation("location", location);
+                        config.saveConfig();
+                    }
                 }
             } else {
                 player.sendMessage("섬을 탈퇴 하거나, 삭제 하세요!");
@@ -107,6 +113,72 @@ public class SkyBlock {
         }
     }
 
+    public void remove(Player player) {
+        if (getLocation() != null) {
+            if (!getMembers().isEmpty()) { //TODO 맴버가 있을 경우 모든 멤버를 스폰으로 텔레포트 시킨다.
+                for (String uuid : getMembers()) {
+                    Player members = Bukkit.getPlayer(UUID.fromString(uuid));
+                    if (members.isOnline()) {
+                        members.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                        members.sendMessage("당신의 섬이 지워졌습니다!");
+                    }
+                }
+            } else if (!getPartTime().isEmpty()) {
+                for (String uuid : getPartTime()) {
+                    Player parttime = Bukkit.getPlayer(UUID.fromString(uuid));
+                    if (parttime.isOnline()) {
+                        parttime.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                        parttime.sendMessage("당신의 섬이 지워졌습니다!");
+                    }
+                }
+            }
+
+            player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+
+            Location spawn = getLocation();
+
+            int size = getSize();
+            org.bukkit.Location pos1 = spawn; //자신의 섬의 영역을 불러온다.
+            pos1.add(size, 256, size);
+            org.bukkit.Location pos2 = spawn;
+            size = -1 * size;
+            pos2.add(size, -256, size);
+
+            for (double x = pos1.getX(); x < pos2.getX(); x++) {
+                for (double y = pos1.getX(); y < pos2.getY(); y++) {
+                    for (double z = pos1.getZ(); z < pos2.getZ(); z++) {
+                        Location newLocation = new Location(Bukkit.getWorld("SkyBlock"), x, y, z);
+                        if (newLocation.getBlock().getType() != Material.AIR) {
+                            Block block = newLocation.getBlock();
+                            block.setType(Material.AIR);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void reset(Player player) {
+        player.sendMessage("초기화 진행중...");
+
+        remove(player);
+        Loading loading = new Loading(player, 5);
+
+        loading.runTaskTimer(SkyBlockCore.plugin, 0, 20);
+
+        loading.end(end -> {
+            try {
+                player.sendMessage("초기화가 완료 되었습니다!");
+                create(player);
+                //TODO 섬 생성 할떄에 플레이어 데이터에 location이 있는지 체크해야함. 있으면 해당 좌표에 섬을 생성 하고,
+                // 없으면 1000좌표를 더한 좌표에 생성 후 텔레포트 시켜준다.
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        SkyBlockData.loading.put(player.getUniqueId(), loading);
+    }
 
     public void time(Player player, long time) {
 
@@ -150,30 +222,6 @@ public class SkyBlock {
 
     public WeatherType getWeather() {
         return WeatherType.valueOf(config.getConfig().getString("SkyBlock.option.weather"));
-    }
-
-    public void worldCreate(Player player) {
-        WorldManager world = new WorldManager();
-        SkyBlockCreateEvent event = new SkyBlockCreateEvent(name, this, player);
-
-        if (!event.isCancelled()) {
-            SkyBlockRecord record = new SkyBlockRecord(name);
-            event.setType(SkyBlockCreateEvent.Type.SMALL);
-            record.skyblockRecord(player, event.getType().getName(), SkyBlockRecord.Type.CREATE);
-            world.create(player, 0);
-
-            config.setLocation("SkyBlock.spawn", new Location(world.getWorld(), 0, 0, 0));
-
-            config.saveConfig();
-
-            Bukkit.getPluginManager().callEvent(new SkyBlockCreateEvent(name, this, player));
-        }
-
-    }
-
-    public void reset(Player player) {
-        delete(player);
-
     }
 
     public void quickSkyBlock(Player player) {
@@ -459,7 +507,7 @@ public class SkyBlock {
     }
 
     public int getLevel() {
-        return config.getInteger("SkyBlock.level");
+        return config.getInteger("SkyBlock.level.level");
     }
 
     public String getOwner() {
@@ -564,7 +612,7 @@ public class SkyBlock {
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
             if (getLocation() != null) {
 
-                int size = getSize();
+                int size = getSize() / 2;
                 org.bukkit.Location pos1 = getLocation(); //자신의 섬의 영역을 불러온다.
                 pos1.add(size, 256, size);
 
