@@ -81,7 +81,7 @@ public class Menu {
 
                 if (section.get("custommodeldata") != null) {
                     int modeldata = section.getInt("custommodeldata");
-                    item.setCustomModelData(modeldata);
+                    item.getItemMeta().setCustomModelData(modeldata);
                 }
 
                 List<String> lore = section.getStringList("lore");

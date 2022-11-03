@@ -1,7 +1,7 @@
 package net.skyexcel.server.menu.event;
 
 import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
-import net.skyexcel.server.menu.Menu;
+import net.skyexcel.server.menu.menu.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
