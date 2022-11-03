@@ -28,7 +28,7 @@ public class SkyExcelNetworkMenuMain {
         new MenuCommand();
         hdb = new HeadDatabaseAPI();
 
-        defaultConfig = new Config("defualt");
+        defaultConfig = new Config("Menu-defualt");
         defaultConfig.setPlugin(plugin);
 
         defaultConfig.loadDefaultPluginConfig();

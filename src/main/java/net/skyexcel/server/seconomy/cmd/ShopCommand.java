@@ -1,6 +1,6 @@
 package net.skyexcel.server.seconomy.cmd;
 
-import net.skyexcel.server.seconomy.SkyExcelNetwork;
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
 import net.skyexcel.server.seconomy.data.Data;
 import net.skyexcel.server.seconomy.data.shop.Shop;
 import org.bukkit.Bukkit;
@@ -23,7 +23,7 @@ public class ShopCommand implements TabCompleter {
     public ShopCommand() {
 
         Bukkit.getPluginCommand("상점").setTabCompleter(this);
-        Cmd cmd = new Cmd(SkyExcelNetwork.plugin, "상점");
+        Cmd cmd = new Cmd(SkyExcelNetworkSEConomyMain.plugin, "상점");
 
         cmd.label(action -> {
             Player player = (Player) action.getSender();
@@ -84,9 +84,9 @@ public class ShopCommand implements TabCompleter {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            Config config = new Config("shop/");
+            Config config = new Config("SEConomy-shop/");
 
-            config.setPlugin(SkyExcelNetwork.plugin);
+            config.setPlugin(SkyExcelNetworkSEConomyMain.plugin);
             if (args.length == 1) {
                 result.add("생성");
                 result.add("열기");

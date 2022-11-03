@@ -17,6 +17,24 @@ worlds:
     generator: SkyBlock
 
 commands:
+  #CashShop
+  캐시:
+  캐시상점:
+
+  #ChatChannel
+  채팅채널:
+    alias: [ c,ㅊ ]
+
+  #Fish
+  낚시:
+  낚시대회:
+
+  #GiftBox
+  선물함:
+  
+  #Items
+  아이템:
+
   #PlayTime
   접속시간:
 
@@ -28,5 +46,5 @@ commands:
   섬:
   섬어드민:
 
-  # Trade
+  #Trade
   거래:

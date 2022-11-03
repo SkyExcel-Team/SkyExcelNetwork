@@ -23,7 +23,7 @@ public class Shop {
 
     public Shop(String name) {
         this.name = name;
-        config = new Config("shop/" + name);
+        config = new Config("Menu-shop/" + name);
         config.setPlugin(SkyExcelNetworkMileageMain.plugin);
 
         gui = new GUI(config);

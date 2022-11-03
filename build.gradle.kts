@@ -1,7 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.util.Properties
 
 plugins {
     java
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "net.skyexcel.server"
@@ -36,7 +38,7 @@ dependencies {
     compileOnly("com.comphenix.protocol", "ProtocolLib", "4.8.0")
 
     /* 기타 API */
-    compileOnly("org.jetbrains:annotations:16.0.2")
+    compileOnly("org.jetbrains:annotations:23.0.0")
 }
 
 tasks.withType<Jar> {
@@ -44,4 +46,20 @@ tasks.withType<Jar> {
         ?: throw NullPointerException("jarDirectory not settled inside .gradle/gradle.properties")
 
     destinationDirectory.set(file(dest))
+}
+
+tasks {
+    named<ShadowJar>("shadowJar") {
+        archiveBaseName.set("shadow")
+        mergeServiceFiles()
+        manifest {
+            attributes(mapOf("Main-Class" to "net.skyexcel.server.SkyExcelNetworkMain"))
+        }
+    }
+}
+
+tasks {
+    build {
+        dependsOn(shadowJar)
+    }
 }

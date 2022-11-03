@@ -1,19 +1,20 @@
 package net.skyexcel.server.seconomy.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.skyexcel.server.seconomy.SkyExcelNetwork;
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
 import net.skyexcel.server.data.economy.SEconomy;
 import net.skyexcel.server.seconomy.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class SEConomyExpansion extends PlaceholderExpansion {
-    private SkyExcelNetwork plugin; // The instance is created in the constructor and won't be modified, so it can be final
+    private JavaPlugin plugin; // The instance is created in the constructor and won't be modified, so it can be final
 
-    public SEConomyExpansion(SkyExcelNetwork plugin) {
+    public SEConomyExpansion(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -45,7 +46,7 @@ public class SEConomyExpansion extends PlaceholderExpansion {
 
     @Override
     public boolean canRegister() {
-        return (plugin = (SkyExcelNetwork) Bukkit.getPluginManager().getPlugin(Objects.requireNonNull(getRequiredPlugin()))) != null;
+        return (plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin(getRequiredPlugin())) != null;
     }
 
     @Override

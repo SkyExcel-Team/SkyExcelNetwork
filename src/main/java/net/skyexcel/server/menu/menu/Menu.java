@@ -34,7 +34,7 @@ public class Menu {
 
     public Menu(String name) {
         this.name = name;
-        config = new Config("menu/" + name);
+        config = new Config("Menu-menu/" + name);
         this.title = name;
         config.setPlugin(SkyExcelNetworkMenuMain.plugin);
     }

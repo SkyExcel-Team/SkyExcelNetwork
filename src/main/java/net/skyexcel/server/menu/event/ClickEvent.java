@@ -23,13 +23,13 @@ public class ClickEvent implements Listener {
     public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
-        config = new Config("menu/");
+        config = new Config("Menu-menu/");
         config.setPlugin(SkyExcelNetworkMenuMain.plugin);
 
         if (inv != null) {
             try {
                 for (String file : config.fileListName()) {
-                    menuConfig = new Config("menu/" + file);
+                    menuConfig = new Config("Menu-menu/" + file);
                     menuConfig.setPlugin(SkyExcelNetworkMenuMain.plugin);
 
                     if (menuConfig.getString("menu_title").equalsIgnoreCase(event.getView().getTitle())) {

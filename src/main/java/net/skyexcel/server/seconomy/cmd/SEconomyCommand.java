@@ -1,6 +1,6 @@
 package net.skyexcel.server.seconomy.cmd;
 
-import net.skyexcel.server.seconomy.SkyExcelNetwork;
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
 import net.skyexcel.server.seconomy.data.StringData;
 import net.skyexcel.server.seconomy.data.economy.SEconomy;
 import net.skyexcel.server.seconomy.data.economy.SEconomyRecord;
@@ -11,7 +11,7 @@ import skyexcel.command.function.Cmd;
 
 public class SEconomyCommand {
     public SEconomyCommand() {
-        Cmd cmd = new Cmd(SkyExcelNetwork.plugin, "돈");
+        Cmd cmd = new Cmd(SkyExcelNetworkSEConomyMain.plugin, "돈");
 
         cmd.label(action -> {
             Player player = (Player) action.getSender();

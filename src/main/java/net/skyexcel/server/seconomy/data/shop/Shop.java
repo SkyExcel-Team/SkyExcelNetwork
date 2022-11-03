@@ -1,6 +1,6 @@
 package net.skyexcel.server.seconomy.data.shop;
 
-import net.skyexcel.server.seconomy.SkyExcelNetwork;
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -23,8 +23,8 @@ public class Shop {
 
     public Shop(String name) {
         this.name = name;
-        config = new Config("shop/" + name);
-        config.setPlugin(SkyExcelNetwork.plugin);
+        config = new Config("SEConomy-shop/" + name);
+        config.setPlugin(SkyExcelNetworkSEConomyMain.plugin);
 
         gui = new GUI(config);
     }

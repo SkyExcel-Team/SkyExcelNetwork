@@ -1,6 +1,6 @@
 package net.skyexcel.server.seconomy.data.economy;
 
-import net.skyexcel.server.seconomy.SkyExcelNetwork;
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
 import org.bukkit.OfflinePlayer;
 import skyexcel.data.file.Config;
 
@@ -17,8 +17,8 @@ public class SEconomy {
 
     public SEconomy(OfflinePlayer player) {
         this.player = player;
-        this.config = new Config("data/" + player.getUniqueId());
-        this.config.setPlugin(SkyExcelNetwork.plugin);
+        this.config = new Config("SEConomy-data/" + player.getUniqueId());
+        this.config.setPlugin(SkyExcelNetworkSEConomyMain.plugin);
     }
 
     /**

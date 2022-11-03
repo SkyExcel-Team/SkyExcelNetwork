@@ -1,0 +1,21 @@
+size: 6
+menu_title: 메인메뉴:offset_-40::main_gui:§f
+open_settings:
+  - '[sound] ENTITY_PLAYER_LEVELUP'
+items:
+  warp_spawn: # 가상 이름
+    material: PLAYER_HEAD # 아이템이름
+    hdb: 13900
+    slots:
+      - 13
+    amount: 1
+    custommodeldata: 1 # 커스텀 모델 데이터 번호
+    display_name: "&b[ &bSky&fExcel &e금고 &b]" # 아이템 이름
+    lore: # 아이템 로어
+      - ''
+      - '&e→ &f테스트 로어 입니다!'
+      - ''
+    left_click_commands: # 좌클릭시 커맨드
+      - '[player] say 아~ sdfg'
+    right_click_commands: # 우클릭시 커맨드
+      - '[player] say 아~ qwer'

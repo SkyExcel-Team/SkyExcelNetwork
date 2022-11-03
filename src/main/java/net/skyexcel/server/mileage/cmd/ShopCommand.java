@@ -27,7 +27,6 @@ public class ShopCommand implements TabCompleter {
 
         cmd.label(action -> {
             Player player = (Player) action.getSender();
-
         });
 
 

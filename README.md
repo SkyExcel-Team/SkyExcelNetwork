@@ -8,9 +8,8 @@
 ## Usages SkyBlock
 
 ```java
-
-PlayerData playerData = new PlayerData(player);
-IslandData islandData = new IslandData(playerData.getIsland());
-
-
+public class Example {
+    PlayerData playerData = new PlayerData(player);
+    IslandData islandData = new IslandData(playerData.getIsland());
+}
 ``` 

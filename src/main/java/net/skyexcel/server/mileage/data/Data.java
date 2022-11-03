@@ -1,6 +1,6 @@
 package net.skyexcel.server.mileage.data;
 
-import net.skyexcel.server.data.shop.Shop;
+import net.skyexcel.server.mileage.data.shop.Shop;
 
 import java.util.HashMap;
 import java.util.UUID;

@@ -41,11 +41,11 @@ public class SkyExcelNetworkMileageMain {
         new ShopCommand();
 
 //
-        message = new Config("message");
+        message = new Config("Mileage-message");
         message.setPlugin(plugin);
         message.loadDefaultPluginConfig();
 
-        shop = new Config("shop");
+        shop = new Config("Mileage-shop");
         shop.setPlugin(plugin);
         shop.loadDefaultPluginConfig();
     }

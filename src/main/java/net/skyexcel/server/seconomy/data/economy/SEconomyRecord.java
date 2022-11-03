@@ -1,6 +1,6 @@
 package net.skyexcel.server.seconomy.data.economy;
 
-import net.skyexcel.server.seconomy.SkyExcelNetwork;
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
 import net.skyexcel.server.seconomy.util.Translate;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -18,8 +18,8 @@ public class SEconomyRecord {
 
 
     public SEconomyRecord() {
-        this.record = new Config("data/log/log");
-        this.record.setPlugin(SkyExcelNetwork.plugin);
+        this.record = new Config("SEConomy-data/log/log");
+        this.record.setPlugin(SkyExcelNetworkSEConomyMain.plugin);
     }
 
 
