@@ -1,17 +1,32 @@
 name: SkyExcelNetwork
-main: net.skyexcel.server.SkyExcelNetwork
-authors: [SkyExcel Team]
+main: net.skyexcel.server.SkyExcelNetworkMain
+author: SkyExcel Team
 description: SkyExcel Network Plugin
 
 version: 0.1
 api-version: 1.19
 
+softdepend:
+  - SkyExcelCore
+  - PlaceholderAPI
+  - WorldEdit
+  - ProtocolLib
+
+worlds:
+  SkyBlock:
+    generator: SkyBlock
+
 commands:
-  쓰레기통:
-    usage: /<command>
-    description: 쓰레기통
-    aliases: [trash]
-  test:
-    usage: /<command>
-    description: 쓰레기통
-    aliases: [trash]
+  #PlayTime
+  접속시간:
+
+  #SEConomy
+  돈:
+  상점:
+
+  #SkyBlock
+  섬:
+  섬어드민:
+
+  # Trade
+  거래:
