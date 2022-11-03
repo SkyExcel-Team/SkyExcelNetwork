@@ -10,22 +10,18 @@ import net.skyexcel.server.data.economy.SEconomy;
 import net.skyexcel.server.data.island.SkyBlock;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.data.player.SkyBlockRequest;
-import net.skyexcel.server.data.vault.SkyBlockVault;
-import net.skyexcel.server.data.vault.SkyBlockVaultRecord;
+import net.skyexcel.server.data.island.vault.SkyBlockVault;
+import net.skyexcel.server.data.island.vault.SkyBlockVaultRecord;
 import net.skyexcel.server.menu.Menu;
 import net.skyexcel.server.ui.gui.MaterialPageMember;
 import net.skyexcel.server.ui.gui.MaterialPagePartTime;
 import net.skyexcel.server.ui.title.Loading;
+import net.skyexcel.server.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import skyexcel.command.function.Cmd;
 
 
@@ -97,11 +93,11 @@ public class IslandCmd {
 
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
-            Player target = Bukkit.getPlayer(action.getArgs()[1]);
+            OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
 
             SkyBlock island = new SkyBlock(playerData.getIsland());
 
-            String reason = String.join(" ", Arrays.copyOfRange(action.getArgs(), 2, action.getArgs().length));
+            String reason = Translate.collapse(action.getArgs(), 2);
 
             assert target != null;
             if (island.kickMember(player, target, reason)) {
@@ -117,8 +113,10 @@ public class IslandCmd {
                 result.addExtra(accept);
 
                 result.addExtra(after);
+                if (target.isOnline()) {
 
-                target.spigot().sendMessage(result);
+                }
+                target.getPlayer().spigot().sendMessage(result);
 
             } else {
                 player.sendMessage("해당 플레이어는 섬원이 아닙니다!");
@@ -133,12 +131,10 @@ public class IslandCmd {
 
             assert target != null;
             SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
-            SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+
 
             if (!targetData.hasIsland()) {
                 if (SkyBlockRequest.send(request, target, player)) {
-
-
                     TextComponent accept = new TextComponent("§a수락");
 
                     accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a클릭하여 수락하세요!").create()));
@@ -216,14 +212,24 @@ public class IslandCmd {
             SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
 
             String[] args = action.getArgs();
+            if (args.length > 1) {
+                if (args[0].equalsIgnoreCase("추가")) {
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+                    String reason = String.join(" ", Arrays.copyOfRange(args, 2, action.getArgs().length));
 
-            String reason = String.join(" ", Arrays.copyOfRange(args, 2, action.getArgs().length));
+                    if (skyBlock.addBlackList(player, target, reason)) {
+                        player.sendMessage(target.getName() + " 님을 " + reason + " 사유로 블랙리스트에 추가 하였습니다.");
+                     }
+                } else if (args[0].equalsIgnoreCase("해제")) {
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-            if (skyBlock.addBlackList(player, target, reason)) {
-                player.sendMessage(target.getName() + " 님을 " + reason + " 사유로 블랙리스트에 추가 하였습니다.");
+                    if(skyBlock.removeBlackList(target)){
+
+                    }
+                }
             }
+
 
         });
 
@@ -256,47 +262,42 @@ public class IslandCmd {
 
         cmd.action("생성", 0, action -> {
             Player player = (Player) action.getSender();
-            String name = String.join(" ", Arrays.copyOfRange(action.getArgs(), 1, action.getArgs().length));
-            SkyBlock data = new SkyBlock(player, name);
+            String[] args = action.getArgs();
+            if (args.length <= 30) {
+                String name = Translate.collapse(action.getArgs(), 1);
+                SkyBlock data = new SkyBlock(player, name);
+                if (!data.equalFileName(name)) {
 
-            if (!data.equalFileName(name)) {
+                    try {
+                        data.create(player);
+                    } catch (InvocationTargetException e) {
+                        throw new RuntimeException(e);
+                    }
 
-                try {
-                    data.create(player);
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException(e);
+                    Loading loading = new Loading(player, 5);
+
+                    loading.runTaskTimer(SkyBlockCore.plugin, 0, 10);
+
+                    loading.end(end -> {
+                        if (data.getLocation() != null)
+                            data.spawn(player, data.getLocation());
+                    });
+
+
+                    SkyBlockData.loading.put(player.getUniqueId(), loading);
+                } else {
+                    player.sendMessage("이미 이름이 있습니다!");
                 }
-
-                Loading loading = new Loading(player, 5);
-
-                loading.runTaskTimer(SkyBlockCore.plugin, 0, 10);
-
-                loading.end(end -> {
-                    if (data.getLocation() != null)
-                        data.spawn(player, data.getLocation());
-                });
-
-
-                SkyBlockData.loading.put(player.getUniqueId(), loading);
             } else {
-                player.sendMessage("이미 이름이 있습니다!");
+                player.sendMessage("섬 이름은 30글자 미만 이어야 합니다.");
             }
 
         });
 
-
-//        cmd.action("제거", 0, action -> {
-//            Player player = (Player) action.getSender();
-//            SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
-//
-//            SkyBlock data = new SkyBlock(playerData.getIsland());
-//            data.delete(player);
-//        });
-
         cmd.action("이름", 0, action -> {
             Player player = (Player) action.getSender();
 
-            String name = String.join(" ", Arrays.copyOfRange(action.getArgs(), 1, action.getArgs().length));
+            String name = Translate.collapse(action.getArgs(), 1);
 
             SkyBlock data = new SkyBlock(name);
             if (data.rename(name)) {
@@ -309,7 +310,7 @@ public class IslandCmd {
 
             if (action.getArgs().length > 1) {
 
-                Player target = Bukkit.getPlayer(action.getArgs()[1]);
+                OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
 
                 assert target != null;
                 SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
@@ -317,7 +318,8 @@ public class IslandCmd {
                 SkyBlock skyBlock = new SkyBlock(targetData.getIsland());
                 skyBlock.teleportSkyBlock(player);
 
-                player.sendMessage(target.getDisplayName() + ChatColor.GREEN + " 님의 섬을 방문 했습니다!");
+
+                player.sendMessage(target.getName() + ChatColor.GREEN + " 님의 섬을 방문 했습니다!");
             }
         });
 
@@ -338,16 +340,31 @@ public class IslandCmd {
                         vault = data.getVault();
                         amount = Integer.parseInt(args[2]);
                         money = new SEconomy(player);
+                        if (playerData.isOwner()) {
+                            if (vault.deposit(amount) && money.withdraw(amount)) {
+                                SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                        if (vault.deposit(amount) && money.withdraw(amount)) {
-                            SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+                                record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
 
-                            record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
-
-                            player.sendMessage("입금 완료");
+                                player.sendMessage("입금 완료");
+                            } else {
+                                player.sendMessage("입금 실패!");
+                            }
                         } else {
-                            player.sendMessage("입금 실패!");
+                            if (vault.isLock()) {
+                                if (vault.deposit(amount) && money.withdraw(amount)) {
+                                    SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+
+                                    record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
+
+                                    player.sendMessage("입금 완료");
+                                } else {
+                                    player.sendMessage("입금 실패!");
+                                }
+                            }
                         }
+
+
                         break;
 
                     case "출금":
@@ -358,23 +375,35 @@ public class IslandCmd {
                         vault.setPlayer(player);
                         money = new SEconomy(player);
 
-                        if (vault.withdraw(amount)) {
-                            money.deposit(amount);
-                            SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+                        if (playerData.isOwner()) {
+                            if (vault.withdraw(amount)) {
+                                money.deposit(amount);
+                                SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                            record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
+                                record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
 
-                            player.sendMessage("출금 완료");
+                                player.sendMessage("출금 완료");
+                            } else {
+                                player.sendMessage("출금 실패!");
+                            }
                         } else {
-                            player.sendMessage("출금 실패!");
+                            if (!vault.isLock()) {
+                                if (vault.withdraw(amount)) {
+                                    money.deposit(amount);
+                                    SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+
+                                    record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
+
+                                    player.sendMessage("출금 완료");
+                                } else {
+                                    player.sendMessage("출금 실패!");
+                                }
+                            }
                         }
+
                         break;
                     case "잠금":
-
-                        if (data.setVaultLock()) {
-                            player.sendMessage("금고를 잠궜습니다.");
-                        }
-
+                        data.setVaultLock();
                         break;
                 }
             }
@@ -465,8 +494,9 @@ public class IslandCmd {
                     }
                     break;
                 case "제거":
-                    data.removeDiscord();
+                    data.removePartTime(player);
                     break;
+
                 case "밴블록":
 
                     break;
@@ -553,7 +583,7 @@ public class IslandCmd {
                     break;
 
                 case "열기":
-
+                    data.setOpen(player);
                     break;
             }
         });

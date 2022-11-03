@@ -1,4 +1,4 @@
-package net.skyexcel.server.data.vault;
+package net.skyexcel.server.data.island.vault;
 
 import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.util.Translate;

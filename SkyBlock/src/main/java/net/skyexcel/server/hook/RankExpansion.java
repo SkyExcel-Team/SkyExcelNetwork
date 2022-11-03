@@ -2,7 +2,7 @@ package net.skyexcel.server.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.skyexcel.server.SkyBlockCore;
-import net.skyexcel.server.data.rank.Ranking;
+import net.skyexcel.server.data.island.rank.Ranking;
 import net.skyexcel.server.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

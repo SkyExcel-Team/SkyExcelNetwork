@@ -1,11 +1,14 @@
-package net.skyexcel.server.data.rank;
+package net.skyexcel.server.data.island.rank;
 
 import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.island.SkyBlock;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Ranking {
 
@@ -28,7 +31,7 @@ public class Ranking {
     }
 
 
-    public void update() {
+    public void update(Player player){
         for (String name : config.fileListName()) {
             SkyBlock skyBlock = new SkyBlock(name);
             int level = skyBlock.getLevel();
@@ -47,7 +50,10 @@ public class Ranking {
             rankdata.setInteger(rank.Rank + ".rank", rank.Rank);
             rankdata.setInteger(rank.Rank + ".level", rank.level);
         }
+
     }
+
+
 
     public String getRankName(int rank) {
         return (rank <= 10 ? rankdata.getString(rank + ".name") : "");

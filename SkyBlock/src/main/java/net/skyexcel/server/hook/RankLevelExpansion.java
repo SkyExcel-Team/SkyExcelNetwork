@@ -2,13 +2,14 @@ package net.skyexcel.server.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.skyexcel.server.SkyBlockCore;
-import net.skyexcel.server.data.rank.Ranking;
+import net.skyexcel.server.data.island.rank.Ranking;
 import net.skyexcel.server.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class RankLevelExpansion extends PlaceholderExpansion {
     private SkyBlockCore plugin; // The instance is created in the constructor and won't be modified, so it can be final
@@ -57,6 +58,7 @@ public class RankLevelExpansion extends PlaceholderExpansion {
     }
 
     private String getRankLevel(String params, Ranking ranking) {
+
 
         return switch (params) {
             case "1" -> Translate.decal(ranking.getRankLevel(1));

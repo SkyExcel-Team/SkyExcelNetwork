@@ -1,4 +1,4 @@
-package net.skyexcel.server.data.vault;
+package net.skyexcel.server.data.island.vault;
 
 import net.skyexcel.server.SkyBlockCore;
 import org.bukkit.entity.Player;
@@ -57,11 +57,17 @@ public class SkyBlockVault {
         return false;
     }
 
-    public void setLock(boolean lock) {
-        if (player.hasPermission("island.admin")) {
-            config.getConfig().set("lock", lock);
+    public void setLock() {
+        if(!isLock()){
+            config.getConfig().set("lock", true);
+            config.saveConfig();
+        } else{
+            config.getConfig().set("lock", false);
             config.saveConfig();
         }
+
+
+
 
     }
 
@@ -69,7 +75,7 @@ public class SkyBlockVault {
         return config.getConfig().getLong("amount");
     }
 
-    public boolean getLock() {
+    public boolean isLock() {
         return config.getConfig().getBoolean("lock");
     }
 

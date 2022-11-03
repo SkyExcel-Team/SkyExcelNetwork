@@ -1,14 +1,13 @@
 package net.skyexcel.server.event;
 
-import net.skyexcel.server.data.event.SkyBlockCreateEvent;
-import net.skyexcel.server.data.event.SkyBlockDeleteEvent;
-import net.skyexcel.server.data.event.SkyBlockJoinEvent;
-import net.skyexcel.server.data.event.SkyBlockQuickEvent;
+import net.skyexcel.server.data.economy.SEconomy;
+import net.skyexcel.server.data.event.*;
 import net.skyexcel.server.data.island.SkyBlock;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,6 +60,7 @@ public class SkyBlockEvent implements Listener {
         }
     }
 
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(SkyBlockJoinEvent event) {
         Player player = event.getPlayer();
@@ -108,7 +108,7 @@ public class SkyBlockEvent implements Listener {
         Player player = event.getPlayer();
 
         Location location = player.getLocation();
-        
+
     }
 
     @EventHandler

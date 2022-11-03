@@ -2,27 +2,14 @@ package net.skyexcel.server.util;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Translate {
 
-    public static String parseTime(long time) {
-        long gameTime = time;
-        long hours = gameTime / 1000 + 6;
-        long minutes = (gameTime % 1000) * 60 / 1000;
-        String ampm = "AM";
-        if (hours >= 12) {
-            hours -= 12;
-            ampm = "오후";
-        }
-        if (hours >= 12) {
-            hours -= 12;
-            ampm = "오전";
-        }
-        if (hours == 0) hours = 12;
-        String mm = "0" + minutes;
-        mm = mm.substring(mm.length() - 2, mm.length());
-        return hours + ":" + mm + " " + ampm;
+
+    public static String collapse(String[] args, int from){
+        return String.join(" ", Arrays.copyOfRange(args, from, args.length));
     }
     
     public static String getDate() {

@@ -2,21 +2,19 @@ package net.skyexcel.server.data.player;
 
 import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.island.SkyBlock;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 import skyexcel.data.file.Config;
 
 public class SkyBlockPlayerData {
-
-
     private Config config;
 
-    private Player player;
+    private OfflinePlayer player;
 
-
-    public SkyBlockPlayerData(Player player) {
+    public SkyBlockPlayerData(OfflinePlayer player) {
         this.player = player;
         config = new Config("data/" + player.getUniqueId());
         config.setPlugin(SkyBlockCore.plugin);
+
     }
 
     public void setName(String name) {
@@ -24,11 +22,8 @@ public class SkyBlockPlayerData {
         config.saveConfig();
     }
 
-
     public boolean isOwner() {
         if (config != null) {
-
-
             if (hasIsland()) {
                 SkyBlock skyBlock = new SkyBlock(getIsland());
                 return this.player.getUniqueId().toString().equalsIgnoreCase(skyBlock.getOwner());
@@ -47,9 +42,7 @@ public class SkyBlockPlayerData {
     }
 
     public boolean hasIsland() {
-
-        return (config.getConfig().get("island.name") != null);
-
+        return (config.getConfig().getString("island.name").equalsIgnoreCase(""));
     }
 
     public Config getConfig() {

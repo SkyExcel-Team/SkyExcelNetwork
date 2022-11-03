@@ -1,4 +1,4 @@
-package net.skyexcel.server.data.packet;
+package net.skyexcel.server.util.packet;
 
 import org.bukkit.entity.Player;
 

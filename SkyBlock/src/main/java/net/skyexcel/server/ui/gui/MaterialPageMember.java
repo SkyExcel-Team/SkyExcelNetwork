@@ -4,7 +4,7 @@ import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.SkyBlockData;
 import net.skyexcel.server.data.StringData;
 import net.skyexcel.server.data.island.SkyBlock;
-import net.skyexcel.server.data.packet.InventoryUpdate;
+import net.skyexcel.server.util.packet.InventoryUpdate;
 import net.skyexcel.server.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.util.Items;
 import org.bukkit.Bukkit;

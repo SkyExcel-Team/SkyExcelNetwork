@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AlphaChest" />
+            <option value="$PROJECT_DIR$/ArmorStand" />
             <option value="$PROJECT_DIR$/AutoClean" />
             <option value="$PROJECT_DIR$/BGM" />
             <option value="$PROJECT_DIR$/BossBar" />
@@ -19,6 +20,7 @@
             <option value="$PROJECT_DIR$/Cosmetic" />
             <option value="$PROJECT_DIR$/DailyQuest" />
             <option value="$PROJECT_DIR$/Eglow" />
+            <option value="$PROJECT_DIR$/EntityManager" />
             <option value="$PROJECT_DIR$/Fish" />
             <option value="$PROJECT_DIR$/GiftBox" />
             <option value="$PROJECT_DIR$/Items" />

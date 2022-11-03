@@ -28,8 +28,6 @@ dependencies {
     compileOnly("com.github.SkyExcel-Team", "SkyExcelCore", "1.1.31")
 
 
-
-
     compileOnly("org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT") //퍼퍼 버킷
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1") // HEAD DATABASE API
 

@@ -1,4 +1,4 @@
-package net.skyexcel.server.data.packet;
+package net.skyexcel.server.util.packet;
 
 
 import com.google.common.base.Preconditions;
@@ -15,7 +15,6 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.Set;
 
 /**

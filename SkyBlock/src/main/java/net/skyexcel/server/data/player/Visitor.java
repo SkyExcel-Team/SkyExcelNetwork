@@ -2,7 +2,7 @@ package net.skyexcel.server.data.player;
 
 import net.skyexcel.server.SkyBlockCore;
 import net.skyexcel.server.data.island.SkyBlock;
-import net.skyexcel.server.data.packet.InventoryUpdate;
+import net.skyexcel.server.util.packet.InventoryUpdate;
 import net.skyexcel.server.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
