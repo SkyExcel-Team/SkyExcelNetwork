@@ -17,13 +17,6 @@ public class SkyBlockRequest {
         System.out.println("사용중 테스트");
     }
 
-
-    /**
-     * Request 클래스에게 요청을 보냅니다.
-     *
-     * @param request
-     * @return
-     */
     public static boolean send(SkyBlockRequest request, Object to, Object from) {
 
 
@@ -39,13 +32,6 @@ public class SkyBlockRequest {
         return false;
     }
 
-
-    /**
-     * Request 클래스에게 요청을 보냅니다.
-     *
-     * @param request
-     * @return
-     */
     public static boolean is(SkyBlockRequest request, Object to, Object from) {
 
         if (request.from.contains(to) && request.to.contains(from)) {
@@ -55,12 +41,6 @@ public class SkyBlockRequest {
         return false;
     }
 
-    /**
-     * Request 클래스에게 요청을 보냅니다.
-     *
-     * @param request
-     * @return
-     */
     public boolean accept(Object to, Object from) {
 
 
@@ -74,12 +54,6 @@ public class SkyBlockRequest {
         return false;
     }
 
-    /**
-     * Request 클래스에게 요청을 보냅니다.
-     *
-     * @param request
-     * @return
-     */
     public static boolean accept(SkyBlockRequest request, Object to, Object from) {
 
 
@@ -93,13 +67,6 @@ public class SkyBlockRequest {
         return false;
     }
 
-
-    /**
-     * Request 클래스에게 요청을 보냅니다.
-     *
-     * @param request
-     * @return
-     */
     public static boolean deny(SkyBlockRequest request, Object to, Object from) {
         if (request.to.contains(to) && request.from.contains(from)) {
 
