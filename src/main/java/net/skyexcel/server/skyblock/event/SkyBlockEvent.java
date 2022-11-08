@@ -1,7 +1,6 @@
 package net.skyexcel.server.skyblock.event;
 
-import net.skyexcel.server.data.economy.SEconomy;
-import net.skyexcel.server.data.event.*;
+
 import net.skyexcel.server.skyblock.data.event.SkyBlockCreateEvent;
 import net.skyexcel.server.skyblock.data.event.SkyBlockDeleteEvent;
 import net.skyexcel.server.skyblock.data.event.SkyBlockJoinEvent;
@@ -19,8 +18,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import skyexcel.data.Item.NBTData;
 
+import java.util.List;
 import java.util.UUID;
 
 public class SkyBlockEvent implements Listener {
@@ -47,21 +46,36 @@ public class SkyBlockEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuick(SkyBlockQuickEvent event) {
         Player player = event.getPlayer();
+
         SkyBlockQuickEvent.CancelCause cause = event.getCancelCause();
 
-        if (cause != null) {
-            switch (cause) {
-                case OWNER -> {
-                    player.sendMessage("섬 주인은 탈퇴 할 수 없습니다!");
+        if (event.getCause().equals(SkyBlockQuickEvent.QuickCuase.ISLAND)) {
+            if (cause != null) {
+                switch (cause) {
+                    case OWNER -> {
+                        player.sendMessage("섬 주인은 탈퇴 할 수 없습니다!");
+                    }
+                    case NOT_MEMBER -> {
+                        player.sendMessage("당신은 해당 섬의 멤버가 아닙니다!");
+                    }
                 }
-                case NOT_MEMBER -> {
-                    player.sendMessage("당신은 해당 섬의 멤버가 아닙니다!");
-                }
+            } else {
+                SkyBlock skyBlock = event.getIslandData();
+                skyBlock.removeMember(player);
+                player.sendMessage("성공적으로 섬을 탈퇴 했습니당");
             }
-        } else {
-            player.sendMessage("성공적으로 섬을 탈퇴 했습니당");
+        } else if (event.getCause().equals(SkyBlockQuickEvent.QuickCuase.SERVER)) {
+            List<String> members = event.getIslandData().getMembers();
+            if (event.getIslandData().getMembers().contains(player.getUniqueId().toString())) {
+                for (String member : members) {
+                    Player online = Bukkit.getPlayer(member);
+                    online.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 퇴장하였습니다!");
+                }
+
+            }
         }
     }
+
 
 
     @EventHandler(priority = EventPriority.HIGHEST)

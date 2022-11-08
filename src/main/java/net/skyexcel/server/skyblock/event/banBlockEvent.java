@@ -14,6 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class banBlockEvent implements Listener {
@@ -94,8 +95,9 @@ public class banBlockEvent implements Listener {
     }
 
     @EventHandler
-    public void jump() {
+    public void jump(PlayerInteractEvent event) {
 
+        event.getClickedBlock();
     }
 
     @EventHandler
@@ -109,7 +111,7 @@ public class banBlockEvent implements Listener {
 
         if (!player.isOp()) {
             if (!islandData.isInIsland(player)) {
-                for (Entity entity : player.getChunk().getEntities()) {
+                for (Entity entity : player.getWorld().getEntities()) {
                     if (entity instanceof Player) {
                         Player players = (Player) entity;
                         SkyBlockPlayerData playersData = new SkyBlockPlayerData(players);

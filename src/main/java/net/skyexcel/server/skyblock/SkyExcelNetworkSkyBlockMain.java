@@ -9,15 +9,13 @@ import net.skyexcel.server.skyblock.cmd.IslandAdminCmdTab;
 import net.skyexcel.server.skyblock.cmd.IslandCmd;
 import net.skyexcel.server.skyblock.cmd.IslandCmdTab;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
-import net.skyexcel.server.skyblock.event.SkyBlockEvent;
-import net.skyexcel.server.skyblock.event.banBlockEvent;
-import net.skyexcel.server.skyblock.event.onHit;
-import net.skyexcel.server.skyblock.event.onJoin;
+import net.skyexcel.server.skyblock.event.*;
 import net.skyexcel.server.skyblock.hook.RankExpansion;
 import net.skyexcel.server.skyblock.hook.RankLevelExpansion;
 import net.skyexcel.server.skyblock.hook.RankNameExpansion;
 import net.skyexcel.server.skyblock.hook.SkyBlockVaultExpansion;
 import net.skyexcel.server.skyblock.runnable.SkyBlockDelay;
+import net.skyexcel.server.skyblock.ui.armorstand.RankStand;
 import net.skyexcel.server.skyblock.util.world.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -50,6 +48,9 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
     }
 
     public void init() {
+        RankStand rankStand = new RankStand();
+        rankStand.create();
+
         RegisteredServiceProvider<WorldBorderApi> worldBorderApiRegisteredServiceProvider = Bukkit.getServer().getServicesManager().getRegistration(WorldBorderApi.class);
 
         if (worldBorderApiRegisteredServiceProvider == null) {
@@ -81,7 +82,7 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
         new RankLevelExpansion(plugin).register();
         new RankNameExpansion(plugin).register();
 
-        Listener[] listeners = {new onJoin(), new SkyBlockEvent(), new banBlockEvent(), new onHit()};
+        Listener[] listeners = {new onJoin(), new SkyBlockEvent(), new banBlockEvent(), new onHit(),new onQuit()};
         Arrays.stream(listeners).forEach(listener -> {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
         });

@@ -43,13 +43,13 @@ public class Items {
 
             if (item.hasItemMeta()) {
                 ItemMeta meta = item.getItemMeta();
-                if (item.hasDisplayName()) {
+                if (meta.hasDisplayName()) {
                     config.setString("items." + name + ".meta.display", meta.getDisplayName());
-                } else if (item.hasLore()) {
-                    config.getConfig().set("items." + name + ".meta.lore", item.getLore());
+                } else if (meta.hasLore()) {
+                    config.getConfig().set("items." + name + ".meta.lore", meta.getLore());
                     config.saveConfig();
-                } else if (item.hasCustomModelData()) {
-                    config.setInteger("items." + name + ".meta.CustomModelData", item.getCustomModelData());
+                } else if (meta.hasCustomModelData()) {
+                    config.setInteger("items." + name + ".meta.CustomModelData", meta.getCustomModelData());
                 }
             }
         } else {
@@ -66,6 +66,9 @@ public class Items {
         config.setString(name + ".name", name);
     }
 
+    public ItemStack getItemStack(){
+        return null;
+    }
     public void setDisplay(String display) {
         config.setString(name + ".display", display);
     }

@@ -3,9 +3,6 @@ package net.skyexcel.server.skyblock.data.island;
 import net.skyexcel.server.skyblock.data.event.*;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
-import net.skyexcel.server.data.event.*;
-import net.skyexcel.server.trade.data.event.*;
-import skyblock.data.event.*;
 import net.skyexcel.server.skyblock.data.island.vault.SkyBlockVault;
 import net.skyexcel.server.skyblock.util.world.WorldManager;
 import org.bukkit.*;
@@ -348,19 +345,14 @@ public class SkyBlock {
         config.saveConfig();
     }
 
-    public boolean onQuit(Player player) {
-        List<String> members = getMembers();
+    public void onQuit(Player player) {
 
-        if (members.contains(player.getUniqueId().toString())) {
-            for (String member : members) {
-
-                Player online = Bukkit.getPlayer(member);
-                online.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 퇴장하였습니다!");
-
-            }
-            return true;
+        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+        SkyBlockQuickEvent skyBlockQuickEvent = new SkyBlockQuickEvent(playerData.getIsland(),this,player);
+        if(!skyBlockQuickEvent.isCancelled()){
+            skyBlockQuickEvent.setCause(SkyBlockQuickEvent.QuickCuase.SERVER);
+            Bukkit.getPluginManager().callEvent(skyBlockQuickEvent);
         }
-        return false;
     }
 
     public boolean removePartTime(Player player) {
@@ -368,7 +360,8 @@ public class SkyBlock {
         if (config.getConfig().get("SkyBlock.parttime.player") != null && config.getConfig().get("SkyBlock.parttime.money") != null) {
             List<String> members = getPartTime();
             List<Integer> money = getPartMoney();
-
+            SkyBlockRecord record = new SkyBlockRecord(name);
+            record.skyblockRecord(player, SkyBlockRecord.Type.REMOVEPARTTIME);
             members.add(player.getUniqueId().toString());
             config.getConfig().set("SkyBlock.parttime.player", members);
             config.getConfig().set("SkyBlock.parttime.money", money);
@@ -384,6 +377,8 @@ public class SkyBlock {
         if (config.getConfig().get("SkyBlock.parttime.player") != null && config.getConfig().get("SkyBlock.parttime.money") != null) {
             List<String> members = getPartTime();
             List<Integer> money = getPartMoney();
+            SkyBlockRecord record = new SkyBlockRecord(name);
+            record.skyblockRecord(player, SkyBlockRecord.Type.ADDPARTTIME);
             money.add(amount);
             members.add(player.getUniqueId().toString());
             config.getConfig().set("SkyBlock.parttime.player", members);
@@ -397,12 +392,16 @@ public class SkyBlock {
 
     public boolean addMember(Player player) {
         if (config != null) {
-            List<String> members = getMembers();
-            members.add(player.getUniqueId().toString());
+            if (!getMembers().isEmpty()) {
+                List<String> members = getMembers();
+                members.add(player.getUniqueId().toString());
 
-            config.getConfig().set("SkyBlock.member", members);
-            config.saveConfig();
-            return true;
+                config.getConfig().set("SkyBlock.member", members);
+                config.saveConfig();
+                return true;
+            }
+
+
         }
 
         return false;
@@ -410,14 +409,17 @@ public class SkyBlock {
 
 
     public boolean removeMember(OfflinePlayer player) {
-        if (config != null) {
-            List<String> members = getMembers();
-            members.remove(player.getUniqueId().toString());
+        if(config != null){
+            if (!getMembers().isEmpty()) {
+                List<String> members = getMembers();
+                members.remove(player.getUniqueId().toString());
 
-            config.getConfig().set("SkyBlock.member", members);
-            config.saveConfig();
-            return true;
+                config.getConfig().set("SkyBlock.member", members);
+                config.saveConfig();
+                return true;
+            }
         }
+
 
         return false;
     }

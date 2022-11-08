@@ -34,7 +34,7 @@ public class SkyBlockPlayerData {
 
     public boolean setSpawn() {
         if (config != null) {
-            config.setLocation("island.spawn", player.getLocation());
+            config.setLocation("island.spawn", player.getPlayer().getLocation());
             config.saveConfig();
             return true;
         }

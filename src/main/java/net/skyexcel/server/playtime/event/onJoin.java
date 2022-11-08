@@ -1,6 +1,6 @@
 package net.skyexcel.server.playtime.event;
 
-import net.skyexcel.server.data.PlayTime;
+import net.skyexcel.server.playtime.data.PlayTime;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

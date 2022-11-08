@@ -59,6 +59,7 @@ public class IslandCmd {
 
         cmd.action("도움말", 0, action -> {
             Player player = (Player) action.getSender();
+
             player.sendMessage("test");
         });
 

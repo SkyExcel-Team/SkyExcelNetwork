@@ -45,16 +45,14 @@ public class SkyBlockRecord {
         }
     }
 
-    public void skyblockRecord(Player player, String reason, Type type) {
+    public void skyblockRecord(Player player,  Type type) {
 
         try {
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
             section.set("time", Translate.getDate());
             section.set("player", player.getName());
-
-            assert reason != null;
-            section.set("reason", reason);
             section.set("action", type.getName());
+
             record.saveConfig();
 
         } catch (NullPointerException e) {
@@ -63,8 +61,6 @@ public class SkyBlockRecord {
             newSection.set("time", Translate.getDate());
             newSection.set("player", player.getName());
 
-            assert reason != null;
-            newSection.set("reason", reason);
             newSection.set("action", type.getName());
             record.saveConfig();
         }
@@ -72,7 +68,7 @@ public class SkyBlockRecord {
 
 
     public enum Type {
-        KICK("추방"), JOIN("입장"), CREATE("생성"), BLACKLIST("블랙리스트");
+        KICK("추방"), JOIN("입장"), CREATE("생성"), BLACKLIST("블랙리스트"),ADDPARTTIME("알바추가") ,REMOVEPARTTIME("알바제거");
 
         private String name;
 

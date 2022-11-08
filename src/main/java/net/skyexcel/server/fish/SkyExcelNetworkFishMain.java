@@ -2,12 +2,14 @@ package net.skyexcel.server.fish;
 
 import net.skyexcel.server.fish.cmd.FishCmd;
 import net.skyexcel.server.fish.cmd.FishGameCmd;
+import net.skyexcel.server.fish.data.FishStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
 
 public class SkyExcelNetworkFishMain {
     public static JavaPlugin plugin;
+    public static FishStatus status = FishStatus.Stop;
     private Config config;
 
     public SkyExcelNetworkFishMain(JavaPlugin plugin) {
