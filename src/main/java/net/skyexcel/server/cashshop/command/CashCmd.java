@@ -42,9 +42,9 @@ public class CashCmd {
         });
 
         cmd.action("지급", 0, action -> {
-
+            Player player = (Player) action.getSender();
             try {
-                Player player = (Player) action.getSender();
+
                 OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
                 int amount = Integer.parseInt(action.getArgs()[2]);
 
@@ -59,8 +59,9 @@ public class CashCmd {
         });
 
         cmd.action("모두지급", 0, action -> {
+            Player player = (Player) action.getSender();
             try {
-                Player player = (Player) action.getSender();
+
 
                 int amount = Integer.parseInt(action.getArgs()[1]);
 
@@ -77,8 +78,9 @@ public class CashCmd {
         });
 
         cmd.action("빼기", 0, action -> {
+            Player player = (Player) action.getSender();
             try {
-                Player player = (Player) action.getSender();
+
                 OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
                 int amount = Integer.parseInt(action.getArgs()[2]);
 
@@ -99,7 +101,7 @@ public class CashCmd {
                 int amount = Integer.parseInt(action.getArgs()[2]);
 
                 Cash cash = new Cash(Objects.requireNonNull(target.getPlayer()));
-                cash.Set(amount);
+                cash.setAmount(amount);
 
                 player.sendMessage(StringData.setCash(target.getPlayer(), amount));
             } catch (NumberFormatException e) {
@@ -119,8 +121,8 @@ public class CashCmd {
             Player player = (Player) action.getSender();
             OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
             Cash cash = new Cash(Objects.requireNonNull(target.getPlayer()));
-            cash.Set(0);
-            player.sendMessage(StringData.checkPlayerCash(target.getPlayer()));
+            cash.setAmount(0);
+            player.sendMessage("캐시를 초기화 하였습니다!");
         });
 
         cmd.action("리로드", 0, action -> {
