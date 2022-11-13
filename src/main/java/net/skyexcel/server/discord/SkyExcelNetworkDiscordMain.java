@@ -2,7 +2,7 @@ package net.skyexcel.server.discord;
 
 import net.skyexcel.server.discord.bot.Bot;
 import net.skyexcel.server.discord.commands.DiscordVerifyCommandTabComplete;
-import net.skyexcel.server.discord.event.ServerJoinEvent;
+import net.skyexcel.server.discord.event.DiscordListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,19 +27,19 @@ public class SkyExcelNetworkDiscordMain {
     public void onEnable() {
         config = new Config("Discord-config");
         config.setPlugin(plugin);
-        config.loadDefualtConfig();
+        config.loadDefaultPluginConfig();
 
         botConfig = new Config("Discord-bot");
         botConfig.setPlugin(plugin);
-        botConfig.loadDefualtConfig();
+        botConfig.loadDefaultPluginConfig();
 
         data = new Config("Discord-discordVerifies");
         data.setPlugin(plugin);
-        data.loadDefualtConfig();
+        data.loadDefaultPluginConfig();
 
         bot = new Bot(plugin, botConfig.getString("bot_settings.token"));
 
-        Bukkit.getPluginManager().registerEvents(new ServerJoinEvent(), plugin);
+        Bukkit.getPluginManager().registerEvents(new DiscordListener(), plugin);
 
         Bukkit.getPluginCommand("인증").setExecutor(VerifyCommand);
         Bukkit.getPluginCommand("인증").setTabCompleter(new DiscordVerifyCommandTabComplete());
