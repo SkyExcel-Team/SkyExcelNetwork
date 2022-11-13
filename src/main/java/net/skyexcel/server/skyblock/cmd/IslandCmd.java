@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.skyexcel.server.menu.menu.Menu;
 import net.skyexcel.server.seconomy.data.economy.SEconomy;
 import net.skyexcel.server.skyblock.data.SkyBlockData;
+import net.skyexcel.server.skyblock.data.StringData;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.skyblock.data.player.SkyBlockRequest;
@@ -28,14 +29,18 @@ import skyexcel.command.function.Cmd;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.DecimalFormat;
 import java.util.*;
 
 
 public class IslandCmd {
+
+
     public IslandCmd() {
         Cmd cmd = new Cmd(SkyExcelNetworkSkyBlockMain.plugin, "섬");
 
         SkyBlockRequest request = new SkyBlockRequest();
+        StringData stringData = new StringData();
 
 
         cmd.label(action -> {
@@ -47,7 +52,7 @@ public class IslandCmd {
             if (data.teleportSkyBlock(player)) {
                 player.sendMessage(ChatColor.GREEN + "섬으로 이동하였습니다 " + ChatColor.GRAY + "[/섬 도움말]");
             } else {
-                player.sendMessage("텔레포트 실패!");
+                player.sendMessage("强 소속되어있는 섬이 없어 텔레포트가 불가능합니다! ");
             }
         });
 
@@ -75,7 +80,7 @@ public class IslandCmd {
             SkyBlock data = new SkyBlock(playerData.getIsland());
 
             if (data.setOwner(target)) {
-                player.sendMessage("양도 완료");
+                player.sendMessage("强 §6" + target.getDisplayName() + "§f님에게 섬을 양도하였습니다!");
             }
         });
 
@@ -105,7 +110,7 @@ public class IslandCmd {
             assert target != null;
             if (island.kickMember(player, target, reason)) {
 
-                player.sendMessage("해당 플레이어를 '" + reason + "' 사유로 추방 하였습니다!");
+                player.sendMessage("架 해당 플레이어를 '" + reason + "' 사유로 §a추방 §f하였습니다!");
 
                 TextComponent accept = new TextComponent("'" + ChatColor.UNDERLINE + reason + ChatColor.RESET + "'");
                 TextComponent after = new TextComponent(ChatColor.RED + " 사유로 추방 당하였습니다! ");
@@ -122,7 +127,7 @@ public class IslandCmd {
                 target.getPlayer().spigot().sendMessage(result);
 
             } else {
-                player.sendMessage("해당 플레이어는 섬원이 아닙니다!");
+                player.sendMessage("强 §f해당 플레이어는 섬원이 아닙니다!");
             }
         });
 
@@ -160,7 +165,7 @@ public class IslandCmd {
                     player.sendMessage("상대방이 수락할때 까지 기달려 주세요.");
                 }
             } else {
-                player.sendMessage(ChatColor.RED + "해당 플레이어는 이미 섬에 소속 되어 있습니다!");
+                player.sendMessage("强 §6" + target.getDisplayName() + "§f님은 이미 섬에 소속 되어 있습니다!");
             }
         });
 
@@ -182,9 +187,9 @@ public class IslandCmd {
 
                 islandData.accept(target, player);
 
-                player.sendMessage(targetData.getIsland() + " 섬에 입장하였습니다!");
+                player.sendMessage("架 §6" + targetData.getIsland() + " §f섬에 입장하였습니다!");
             } else {
-                player.sendMessage("초대 수락에 실패 하였습니다! ");
+                player.sendMessage("强 초대 수락에 실패 하였습니다!");
             }
         });
 
@@ -199,10 +204,10 @@ public class IslandCmd {
 
             SkyBlock data = new SkyBlock(playerData.getIsland());
             if (SkyBlockRequest.deny(request, player, target)) {
-                target.sendMessage(player.getDisplayName() + " 님이 초대 요청을 거절 하였습니다!");
-                player.sendMessage("초대 요청을 거절 하였습니다!");
+                target.sendMessage("家 §6" + player.getDisplayName() + "§f님이 초대 요청을 거절 하였습니다!");
+                player.sendMessage("架 초대 요청을 거절 하였습니다!");
             } else {
-                player.sendMessage("초대 요청 거절을 실패 하였습니다! ");
+                player.sendMessage("强 초대 요청 거절을 실패 하였습니다! ");
             }
 
         });
@@ -222,7 +227,7 @@ public class IslandCmd {
                     String reason = String.join(" ", Arrays.copyOfRange(args, 2, action.getArgs().length));
 
                     if (skyBlock.addBlackList(player, target, reason)) {
-                        player.sendMessage(target.getName() + " 님을 " + reason + " 사유로 블랙리스트에 추가 하였습니다.");
+                        player.sendMessage("架 " + target.getName() + " 님을 " + reason + " 사유로 블랙리스트에 추가 하였습니다.");
                     }
                 } else if (args[0].equalsIgnoreCase("해제")) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
@@ -289,10 +294,10 @@ public class IslandCmd {
 
                     SkyBlockData.loading.put(player.getUniqueId(), loading);
                 } else {
-                    player.sendMessage("이미 이름이 있습니다!");
+                    player.sendMessage("强 이미 사용중인 섬 이름입니다!");
                 }
             } else {
-                player.sendMessage("섬 이름은 30글자 미만 이어야 합니다.");
+                player.sendMessage("强 섬 이름은 30글자 미만 이어야 합니다.");
             }
 
         });
@@ -304,7 +309,7 @@ public class IslandCmd {
 
             SkyBlock data = new SkyBlock(name);
             if (data.rename(name)) {
-                player.sendMessage("이름을 바꾸었습니다!");
+                player.sendMessage("架 섬이름을 §6" + name + "§f으로 바꾸었습니다!");
             }
         });
 
@@ -322,7 +327,7 @@ public class IslandCmd {
                 skyBlock.teleportSkyBlock(player);
 
 
-                player.sendMessage(target.getName() + ChatColor.GREEN + " 님의 섬을 방문 했습니다!");
+                player.sendMessage("架 §6" + target.getName() + "§f님의 섬을 방문 했습니다!");
             }
         });
 
@@ -344,29 +349,24 @@ public class IslandCmd {
                         amount = Integer.parseInt(args[2]);
                         money = new SEconomy(player);
 
-                        if (playerData.isOwner()) {
-                            if (vault.deposit(amount) && money.withdraw(amount)) {
-                                SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                                record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
+                        if (vault.deposit(amount) && money.withdraw(amount)) {
+                            SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                                player.sendMessage("입금 완료");
-                            } else {
-                                player.sendMessage("입금 실패!");
+                            record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
+
+                            player.sendMessage("架 섬에 §6" + format(money.getLong()) + "§f을 입금 하였습니다!");
+
+                            List<String> members = data.getMembers();
+                            for (String member : members) {
+                                Player online = Bukkit.getPlayer(member);
+                                online.getPlayer().sendMessage("家 " + player.getPlayer().getDisplayName() + "님이 섬 금고에 §6" + format(money.getLong()) + "을 입금 하였습니다!");
                             }
+
                         } else {
-                            if (vault.isLock()) {
-                                if (vault.deposit(amount) && money.withdraw(amount)) {
-                                    SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
-
-                                    record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
-
-                                    player.sendMessage("입금 완료");
-                                } else {
-                                    player.sendMessage("입금 실패!");
-                                }
-                            }
+                            player.sendMessage("强 금고에 §6입금§f을 §c실패§f하였습니다!");
                         }
+
                     }
                     case "출금" -> {
                         data = new SkyBlock(player, playerData.getIsland());
@@ -374,30 +374,21 @@ public class IslandCmd {
                         amount = Integer.parseInt(args[2]);
                         vault.setPlayer(player);
                         money = new SEconomy(player);
-                        if (playerData.isOwner()) {
-                            if (vault.withdraw(amount)) {
-                                money.deposit(amount);
-                                SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+                        if (vault.withdraw(amount)) {
+                            money.deposit(amount);
+                            SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                                record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
+                            record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
 
-                                player.sendMessage("출금 완료");
-                            } else {
-                                player.sendMessage("출금 실패!");
+                            player.sendMessage("架 섬 금고에서 §6" + format(money.getLong()) + "§f을 출금 하였습니다!");
+
+                            List<String> members = data.getMembers();
+                            for (String member : members) {
+                                Player online = Bukkit.getPlayer(member);
+                                online.getPlayer().sendMessage("家 " + player.getPlayer().getDisplayName() + "님이 섬 금고에서 §6" + format(money.getLong()) + "을 출금 하였습니다!");
                             }
                         } else {
-                            if (!vault.isLock()) {
-                                if (vault.withdraw(amount)) {
-                                    money.deposit(amount);
-                                    SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
-
-                                    record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
-
-                                    player.sendMessage("출금 완료");
-                                } else {
-                                    player.sendMessage("출금 실패!");
-                                }
-                            }
+                            player.sendMessage("强 금고에서 §6출금§f을 §c실패§f하였습니다!");
                         }
                     }
                     case "잠금" -> data.setVaultLock();
@@ -600,5 +591,11 @@ public class IslandCmd {
                     break;
             }
         });
+    }
+
+    private String format(long amount) {
+        DecimalFormat decFormat = new DecimalFormat("###,###");
+
+        return decFormat.format(amount);
     }
 }

@@ -129,7 +129,7 @@ public class CashCmd {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(action.getArgs()[1]);
                 Cash cash = new Cash(Objects.requireNonNull(target.getPlayer()));
                 cash.setAmount(0);
-                player.sendMessage("캐시를 초기화 하였습니다!");
+                player.sendMessage(stringData.resetCash(target.getPlayer()));
             } else {
                 player.sendMessage(ChatColor.RED + "당신은 관리자가 아닙니다.");
             }
@@ -147,4 +147,5 @@ public class CashCmd {
 
         });
     }
+
 }

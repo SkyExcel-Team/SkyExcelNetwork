@@ -20,7 +20,7 @@ public class StringData {
         Cash cash = new Cash(player);
 
         return ChatColor.translateAlternateColorCodes('&', getCashMessage("my_cash")
-                .replaceAll("%cash%", String.valueOf(cash.getLong())));
+                .replaceAll("%cash%", format(cash.getLong())));
     }
 
     public String checkPlayerCash(Player target) {
@@ -107,20 +107,20 @@ public class StringData {
     public String sendCashAllPlayer(long amount) {
 
         return ChatColor.translateAlternateColorCodes('&', getCashMessage("send_cash_all_player")
-                .replaceAll("%cash%", String.valueOf(amount)));
+                .replaceAll("%cash%", format(amount)));
     }
 
     public String removeCash(Player target, long amount) {
 
         return ChatColor.translateAlternateColorCodes('&', getCashMessage("remove_cash")
-                .replaceAll("%cash%", String.valueOf(amount))
+                .replaceAll("%cash%", format(amount))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
     public String setCash(Player target, long amount) {
 
         return ChatColor.translateAlternateColorCodes('&', getCashMessage("set_cash")
-                .replaceAll("%cash%", String.valueOf(amount))
+                .replaceAll("%cash%", format(amount))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
