@@ -48,18 +48,17 @@ public class JobListener implements Listener {
 
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
         if (event.getAction() != Action.RIGHT_CLICK_AIR) return;
-        player.sendMessage("test");
 
         if (event.getHand() != null) {
-//            if (player.getInventory().getItemInHand().getType().equals(Material.STONE_HOE)) {
-//                if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-//                    // 허수아비를 소환 할때 메세지.
-//                    Scarecrow scarecrow = new Scarecrow();
-//                    scarecrow.spawn(player);
-//                    player.sendMessage("허수아비를 소환합니다.");
-//                    event.setCancelled(true);
-//                }
-//            }
+            if (player.getInventory().getItemInHand().getType().equals(Material.STONE_HOE)) {
+
+                // 허수아비를 소환 할때 메세지.
+                Scarecrow scarecrow = new Scarecrow(player);
+                scarecrow.spawn(player);
+                player.sendMessage("허수아비를 소환합니다.");
+                event.setCancelled(true);
+
+            }
         }
     }
 

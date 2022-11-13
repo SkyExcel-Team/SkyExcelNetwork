@@ -2,20 +2,30 @@ package net.skyexcel.server.job.data.obj;
 
 
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
+import net.skyexcel.server.job.runnable.CoolTime;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
-
-import java.lang.reflect.InvocationTargetException;
+import skyexcel.data.Time;
+import skyexcel.data.file.Config;
 
 public class Scarecrow {
 
+
+    private Config config;
+
+
+    public Scarecrow(OfflinePlayer player) {
+
+        config = new Config("data/Scarecrow/" + player.getUniqueId());
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
+    }
 
     public void spawn(Player player) {
 
@@ -23,8 +33,11 @@ public class Scarecrow {
         armorStand.setArms(true);
 
         EntityEquipment equipmentSlot = armorStand.getEquipment();
-
         ItemStack head = SkyExcelNetworkMain.hdb.getItemHead("29830");
+
+        armorStand.setCustomNameVisible(true);
+
+        armorStand.setCustomName("허수아비");
 
         equipmentSlot.setItemInHand(new ItemStack(Material.DIAMOND_HOE));
         equipmentSlot.setHelmet(head);
@@ -37,6 +50,10 @@ public class Scarecrow {
 
         armorStand.setLeftArmPose(eulerAngle);
         armorStand.setRightArmPose(right);
+
+        CoolTime coolTime = new CoolTime(armorStand, player);
+        coolTime.runTaskTimer(SkyExcelNetworkMain.getPlugin(), 0, 20);
     }
+
 
 }
