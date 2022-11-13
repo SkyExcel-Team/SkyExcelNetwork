@@ -1,6 +1,7 @@
 package net.skyexcel.server.mileage.util;
 
-import net.skyexcel.server.data.economy.Mileage;
+
+import net.skyexcel.server.mileage.data.Mileage;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -18,17 +19,17 @@ public class Translate {
 
     public static String moneyCheck(Player player, String msg) {
         economy = new Mileage(player);
-        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%money%", String.valueOf(economy.getMoney())));
+        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%money%", String.valueOf(economy.getLong())));
     }
 
     public static String moneyCheckTarget(OfflinePlayer target, String msg) {
         economy = new Mileage(target);
-        return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%money%", String.valueOf(economy.getMoney())));
+        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%money%", String.valueOf(economy.getLong())));
     }
 
     public static String moneyAction(Player player, Player target, long amount, String msg) {
         economy = new Mileage(player);
-        return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%money%", String.valueOf(amount)).
+        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%money%", String.valueOf(amount)).
                 replaceAll("%player%", target.getDisplayName()));
     }
 
@@ -39,31 +40,33 @@ public class Translate {
     }
 
     public static String shopAction(String name, String msg) {
-        return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%name%", name));
+        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%name%", name));
     }
 
     public static String shopResize(String name, int size, String msg) {
         return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%name%", name)
                 .replaceAll("%size%", String.valueOf(size)));
     }
+
     public static String shopRename(String name, String newName, String msg) {
-        return  ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%name%", name)
-                  .replaceAll("%set_name%", newName));
+        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%name%", name)
+                .replaceAll("%set_name%", newName));
     }
 
     public static String itemAction(ItemStack item, int price, String msg) {
         if (item != null) {
             if (item.hasItemMeta()) {
                 ItemMeta meta = item.getItemMeta();
-                return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%item_order%", meta.getDisplayName())
+                return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%item_order%", meta.getDisplayName())
                         .replaceAll("%price%", String.valueOf(price)));
             } else {
-                return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%item_order%", item.getType().name())
+                return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%item_order%", item.getType().name())
                         .replaceAll("%price%", String.valueOf(price)));
             }
         }
-        return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%price%", String.valueOf(price)));
+        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%price%", String.valueOf(price)));
     }
+
     public static String getDate() {
         SimpleDateFormat format2 = new SimpleDateFormat("yyyy년 MM월dd일 HH시mm분ss초");
         Date date = new Date();
@@ -71,7 +74,7 @@ public class Translate {
         return nowTime;
     }
 
-    public static String decal(long amount){
+    public static String decal(long amount) {
         DecimalFormat decFormat = new DecimalFormat("###,###");
 
         String str = decFormat.format(amount);

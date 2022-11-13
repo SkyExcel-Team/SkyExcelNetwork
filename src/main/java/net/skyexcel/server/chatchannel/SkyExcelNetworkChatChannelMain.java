@@ -16,7 +16,7 @@ public class SkyExcelNetworkChatChannelMain {
     }
 
     public void onEnable() {
-        new ChatCmd(this);
+        plugin.getCommand("채팅채널").setExecutor(new ChatCmd());
 
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new Chat(), plugin);

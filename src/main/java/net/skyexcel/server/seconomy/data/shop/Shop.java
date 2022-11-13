@@ -23,7 +23,7 @@ public class Shop {
 
     public Shop(String name) {
         this.name = name;
-        config = new Config("SEConomy-shop/" + name);
+        config = new Config("shop/seconomy/" + name);
         config.setPlugin(SkyExcelNetworkSEConomyMain.plugin);
 
         gui = new GUI(config);

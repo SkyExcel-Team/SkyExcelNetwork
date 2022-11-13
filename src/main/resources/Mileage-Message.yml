@@ -1,0 +1,109 @@
+####################################################################################################
+# +----------------------------------------------------------------------------------------------+ #
+# │                                                                                              │ #
+# │                                                                                              │ #
+# │               ███████╗██╗  ██╗██╗   ██╗███████╗██╗  ██╗ ██████╗███████╗██╗                   │ #
+# │               ██╔════╝██║ ██╔╝╚██╗ ██╔╝██╔════╝╚██╗██╔╝██╔════╝██╔════╝██║                   │ #
+# │               ███████╗█████╔╝  ╚████╔╝ █████╗   ╚███╔╝ ██║     █████╗  ██║                   │ #
+# │               ╚════██║██╔═██╗   ╚██╔╝  ██╔══╝   ██╔██╗ ██║     ██╔══╝  ██║                   │ #
+# │               ███████║██║  ██╗   ██║   ███████╗██╔╝ ██╗╚██████╗███████╗███████╗              │ #
+# │               ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝              │ #
+# │                                                                                              │ #
+# │                          ■ WebSite: https://skyexcel.net                                     │ #
+# │                          ■ Discord: https://discord.gg/TMaAyJsEnQ                            │ #
+# │                          ■ Version: v0.1                                                     │ #
+# │                          ■ Authors: @Yooinseo @idkNicks                                      │ #
+# │                                                                                              │ #
+# │                                                                                              │ #
+# │                  ■  Copyright © 2022 SkyExcel Team - All Rights Reserved  ■                  │ #
+# │                                                                                              │ #
+# +----------------------------------------------------------------------------------------------+ #
+####################################################################################################
+
+
+# +----------------------------------------------------------------------------------------------+ #
+# │                                                                                              │ #
+# │                                      ■  Mileage Message  ■                                      │ #
+# │                             # The below is messages about mileage #                             │ #
+# │                                                                                              │ #
+# +----------------------------------------------------------------------------------------------+ #
+
+mileage_message:
+
+  # When checking the mileage you have
+  my_mileage: "보유중인 마일리지: %mileage%"
+
+  # When checking the mileage that the other person has
+  check_player_mileage: "%player%님께서 보유중인 마일리지: %mileage%"
+
+  # When sending mileage to a player
+  send_mileage: "%player%님에게 %mileage%만큼의 마일리지를 지급하였습니다!"
+
+  # When sending mileage to all players
+  send_mileage_all_player: "모든 플레이어에게 %mileage%만큼의 마일리지를 지급하였습니다!"
+
+  # When removing the player's mileage
+  remove_mileage: "%player%님의 마일리지를 %mileage%만큼 제거하였습니다!"
+
+  # When setting the player's mileage
+  set_mileage: "%player%님의 마일리지를 %mileage%만큼 설정하였습니다!"
+
+  # When initializing the player's mileage
+  reset_mileage: "%player%님의 마일리지를 초기화하였습니다!"
+
+
+  # +----------------------------------------------------------------------------------------------+ #
+  # │                                                                                              │ #
+  # │                                      ■  mileageShop Message  ■                                  │ #
+  # │                              # The below is messages about mileageshop #                        │ #
+  # │                                                                                              │ #
+  # +----------------------------------------------------------------------------------------------+ #
+
+
+mileageshop_message:
+
+  # When a player purchase cash at mileage Shop
+  buy: "마일리지 %cash%을 %mileage%마일리지로 구매하였습니다!"
+
+
+# +----------------------------------------------------------------------------------------------+ #
+# │                                                                                              │ #
+# │                                      ■  Error Message  ■                                     │ #
+# │                              # The below is messages about error #                           │ #
+# │                                                                                              │ #
+# +----------------------------------------------------------------------------------------------+ #
+
+error_message:
+
+  # When the mileage you have exceeds the value of 2,147,483,647
+  overflow: "보유중인 마일리지가 2,147,483,647를 넘을 수 없습니다!"
+
+  # When the item cannot be purchased due to lack of mileage
+  cannot_buy: "당신은 마일리지가 부족하여 캐시 구매가 불가능합니다."
+
+  # When you do not enter a playername in the command
+  command_none_player: "플레이어 닉네임을 입력해주세요!"
+
+  # When you do not enter mileage amount in the command
+  command_none_mileage: "금액을 입력해주세요!"
+
+
+# +----------------------------------------------------------------------------------------------+ #
+# │                                                                                              │ #
+# │                                      ■  Other Message  ■                                     │ #
+# │                              # The below is messages about other #                           │ #
+# │                                                                                              │ #
+# +----------------------------------------------------------------------------------------------+ #
+
+
+other_message:
+
+  # When I reloaded the all config
+  reload_config: "&a콘피그를 성공적으로 리로드하였습니다!"
+
+
+
+
+
+
+

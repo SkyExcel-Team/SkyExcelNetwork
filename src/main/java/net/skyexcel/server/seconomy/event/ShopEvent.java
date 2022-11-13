@@ -1,10 +1,14 @@
 package net.skyexcel.server.seconomy.event;
 
-import net.skyexcel.server.data.Data;
-import net.skyexcel.server.data.StringData;
-import net.skyexcel.server.data.shop.EditGUI;
-import net.skyexcel.server.data.shop.SettingType;
-import net.skyexcel.server.data.shop.Shop;
+
+
+
+
+import net.skyexcel.server.seconomy.data.Data;
+import net.skyexcel.server.seconomy.data.StringData;
+import net.skyexcel.server.seconomy.data.shop.EditGUI;
+import net.skyexcel.server.seconomy.data.shop.SettingType;
+import net.skyexcel.server.seconomy.data.shop.Shop;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

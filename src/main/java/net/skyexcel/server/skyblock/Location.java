@@ -15,15 +15,6 @@ public class Location extends org.bukkit.Location {
     }
 
 
-    /**
-     * 스폰 가능한 위치를 찾습니다.
-     *
-     * @return
-     */
-    public boolean canSpawn(double x, double y, double z) {
-
-        return location.getNearbyEntities(x, y, z).isEmpty();
-    }
 
     public org.bukkit.Location getLocation() {
         return location;

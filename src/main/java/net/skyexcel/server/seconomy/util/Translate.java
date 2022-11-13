@@ -1,6 +1,7 @@
 package net.skyexcel.server.seconomy.util;
 
-import net.skyexcel.server.data.economy.SEconomy;
+
+import net.skyexcel.server.seconomy.data.economy.SEconomy;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -18,12 +19,12 @@ public class Translate {
 
     public static String moneyCheck(Player player, String msg) {
         economy = new SEconomy(player);
-        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%money%", String.valueOf(economy.getMoney())));
+        return ChatColor.translateAlternateColorCodes('&', msg.replaceAll("%money%", String.valueOf(economy.getLong())));
     }
 
     public static String moneyCheckTarget(OfflinePlayer target, String msg) {
         economy = new SEconomy(target);
-        return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%money%", String.valueOf(economy.getMoney())));
+        return ChatColor.translateAlternateColorCodes('&',msg.replaceAll("%money%", String.valueOf(economy.getLong())));
     }
 
     public static String moneyAction(Player player, Player target, long amount, String msg) {

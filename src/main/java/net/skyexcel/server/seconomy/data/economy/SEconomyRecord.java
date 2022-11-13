@@ -18,7 +18,7 @@ public class SEconomyRecord {
 
 
     public SEconomyRecord() {
-        this.record = new Config("SEConomy-data/log/log");
+        this.record = new Config("data/seconomy/log/log");
         this.record.setPlugin(SkyExcelNetworkSEConomyMain.plugin);
     }
 
@@ -40,7 +40,7 @@ public class SEconomyRecord {
             section.set("sendType", type.getName());
             section.set("target", target.getName());
             section.set("after", after);
-            section.set("before",before);
+            section.set("before", before);
             section.set("amount", amount);
 
             record.saveConfig();
@@ -70,7 +70,7 @@ public class SEconomyRecord {
             section.set("sendType", type.getName());
             section.set("target", target.getName());
             section.set("after", after);
-            section.set("before",before);
+            section.set("before", before);
             section.set("amount", amount);
 
             record.saveConfig();

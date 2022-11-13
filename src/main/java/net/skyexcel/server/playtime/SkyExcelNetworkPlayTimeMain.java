@@ -1,7 +1,7 @@
 package net.skyexcel.server.playtime;
 
-import net.skyexcel.server.event.onJoin;
 import net.skyexcel.server.playtime.cmd.PlayTimeCmd;
+import net.skyexcel.server.playtime.event.onJoin;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;

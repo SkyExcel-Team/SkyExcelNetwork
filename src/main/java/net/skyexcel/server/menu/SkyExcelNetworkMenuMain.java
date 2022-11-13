@@ -1,9 +1,8 @@
 package net.skyexcel.server.menu;
 
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
-import net.skyexcel.server.cmd.MenuCommand;
-import net.skyexcel.server.event.ClickEvent;
-import net.skyexcel.server.gui.PlayerProfile;
+import net.skyexcel.server.menu.cmd.MenuCommand;
+import net.skyexcel.server.menu.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +32,7 @@ public class SkyExcelNetworkMenuMain {
 
         defaultConfig.loadDefaultPluginConfig();
 
-        Listener[] listeners = {new ClickEvent(), new PlayerProfile()};
+        Listener[] listeners = {new ClickEvent() };
         Arrays.stream(listeners).forEach(listener -> {
                     Bukkit.getPluginManager().registerEvents(listener, plugin);
                 }

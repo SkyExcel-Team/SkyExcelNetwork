@@ -2,7 +2,8 @@ package net.skyexcel.server.mileage.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
-import net.skyexcel.server.mileage.data.economy.Mileage;
+
+import net.skyexcel.server.mileage.data.Mileage;
 import net.skyexcel.server.mileage.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -53,10 +54,10 @@ public class MileageExpansion extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, String params) {
         if (params.equalsIgnoreCase("mileage_fixed")) {
             Mileage economy = new Mileage(player);
-            return Translate.decal(economy.getMoney());
+            return Translate.decal(economy.getLong());
         } else if (params.equalsIgnoreCase("mileage")) {
             Mileage economy = new Mileage(player);
-            return String.valueOf(economy.getMoney());
+            return String.valueOf(economy.getLong());
         }
         return null; // Placeholder is unknown by the expansion
     }

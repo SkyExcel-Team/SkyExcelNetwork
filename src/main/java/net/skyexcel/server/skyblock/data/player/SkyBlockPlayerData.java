@@ -12,7 +12,7 @@ public class SkyBlockPlayerData {
 
     public SkyBlockPlayerData(OfflinePlayer player) {
         this.player = player;
-        config = new Config("data/" + player.getUniqueId());
+        config = new Config("data/SkyBlock/Player/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
 
     }
@@ -42,7 +42,12 @@ public class SkyBlockPlayerData {
     }
 
     public boolean hasIsland() {
-        return (config.getConfig().getString("island.name").equalsIgnoreCase(""));
+        if (config != null) {
+
+            return (config.getConfig().getString("island.name") != null);
+        }
+
+        return false;
     }
 
     public Config getConfig() {

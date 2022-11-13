@@ -16,13 +16,6 @@ public class ChatCmd implements CommandExecutor, TabExecutor {
 
     private static final String cmd = "채팅채널";
 
-
-    public ChatCmd(SkyExcelNetworkChatChannelMain channel) {
-        Objects.requireNonNull(channel.getCommand(cmd)).setExecutor(this);
-        Objects.requireNonNull(channel.getCommand(cmd)).setTabCompleter(this);
-
-    }
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 

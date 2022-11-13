@@ -1,4 +1,5 @@
 package net.skyexcel.server.lockmanager.packet;
+
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketAdapter;

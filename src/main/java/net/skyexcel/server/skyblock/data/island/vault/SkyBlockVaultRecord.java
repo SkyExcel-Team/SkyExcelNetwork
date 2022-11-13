@@ -15,7 +15,7 @@ public class SkyBlockVaultRecord {
 
     public SkyBlockVaultRecord(String name) {
         this.name = name;
-        this.record = new Config("SkyBlock/" + name + "/record/VaultRecord");
+        this.record = new Config("data/SkyBlock/Skyblock/" + name + "/vaultRecord");
         this.record.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
 
     }

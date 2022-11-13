@@ -1,11 +1,10 @@
 package net.skyexcel.server.cashshop;
 
-import net.skyexcel.server.cashshop.command.CashCmd;
-import net.skyexcel.server.cashshop.command.CashShopCmd;
-import net.skyexcel.server.cashshop.event.JoinEvent;
-import net.skyexcel.server.cashshop.event.QuitEvent;
+import net.skyexcel.server.cashshop.cmd.*;
+import net.skyexcel.server.cashshop.event.CashListener;
 import net.skyexcel.server.cashshop.hook.CashExpansion;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
@@ -21,30 +20,32 @@ public class SkyExcelNetworkCashShopMain {
     public SkyExcelNetworkCashShopMain(JavaPlugin plugin) {
         SkyExcelNetworkCashShopMain.plugin = plugin;
 
-        onEnable();
+        init();
+        System.out.println(ChatColor.GREEN + " 캐시샵 플러그인 등록 완료!");
+        plugin.getCommand("캐시").setTabCompleter(new CashCmdTab());
+        plugin.getCommand("캐시상점").setTabCompleter(new CashShopCmdTab());
     }
 
-    public void onEnable() {
-        init();
 
-        Listener[] listeners = {new JoinEvent(), new QuitEvent()};
+    private void init() {
+        Listener[] listeners = {new CashListener()};
         Arrays.stream(listeners).forEach(listener -> {
                     Bukkit.getPluginManager().registerEvents(listener, plugin);
                 }
         );
 
         new CashCmd().registerCmd();
+
         new CashExpansion(plugin).register();
+
         CashShopCmd cashShopCmd = new CashShopCmd();
         cashShopCmd.registerCmd();
-    }
 
-    private void init() {
         message = new Config("CashShop-message");
         message.setPlugin(plugin);
         message.loadDefaultPluginConfig();
 
-        cashShop = new Config("CashShop-cashshop");
+        cashShop = new Config("CashShop-defualt");
         cashShop.setPlugin(plugin);
         cashShop.loadDefaultPluginConfig();
     }

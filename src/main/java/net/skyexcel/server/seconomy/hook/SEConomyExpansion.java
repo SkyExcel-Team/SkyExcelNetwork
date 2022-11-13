@@ -1,8 +1,8 @@
 package net.skyexcel.server.seconomy.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
-import net.skyexcel.server.data.economy.SEconomy;
+
+import net.skyexcel.server.seconomy.data.economy.SEconomy;
 import net.skyexcel.server.seconomy.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -53,10 +53,10 @@ public class SEConomyExpansion extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, String params) {
         if (params.equalsIgnoreCase("money_fixed")) {
             SEconomy economy = new SEconomy(player);
-            return Translate.decal(economy.getMoney());
+            return Translate.decal(economy.getLong());
         } else if (params.equalsIgnoreCase("money")) {
             SEconomy economy = new SEconomy(player);
-            return String.valueOf(economy.getMoney());
+            return String.valueOf(economy.getLong());
         }
         return null; // Placeholder is unknown by the expansion
     }

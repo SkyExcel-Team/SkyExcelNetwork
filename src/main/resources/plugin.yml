@@ -20,10 +20,15 @@ commands:
   #CashShop
   캐시:
   캐시상점:
+    aliases: [ cash ]
+  메뉴:
+    aliases: [ menu,m,ㅁ ]
+  마일리지:
+  마일리지상점:
 
   #ChatChannel
   채팅채널:
-    alias: [ c,ㅊ ]
+    aliases: [ c,ㅊ ]
 
   #Fish
   낚시:
@@ -37,6 +42,14 @@ commands:
 
   #PlayTime
   접속시간:
+
+  워프:
+
+  프로필:
+  인기도:
+
+  spawn:
+    aliases: [ tmvhs,넴주,스폰 ]
 
   #SEConomy
   돈:

@@ -1,9 +1,10 @@
 package net.skyexcel.server.seconomy;
 
-import net.skyexcel.server.cmd.SEconomyCommand;
-import net.skyexcel.server.cmd.ShopCommand;
-import net.skyexcel.server.event.onJoin;
+import net.skyexcel.server.seconomy.cmd.EconomyCmdTab;
+import net.skyexcel.server.seconomy.cmd.SEconomyCommand;
+import net.skyexcel.server.seconomy.cmd.ShopCommand;
 import net.skyexcel.server.seconomy.event.ShopEvent;
+import net.skyexcel.server.seconomy.event.onJoin;
 import net.skyexcel.server.seconomy.hook.SEConomyExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -39,6 +40,7 @@ public class SkyExcelNetworkSEConomyMain {
 
         new SEConomyExpansion(plugin).register();
         new SEconomyCommand();
+        plugin.getCommand("돈").setTabCompleter(new EconomyCmdTab());
         new ShopCommand();
 //
         message = new Config("SEConomy-message");

@@ -19,7 +19,7 @@ public class PlayTime {
     public PlayTime(Player player) {
         this.player = player;
 
-        this.config = new Config("PlayTime-data/" + player.getUniqueId());
+        this.config = new Config("data/playtime/" + player.getUniqueId());
         this.config.setPlugin(SkyExcelNetworkPlayTimeMain.plugin);
 
         this.time = new Time();

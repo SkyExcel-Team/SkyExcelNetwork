@@ -17,7 +17,7 @@ public class SEconomyCommand {
             Player player = (Player) action.getSender();
             StringData.myMoney(player);
         });
-        
+
         cmd.action("도움말", 0, action -> {
             Player player = (Player) action.getSender();
             if (player.hasPermission("") || player.isOp()) {
@@ -37,11 +37,11 @@ public class SEconomyCommand {
                         SEconomy money = new SEconomy(players);
 
                         SEconomyRecord record = new SEconomyRecord();
-                        record.setBefore(money.getMoney());
+                        record.setBefore(money.getLong());
 
                         money.deposit(amount);
 
-                        record.setAfter(money.getMoney());
+                        record.setAfter(money.getLong());
                         record.playerRecord(player, players, amount, SEconomyRecord.Type.ADD);
                         StringData.sendMoney(player, players, amount);
                     }
@@ -66,9 +66,9 @@ public class SEconomyCommand {
                         SEconomy money = new SEconomy(target);
                         SEconomyRecord record = new SEconomyRecord();
 
-                        record.setBefore(money.getMoney());
+                        record.setBefore(money.getLong());
                         money.deposit(amount);
-                        record.setAfter(money.getMoney());
+                        record.setAfter(money.getLong());
 
                         record.playerRecord(player, target, amount, SEconomyRecord.Type.ADD);
 
@@ -96,9 +96,9 @@ public class SEconomyCommand {
                         SEconomy money = new SEconomy(target);
 
                         SEconomyRecord record = new SEconomyRecord();
-                        record.setBefore(money.getMoney());
+                        record.setBefore(money.getLong());
                         money.withdraw(amount);
-                        record.setAfter(money.getMoney());
+                        record.setAfter(money.getLong());
                         record.playerRecord(player, target, amount, SEconomyRecord.Type.REMOVE);
 
                         StringData.removeMoney(player, target, amount);
@@ -123,9 +123,9 @@ public class SEconomyCommand {
                         assert target != null;
                         SEconomy money = new SEconomy(target);
                         SEconomyRecord record = new SEconomyRecord();
-                        record.setBefore(money.getMoney());
-                        money.setMoney(amount);
-                        record.setAfter(money.getMoney());
+                        record.setBefore(money.getLong());
+                        money.setAmount(amount);
+                        record.setAfter(money.getLong());
                         record.playerRecord(player, target, amount, SEconomyRecord.Type.SET);
 
                         StringData.setMoney(player, target, amount);
@@ -164,8 +164,8 @@ public class SEconomyCommand {
                     assert target != null;
                     SEconomy money = new SEconomy(target);
                     SEconomyRecord record = new SEconomyRecord();
-                    record.setBefore(money.getMoney());
-                    money.setMoney(0);
+                    record.setBefore(money.getLong());
+                    money.setAmount(0);
                     record.setAfter(0);
                     record.playerRecord(player, target, 0, SEconomyRecord.Type.RESET);
 

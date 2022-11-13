@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -19,35 +20,42 @@ public class Chat implements Listener {
 
     private final String split = " : ";
 
+    private boolean isCancelled = false;
 
-    @EventHandler
+
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        ChatRecord record = new ChatRecord(player.getUniqueId().toString());
-        TextComponent tPrefix = new TextComponent(prefix);
 
-        TextComponent tPlayer = new TextComponent(player.getDisplayName());
-        tPlayer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a클릭하여 섬을 구경하세요!").create()));
+        if(!isCancelled){
+            ChatRecord record = new ChatRecord(player.getUniqueId().toString());
+            TextComponent tPrefix = new TextComponent(prefix);
 
-        tPlayer.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/섬 방문 " + player.getDisplayName()));
+            TextComponent tPlayer = new TextComponent(player.getDisplayName());
+            tPlayer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a클릭하여 섬을 구경하세요!").create()));
 
-        TextComponent tSplit = new TextComponent(split);
+            tPlayer.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/섬 방문 " + player.getDisplayName()));
 
-        TextComponent message = new TextComponent(event.getMessage());
-        message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GRAY + Translate.getDate()).create()));
+            TextComponent tSplit = new TextComponent(split);
+
+            TextComponent message = new TextComponent(event.getMessage());
+            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GRAY + Translate.getDate()).create()));
 
 
-        tPrefix.addExtra(tPlayer);
-        tPrefix.addExtra(tSplit);
-        tPrefix.addExtra(message);
+            tPrefix.addExtra(tPlayer);
+            tPrefix.addExtra(tSplit);
+            tPrefix.addExtra(message);
 
-        for (Player online : Bukkit.getOnlinePlayers()) {
+            for (Player online : Bukkit.getOnlinePlayers()) {
 
-            online.spigot().sendMessage(tPrefix);
+                online.spigot().sendMessage(tPrefix);
+            }
+            record.record(player, event.getMessage());
+            event.setCancelled(true);
         }
-        record.record(player, event.getMessage());
+    }
 
-        event.setCancelled(true);
-
+    public void setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
     }
 }

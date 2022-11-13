@@ -45,8 +45,8 @@ public class MaterialPageMember {
 
 
     public void update(Player player) {
-        Light light = new Light();
-        materials.add(light.getMaterial());
+
+
 
         Arrays.stream(SkyBlockData.remove).forEach(materials::remove);
 

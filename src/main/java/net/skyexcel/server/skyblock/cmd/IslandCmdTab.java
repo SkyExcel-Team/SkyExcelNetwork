@@ -20,39 +20,16 @@ public class IslandCmdTab implements TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            player.sendMessage(args.length + "");
+
             SkyBlockPlayerData playerData;
             if (args.length == 1) {
-                result.add("도움말");
-                result.add("생성");
-                result.add("제거");
-                result.add("초대");
-                result.add("수락");
-                result.add("거절");
-                result.add("탈퇴");
-                result.add("방문");
-                result.add("추방");
-                result.add("규칙");
-                result.add("금고");
-                result.add("디스코드");
-                result.add("방문객");
-                result.add("이름변경");
-                result.add("스폰변경");
 
-                result.add("업그레이드");
-                result.add("양도");
-                result.add("권한");
-                result.add("호퍼");
-                result.add("초기화");
-                result.add("홈");
-                result.add("설정");
-                result.add("옵션");
-                result.add("알바");
-                result.add("순위");
-                result.add("섬원");
+                result = List.of("도움말", "생성", "제거", "초대", "수락", "거절", "탈퇴", "방문", "추방", "규칙",
+                        "금고", "디스코드", "방문객", "이름변경", "스폰변경", "업그레이드", "업그레이드", "양도",
+                        "권한", "호퍼", "초기화", "홈", "설정", "옵션", "알바", "순위", "섬원");
 
             } else if (args.length == 2) {
                 switch (args[0]) {
@@ -83,28 +60,24 @@ public class IslandCmdTab implements TabCompleter {
                     case "규칙":
                         playerData = new SkyBlockPlayerData(player);
                         if (playerData.isOwner()) {
-                            result.add("추가");
-                            result.add("제거");
+                            result = List.of("추가", "제거");
                         }
 
                         result.add("보기");
                         break;
                     case "금고":
+                        result = List.of("입금", "출금");
 
-                        result.add("입금");
-                        result.add("출금");
                         playerData = new SkyBlockPlayerData(player);
                         if (playerData.isOwner()) {
-                            result.add("기록");
-                            result.add("잠금");
+                            result = List.of("기록", "잠금");
                         }
                         break;
 
                     case "디스코드":
                         playerData = new SkyBlockPlayerData(player);
                         if (playerData.isOwner()) {
-                            result.add("설정");
-                            result.add("삭제");
+                            result = List.of("설정", "삭제");
                         }
 
                         break;
@@ -125,30 +98,16 @@ public class IslandCmdTab implements TabCompleter {
 
                     case "옵션":
                         playerData = new SkyBlockPlayerData(player);
-                        if (playerData.isOwner()) {
-                            result.add("전투");
-                            result.add("밴블록");
-                            result.add("전투");
-                            result.add("열기");
-                            result.add("잠금");
-                            result.add("시간");
-                        }
-
-                        result.add("전투");
-                        result.add("밴블록");
-                        result.add("전투");
-                        result.add("열기");
-                        result.add("잠금");
-                        result.add("시간");
-
+//                        if (playerData.isOwner()) {
+//                            result = List.of("전투", "밴블록", "열기", "잠금", "시간");
+//                        }
+                        result = List.of("전투", "밴블록", "열기", "잠금", "시간", "월드보더");
                         break;
 
                     case "알바":
                         playerData = new SkyBlockPlayerData(player);
                         if (playerData.isOwner()) {
-                            result.add("추가");
-                            result.add("제거");
-                            result.add("완료");
+                            result = List.of("추가", "제거", "완료");
                         }
                         break;
                 }

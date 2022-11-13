@@ -50,10 +50,11 @@ public class CashExpansion extends PlaceholderExpansion {
     @Override
     public String onRequest(OfflinePlayer player, String params) {
         Cash cash = new Cash(player);
+        Translate translate = new Translate();
         if (params.equalsIgnoreCase("Cash")) {
-            return String.valueOf(cash.getAmount());
+            return String.valueOf(cash.getLong());
         } else if (params.equalsIgnoreCase("Cash_fixed")) {
-            return Translate.decal(cash.getAmount());
+            return translate.decal(cash.getLong());
         }
         return null; // Placeholder is unknown by the expansion
     }

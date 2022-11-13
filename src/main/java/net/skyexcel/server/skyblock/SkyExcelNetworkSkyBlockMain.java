@@ -37,19 +37,16 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
     private static ProtocolManager protocolManager;
     private static WorldBorderApi worldBorderApi;
 
-    public SkyExcelNetworkSkyBlockMain(JavaPlugin plugin) {
-        SkyExcelNetworkSkyBlockMain.plugin = plugin;
-
-        onEnable();
-    }
-
-    public void onEnable() {
+    public SkyExcelNetworkSkyBlockMain(JavaPlugin newplugin) {
+        plugin = newplugin;
+        System.out.println(ChatColor.GREEN + "섬 플러그인 등록 완료!");
         init();
     }
 
+
     public void init() {
         RankStand rankStand = new RankStand();
-        rankStand.create();
+//        rankStand.create();
 
         RegisteredServiceProvider<WorldBorderApi> worldBorderApiRegisteredServiceProvider = Bukkit.getServer().getServicesManager().getRegistration(WorldBorderApi.class);
 
@@ -92,10 +89,10 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
         }
 
         //TODO 서버가 켜지면 다시 섬 초기화,제거,생성 쿨타임 진행
-        for(OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()){
+        for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(offlinePlayer);
             SkyBlockDelay delay = new SkyBlockDelay(playerData, false);
-            delay.runTaskTimer(plugin,0,20);
+            delay.runTaskTimer(plugin, 0, 20);
         }
     }
 

@@ -19,6 +19,15 @@ public class Items {
         inv.setItem(loc, item);
     }
 
+    public static ItemStack newItem(String name, Material type, int stack, List<String> lore) {
+        ItemStack item = new ItemStack(type, stack);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     public static void Enchant(ItemStack item, Inventory inv, int pos) {
         item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
         ItemMeta meta = item.getItemMeta();

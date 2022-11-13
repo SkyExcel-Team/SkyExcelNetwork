@@ -15,7 +15,6 @@ import java.util.List;
 
 public class SignData {
 
-
     private Config config;
 
 
@@ -46,9 +45,9 @@ public class SignData {
      *
      * @param player
      */
-    public void addSign(Player player, Location sign,Location chest) {
+    public void addSign(Player player, Location sign, Location chest) {
         addObject("sign.players", player.getUniqueId());
-        
+
 
     }
 
@@ -85,20 +84,20 @@ public class SignData {
      * @param block 설치한 블록이 표지판인지 체크.
      */
     public void edit(Player player, Block block) {
-        if (block instanceof Sign) {
-            Sign sign = (Sign) block.getState();
 
-            String oneLine = (sign.getLine(0) != null ? sign.getLine(0) : "");
-            String twoLine = (sign.getLine(1) != null ? sign.getLine(1) : "");
-            String threeLine = (sign.getLine(2) != null ? sign.getLine(2) : "");
-            String fourLIne = (sign.getLine(3) != null ? sign.getLine(3) : "");
-            signGUI(player, Arrays.asList(oneLine, twoLine, threeLine, fourLIne));
-        }
+
+//
+//        String oneLine = (sign.getLine(0) != null ? sign.getLine(0) : "");
+//        String twoLine = (sign.getLine(1) != null ? sign.getLine(1) : "");
+//        String threeLine = (sign.getLine(2) != null ? sign.getLine(2) : "");
+//        String fourLIne = (sign.getLine(3) != null ? sign.getLine(3) : "");
+        signGUI(player, Arrays.asList("oneLine", "twoLine" ));
+
     }
 
     private void signGUI(Player target, List<String> lore) {
         SignEdit edit = new SignEdit(SkyExcelNetworkLock.getPlugin());
-        SignEdit.Menu menu = edit.newMenu(lore)
+        SignEdit.Menu menu = edit.newMenu(List.of())
                 .reopenIfFail(true)
                 .response((player, strings) -> {
                     if (!strings[3].equalsIgnoreCase("sign")) {

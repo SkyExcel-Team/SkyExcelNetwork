@@ -1,6 +1,7 @@
 package net.skyexcel.server.seconomy.event;
 
-import net.skyexcel.server.data.economy.SEconomy;
+
+import net.skyexcel.server.seconomy.data.economy.SEconomy;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,7 +12,7 @@ public class onJoin implements Listener {
     public void onJoinServer(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         SEconomy money = new SEconomy(player);
-        if (money.getMoney() == -1)
-            money.setMoney(0);
+        if (money.getLong() == -1)
+            money.setAmount(0);
     }
 }

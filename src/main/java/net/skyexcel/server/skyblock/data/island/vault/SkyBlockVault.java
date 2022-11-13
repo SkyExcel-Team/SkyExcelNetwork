@@ -14,7 +14,7 @@ public class SkyBlockVault {
     public SkyBlockVault(Player player, String name) {
         this.name = name;
         this.player = player;
-        config = new Config("SkyBlock/" + name + "/vault");
+        config = new Config("data/SkyBlock/SkyBlock/" + name + "/vault");
         config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
     }
 

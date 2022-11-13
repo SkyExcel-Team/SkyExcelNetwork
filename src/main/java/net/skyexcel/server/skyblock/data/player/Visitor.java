@@ -35,9 +35,9 @@ public class Visitor {
 
 
             if (skyBlock.getSize() != 0) {
-                int size = skyBlock.getSize();
+                double size = skyBlock.getSize();
                 List<String> members = skyBlock.getMembers();
-                for (Entity entity : location.getNearbyEntities(size, size, size)) {
+                for (Entity entity : Bukkit.getWorld("SkyBlock").getNearbyEntities(location, size, size, size)) {
                     if (entity instanceof Player) {
                         Player player = (Player) entity;
 
@@ -61,7 +61,7 @@ public class Visitor {
         return visitors;
     }
 
-    public void openGUI(Player player){
+    public void openGUI(Player player) {
         Inventory inv = Bukkit.createInventory(null, 54, name + " 방문객  " + getVisitors().size() + " 명");
         getVisitors().forEach(visitors -> {
             if (!visitors.getUniqueId().toString().equalsIgnoreCase(skyBlock.getOwner())) {
@@ -71,18 +71,18 @@ public class Visitor {
         });
         player.openInventory(inv);
         this.inv = inv;
-        update(player,"방문객 " + getVisitors().size() + " 명");
+        update(player, "방문객 " + getVisitors().size() + " 명");
     }
 
-    public void update(Player player,String title){
+    public void update(Player player, String title) {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyExcelNetworkSkyBlockMain.plugin, new Runnable() {
             @Override
             public void run() {
-                if(inv != null){
-                    InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin,player,title);
+                if (inv != null) {
+                    InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin, player, title);
                 }
             }
-        },0,20);
+        }, 0, 20);
     }
 
     public SkyBlock getSkyBlock() {

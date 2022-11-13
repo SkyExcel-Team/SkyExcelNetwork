@@ -4,6 +4,8 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.skyexcel.server.menu.menu.Menu;
+import net.skyexcel.server.seconomy.data.economy.SEconomy;
 import net.skyexcel.server.skyblock.data.SkyBlockData;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
@@ -11,10 +13,10 @@ import net.skyexcel.server.skyblock.data.player.SkyBlockRequest;
 import net.skyexcel.server.skyblock.ui.title.Loading;
 import net.skyexcel.server.skyblock.util.Translate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
-import net.skyexcel.server.data.economy.SEconomy;
+
 import net.skyexcel.server.skyblock.data.island.vault.SkyBlockVault;
 import net.skyexcel.server.skyblock.data.island.vault.SkyBlockVaultRecord;
-import net.skyexcel.server.menu.Menu;
+
 import net.skyexcel.server.skyblock.ui.gui.MaterialPageMember;
 import net.skyexcel.server.skyblock.ui.gui.MaterialPagePartTime;
 import org.bukkit.Bukkit;
@@ -221,11 +223,11 @@ public class IslandCmd {
 
                     if (skyBlock.addBlackList(player, target, reason)) {
                         player.sendMessage(target.getName() + " 님을 " + reason + " 사유로 블랙리스트에 추가 하였습니다.");
-                     }
+                    }
                 } else if (args[0].equalsIgnoreCase("해제")) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-                    if(skyBlock.removeBlackList(target)){
+                    if (skyBlock.removeBlackList(target)) {
 
                     }
                 }
@@ -336,11 +338,12 @@ public class IslandCmd {
                 int amount;
                 SEconomy money;
                 switch (args[1]) {
-                    case "입금":
+                    case "입금" -> {
                         data = new SkyBlock(player, playerData.getIsland());
                         vault = data.getVault();
                         amount = Integer.parseInt(args[2]);
                         money = new SEconomy(player);
+
                         if (playerData.isOwner()) {
                             if (vault.deposit(amount) && money.withdraw(amount)) {
                                 SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
@@ -364,18 +367,13 @@ public class IslandCmd {
                                 }
                             }
                         }
-
-
-                        break;
-
-                    case "출금":
+                    }
+                    case "출금" -> {
                         data = new SkyBlock(player, playerData.getIsland());
-
                         vault = data.getVault();
                         amount = Integer.parseInt(args[2]);
                         vault.setPlayer(player);
                         money = new SEconomy(player);
-
                         if (playerData.isOwner()) {
                             if (vault.withdraw(amount)) {
                                 money.deposit(amount);
@@ -401,11 +399,8 @@ public class IslandCmd {
                                 }
                             }
                         }
-
-                        break;
-                    case "잠금":
-                        data.setVaultLock();
-                        break;
+                    }
+                    case "잠금" -> data.setVaultLock();
                 }
             }
 
@@ -569,14 +564,31 @@ public class IslandCmd {
                 case "시간":
                     if (args.length > 2) {
                         switch (args[2]) {
-                            case "아침" -> data.time(player, 1000);
-                            case "점심" -> data.time(player, 6000);
-                            case "저녁" -> data.time(player, 1);
-                            case "일몰" -> data.time(player, 12000);
-                            case "일출" -> data.time(player, 23000);
-                            case "밤" -> data.time(player, 18000);
+                            case "아침" -> {
+                                data.time(player, 1000);
+                                player.sendMessage("§a● §f§e아침§f으로 변경하였습니다.");
+                            }
+                            case "점심" -> {
+                                data.time(player, 6000);
+                                player.sendMessage("§a● §f§e점심§f으로 변경하였습니다.");
+                            }
+                            case "저녁" -> {
+                                data.time(player, 1);
+                                player.sendMessage("§a● §7저녁§f으로 변경하였습니다.");
+                            }
+                            case "일몰" -> {
+                                data.time(player, 12000);
+                                player.sendMessage("§a● §f§6일몰§f 시간대로 변경하였습니다.");
+                            }
+                            case "일출" -> {
+                                data.time(player, 23000);
+                                player.sendMessage("§a● §f일출§f 시간대로변경하였습니다.");
+                            }
+                            case "밤" -> {
+                                data.time(player, 18000);
+                                player.sendMessage("§a● §0밤§f 시간대로변경하였습니다.");
+                            }
                         }
-
                     }
                     break;
                 case "월드보더":
