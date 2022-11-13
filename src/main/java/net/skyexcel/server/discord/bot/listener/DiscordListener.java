@@ -5,21 +5,25 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.exceptions.HierarchyException;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.interactions.InteractionHook;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
+import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 import net.skyexcel.server.discord.SkyExcelNetworkDiscordMain;
 import net.skyexcel.server.discord.utils.VerifyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.awt.Color;
 import java.util.logging.Logger;
 
 public class DiscordListener implements EventListener {
@@ -42,14 +46,31 @@ public class DiscordListener implements EventListener {
                     return;
                 }
 
+                MessageEmbed embed = new EmbedBuilder()
+                        .setTitle("SkyExcel Network | 디스코드 연동")
+                        .setDescription("(디스코드-마인크래프트) 계정 연동을 통해 더 많은 기능을 사용하실 수 있습니다.")
+                        .build();
+
+                Button openVerifyModal = Button.primary("openVerifyModal", "연동하기");
+
+                MessageCreateData message = new MessageCreateBuilder()
+                        .addEmbeds(embed)
+                        .addComponents(ActionRow.of(openVerifyModal))
+                        .build();
+
+                e.reply("생성함 ㅅㄱ").setEphemeral(true).queue();
+                e.getChannel().sendMessage(message).queue();
+            }
+        } else if (event instanceof ButtonInteractionEvent e) {
+            if (e.getButton().getId().equals("openVerifyModal")) {
                 TextInput verifyCode = TextInput.create("verifyCode", "인증코드", TextInputStyle.SHORT)
-                        .setPlaceholder("서버에서 발급받은 인증코드를 입력해주세요.")
-                        .setRequired(true)
+                        .setPlaceholder("서버에서 발급받은 코드를 입력해주세요.")
                         .setMinLength(6)
                         .setMaxLength(6)
                         .build();
-                Modal modal = Modal.create("verifyCode", "디스코드 계정 연동")
-                        .addActionRow(verifyCode)
+
+                Modal modal = Modal.create("verifyCode", "디스코드 연동하기")
+                        .addActionRows(ActionRow.of(verifyCode))
                         .build();
 
                 e.replyModal(modal).queue();
@@ -62,14 +83,14 @@ public class DiscordListener implements EventListener {
 
                 //6자리인지 확인
                 if (currentCode.length() != 6) {
-                    e.replyEmbeds(getEmbed("only6Characters")).setEphemeral(true).queue(msg -> wrapper.message = msg);
+                    e.replyEmbeds(getEmbed("only6Characters")).setEphemeral(true).queue();
                     return;
                 }
 
                 //존재하는 코드인지 확인
                 try {
                     if (!VerifyUtils.containsCode(currentCode)) {
-                        e.replyEmbeds(getEmbed("notAvailableCode")).setEphemeral(true).queue(msg -> wrapper.message = msg);
+                        e.replyEmbeds(getEmbed("notAvailableCode")).setEphemeral(true).queue();
                         return;
                     }
 
@@ -83,30 +104,28 @@ public class DiscordListener implements EventListener {
                 }
 
                 //성공 임베드 전송
-                e.replyEmbeds(getEmbed("successVerify")).setEphemeral(true).queue(msg -> wrapper.message = msg);
+                e.replyEmbeds(getEmbed("successVerify")).setEphemeral(true).queue();
 
                 //역할 지급
                 try {
+                    while(wrapper.message == null) {}
+
                     Guild guild = e.getJDA().getGuildById(SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.guildId"));
                     if (guild == null) {
-                        wrapper.message.editOriginalEmbeds(getEmbed("notAvailableGuildId")).queue();
                         return;
                     }
 
                     Member member = guild.getMember(e.getUser());
                     if (member == null) {
-                        wrapper.message.editOriginalEmbeds(getEmbed("notGuildMember")).queue();
                         return;
                     }
 
                     Role role = guild.getRoleById(SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.roles.verifiedRole"));
                     if (role == null) {
-                        wrapper.message.editOriginalEmbeds(getEmbed("notAvailableRoleId")).queue();
                         return;
                     }
 
                     guild.addRoleToMember(member, role).queue();
-                    wrapper.message.editOriginalEmbeds(getEmbed("successGiveRole")).queue();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -127,7 +146,6 @@ public class DiscordListener implements EventListener {
                         guild.getMember(e.getUser()).modifyNickname(nickname).queue();
                     } catch (Exception ex) {
                         if (ex instanceof HierarchyException) {
-                            wrapper.message.editOriginalEmbeds(getEmbed("failedModifyNick")).queue();
                             return;
                         } else
                             ex.printStackTrace();

@@ -25,6 +25,20 @@ public class SkyExcelNetworkDiscordMain {
     }
 
     public void onEnable() {
+        config = new Config("Discord-config");
+        config.setPlugin(plugin);
+        config.loadDefualtConfig();
+
+        botConfig = new Config("Discord-bot");
+        botConfig.setPlugin(plugin);
+        botConfig.loadDefualtConfig();
+
+        data = new Config("Discord-discordVerifies");
+        data.setPlugin(plugin);
+        data.loadDefualtConfig();
+
+        bot = new Bot(plugin, botConfig.getString("bot_settings.token"));
+
         Bukkit.getPluginManager().registerEvents(new ServerJoinEvent(), plugin);
 
         Bukkit.getPluginCommand("인증").setExecutor(VerifyCommand);
@@ -50,16 +64,5 @@ public class SkyExcelNetworkDiscordMain {
 
         if (bot.getJDA() != null)
             bot.getJDA().shutdown();
-    }
-
-    public void onLoad() {
-        config = new Config("config");
-        config.loadDefualtConfig();
-        botConfig = new Config("bot");
-        botConfig.loadDefualtConfig();
-        data = new Config("discordVerifies");
-        data.loadDefualtConfig();
-
-        bot = new Bot(plugin, botConfig.getString("bot_settings.token"));
     }
 }
