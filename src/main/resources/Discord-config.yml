@@ -1,0 +1,70 @@
+messages:
+
+  # /인증 쳤을 때 인증안한 사람한테 보내는 메세지
+  noVerifyMessage:
+    - "&c---------------"
+    - "&e너 인증 안함"
+    - "&c---------------"
+
+  # /인증 쳤을 때 인증한 사람한테 보내는 메세지
+  completeVerifyMessage:
+    - "&a---------------"
+    - "&e너 인증 했음"
+    - "&a---------------"
+
+  # /인증 발급 을 쳤을 때 인증 코드를 이미 발급하였을 때
+  alreadyVerifyCode: "&8[ &6idk&fNick &8] &f 이미 발급받은 코드가 있습니다. 해당 코드가 만료되면 다시 시도해주세요."
+
+  # 인증코드를 발급 하였을 때
+  completeVerifyCode:
+    - ""
+    - "&8[ &6idk&fNick &8] &f%expired_seconds%초 이내에 입력해주세요."
+    - "&8[ &6idk&fNick &8] &f인증코드가 발급되었습니다! 인증코드: &a%verify_code%"
+    - ""
+
+  # 인증코드가 만료되었을 때
+  expiredVerifyCode: "&8[ &6idk&fNick &8] &f발급한 인증코드가 만료되었습니다."
+
+  # 이미 인증된 계정일 경우
+  already_verify_account: "&8[ &6idk&fNick &8] &f이미 인증된 계정입니다."
+
+  # 인증을 안했을 때 뜨는 타이틀
+  notVerifiedTitle:
+
+    # 미인증시 움직임 방지
+    cancelMoveEnable: true
+
+    # 타이틀 활성화
+    titleEnable: true
+
+    # 대 제목
+    title: "&8[ &6/인증 &8]"
+
+    # 소 제목
+    subtitle: "&e인증&f을 해주세요!"
+
+    # 보여지는 애니메이션 시간
+    fadein: 1
+
+    # 유지 시간
+    stay: 2
+
+    # 없어지는 애니메이션 시간
+    fadeout: 1
+
+others:
+
+  # 인증 코드 만료 기간 | 만료 이전 재발급 불가
+  verifyCodeExpiredSeconds: 20
+
+  # 콘솔에서 인증 커맨드를 사용할 시
+  noConsoleCommand: "&8[ &6idk&fNick &8] &f이 명령어를 콘솔에서 사용이 불가능합니다!!"
+
+  # 유저가 오피 커맨드를 사용할 경우 (Ex: /인증 리로드)
+  opCommand: "&8[ &6idk&fNick &8] &f이 명령어는 오피만 사용이 가능합니다."
+
+  # 콘피그를 리로드 하였을 때
+  reloadConfig: "&8[ &6idk&fNick &8] &f성공적으로 콘피그를 리로드하였습니다!"
+
+  # 미인증 알림 타이틀 표시 간격
+  notVerifiedTitlePeriodSeconds: 5

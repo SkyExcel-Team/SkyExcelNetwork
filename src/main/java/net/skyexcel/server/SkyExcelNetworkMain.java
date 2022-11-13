@@ -21,14 +21,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelNetworkMain extends JavaPlugin {
     private static JavaPlugin plugin;
+    private SkyExcelNetworkDiscordMain discord;
 
     @Override
     public void onEnable() {
-        plugin = this;
-
         new SkyExcelNetworkChatChannelMain(plugin);
         new SkyExcelNetworkCashShopMain(plugin);
-        new SkyExcelNetworkDiscordMain(plugin);
+        discord = new SkyExcelNetworkDiscordMain();
         new SkyExcelNetworkFishMain(plugin);
         new SkyExcelNetworkGiftBoxMain(plugin);
         new SkyExcelNetworkItemsMain(plugin);
@@ -47,6 +46,14 @@ public class SkyExcelNetworkMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        discord.onDisable();
+    }
+
+    @Override
+    public void onLoad() {
+        plugin = this;
+
+        discord.onLoad(plugin);
     }
 
 

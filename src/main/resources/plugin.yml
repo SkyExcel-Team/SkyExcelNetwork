@@ -30,6 +30,11 @@ commands:
   채팅채널:
     aliases: [ c,ㅊ ]
 
+  #Discord
+  인증:
+    description: 디스코드 인증 명령어
+    aliases: [ verify ]
+
   #Fish
   낚시:
   낚시대회:
