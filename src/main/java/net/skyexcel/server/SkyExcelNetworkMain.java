@@ -31,7 +31,6 @@ public class SkyExcelNetworkMain extends JavaPlugin {
 
         new SkyExcelNetworkChatChannelMain(plugin);
         new SkyExcelNetworkCashShopMain(plugin);
-        discord = new SkyExcelNetworkDiscordMain();
         new SkyExcelNetworkFishMain(plugin);
         new SkyExcelNetworkGiftBoxMain(plugin);
         new SkyExcelNetworkItemsMain(plugin);
@@ -57,7 +56,8 @@ public class SkyExcelNetworkMain extends JavaPlugin {
     public void onLoad() {
         plugin = this;
 
-        discord.onLoad(plugin);
+        discord = new SkyExcelNetworkDiscordMain(plugin);
+        discord.onLoad();
     }
 
 

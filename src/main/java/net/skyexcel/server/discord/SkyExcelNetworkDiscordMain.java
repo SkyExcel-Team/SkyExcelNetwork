@@ -18,7 +18,9 @@ public class SkyExcelNetworkDiscordMain {
     public static Bot bot;
     private int titleSchedulerId;
 
-    public SkyExcelNetworkDiscordMain() {
+    public SkyExcelNetworkDiscordMain(JavaPlugin plugin) {
+        SkyExcelNetworkDiscordMain.plugin = plugin;
+
         onEnable();
     }
 
@@ -50,9 +52,7 @@ public class SkyExcelNetworkDiscordMain {
             bot.getJDA().shutdown();
     }
 
-    public void onLoad(JavaPlugin plugin) {
-        SkyExcelNetworkDiscordMain.plugin = plugin;
-
+    public void onLoad() {
         config = new Config("config");
         config.loadDefualtConfig();
         botConfig = new Config("bot");
