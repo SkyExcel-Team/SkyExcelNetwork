@@ -18,7 +18,6 @@ repositories {
         name = "eldonexus"
         url = uri("https://eldonexus.de/repository/maven-releases/")
     }
-
 }
 
 dependencies {
