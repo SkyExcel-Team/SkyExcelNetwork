@@ -43,12 +43,6 @@ dependencies {
     api("net.dv8tion:JDA:5.0.0-alpha.22")
 }
 
-tasks.withType<Jar> {
-    val dest = Properties().apply { load(rootProject.file("env.properties").reader()) }.getProperty("jarDirectory")
-        ?: throw NullPointerException("jarDirectory not settled inside .gradle/gradle.properties")
-
-    destinationDirectory.set(file(dest))
-}
 
 tasks {
     named<ShadowJar>("shadowJar") {
