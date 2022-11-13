@@ -1,5 +1,6 @@
 package net.skyexcel.server;
 
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
 import net.skyexcel.server.discord.SkyExcelNetworkDiscordMain;
@@ -21,11 +22,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelNetworkMain extends JavaPlugin {
     private static JavaPlugin plugin;
+    public static HeadDatabaseAPI hdb;
 
     @Override
     public void onEnable() {
         plugin = this;
-
+        hdb = new HeadDatabaseAPI();
         new SkyExcelNetworkChatChannelMain(plugin);
         new SkyExcelNetworkCashShopMain(plugin);
         new SkyExcelNetworkDiscordMain(plugin);
@@ -43,6 +45,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetworkTradeMain(plugin);
         new SkyExcelNetWorkWarp(plugin);
         new SkyExcelNetworkTutorialMain(plugin);
+        new SkyExcelNetworkJobMain(plugin);
     }
 
     @Override
