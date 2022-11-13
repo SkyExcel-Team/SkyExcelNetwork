@@ -1,13 +1,6 @@
 package net.skyexcel.server.job.data.obj;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.reflect.StructureModifier;
+
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
 import org.bukkit.Material;

@@ -7,7 +7,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import skyexcel.data.file.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ public class WarpTab implements TabCompleter {
                 }
             }
         }
-
         return result;
     }
 }
