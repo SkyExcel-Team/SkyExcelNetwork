@@ -8,12 +8,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 
-public class SkyExcelNetworkTutorial {
-    private JavaPlugin plugin;
+public class SkyExcelNetworkTutorialMain {
+    public static JavaPlugin plugin;
 
 
-    public SkyExcelNetworkTutorial(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public SkyExcelNetworkTutorialMain(JavaPlugin plugin) {
+        SkyExcelNetworkTutorialMain.plugin = plugin;
         PluginManager pm = Bukkit.getPluginManager();
         Listener[] listeners = {new TutorialListener()};
         Arrays.stream(listeners).forEach(listener -> {

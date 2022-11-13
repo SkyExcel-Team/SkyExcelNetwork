@@ -1,11 +1,9 @@
 package net.skyexcel.server.lockmanager.data;
 
-import net.skyexcel.server.lockmanager.SkyExcelNetworkLock;
+import net.skyexcel.server.lockmanager.SkyExcelNetworkLockManagerMain;
 import net.skyexcel.server.lockmanager.packet.SignEdit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
@@ -27,7 +25,7 @@ public class SignData {
     public SignData() {
 
         this.config = new Config("data/sign/sign");
-        this.config.setPlugin(SkyExcelNetworkLock.getPlugin());
+        this.config.setPlugin(SkyExcelNetworkLockManagerMain.getPlugin());
     }
 
     public boolean removeSign(Player player) {
@@ -96,7 +94,7 @@ public class SignData {
     }
 
     private void signGUI(Player target, List<String> lore) {
-        SignEdit edit = new SignEdit(SkyExcelNetworkLock.getPlugin());
+        SignEdit edit = new SignEdit(SkyExcelNetworkLockManagerMain.getPlugin());
         SignEdit.Menu menu = edit.newMenu(List.of())
                 .reopenIfFail(true)
                 .response((player, strings) -> {

@@ -8,14 +8,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 
-public class SkyExcelNetworkLock {
-    private static JavaPlugin plugin;
+public class SkyExcelNetworkLockManagerMain {
+    public static JavaPlugin plugin;
 
     private static SignEdit signEdit;
 
 
-    public SkyExcelNetworkLock(JavaPlugin plugin) {
-        SkyExcelNetworkLock.plugin = plugin;
+    public SkyExcelNetworkLockManagerMain(JavaPlugin plugin) {
+        SkyExcelNetworkLockManagerMain.plugin = plugin;
         init();
 //        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
 //            foo(onlinePlayer);
@@ -25,7 +25,7 @@ public class SkyExcelNetworkLock {
     public void init() {
         Bukkit.getConsoleSender().sendMessage("LockManager 플러그인 활성화");
         Bukkit.getPluginManager().registerEvents(new SignListener(), plugin);
-        SkyExcelNetworkLock.signEdit = new SignEdit(plugin);
+        SkyExcelNetworkLockManagerMain.signEdit = new SignEdit(plugin);
     }
 
     public static JavaPlugin getPlugin() {
