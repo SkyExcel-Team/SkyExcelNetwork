@@ -23,14 +23,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SkyExcelNetworkMain extends JavaPlugin {
     private static JavaPlugin plugin;
     public static HeadDatabaseAPI hdb;
+    private volatile SkyExcelNetworkDiscordMain discord = null;
 
     @Override
     public void onEnable() {
         plugin = this;
+
         hdb = new HeadDatabaseAPI();
+
         new SkyExcelNetworkChatChannelMain(plugin);
         new SkyExcelNetworkCashShopMain(plugin);
-        new SkyExcelNetworkDiscordMain(plugin);
+        discord = new SkyExcelNetworkDiscordMain(plugin);
         new SkyExcelNetworkFishMain(plugin);
         new SkyExcelNetworkGiftBoxMain(plugin);
         new SkyExcelNetworkItemsMain(plugin);
@@ -45,11 +48,11 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetworkTradeMain(plugin);
         new SkyExcelNetWorkWarp(plugin);
         new SkyExcelNetworkTutorialMain(plugin);
-        new SkyExcelNetworkJobMain(plugin);
     }
 
     @Override
     public void onDisable() {
+        discord.onDisable();
     }
 
 

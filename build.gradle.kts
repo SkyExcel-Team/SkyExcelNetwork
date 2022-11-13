@@ -3,6 +3,7 @@ import java.util.Properties
 
 plugins {
     java
+    id("java-library")
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -39,6 +40,7 @@ dependencies {
 
     /* 기타 API */
     compileOnly("org.jetbrains:annotations:23.0.0")
+    api("net.dv8tion:JDA:5.0.0-alpha.22")
 }
 
 tasks.withType<Jar> {

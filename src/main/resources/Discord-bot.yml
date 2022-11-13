@@ -1,0 +1,96 @@
+bot_settings:
+
+  # 봇 토큰
+  token: "YOUR_TOKEN"
+
+  # 봇 상태 [online, dnd, idle]
+  status: "online"
+
+  # 봇 활동
+  richPresence:
+
+    # 활동 이름
+    name: "YOUR_STATUS"
+
+    # 활동 타입 [playing, watching, listening]
+    type: "playing"
+
+  # 역할 ID 지정
+  roles:
+
+    # 인증됨
+    verifiedRole: "YOUR_ROLE_ID"
+
+  # 봇이 작동할 길드 ID 지정
+  guildId: "YOUR_GUILD_ID"
+
+  # 인증 시 서버 닉네임 변경
+  changeDiscordName:
+
+    # 활성화
+    enable: true
+
+    # +-------------- 마크 닉네임 ------ 디코 닉네임 ------- 디코 태그 ---- 디코 닉네임 + 태그 ----------+ #
+    # 변경할 이름 [  %minecraft_name%,  %discord_name%,  %discord_tag%,  %discord_full%  ]
+    name: "[ %minecraft_name% ]"
+
+# +----------------------------------------------------------------------------------------------+ #
+
+# 봇 메세지
+bot_messages:
+
+  # 임베드 색깔
+  embedColor: "#FFFFFF"
+
+  # 서버내 명령어 사용 시도
+  onlyGuild:
+    title: "생성에 실패했습니다!"
+    description: "해당 명령어는 길드에서만 사용 가능합니다!"
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 인증코드 자릿수 오류
+  only6Characters:
+    title: "인증에 실패했습니다!"
+    description: "인증코드는 6자리여야 합니다."
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 인증코드 존재 안함
+  notAvailableCode:
+    title: "인증에 실패했습니다!"
+    description: "인증코드가 존재하지 않습니다."
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 인증 성공
+  successVerify:
+    title: "인증에 성공했습니다!"
+    description: "인증에 성공하였습니다."
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 길드가 없음
+  notAvailableGuildId:
+    title: "역할지급에 실패했습니다!"
+    description: "역할을 지급받을 길드 ID가 올바르지 않습니다. 자세한 사항은 관리자에게 문의해주세요."
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 유저가 길드에 없음
+  notGuildMember:
+    title: "역할지급에 실패했습니다!"
+    description: "역할을 지급받을 길드에 당신이 있지 않습니다!"
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 역할이 없음
+  notAvailableRoleId:
+    title: "역할지급에 실패했습니다!"
+    description: "지급 받을 역할의 ID가 올바르지 않습니다. 자세한 사항은 관리자에게 문의해주세요."
+
+  # 역할지급 성공
+  successGiveRole:
+    title: "역할지급에 성공했습니다!"
+    description: "역할을 지급했습니다!"
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 닉네임 변경 실패
+  failedModifyNick:
+    title: "닉네임 변경에 실패했습니다!"
+    description: "관리자의 닉네임은 변경할 수 없습니다!"
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
