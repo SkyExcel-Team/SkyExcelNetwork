@@ -1,206 +1,250 @@
 package net.skyexcel.server.seconomy.data;
 
-import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
 import net.skyexcel.server.seconomy.util.Translate;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
+import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Objects;
 
 public class StringData {
 
-    public static void myMoney(Player player) {
-        player.sendMessage(Translate.moneyCheck(player,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economy_message.my_money"))));
+    private Translate translate;
+
+    public StringData() {
+        translate = new Translate();
     }
 
-    public static void targetMoney(Player player, OfflinePlayer target) {
-        player.sendMessage(Translate.moneyCheckTarget(target,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economy_message.check_player_money"))));
+    public String mymoneny(Player player) {
+        SEConomy moneny = new SEConomy(player);
+
+        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("my_moneny")
+                .replaceAll("%moneny%", format(moneny.getLong())));
     }
 
-    public static void sendMoney(Player player, Player target, long amount) {
-        player.sendMessage(Translate.moneyAction(player, target, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economy_message.send_money"))));
+    public String checkPlayermoneny(Player target) {
+        SEConomy moneny = new SEConomy(target);
+        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("check_player_moneny")
+                .replaceAll("%moneny%", format(moneny.getLong()))
+                .replaceAll("%player%", target.getDisplayName()));
     }
 
+    public String sendmoneny(Player target, long amount) {
 
-    public static void sendMoney(Player player, OfflinePlayer target, long amount) {
-        player.sendMessage(Translate.moneyAction(player, target, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economy_message.send_money"))));
+        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("send_moneny")
+                .replaceAll("%moneny%", format(amount))
+                .replaceAll("%player%", target.getDisplayName()));
     }
 
-    public static void removeMoney(Player player, OfflinePlayer target, long amount) {
-        player.sendMessage(Translate.moneyAction(player, target, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economy_message.remove_money"))));
+    /**
+     * 구매와 판매 모두 못할 경우 출력되는 로어 입니다.
+     *
+     * @return 설명
+     */
+    public List<String> cantBoth() {
+
+        return translate.msgCollapse(List.of("",
+                "&f[&b!&f] 구매가 불가능한 상품 입니다."
+                , "&f[&b!&f] 판매가 불가능한 상품입니다."
+                , ""));
     }
 
-    public static void setMoney(Player player, OfflinePlayer target, long amount) {
-        player.sendMessage(Translate.moneyAction(player, target, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economy_message.set_money"))));
+    /**
+     * 판매와 구매 모두 가능 할 때 출력되는 로어 입니다.
+     *
+     * @param buy  구매 가격
+     * @param sell 판매 가격
+     * @return 설명
+     */
+    public List<String> canBoth(long buy, long sell) {
+
+        return translate.msgCollapse(List.of(""
+                , "&f[&b!&f] 구매 가격:  " + buy + " 캐시"
+                , "&f[&b!&f] 판매 가격:  " + sell + " 캐시"
+
+                , ""
+                , "&f[&b!&f] 쉬프트 + 좌클릭: 64개 구매"
+                , "&f[&b!&f] 쉬프트 + 우클릭: 64개 판매"
+
+                , ""));
     }
 
-    public static void resetMoney(Player player, OfflinePlayer target, long amount) {
-        player.sendMessage(Translate.moneyAction(player, target, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economy_message.reset_money"))));
+    /**
+     * 판매가 불가능 하고, 구매만 가능 했을 때 로어입니다.
+     *
+     * @param buy 구매 가격
+     * @return 로어
+     */
+    public List<String> canBuy(long buy) {
+        return translate.msgCollapse(List.of(""
+                , "&f[&b!&f] 구매 가격:  " + buy + " 캐시"
+
+                , ""
+                , "&f[&b!&f] 판매가 불가능한 상품 입니다."
+                , "&f[&b!&f] 쉬프트 + 우클릭: 64개 구매"
+
+                , ""));
     }
 
-    public static void shopBuyOne(Player player, ItemStack item, int amount) {
-        player.sendMessage(Translate.itemAction(item, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.buy_one"))));
+    /**
+     * 구매가 불가능하고, 판매만 가능 했을 때 로어입니다.
+     *
+     * @param sell 판매 가격
+     * @return 설명
+     */
+    public List<String> canSell(long sell) {
+
+        return translate.msgCollapse(List.of(""
+                , "&f[&b!&f] 구매가 불가능한 상품 입니다."
+                , "&f[&b!&f] 판매 가격:  " + sell + " 캐시"
+                , ""
+                , "&f[&b!&f] 쉬프트 + 좌클릭: 64개 판매"
+
+                , ""));
     }
 
-    public static void shopSellOne(Player player, ItemStack item, int amount) {
-        player.sendMessage(Translate.itemAction(item, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.sell_one"))));
+    public String sendmonenyAllPlayer(long amount) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("send_moneny_all_player")
+                .replaceAll("%moneny%", format(amount)));
     }
 
-    public static void shopBuySet(Player player, ItemStack item, int amount) {
-        player.sendMessage(Translate.itemAction(item, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.buy_64"))));
+    public String removemoneny(Player target, long amount) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("remove_moneny")
+                .replaceAll("%moneny%", format(amount))
+                .replaceAll("%player%", target.getDisplayName()));
     }
 
-    public static void shopSellSet(Player player, ItemStack item, int amount) {
-        player.sendMessage(Translate.itemAction(item, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.sell_64"))));
+    public String setmoneny(Player target, long amount) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("set_moneny")
+                .replaceAll("%moneny%", format(amount))
+                .replaceAll("%player%", target.getDisplayName()));
     }
 
-    public static void shopSettingBuyPrice(Player player) {
-        player.sendMessage(Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.setting_buy_price")));
+    public String resetmoneny(Player target) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("reset_moneny")
+                .replaceAll("%player%", target.getDisplayName()));
     }
 
-    public static void shopSettingSellPrice(Player player) {
-        player.sendMessage(Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.setting_sell_price")));
+    public String buyOne(Player target, int price) {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("buy_one")
+                .replaceAll("%item_order%", target.getDisplayName())
+                .replaceAll("%price%", format(price)));
     }
 
-    public static void shopCreate(Player player, String name) {
-        player.sendMessage(Translate.shopAction(name,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.create_economyshop"))));
+    public String sellOne(Player target, int price) {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("sell_one")
+                .replaceAll("%item_order%", target.getDisplayName())
+                .replaceAll("%price%", format(price)));
     }
 
-    public static void shopDelete(Player player, String name) {
-        player.sendMessage(Translate.shopAction(name,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.recyclebin_economyshop"))));
+    public String settingBuyPrice() {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("setting_buy_price"));
     }
 
-    public static void shopDeleteForever(Player player, String name) {
-        player.sendMessage(Translate.shopAction(name,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.delete_economyshop"))));
+    public String settingSellPrice() {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("setting_sell_price"));
     }
 
-    public static void shopResize(Player player, String name, int size) {
-        player.sendMessage(Translate.shopResize(name, size,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.set_gui_size"))));
+    public String createmonenyShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("create_monenyshop")
+                .replaceAll("%monenyshop_name%", name));
     }
 
-    public static void shopResize(Player player, String name, String newName) {
-        player.sendMessage(Translate.shopRename(name, newName,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.set_gui_name"))));
+    public String recyclebinmonenyShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("recyclebin_monenyshop")
+                .replaceAll("%monenyshop_name%", name));
     }
 
-    public static void shopSetBuyPrice(Player player, int amount) {
-        player.sendMessage(Translate.itemAction(null, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.set_buy_price"))));
+    public String deletemonenyShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("delete_monenyshop")
+                .replaceAll("%monenyshop_name%", name));
     }
 
-    public static void shopSetSellPrice(Player player, int amount) {
-        player.sendMessage(Translate.itemAction(null, amount,
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("economyshop_message.set_sell_price"))));
-    }
-
-    public static void overFlow(Player player) {
-        player.sendMessage(
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("error_message.overflow")));
-    }
-
-    public static void canNotBuy(Player player) {
-        player.sendMessage(
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("error_message.cannot_buy")));
-    }
-
-    public static void canNotSell(Player player) {
-        player.sendMessage(
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("error_message.cannot_sell")));
-    }
-
-    public static void inventoryFull(Player player) {
-        player.sendMessage(
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("error_message.inventory_full")));
-    }
-
-    public static void nonePlayer(Player player) {
-        player.sendMessage(
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("error_message.command_none_player")));
-    }
-
-    public static void noneMoney(Player player) {
-        player.sendMessage(
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("error_message.command_none_money")));
-    }
-
-    public static void impossibleBuyItem(Player player) {
-        player.sendMessage(
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("error_message.cannot_buy_impossible_item")));
-    }
-
-    public static void impossibleSellItem(Player player) {
-        player.sendMessage(
-                Objects.requireNonNull(SkyExcelNetworkSEConomyMain.message.getConfig().getString("error_message.cannot_sell_impossible_item")));
-    }
-
-
-    public static void command_guide_economy(Player player) {
-
-        for (String line : SkyExcelNetworkSEConomyMain.message.getConfig().getStringList("other_message.command_guide_economy")) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
-        }
-    }
-
-
-    public static void command_economy(Player player) {
-
-        for (String line : SkyExcelNetworkSEConomyMain.message.getConfig().getStringList("other_message.command_economy")) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
-        }
-    }
-
-    public static String gui_title() {
-        return SkyExcelNetworkSEConomyMain.shop.getString("shop_gui_settings.shop_settings.gui_title");
-    }
-
-    public static int gui_size() {
-        return SkyExcelNetworkSEConomyMain.shop.getInteger("shop_gui_settings.shop_settings.gui_size");
-    }
-
-    public static Material buy_sell_settings() {
-        return Material.valueOf(SkyExcelNetworkSEConomyMain.shop.getString("shop_gui_settings.shop_settings.buy_sell_settings.item"));
+    public String setGuiSizemonenyShop(String name, int size) {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("set_gui_size")
+                .replaceAll("%monenyshop_name%", name)
+                .replaceAll("%monenyshop_gui_size%", String.valueOf(size)));
     }
 
 
-    public static int buy_sell_slot() {
-        return SkyExcelNetworkSEConomyMain.shop.getInteger("shop_gui_settings.shop_settings.buy_sell_settings.slot");
+    public String setNamemonenyShop(String original, String newName) {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("set_gui_name")
+                .replaceAll("%monenyshop_name%", original)
+                .replaceAll("%set_monenyshop_name%", newName));
     }
 
-    public static List<String> buy_sell_lore() {
-        return SkyExcelNetworkSEConomyMain.shop.getConfig().getStringList("shop_gui_settings.shop_settings.buy_sell_settings.lore");
+    public List<String> main() {
+        return translate.msgCollapse(SkyExcelNetworkSEconomyMain.message.getConfig().getStringList("other_message.command_monenyshop"));
     }
 
-    public static Sound buy_sound() {
-        return Sound.valueOf(SkyExcelNetworkSEConomyMain.shop.getString("shop_gui_settings.shop_sound_settings.buy_sound"));
+    public String setBuyPricemonenyShop(int price) {
+        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("set_buy_price")
+                .replaceAll("%price%", format(price)));
+    }
+
+    public String overFlow() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("overflow"));
     }
 
 
-    public static Sound sell_sound() {
-        return Sound.valueOf(SkyExcelNetworkSEConomyMain.shop.getString("shop_gui_settings.shop_sound_settings.sell_sound"));
+    public String canNotBuy() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("cannot_buy"));
     }
 
-    public static Sound impossible_buy_sell_sound() {
-        return Sound.valueOf(SkyExcelNetworkSEConomyMain.shop.getString("shop_gui_settings.shop_sound_settings.impossible_buy_sell_sound"));
+    public String canNotSell() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("cannot_sell"));
     }
 
+    public String inventoryFull() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("inventoryFull"));
+    }
+
+    public String nonePlayer() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("command_none_player"));
+    }
+
+    public String impossibleItemBuy() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("impossibleItem_buy"));
+    }
+
+    public String impossibleItemSell() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("impossibleItem_sell"));
+    }
+
+
+    public String nonemoneny() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("command_none_moneny"));
+    }
+
+    private String getmonenyMessage(String path) {
+
+        return SkyExcelNetworkSEconomyMain.message.getString("moneny_message." + path);
+    }
+
+    private String getmonenyShopMessage(String path) {
+
+        return SkyExcelNetworkSEconomyMain.message.getString("monenyshop_message." + path);
+    }
+
+    private String getErrorMessage(String path) {
+
+        return SkyExcelNetworkSEconomyMain.message.getString("error_message." + path);
+    }
+
+    private String getOtherMessage(String path) {
+
+        return SkyExcelNetworkSEconomyMain.message.getString("other_message." + path);
+    }
+
+
+    private String format(long amount) {
+        DecimalFormat decFormat = new DecimalFormat("###,###");
+
+        return decFormat.format(amount);
+    }
 }

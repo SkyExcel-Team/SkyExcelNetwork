@@ -1,7 +1,7 @@
-package net.skyexcel.server.seconomy.data.economy;
+package net.skyexcel.server.seconomy.data;
 
-import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
-import net.skyexcel.server.seconomy.util.Translate;
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
+import net.skyexcel.server.skyblock.util.Translate;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -18,8 +18,8 @@ public class SEconomyRecord {
 
 
     public SEconomyRecord() {
-        this.record = new Config("data/seconomy/log/log");
-        this.record.setPlugin(SkyExcelNetworkSEConomyMain.plugin);
+        this.record = new Config("data/cash/log/log");
+        this.record.setPlugin(SkyExcelNetworkSEconomyMain.plugin);
     }
 
 
@@ -40,7 +40,7 @@ public class SEconomyRecord {
             section.set("sendType", type.getName());
             section.set("target", target.getName());
             section.set("after", after);
-            section.set("before", before);
+            section.set("before",before);
             section.set("amount", amount);
 
             record.saveConfig();
@@ -70,7 +70,7 @@ public class SEconomyRecord {
             section.set("sendType", type.getName());
             section.set("target", target.getName());
             section.set("after", after);
-            section.set("before", before);
+            section.set("before",before);
             section.set("amount", amount);
 
             record.saveConfig();

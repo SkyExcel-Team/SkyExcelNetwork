@@ -32,6 +32,8 @@ commands:
   마일리지:
   마일리지상점:
 
+
+
   #ChatChannel
   채팅채널:
     aliases: [ c,ㅊ ]

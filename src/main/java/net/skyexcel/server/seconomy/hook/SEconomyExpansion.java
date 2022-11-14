@@ -1,26 +1,23 @@
 package net.skyexcel.server.seconomy.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-
-import net.skyexcel.server.seconomy.data.economy.SEconomy;
+import net.skyexcel.server.seconomy.data.SEConomy;
 import net.skyexcel.server.seconomy.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
-public class SEConomyExpansion extends PlaceholderExpansion {
+public class SEconomyExpansion extends PlaceholderExpansion {
     private JavaPlugin plugin; // The instance is created in the constructor and won't be modified, so it can be final
 
-    public SEConomyExpansion(JavaPlugin plugin) {
+    public SEconomyExpansion(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return "SEconomy";
+        return "Cash";
     }
 
     @Override
@@ -41,7 +38,7 @@ public class SEConomyExpansion extends PlaceholderExpansion {
 
     @Override
     public String getRequiredPlugin() {
-        return "SEconomy";
+        return "CashShop";
     }
 
     @Override
@@ -51,12 +48,12 @@ public class SEConomyExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-        if (params.equalsIgnoreCase("money_fixed")) {
-            SEconomy economy = new SEconomy(player);
-            return Translate.decal(economy.getLong());
-        } else if (params.equalsIgnoreCase("money")) {
-            SEconomy economy = new SEconomy(player);
-            return String.valueOf(economy.getLong());
+        SEConomy cash = new SEConomy(player);
+        Translate translate = new Translate();
+        if (params.equalsIgnoreCase("Cash")) {
+            return String.valueOf(cash.getLong());
+        } else if (params.equalsIgnoreCase("Cash_fixed")) {
+            return translate.decal(cash.getLong());
         }
         return null; // Placeholder is unknown by the expansion
     }

@@ -6,7 +6,7 @@
 # +----------------------------------------------------------------------------------------------+ #
 
 
-economy_message:
+money_message:
 
   # When checking the money you have
   my_money: "보유중인 금액: %money%"
