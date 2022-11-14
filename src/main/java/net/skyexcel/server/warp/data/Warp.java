@@ -38,7 +38,8 @@ public class Warp {
     }
 
     public void deleteLocation() {
-        config.getConfig().set("warp." + name, "");
+        config.removeKey("warp." + name);
+
         config.saveConfig();
     }
 

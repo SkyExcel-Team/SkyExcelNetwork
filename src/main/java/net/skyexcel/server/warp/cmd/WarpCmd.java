@@ -21,6 +21,13 @@ public class WarpCmd implements CommandExecutor {
 
         if (sender instanceof Player player) {
 
+            if (args.length == 1) {
+                String name = collapse(args, 0);
+                Warp warp = new Warp(name);
+                Location location = warp.getLocation();
+                player.teleport(location);
+                player.sendMessage("家 " + name + "으로 이동하였습니다!");
+            }
             if (args.length > 1) {
                 switch (args[0]) {
                     case "생성" -> {
@@ -36,18 +43,14 @@ public class WarpCmd implements CommandExecutor {
                             player.sendMessage("强 " + "당신은 워프를 생성할 권한이 없습니다.");
                         }
                     }
-                    case "이동" -> {
-                        String name = collapse(args, 1);
-                        Warp warp = new Warp(name);
-                        Location location = warp.getLocation();
-                        player.teleport(location);
-                        player.sendMessage("家 " + name + "으로 이동하였습니다!");
-                    }
+
                     case "삭제" -> {
                         if (player.isOp()) {
                             String name = collapse(args, 1);
 
-
+                            Warp warp = new Warp(name);
+                            warp.deleteLocation();
+                            player.sendMessage("架 " + "성공적으로 " + name + ChatColor.WHITE + " 의 워프를 삭제하였습니다!");
                         } else {
                             player.sendMessage("强 " + "당신은 워프를 제거할 권한이 없습니다.");
                         }

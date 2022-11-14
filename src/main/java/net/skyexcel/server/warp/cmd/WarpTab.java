@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class WarpTab implements TabCompleter {
     @Nullable
@@ -18,13 +19,17 @@ public class WarpTab implements TabCompleter {
         List<String> result = new ArrayList<>();
         if (sender instanceof Player player) {
             if (args.length == 1) {
+
+                Warp warp = new Warp();
+                result = warp.getList();
+
                 if (player.isOp()) {
-                    result = List.of("생성", "이동", "삭제");
-                } else {
-                    result = List.of("이동");
+                    result = warp.getList();
+                    result.add("생성");
+                    result.add("삭제");
                 }
             } else if (args.length == 2) {
-                if (List.of("생성", "이동", "삭제").contains(args[0])) {
+                if (Objects.equals("삭제", args[0])) {
                     Warp warp = new Warp();
                     result = warp.getList();
                 }
