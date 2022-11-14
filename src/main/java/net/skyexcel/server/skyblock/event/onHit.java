@@ -32,7 +32,7 @@ public class onHit implements Listener {
             SkyBlock playerIsland = new SkyBlock(playerData.getIsland());
 
             if (playerIsland.isPvp()) {
-                target.sendMessage(ChatColor.RED + "해당 섬에서는 때릴 수 없습니다!");
+                target.sendMessage("强 해당 섬에서는 PVP가 비활성화 되어있습니다");
                 event.setCancelled(true);
             }
         }

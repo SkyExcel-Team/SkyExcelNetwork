@@ -70,11 +70,11 @@ public class banBlockEvent implements Listener {
 
         if (SkyBlockData.partTimePage.containsKey(player.getUniqueId())) {
 
-            player.sendMessage("알바 밴블록 설정을 완료 하였습니다.");
+            player.sendMessage("架 알바 밴블록 설정을 완료 하였습니다.");
             SkyBlockData.partTimePage.remove(player.getUniqueId());
 
         } else if (SkyBlockData.memberPage.containsKey(player.getUniqueId())) {
-            player.sendMessage("맴버 밴블록 설정을 완료 하였습니다.");
+            player.sendMessage("架 맴버 밴블록 설정을 완료 하였습니다.");
             SkyBlockData.memberPage.remove(player.getUniqueId());
         }
     }
@@ -116,12 +116,12 @@ public class banBlockEvent implements Listener {
                         Player players = (Player) entity;
                         SkyBlockPlayerData playersData = new SkyBlockPlayerData(players);
                         if (playersData.isOwner()) {
-                            player.sendMessage("Owner 는 " + players.getDisplayName() + " 님 입니다!");
+                            player.sendMessage("家 섬장은 는 §6" + players.getDisplayName() + "§f님 입니다!");
                             break;
                         }
                     }
                 }
-                player.sendMessage("다른 섬의 블록은 캘 수 없습니다!");
+                player.sendMessage("强 다른 섬의 블록은 부술 수 없습니다!");
                 event.setCancelled(true);
             } else { //자신의 섬 일때
                 if (islandData.getOwner() != null) {

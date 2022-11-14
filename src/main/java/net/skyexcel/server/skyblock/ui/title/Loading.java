@@ -30,7 +30,7 @@ public class Loading extends BukkitRunnable {
     public Loading(Player player, int cooltime) {
         this.player = player;
         this.cooltime = cooltime;
-        player.sendMessage("섬 제작중...");
+        player.sendMessage("家 섬을 제작중입니다...");
     }
 
     /**

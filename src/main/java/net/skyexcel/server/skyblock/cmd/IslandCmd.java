@@ -50,7 +50,7 @@ public class IslandCmd {
             SkyBlock data = new SkyBlock(playerData.getIsland());
 
             if (data.teleportSkyBlock(player)) {
-                player.sendMessage(ChatColor.GREEN + "섬으로 이동하였습니다 " + ChatColor.GRAY + "[/섬 도움말]");
+                player.sendMessage("架 " + "자신의 섬으로 이동하였습니다 " + ChatColor.GRAY + "[/섬 도움말]");
             } else {
                 player.sendMessage("强 소속되어있는 섬이 없어 텔레포트가 불가능합니다! ");
             }
@@ -110,12 +110,12 @@ public class IslandCmd {
             assert target != null;
             if (island.kickMember(player, target, reason)) {
 
-                player.sendMessage("架 해당 플레이어를 '" + reason + "' 사유로 §a추방 §f하였습니다!");
+                player.sendMessage("架 해당 플레이어를 §e'" + reason + "'§f의 사유로 §a추방 §f하였습니다!");
 
                 TextComponent accept = new TextComponent("'" + ChatColor.UNDERLINE + reason + ChatColor.RESET + "'");
-                TextComponent after = new TextComponent(ChatColor.RED + " 사유로 추방 당하였습니다! ");
+                TextComponent after = new TextComponent("家 §e'" + reason + "'§f의 사유로 §c추방 §f당하였습니다! ");
 
-                accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(player.getDisplayName() + " 님이 추방하였습니다.").create()));
+                accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("家 §6" + player.getDisplayName() + "§f님이 §c추방§당하셨습니다.").create()));
                 TextComponent result = new TextComponent(ChatColor.translateAlternateColorCodes('&', island.getName()) +
                         ChatColor.RED + " 섬에서 " + ChatColor.WHITE);
                 result.addExtra(accept);
@@ -145,24 +145,24 @@ public class IslandCmd {
                 if (SkyBlockRequest.send(request, target, player)) {
                     TextComponent accept = new TextComponent("§a수락");
 
-                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a클릭하여 수락하세요!").create()));
+                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("家 §a클릭하여 수락하세요!").create()));
                     accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/섬 수락 " + player.getDisplayName()));
 
                     TextComponent deny = new TextComponent("§c거절");
 
-                    deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§c클릭하여 거절하세요").create()));
+                    deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("家 §c클릭하여 거절하세요").create()));
                     deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/섬 거절 " + player.getDisplayName()));
 
-                    TextComponent result = new TextComponent(player.getDisplayName() + " 님에게 섬 초대 요청이 왔습니다! ");
+                    TextComponent result = new TextComponent("家 §6" + player.getDisplayName() + "§f님에게 섬 초대 요청이 왔습니다! ");
                     result.addExtra(accept);
                     result.addExtra("|");
                     result.addExtra(deny);
 
                     target.spigot().sendMessage(result);
-                    player.sendMessage("초대를 보냈습니다!");
+                    player.sendMessage("家 §6" + target.getDisplayName() + "§f님에게 섬 §a초대§f를 보냈습니다!");
 
                 } else {
-                    player.sendMessage("상대방이 수락할때 까지 기달려 주세요.");
+                    player.sendMessage("强 이미 초대 요청을 보낸 플레이어입니다!");
                 }
             } else {
                 player.sendMessage("强 §6" + target.getDisplayName() + "§f님은 이미 섬에 소속 되어 있습니다!");
@@ -204,10 +204,10 @@ public class IslandCmd {
 
             SkyBlock data = new SkyBlock(playerData.getIsland());
             if (SkyBlockRequest.deny(request, player, target)) {
-                target.sendMessage("家 §6" + player.getDisplayName() + "§f님이 초대 요청을 거절 하였습니다!");
+                target.sendMessage("家 §6" + player.getDisplayName() + "§f님이 초대 요청을 §c거절 §f하였습니다!");
                 player.sendMessage("架 초대 요청을 거절 하였습니다!");
             } else {
-                player.sendMessage("强 초대 요청 거절을 실패 하였습니다! ");
+                player.sendMessage("强 초대 요청 §c거절§f을 §c실패 §f하였습니다! ");
             }
 
         });
@@ -227,7 +227,7 @@ public class IslandCmd {
                     String reason = String.join(" ", Arrays.copyOfRange(args, 2, action.getArgs().length));
 
                     if (skyBlock.addBlackList(player, target, reason)) {
-                        player.sendMessage("架 " + target.getName() + " 님을 " + reason + " 사유로 블랙리스트에 추가 하였습니다.");
+                        player.sendMessage("架 §6" + target.getName() + "§f님을 §e'" + reason + "'§f의 사유로 블랙리스트에 §a추가 §f하였습니다.");
                     }
                 } else if (args[0].equalsIgnoreCase("해제")) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
@@ -256,7 +256,7 @@ public class IslandCmd {
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
             if (playerData.setSpawn()) {
-                player.sendMessage("스폰 설정");
+                player.sendMessage("架 현재 있는 위치를 섬 스폰으로 설정되었습니다!");
             }
         });
 
@@ -309,7 +309,7 @@ public class IslandCmd {
 
             SkyBlock data = new SkyBlock(name);
             if (data.rename(name)) {
-                player.sendMessage("架 섬이름을 §6" + name + "§f으로 바꾸었습니다!");
+                player.sendMessage("架 섬 이름을 §6" + name + "§f으로 바꾸었습니다!");
             }
         });
 
@@ -417,10 +417,10 @@ public class IslandCmd {
             } else {
                 TextComponent url = new TextComponent("§a클릭");
 
-                url.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a섬 디스코드 이동!").create()));
+                url.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("强 §a클릭해주세요!").create()));
                 url.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, data.getDiscord()));
 
-                TextComponent message = new TextComponent("섬 디스코드 링크 => ");
+                TextComponent message = new TextComponent("家 섬 디스코드 링크 => ");
                 message.addExtra(url);
                 player.spigot().sendMessage(message);
             }
@@ -437,7 +437,7 @@ public class IslandCmd {
             switch (args[1]) {
                 case "초기화":
 
-                    player.sendMessage("기록을 초기화 했습니다!");
+                    player.sendMessage("架 기록을 초기화 했습니다!");
                     if (player.isOp())
                         data.removeAll();
                     break;
@@ -464,20 +464,20 @@ public class IslandCmd {
                                 Player target = Bukkit.getPlayer(name);
 
                                 if (data.addPartTime(target, amount)) {
-                                    player.sendMessage("알바 추가가 되었습니다!");
-                                    target.sendMessage(player.getDisplayName() + " 님이 당신을 알바로 고용했습니다!");
+                                    player.sendMessage("架 §6" + target.getDisplayName() + "§f님을 알바로 추가하였습니다");
+                                    target.sendMessage("家 §6" + player.getDisplayName() + "§f님이 당신을 알바로 고용했습니다!");
                                 } else {
-                                    player.sendMessage("알바 추가가 안됨 ㅅㄱ");
+                                    player.sendMessage("强 알바 추가가 불가능합니다.");
                                 }
                             } catch (NumberFormatException e) {
-                                player.sendMessage("올바른 숫자를 입력해 주세요!");
+                                player.sendMessage("强올 바른 숫자를 입력해 주세요!");
                             }
 
                         } else {
-                            player.sendMessage("금액을 입력해 주세요!");
+                            player.sendMessage("强 금액을 입력해 주세요!");
                         }
                     } else {
-                        player.sendMessage("이름을 입력해 주세요!");
+                        player.sendMessage("强 이름을 입력해 주세요!");
                     }
                     break;
                 case "제거":
@@ -501,17 +501,17 @@ public class IslandCmd {
             switch (args[1]) {
                 case "추가":
                     if (data.addRule(args)) {
-                        player.sendMessage("성공적으로 추가가 되었습니다!");
+                        player.sendMessage("架 성공적으로 규칙이 추가가 되었습니다!");
                     } else {
-                        player.sendMessage("규칙 추가 실패!");
+                        player.sendMessage("强 규칙 추가 실패!");
                     }
                     break;
                 case "삭제":
                     int index = Integer.parseInt(args[2]);
                     if (data.removeRule(index)) {
-                        player.sendMessage("성공적으로 제거가 되었습니다!");
+                        player.sendMessage("架 성공적으로 규칙이 제거가 되었습니다!");
                     } else {
-                        player.sendMessage("규칙 삭제 실패!");
+                        player.sendMessage("强 규칙 삭제를 실패하였습니다!");
                     }
                     break;
 
