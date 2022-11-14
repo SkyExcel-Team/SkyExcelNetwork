@@ -30,13 +30,13 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.2'
 
     implementation 'com.github.SkyExcel-Team:SkyExcelCore:v1.1.57'
-    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0"
     compileOnly("com.github.yannicklamprecht:worldborderapi:1.180.0")
 
 //    compileOnly("com.github.yannicklamprecht:worldborderapi:1.180.0")
 
 
-    / 기타 API */
+    /* 기타 API */
     compileOnly("org.jetbrains:annotations:23.0.0")
 
     api "net.dv8tion:JDA:5.0.0-alpha.22" // SHADOW
