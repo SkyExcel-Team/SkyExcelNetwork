@@ -18,11 +18,22 @@ public class SkyBlockDeleteEvent extends Event implements Cancellable {
 
     private Player player;
 
+    private Delete delete;
+
+
     public SkyBlockDeleteEvent(String name, SkyBlock islandData, Player player) {
         this.name = name;
         this.islandData = islandData;
         this.player = player;
         this.isCancelled = false;
+    }
+
+    public void setDelete(Delete delete) {
+        this.delete = delete;
+    }
+
+    public Delete getDelete() {
+        return delete;
     }
 
     @Override
@@ -59,5 +70,10 @@ public class SkyBlockDeleteEvent extends Event implements Cancellable {
 
     public Player getPlayer() {
         return player;
+    }
+
+
+    public enum Delete {
+        YES, NO
     }
 }

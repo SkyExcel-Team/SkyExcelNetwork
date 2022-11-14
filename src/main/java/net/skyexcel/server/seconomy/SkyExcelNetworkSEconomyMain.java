@@ -24,7 +24,6 @@ public class SkyExcelNetworkSEconomyMain {
         SkyExcelNetworkSEconomyMain.plugin = plugin;
 
         init();
-        System.out.println(ChatColor.GREEN + " 이코노미 플러그인 등록 완료!");
     }
 
 

@@ -21,9 +21,6 @@ public class SkyExcelNetworkCashShopMain {
         SkyExcelNetworkCashShopMain.plugin = plugin;
 
         init();
-        System.out.println(ChatColor.GREEN + " 캐시샵 플러그인 등록 완료!");
-
-
 
     }
 

@@ -39,7 +39,6 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
 
     public SkyExcelNetworkSkyBlockMain(JavaPlugin newplugin) {
         plugin = newplugin;
-        System.out.println(ChatColor.GREEN + "섬 플러그인 등록 완료!");
         init();
     }
 

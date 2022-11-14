@@ -18,9 +18,9 @@ public class SkyBlockQuickEvent extends Event implements Cancellable {
 
     private Player player;
 
-    private CancelCause cancelCause;
+    private CancelCause cancelCause = CancelCause.DEFAULT;
 
-    private QuickCuase cause;
+    private QuickCuase cause = QuickCuase.DEFAULT;
 
 
     public SkyBlockQuickEvent(String name, SkyBlock islandData, Player player) {
@@ -83,12 +83,12 @@ public class SkyBlockQuickEvent extends Event implements Cancellable {
     }
 
     public enum CancelCause {
-        OWNER(), NOT_MEMBER;
+        OWNER(), NOT_MEMBER, DEFAULT;
 
     }
 
-    public enum QuickCuase{
-        SERVER, ISLAND
+    public enum QuickCuase {
+        SERVER, ISLAND, DEFAULT
     }
 
 

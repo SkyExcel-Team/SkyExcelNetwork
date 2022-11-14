@@ -24,9 +24,6 @@ public class SkyExcelNetworkMileageMain {
         SkyExcelNetworkMileageMain.plugin = plugin;
 
         init();
-        System.out.println(ChatColor.GREEN + " 마일리지샵 플러그인 등록 완료!");
-
-
 
     }
 

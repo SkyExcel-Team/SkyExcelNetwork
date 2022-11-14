@@ -28,35 +28,21 @@ import java.util.UUID;
 public class SkyBlockEvent implements Listener {
 
 
-    private double MIN_Y = -60;
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onDelete(SkyBlockDeleteEvent event) {
-        Player player = event.getPlayer();
-
-        player.sendMessage("架 섬을 성공적으로 제거 하였습니다!");
-    }
-
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCreate(SkyBlockCreateEvent event) {
         Player player = event.getPlayer();
 
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
-        SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
-
         if (!equalFileName(event.getName())) {
             if (!playerData.hasIsland()) {
-                if (!playerData.isOwner()) {
 
-                    if (skyBlock.teleportSkyBlock(player)) {
-                        SkyBlockRecord record = new SkyBlockRecord(skyBlock.getName());
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', event.getName()) + "家 섬 생성에 성공 하였습니다!");
-                        player.sendMessage("家 섬 채팅을 사용 하실 수 있습니다! ");
-                    }
+                SkyBlockRecord record = new SkyBlockRecord(event.getName());
 
-                }
+                record.skyblockRecord(player, SkyBlockRecord.Type.CREATE);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "家 " + event.getName()) + " 이름의 섬 생성에 성공 하였습니다!");
+                player.sendMessage("家" + ChatColor.GRAY + " 섬 채팅을 사용 하실 수 있습니다! ");
+
             } else {
                 player.sendMessage("당신은 이미 섬이 있습니다!");
                 event.setCancelled(true);
@@ -64,8 +50,8 @@ public class SkyBlockEvent implements Listener {
         } else {
             player.sendMessage("이미 해당 섬 이름이 있습니다");
         }
-
     }
+
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuick(SkyBlockQuickEvent event) {
@@ -75,6 +61,7 @@ public class SkyBlockEvent implements Listener {
 
         if (event.getCause().equals(SkyBlockQuickEvent.QuickCuase.ISLAND)) {
             if (cause != null) {
+
                 switch (cause) {
                     case OWNER -> {
                         player.sendMessage("强 섬 주인은 탈퇴 할 수 없습니다!");
@@ -107,9 +94,8 @@ public class SkyBlockEvent implements Listener {
         SkyBlock data = event.getIslandData();
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
-        if (event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.VISIT)) {
 
-        }
+
         if (playerData.hasIsland()) {
             Player owner = Bukkit.getPlayer(UUID.fromString(data.getOwner()));
 
@@ -136,6 +122,7 @@ public class SkyBlockEvent implements Listener {
         Player player = event.getPlayer();
         Location location = event.getTo();
 
+        double MIN_Y = -60;
         if (location.getY() <= MIN_Y) {
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
             SkyBlock skyBlock = new SkyBlock(playerData.getIsland());

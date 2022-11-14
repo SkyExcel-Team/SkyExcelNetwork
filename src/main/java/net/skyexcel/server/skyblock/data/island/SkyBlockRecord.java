@@ -15,7 +15,7 @@ public class SkyBlockRecord {
 
     public SkyBlockRecord(String name) {
         this.name = name;
-        this.record = new Config("SkyBlock/" + name + "/record/IslandRecord");
+        this.record = new Config("data/SkyBlock/SkyBlock/" + name + "/record/record");
         this.record.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
 
     }
@@ -45,7 +45,7 @@ public class SkyBlockRecord {
         }
     }
 
-    public void skyblockRecord(Player player,  Type type) {
+    public void skyblockRecord(Player player, Type type) {
 
         try {
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
@@ -68,7 +68,7 @@ public class SkyBlockRecord {
 
 
     public enum Type {
-        KICK("추방"), JOIN("입장"), CREATE("생성"), BLACKLIST("블랙리스트"),ADDPARTTIME("알바추가") ,REMOVEPARTTIME("알바제거");
+        KICK("추방"), JOIN("입장"), CREATE("생성"), BLACKLIST("블랙리스트"), ADDPARTTIME("알바추가"), REMOVEPARTTIME("알바제거");
 
         private String name;
 

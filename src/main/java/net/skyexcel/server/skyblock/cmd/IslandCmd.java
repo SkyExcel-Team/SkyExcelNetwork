@@ -8,11 +8,12 @@ import net.skyexcel.server.menu.menu.Menu;
 
 import net.skyexcel.server.seconomy.data.SEConomy;
 import net.skyexcel.server.skyblock.data.SkyBlockData;
-import net.skyexcel.server.skyblock.data.StringData;
+import net.skyexcel.server.skyblock.data.island.DeleteRunnable;
+import net.skyexcel.server.skyblock.data.island.InviteSkyBlock;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
+
 import net.skyexcel.server.skyblock.data.player.SkyBlockRequest;
-import net.skyexcel.server.skyblock.ui.title.Loading;
 import net.skyexcel.server.skyblock.util.Translate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 
@@ -30,10 +31,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import skyexcel.command.function.Cmd;
 
 
-import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -174,29 +173,15 @@ public class IslandCmd implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[1]);
 
                         assert target != null;
+
                         SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
 
+                        InviteSkyBlock inviteSkyBlock = new InviteSkyBlock(player);
 
                         if (!targetData.hasIsland()) {
-                            if (SkyBlockRequest.send(request, target, player)) {
-                                TextComponent accept = new TextComponent("§a수락");
-
-                                accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("家 §a클릭하여 수락하세요!").create()));
-                                accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/섬 수락 " + player.getDisplayName()));
-
-                                TextComponent deny = new TextComponent("§c거절");
-
-                                deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("家 §c클릭하여 거절하세요").create()));
-                                deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/섬 거절 " + player.getDisplayName()));
-
-                                TextComponent result = new TextComponent("家 §6" + player.getDisplayName() + "§f님에게 섬 초대 요청이 왔습니다! ");
-                                result.addExtra(accept);
-                                result.addExtra("|");
-                                result.addExtra(deny);
-
-                                target.spigot().sendMessage(result);
-                                player.sendMessage("家 §6" + target.getDisplayName() + "§f님에게 섬 §a초대§f를 보냈습니다!");
-
+                            if (!SkyBlockData.inviteSkyBlock.containsKey(target.getUniqueId())) {
+                                inviteSkyBlock.send(target);
+                                SkyBlockData.inviteSkyBlock.put(target.getUniqueId(), inviteSkyBlock);
                             } else {
                                 player.sendMessage("强 이미 초대 요청을 보낸 플레이어입니다!");
                             }
@@ -205,13 +190,11 @@ public class IslandCmd implements CommandExecutor {
                         }
                     }
                     case "수락" -> {
-                        SkyBlockRequest request = new SkyBlockRequest();
+
 
                         Player target = Bukkit.getPlayer(args[1]);
 
-                        if (SkyBlockRequest.accept(request, player, target)) {
-
-                            assert target != null;
+                        if (SkyBlockData.inviteSkyBlock.containsKey(player.getUniqueId())) {
                             SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
                             SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
@@ -222,9 +205,13 @@ public class IslandCmd implements CommandExecutor {
                             islandData.accept(target, player);
 
                             player.sendMessage("架 §6" + targetData.getIsland() + " §f섬에 입장하였습니다!");
+
+                            SkyBlockData.inviteSkyBlock.remove(player.getUniqueId());
                         } else {
                             player.sendMessage("强 초대 수락에 실패 하였습니다!");
                         }
+
+
                     }
                     case "거절" -> {
                         SkyBlockRequest request = new SkyBlockRequest();
@@ -281,7 +268,18 @@ public class IslandCmd implements CommandExecutor {
                         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
                         SkyBlock data = new SkyBlock(playerData.getIsland());
-                        data.remove(player);
+                        if (!SkyBlockData.delete.containsKey(player.getUniqueId())) {
+                            player.sendMessage("진짜 지울꺼야? ? ? ? ?? ? ? ?? ? ?");
+                            DeleteRunnable runnable = new DeleteRunnable(player);
+
+                            runnable.runTaskTimer(SkyExcelNetworkSkyBlockMain.plugin, 0, 20);
+                            SkyBlockData.delete.put(player.getUniqueId(), runnable);
+
+                        } else {
+                            data.remove(player);
+                            SkyBlockData.delete.remove(player.getUniqueId());
+                        }
+
                     }
                     case "생성" -> {
                         if (args.length <= 30) {
