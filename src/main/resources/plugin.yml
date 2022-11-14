@@ -8,16 +8,13 @@ api-version: 1.19
 
 #의존성 추가
 softdepend:
-  - SkyExcelCore
   - WorldEdit
   - ProtocolLib
 
 depend:
-  - PlaceholderAPI
   - HeadDatabase
+  - PlaceholderAPI
   - WorldBorderAPI
-
-
 
 worlds:
   SkyBlock:
@@ -73,8 +70,11 @@ commands:
   #SkyBlock
   섬:
     aliases: [ SkyBlock,is,tja ]
-
   섬어드민:
+
+  #Snowy
+  눈:
+    aliases: [ snowy ]
 
   #Trade
   거래:

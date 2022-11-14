@@ -128,9 +128,10 @@ public class SignEdit {
             try {
                 ProtocolLibrary.getProtocolManager().sendServerPacket(player, signData);
                 ProtocolLibrary.getProtocolManager().sendServerPacket(player, openSign);
-            } catch (InvocationTargetException exception) {
-                exception.printStackTrace();
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
             }
+
             inputs.put(player, this);
         }
 
