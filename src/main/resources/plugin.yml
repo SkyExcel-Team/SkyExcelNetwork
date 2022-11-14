@@ -26,8 +26,10 @@ worlds:
 commands:
   #CashShop
   캐시:
+
   캐시상점:
     aliases: [ cash ]
+
   메뉴:
     aliases: [ menu,m,ㅁ ]
   마일리지:
@@ -70,6 +72,8 @@ commands:
 
   #SkyBlock
   섬:
+    aliases: [ SkyBlock,is,tja ]
+
   섬어드민:
 
   #Trade

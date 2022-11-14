@@ -13,7 +13,9 @@ public class SkyExcelNetWorkWarp {
     public SkyExcelNetWorkWarp(JavaPlugin plugin) {
         this.plugin = plugin;
 
-        new WarpCmd().register();
+
+        plugin.getCommand("워프").setExecutor(new WarpCmd());
+
         plugin.getCommand("spawn").setExecutor(new WarpSpawnCmd());
 
         plugin.getCommand("워프").setTabCompleter(new WarpTab());

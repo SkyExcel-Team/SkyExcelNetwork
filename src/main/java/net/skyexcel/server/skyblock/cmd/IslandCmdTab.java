@@ -70,7 +70,7 @@ public class IslandCmdTab implements TabCompleter {
 
                         playerData = new SkyBlockPlayerData(player);
                         if (playerData.isOwner()) {
-                            result = List.of("기록", "잠금");
+                            result = List.of("기록", "잠금", "입금", "출금");
                         }
                         break;
 

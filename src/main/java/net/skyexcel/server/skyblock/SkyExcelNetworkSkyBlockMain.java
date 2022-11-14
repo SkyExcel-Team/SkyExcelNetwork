@@ -67,10 +67,7 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
         WorldManager worldManager = new WorldManager();
         worldManager.create();
 
-        new IslandCmd();
-
-        new IslandAdminCmdTab();
-        new IslandAdminCmd();
+        plugin.getCommand("섬").setExecutor(new IslandCmd());
 
         Bukkit.getServer().getPluginCommand("섬").setTabCompleter(new IslandCmdTab());
 
@@ -79,7 +76,7 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
         new RankLevelExpansion(plugin).register();
         new RankNameExpansion(plugin).register();
 
-        Listener[] listeners = {new onJoin(), new SkyBlockEvent(), new banBlockEvent(), new onHit(),new onQuit()};
+        Listener[] listeners = {new onJoin(), new SkyBlockEvent(), new banBlockEvent(), new onHit(), new onQuit()};
         Arrays.stream(listeners).forEach(listener -> {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
         });
@@ -94,6 +91,7 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
             SkyBlockDelay delay = new SkyBlockDelay(playerData, false);
             delay.runTaskTimer(plugin, 0, 20);
         }
+
     }
 
 
