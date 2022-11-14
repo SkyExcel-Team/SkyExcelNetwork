@@ -15,6 +15,7 @@ import net.skyexcel.server.playerprofile.SkyExcelNetworkPlayerProfile;
 import net.skyexcel.server.playtime.SkyExcelNetworkPlayTimeMain;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
+import net.skyexcel.server.snowy.SkyExcelSnowyMain;
 import net.skyexcel.server.trade.SkyExcelNetworkTradeMain;
 import net.skyexcel.server.tutorial.SkyExcelNetworkTutorialMain;
 import net.skyexcel.server.warp.SkyExcelNetWorkWarp;
@@ -23,8 +24,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SkyExcelNetworkMain extends JavaPlugin {
     private static JavaPlugin plugin;
     public static HeadDatabaseAPI hdb;
-    private volatile SkyExcelNetworkDiscordMain discord = null;
 
+    private volatile SkyExcelNetworkDiscordMain discord = null;
     private SkyExcelNetworkJobMain skyExcelNetworkJobMain;
 
     @Override
@@ -47,6 +48,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetworkPlayTimeMain(plugin);
         new SkyExcelNetworkSEConomyMain(plugin);
         new SkyExcelNetworkSkyBlockMain(plugin);
+        new SkyExcelSnowyMain(plugin);
         new SkyExcelNetworkTradeMain(plugin);
         new SkyExcelNetWorkWarp(plugin);
         new SkyExcelNetworkTutorialMain(plugin);
