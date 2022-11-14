@@ -25,6 +25,8 @@ public class SkyExcelNetworkMain extends JavaPlugin {
     public static HeadDatabaseAPI hdb;
     private volatile SkyExcelNetworkDiscordMain discord = null;
 
+    private SkyExcelNetworkJobMain skyExcelNetworkJobMain;
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -37,7 +39,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetworkFishMain(plugin);
         new SkyExcelNetworkGiftBoxMain(plugin);
         new SkyExcelNetworkItemsMain(plugin);
-        new SkyExcelNetworkJobMain(plugin);
+        this.skyExcelNetworkJobMain = new SkyExcelNetworkJobMain(plugin);
         new SkyExcelNetworkLockManagerMain(plugin);
         new SkyExcelNetworkMenuMain(plugin);
         new SkyExcelNetworkMileageMain(plugin);
@@ -53,6 +55,8 @@ public class SkyExcelNetworkMain extends JavaPlugin {
     @Override
     public void onDisable() {
 //        discord.onDisable();
+
+        this.skyExcelNetworkJobMain.disable();
     }
 
 

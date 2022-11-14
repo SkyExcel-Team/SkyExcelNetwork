@@ -2,21 +2,21 @@ package net.skyexcel.server.job.event;
 
 import net.skyexcel.server.fish.SkyExcelNetworkFishMain;
 import net.skyexcel.server.fish.data.FishStatus;
+import net.skyexcel.server.job.data.Job;
+import net.skyexcel.server.job.data.JobType;
 import net.skyexcel.server.job.data.obj.Scarecrow;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
-import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
@@ -41,24 +41,40 @@ public class JobListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        Action action = event.getAction();
-
         EquipmentSlot e = event.getHand();
 
 
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
         if (event.getAction() != Action.RIGHT_CLICK_AIR) return;
 
-        if (event.getHand() != null) {
-            if (player.getInventory().getItemInHand().getType().equals(Material.STONE_HOE)) {
+        Job job = new Job(player);
 
-                // 허수아비를 소환 할때 메세지.
-                Scarecrow scarecrow = new Scarecrow(player);
-                scarecrow.spawn(player);
-                player.sendMessage("허수아비를 소환합니다.");
-                event.setCancelled(true);
 
+        job.selectJob(player, JobType.FARM);
+
+        if (Objects.equals(job.getJobType(), JobType.FARM)) {
+            if (event.getHand() != null) {
+                if (player.isSneaking()) {
+                    if (player.getInventory().getItemInHand().getType().equals(Material.STONE_HOE)) {
+
+                        // 허수아비를 소환 할때 메세지.
+                        Scarecrow scarecrow = new Scarecrow(player);
+                        scarecrow.spawn(player);
+                        player.sendMessage("허수아비를 소환합니다.");
+                        event.setCancelled(true);
+
+                    }
+                }
             }
+        }
+    }
+
+    @EventHandler
+    public void onInteractAtEntity(PlayerInteractAtEntityEvent event) {
+        Entity entity = event.getRightClicked();
+
+        if (Objects.equals(entity.getType(), EntityType.ARMOR_STAND)) {
+            event.setCancelled(true);
         }
     }
 

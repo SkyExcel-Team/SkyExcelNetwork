@@ -35,6 +35,48 @@ import java.util.*;
 
 public class IslandCmd {
 
+    private final List<String> help = List.of(
+            "/섬 도움말 : 섬 도움말을 띄웁니다 ",
+            "/섬 생성 [이름] : [이름]의 섬을 생성합니다.",
+            "/섬 제거 : 자신의 섬을 제거합니다.",
+            "/섬 초대 [플레이어] : 자신의 섬에 [플레이어를] 추가합니다",
+            "/섬 수락 [플레이어] : 초대온 섬 초대 요청을 수락합니다.",
+            "/섬 거절 [플레이어] : 초대온 섬 초대 요청을 거절합니다.",
+            "/섬 탈퇴 : 섬에서 탈퇴합니다.",
+            "/섬 추방 [플레이어] [사유] : 자신의 섬에 있는 [플레이어]를 추방합니다.",
+            "/섬 규칙 추가 [이름] : [이름]의 규칙을 추가합니다. 10줄까지 가능",
+            "/섬 규칙 제거 [번호] : [번호]의 규칙을 제거합니다. ",
+            "/섬 규칙 보기 : 섬 규칙을 확인합니다.  ",
+            "/섬 금고 입금 <Amount> : 금고에 <Amount>만큼의 금액을 입금합니다. ",
+            "/섬 금고 출금 <Amount> : 금고에 <Amount>만큼의 금액을 출금합니다.  ",
+            "/섬 금고 기록 : 금고의 입출금 기록을 띄웁니다.  ",
+            "/섬 금고 잠금 : 금고 출금을 금지시킵니다.  ",
+            "/섬 디스코드 설정 [링크] : 섬 디스코드 링크를 [링크]로 설정합니다. ",
+            "/섬 디스코드 삭제 : [링크]를 삭제합니다.  ",
+            "/섬 방문객 : 최근 방문한 방문객을 모두 채팅에 표시합니다.",
+            "/섬 이름변경 [이름] : 섬의 이름을 [이름]으로 변경합니다. ",
+            "/섬 스폰변경 : 섬 스폰위치를 변경합니다.  ",
+            "/섬 업그레이드 : 섬 업그레이드 GUI를 띄웁니다.",
+            "/섬 양도 [플레이어] : 섬 소유권을 [플레이어]에게 양도합니다.  ",
+            "/섬 권한 : 섬 권한 관련된 GUI를 띄웁니다.",
+            "/섬 호퍼 : 섬에 설치된 호퍼 갯수를 확인합니다.",
+            "/섬 초기화 : 섬을 초기화합니다.",
+            "/섬 홈 : 자신의 섬 스폰을 지정합니다.",
+            "/섬 설정 : 섬 세부 사항을 설정 할 수 있습니다. \n" +
+                    "ㄴ 밴블록, 시간(아침/점심/저녁/새벽), 날씨(맑음/비/번개), pvp, ",
+
+            "/섬 옵션 전투 허용 (죽으면 섬 스폰으로 이동 되며 다른패널티는 없다.)",
+            "/섬 옵션 열기",
+            "/섬 옵션 밴블록 알바",
+            "/섬 옵션 밴블록 맴버",
+            "/섬 옵션 전투 허용",
+            "/섬 블랙리스트 추가 <플레이어> <사유>",
+            "/섬 블랙리스트 제거 <Player>",
+            "/섬 블랙리스트 목록",
+            "/섬 알바 추가 [이름] [돈]",
+            "/섬 알바 제거 [이름]",
+            "/섬 순위 [페이지]",
+            "/섬 멤버");
 
     public IslandCmd() {
         Cmd cmd = new Cmd(SkyExcelNetworkSkyBlockMain.plugin, "섬");
@@ -67,7 +109,20 @@ public class IslandCmd {
         cmd.action("도움말", 0, action -> {
             Player player = (Player) action.getSender();
 
-            player.sendMessage("test");
+            if (action.getArgs().length > 1) {
+                int page = Integer.parseInt(action.getArgs()[1]);
+                player.sendMessage("섬 도움말 페이지 [" + page + " /3]");
+                List<String> test = message(help, page);
+                for (String text : test) {
+                    player.sendMessage(text);
+                }
+            } else {
+                List<String> test = message(help, 1);
+                player.sendMessage("섬 도움말 페이지 [1/3]");
+                for (String text : test) {
+                    player.sendMessage(text);
+                }
+            }
         });
 
         cmd.action("양도", 0, action -> {
@@ -212,7 +267,6 @@ public class IslandCmd {
 
         });
 
-
         cmd.action("블랙리스트", 0, action -> {
             Player player = (Player) action.getSender();
 
@@ -237,8 +291,6 @@ public class IslandCmd {
                     }
                 }
             }
-
-
         });
 
 
@@ -591,6 +643,19 @@ public class IslandCmd {
                     break;
             }
         });
+    }
+
+    private List<String> message(List<String> help, int index) {
+        List<String> result = new ArrayList<>();
+        try {
+            for (int i = 10 * index; i < 10 * (index + 1); i++) {
+                String line = help.get(i);
+                result.add(line);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("해당 페이지는 존재하지 않습니다.");
+        }
+        return result;
     }
 
     private String format(long amount) {

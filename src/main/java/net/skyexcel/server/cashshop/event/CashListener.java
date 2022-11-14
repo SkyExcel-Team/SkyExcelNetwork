@@ -133,6 +133,7 @@ public class CashListener implements Listener {
                         player.sendMessage("구매 가격을 입력 해 주세요!");
                     }
                     case CLOSE, DEFAULT, EDIT -> {
+                        System.out.println(event.getInventory());
                         cashShop.save(event.getInventory());
                         CashShopData.shop.remove(player.getUniqueId());
                     }
