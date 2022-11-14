@@ -25,8 +25,6 @@ public class CashShopCmdTab implements TabCompleter {
                 } else {
                     result = List.of("열기");
                 }
-
-
             } else if (args.length == 2) {
                 if (List.of("제거", "편집", "제목", "열기").contains(args[0])) {
                     (result).addAll(config.fileListName());
@@ -36,9 +34,7 @@ public class CashShopCmdTab implements TabCompleter {
             } else if (args.length == 3 && "줄".equalsIgnoreCase(args[0])) {
                 (result).addAll(config.fileListName());
             }
-
         }
-
         return result;
     }
 }

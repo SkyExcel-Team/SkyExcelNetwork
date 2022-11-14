@@ -1,6 +1,7 @@
 package net.skyexcel.server.warp.cmd;
 
 import net.skyexcel.server.warp.data.Warp;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -17,9 +18,9 @@ public class WarpTab implements TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> result = new ArrayList<>();
+
         if (sender instanceof Player player) {
             if (args.length == 1) {
-
                 Warp warp = new Warp();
                 result = warp.getList();
 
@@ -32,6 +33,10 @@ public class WarpTab implements TabCompleter {
                 if (Objects.equals("삭제", args[0])) {
                     Warp warp = new Warp();
                     result = warp.getList();
+                } else {
+                    for (Player online : Bukkit.getOnlinePlayers()) {
+                        result.add(online.getDisplayName());
+                    }
                 }
             }
         }

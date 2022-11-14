@@ -22,7 +22,6 @@ public class Warp {
 
 
     public Warp() {
-
         this.config = new Config("warp/warp");
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
@@ -57,5 +56,4 @@ public class Warp {
     public Location getLocation() {
         return config.getLocation("warp." + name);
     }
-
 }

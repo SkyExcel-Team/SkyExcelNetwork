@@ -22,24 +22,28 @@ public class SkyExcelNetworkCashShopMain {
 
         init();
         System.out.println(ChatColor.GREEN + " 캐시샵 플러그인 등록 완료!");
-        plugin.getCommand("캐시").setTabCompleter(new CashCmdTab());
-        plugin.getCommand("캐시상점").setTabCompleter(new CashShopCmdTab());
+
+
+
     }
 
 
     private void init() {
         Listener[] listeners = {new CashListener()};
+
         Arrays.stream(listeners).forEach(listener -> {
                     Bukkit.getPluginManager().registerEvents(listener, plugin);
                 }
         );
 
-        new CashCmd().registerCmd();
+
+        plugin.getCommand("캐시").setTabCompleter(new CashCmdTab());
+        plugin.getCommand("캐시상점").setTabCompleter(new CashShopCmdTab());
+
+        plugin.getCommand("캐시").setExecutor(new CashCmd());
+        plugin.getCommand("캐시상점").setExecutor(new CashShopCmd());
 
         new CashExpansion(plugin).register();
-
-        CashShopCmd cashShopCmd = new CashShopCmd();
-        cashShopCmd.registerCmd();
 
         message = new Config("CashShop-message");
         message.setPlugin(plugin);
