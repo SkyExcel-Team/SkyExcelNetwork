@@ -109,6 +109,13 @@ public class IslandCmdTab implements TabCompleter {
                         if (playerData.isOwner()) {
                             result = List.of("추가", "제거", "완료");
                         }
+                    case "방문":
+                        for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
+                            SkyBlockPlayerData skyBlockPlayerData = new SkyBlockPlayerData(offlinePlayer);
+                            if (skyBlockPlayerData.hasIsland()) {
+                                result.add(offlinePlayer.getName());
+                            }
+                        }
                         break;
                 }
             } else if (args.length == 3) {

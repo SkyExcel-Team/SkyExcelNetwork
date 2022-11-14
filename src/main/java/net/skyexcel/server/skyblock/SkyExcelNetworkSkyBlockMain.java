@@ -70,6 +70,10 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
 
         Bukkit.getServer().getPluginCommand("섬").setTabCompleter(new IslandCmdTab());
 
+
+        plugin.getCommand("섬어드민").setExecutor(new IslandAdminCmd());
+        Bukkit.getServer().getPluginCommand("섬어드민").setTabCompleter(new IslandAdminCmdTab());
+
         new SkyBlockVaultExpansion(plugin).register();
         new RankExpansion(plugin).register();
         new RankLevelExpansion(plugin).register();

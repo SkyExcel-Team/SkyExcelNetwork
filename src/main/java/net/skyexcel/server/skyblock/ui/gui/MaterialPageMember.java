@@ -117,7 +117,7 @@ public class MaterialPageMember {
         } else {
             if (member.contains(material)) {
                 islandData.removeBanBlockMember(material);
-//                Items.newItem(ChatColor.GRAY + material.name(), material, 1, Arrays.asList(""), slot, inv);
+
                 unSelected(material, slot);
             } else {
                 player.sendMessage(ChatColor.RED + "밴 블록이 아닙니다!");

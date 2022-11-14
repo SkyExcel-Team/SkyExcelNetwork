@@ -5,6 +5,7 @@ import net.skyexcel.server.fish.data.FishStatus;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobType;
 import net.skyexcel.server.job.data.obj.Scarecrow;
+import net.skyexcel.server.job.data.obj.Selector;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,7 +51,9 @@ public class JobListener implements Listener {
         Job job = new Job(player);
 
 
-        job.selectJob(player, JobType.FARM);
+        Selector selector = new Selector(JobType.FARM);
+
+        selector.selectJob(player);
 
         if (Objects.equals(job.getJobType(), JobType.FARM)) {
             if (event.getHand() != null) {

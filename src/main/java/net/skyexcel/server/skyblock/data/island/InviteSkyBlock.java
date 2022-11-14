@@ -33,7 +33,6 @@ public class InviteSkyBlock {
 
         target.spigot().sendMessage(result);
         player.sendMessage("家 §6" + target.getDisplayName() + "§f님에게 섬 §a초대§f를 보냈습니다!");
-
     }
 
 }
