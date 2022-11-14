@@ -100,17 +100,17 @@ public class IslandCmd implements CommandExecutor {
                     case "도움말" -> {
                         if (args.length > 1) {
                             int page = Integer.parseInt(args[1]);
-                            player.sendMessage("섬 도움말 페이지 [" + page + " /3]");
                             List<String> test = message(player, help, page);
                             for (String text : test) {
                                 player.sendMessage(text);
                             }
+                            player.sendMessage("家 섬 §6도움말 §f페이지 §7[" + page + " /4]");
                         } else {
                             List<String> test = message(player, help, 1);
-                            player.sendMessage("섬 도움말 페이지 [1/3]");
                             for (String text : test) {
                                 player.sendMessage(text);
                             }
+                            player.sendMessage("家 섬 §6도움말 §f페이지 §7[1/4]");
                         }
                     }
                     case "메뉴" -> {
@@ -573,16 +573,22 @@ public class IslandCmd implements CommandExecutor {
         return false;
     }
 
+    // 0 ~ 10
     private List<String> message(Player player, List<String> help, int index) {
         List<String> result = new ArrayList<>();
-        try {
-            for (int i = 10 * index; i < 10 * (index + 1); i++) {
-                String line = help.get(i);
-                result.add(line);
+
+
+        for (int i = 10 * (index - 1); i < 10 * (index); i++) {
+            String line = help.get(i);
+            result.add(line);
+
+            if (help.get(i) == null) {
+                player.sendMessage("强 해당 페이지는 존재하지 않습니다.");
+                break;
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            player.sendMessage("해당 페이지는 존재하지 않습니다.");
+
         }
+
         return result;
     }
 
