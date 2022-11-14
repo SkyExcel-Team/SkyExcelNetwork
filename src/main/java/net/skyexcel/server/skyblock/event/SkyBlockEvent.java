@@ -31,7 +31,7 @@ public class SkyBlockEvent implements Listener {
     public void onDelete(SkyBlockDeleteEvent event) {
         Player player = event.getPlayer();
 
-        player.sendMessage(ChatColor.GRAY + " 섬을 제거 하였습니다!");
+        player.sendMessage("架 섬을 성공적으로 제거 하였습니다!");
     }
 
 
@@ -39,8 +39,8 @@ public class SkyBlockEvent implements Listener {
     public void onCreate(SkyBlockCreateEvent event) {
         Player player = event.getPlayer();
 
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', event.getName()) + ChatColor.GREEN + " 섬 생성에 성공 하였습니다!");
-        player.sendMessage(ChatColor.GRAY + "섬 채팅을 사용 하실 수 있습니다! ");
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', event.getName()) + "家 섬 생성에 성공 하였습니다!");
+        player.sendMessage("家 섬 채팅을 사용 하실 수 있습니다! ");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -53,23 +53,23 @@ public class SkyBlockEvent implements Listener {
             if (cause != null) {
                 switch (cause) {
                     case OWNER -> {
-                        player.sendMessage("섬 주인은 탈퇴 할 수 없습니다!");
+                        player.sendMessage("强 섬 주인은 탈퇴 할 수 없습니다!");
                     }
                     case NOT_MEMBER -> {
-                        player.sendMessage("당신은 해당 섬의 멤버가 아닙니다!");
+                        player.sendMessage("强 당신은 해당 섬의 멤버가 아닙니다!");
                     }
                 }
             } else {
                 SkyBlock skyBlock = event.getIslandData();
                 skyBlock.removeMember(player);
-                player.sendMessage("성공적으로 섬을 탈퇴 했습니당");
+                player.sendMessage("架 성공적으로 섬을 탈퇴하였습니다!");
             }
         } else if (event.getCause().equals(SkyBlockQuickEvent.QuickCuase.SERVER)) {
             List<String> members = event.getIslandData().getMembers();
             if (event.getIslandData().getMembers().contains(player.getUniqueId().toString())) {
                 for (String member : members) {
                     Player online = Bukkit.getPlayer(member);
-                    online.getPlayer().sendMessage(player.getPlayer().getDisplayName() + " 님이 입장 퇴장하였습니다!");
+                    online.getPlayer().sendMessage("家 §6" + player.getPlayer().getDisplayName() + "§f님이 §a입장 §c퇴장§f하였습니다!");
                 }
 
             }
@@ -95,13 +95,13 @@ public class SkyBlockEvent implements Listener {
 
                     Player member = Bukkit.getPlayer(UUID.fromString(uuid));
                     if (!data.getMembers().contains(player.getUniqueId().toString()))
-                        member.sendMessage(player.getDisplayName() + " 님이 섬 월드에 입장하였습니다!");
+                        member.sendMessage("家 §6" + player.getDisplayName() + "§f님이 섬에 입장하였습니다!");
                 }
             }
 
             if (owner != null) {
                 if (!player.equals(owner)) {
-                    owner.sendMessage(player.getDisplayName() + " 님이 섬 월드에 입장하였습니다!");
+                    owner.sendMessage("家 §6" + player.getDisplayName() + "§f님이 섬에 입장하였습니다!");
                 }
             }
         }
