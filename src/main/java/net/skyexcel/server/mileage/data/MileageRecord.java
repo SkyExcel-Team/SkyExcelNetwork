@@ -1,7 +1,7 @@
-package net.skyexcel.server.mileage.data.economy;
+package net.skyexcel.server.mileage.data;
 
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
-import net.skyexcel.server.mileage.util.Translate;
+import net.skyexcel.server.skyblock.util.Translate;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class MileageRecord {
 
 
     public MileageRecord() {
-        this.record = new Config("data/log/log");
+        this.record = new Config("data/cash/log/log");
         this.record.setPlugin(SkyExcelNetworkMileageMain.plugin);
     }
 

@@ -21,7 +21,7 @@ public class MileageCmdTab implements TabCompleter {
                     result = List.of("지급", "모두지급", "빼기", "설정", "확인", "초기화");
                 } else if (args.length == 2) {
                     if (!"모두지급".equalsIgnoreCase(args[0])) {
-                        this.addPlayer((List)result);
+                        this.addPlayer(result);
                     }
                 } else if (args.length == 3 && !List.of("확인", "초기화").contains(args[0])) {
                     result = List.of("<Amount>");
@@ -29,17 +29,13 @@ public class MileageCmdTab implements TabCompleter {
             }
         }
 
-        return (List)result;
+        return result;
     }
 
     public void addPlayer(List<String> result) {
-        OfflinePlayer[] var2 = Bukkit.getOfflinePlayers();
-        int var3 = var2.length;
-
-        for(int var4 = 0; var4 < var3; ++var4) {
-            OfflinePlayer offlinePlayer = var2[var4];
+        OfflinePlayer[] players = Bukkit.getOfflinePlayers();
+        for (OfflinePlayer offlinePlayer : players) {
             result.add(offlinePlayer.getName());
         }
-
     }
 }

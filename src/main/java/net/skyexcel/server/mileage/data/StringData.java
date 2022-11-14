@@ -1,174 +1,248 @@
 package net.skyexcel.server.mileage.data;
 
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
-import net.skyexcel.server.skyblock.util.Translate;
+import net.skyexcel.server.mileage.util.Translate;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.List;
 
 public class StringData {
 
-    
-    public static String myCash(OfflinePlayer player) {
-        Mileage cash = new Mileage(player);
+    private Translate translate;
 
-        return ChatColor.translateAlternateColorCodes('&', getCashMessage("my_mileage")
-                .replaceAll("%mileage%", String.valueOf(cash.getLong())));
+    public StringData() {
+        translate = new Translate();
     }
 
-    public static String checkPlayerCash(OfflinePlayer target) {
-        Mileage cash = new Mileage(target);
-        return ChatColor.translateAlternateColorCodes('&', getCashMessage("check_player_mileage")
-                .replaceAll("%mileage%", format(cash.getLong()))
-                .replaceAll("%player%", target.getName()));
+    public String mymileage(Player player) {
+        Mileage mileage = new Mileage(player);
+
+        return ChatColor.translateAlternateColorCodes('&', getmileageMessage("my_mileage")
+                .replaceAll("%mileage%", format(mileage.getLong())));
     }
 
-    public static String sendCash(OfflinePlayer target, int amount) {
-
-        return ChatColor.translateAlternateColorCodes('&', getCashMessage("send_mileage")
-                .replaceAll("%mileage%", format(amount))
-                .replaceAll("%player%", target.getName()));
-    }
-
-    public static String sendCashAllPlayer(int amount) {
-
-        return ChatColor.translateAlternateColorCodes('&', getCashMessage("send_mileage_all_player")
-                .replaceAll("%mileage%", String.valueOf(amount)));
-    }
-
-    public static String removeCash(OfflinePlayer target, int amount) {
-
-        return ChatColor.translateAlternateColorCodes('&', getCashMessage("remove_mileage")
-                .replaceAll("%mileage%", String.valueOf(amount))
-                .replaceAll("%player%", target.getName()));
-    }
-
-    public static String setCash(OfflinePlayer target, int amount) {
-
-        return ChatColor.translateAlternateColorCodes('&', getCashMessage("set_mileage")
-                .replaceAll("%mileage%", String.valueOf(amount))
-                .replaceAll("%player%", target.getName()));
-    }
-
-    public static String resetCash(Player target) {
-
-        return ChatColor.translateAlternateColorCodes('&', getCashMessage("reset_mileage")
+    public String checkPlayermileage(Player target) {
+        Mileage mileage = new Mileage(target);
+        return ChatColor.translateAlternateColorCodes('&', getmileageMessage("check_player_mileage")
+                .replaceAll("%mileage%", format(mileage.getLong()))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
-    public static String buyOne(Player target, int price) {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("buy_one")
+    public String sendmileage(Player target, long amount) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmileageMessage("send_mileage")
+                .replaceAll("%mileage%", format(amount))
+                .replaceAll("%player%", target.getDisplayName()));
+    }
+
+    /**
+     * 구매와 판매 모두 못할 경우 출력되는 로어 입니다.
+     *
+     * @return 설명
+     */
+    public List<String> cantBoth() {
+
+        return translate.msgCollapse(List.of("",
+                "&f[&b!&f] 구매가 불가능한 상품 입니다."
+                , "&f[&b!&f] 판매가 불가능한 상품입니다."
+                , ""));
+    }
+
+    /**
+     * 판매와 구매 모두 가능 할 때 출력되는 로어 입니다.
+     *
+     * @param buy  구매 가격
+     * @param sell 판매 가격
+     * @return 설명
+     */
+    public List<String> canBoth(long buy, long sell) {
+
+        return translate.msgCollapse(List.of(""
+                , "&f[&b!&f] 구매 가격:  " + buy + " 캐시"
+                , "&f[&b!&f] 판매 가격:  " + sell + " 캐시"
+
+                , ""
+                , "&f[&b!&f] 쉬프트 + 좌클릭: 64개 구매"
+                , "&f[&b!&f] 쉬프트 + 우클릭: 64개 판매"
+
+                , ""));
+    }
+
+    /**
+     * 판매가 불가능 하고, 구매만 가능 했을 때 로어입니다.
+     *
+     * @param buy 구매 가격
+     * @return 로어
+     */
+    public List<String> canBuy(long buy) {
+        return translate.msgCollapse(List.of(""
+                , "&f[&b!&f] 구매 가격:  " + buy + " 캐시"
+
+                , ""
+                , "&f[&b!&f] 판매가 불가능한 상품 입니다."
+                , "&f[&b!&f] 쉬프트 + 우클릭: 64개 구매"
+
+                , ""));
+    }
+
+    /**
+     * 구매가 불가능하고, 판매만 가능 했을 때 로어입니다.
+     *
+     * @param sell 판매 가격
+     * @return 설명
+     */
+    public List<String> canSell(long sell) {
+
+        return translate.msgCollapse(List.of(""
+                , "&f[&b!&f] 구매가 불가능한 상품 입니다."
+                , "&f[&b!&f] 판매 가격:  " + sell + " 캐시"
+                , ""
+                , "&f[&b!&f] 쉬프트 + 좌클릭: 64개 판매"
+
+                , ""));
+    }
+
+    public String sendmileageAllPlayer(long amount) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmileageMessage("send_mileage_all_player")
+                .replaceAll("%mileage%", format(amount)));
+    }
+
+    public String removemileage(Player target, long amount) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmileageMessage("remove_mileage")
+                .replaceAll("%mileage%", format(amount))
+                .replaceAll("%player%", target.getDisplayName()));
+    }
+
+    public String setmileage(Player target, long amount) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmileageMessage("set_mileage")
+                .replaceAll("%mileage%", format(amount))
+                .replaceAll("%player%", target.getDisplayName()));
+    }
+
+    public String resetmileage(Player target) {
+
+        return ChatColor.translateAlternateColorCodes('&', getmileageMessage("reset_mileage")
+                .replaceAll("%player%", target.getDisplayName()));
+    }
+
+    public String buyOne(Player target, int price) {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("buy_one")
                 .replaceAll("%item_order%", target.getDisplayName())
                 .replaceAll("%price%", format(price)));
     }
 
-    public static String sellOne(Player target, int price) {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("sell_one")
+    public String sellOne(Player target, int price) {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("sell_one")
                 .replaceAll("%item_order%", target.getDisplayName())
                 .replaceAll("%price%", format(price)));
     }
 
-    public static String settingBuyPrice() {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("setting_buy_price"));
+    public String settingBuyPrice() {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("setting_buy_price"));
     }
 
-    public static String settingSellPrice() {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("setting_sell_price"));
+    public String settingSellPrice() {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("setting_sell_price"));
     }
 
-    public static String createCashShop(String name) {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("create_cashshop")
-                .replaceAll("%cashshop_name%", name));
+    public String createmileageShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("create_mileageshop")
+                .replaceAll("%mileageshop_name%", name));
     }
 
-    public static String recyclebinCashShop(String name) {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("recyclebin_cashshop")
-                .replaceAll("%cashshop_name%", name));
+    public String recyclebinmileageShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("recyclebin_mileageshop")
+                .replaceAll("%mileageshop_name%", name));
     }
 
-    public static String deleteCashShop(String name) {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("delete_cashshop")
-                .replaceAll("%cashshop_name%", name));
+    public String deletemileageShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("delete_mileageshop")
+                .replaceAll("%mileageshop_name%", name));
     }
 
-    public static String setGuiSizeCashShop(String name, int size) {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("set_gui_size")
-                .replaceAll("%cashshop_name%", name)
-                .replaceAll("%cashshop_gui_size%", String.valueOf(size)));
+    public String setGuiSizemileageShop(String name, int size) {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("set_gui_size")
+                .replaceAll("%mileageshop_name%", name)
+                .replaceAll("%mileageshop_gui_size%", String.valueOf(size)));
     }
 
 
-    public static String setNameCashShop(String original, String newName) {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("set_gui_name")
-                .replaceAll("%cashshop_name%", original)
-                .replaceAll("%set_cashshop_name%", newName));
+    public String setNamemileageShop(String original, String newName) {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("set_gui_name")
+                .replaceAll("%mileageshop_name%", original)
+                .replaceAll("%set_mileageshop_name%", newName));
     }
 
-    public static String setBuyPriceCashShop(int price) {
-        return ChatColor.translateAlternateColorCodes('&', getCashShopMessage("set_buy_price")
+    public List<String> main() {
+        return translate.msgCollapse(SkyExcelNetworkMileageMain.message.getConfig().getStringList("other_message.command_mileageshop"));
+    }
+
+    public String setBuyPricemileageShop(int price) {
+        return ChatColor.translateAlternateColorCodes('&', getmileageShopMessage("set_buy_price")
                 .replaceAll("%price%", format(price)));
     }
 
-    public static String overFlow() {
+    public String overFlow() {
         return ChatColor.translateAlternateColorCodes('&', getErrorMessage("overflow"));
     }
 
 
-    public static String canNotBuy() {
+    public String canNotBuy() {
         return ChatColor.translateAlternateColorCodes('&', getErrorMessage("cannot_buy"));
     }
 
-    public static String canNotSell() {
+    public String canNotSell() {
         return ChatColor.translateAlternateColorCodes('&', getErrorMessage("cannot_sell"));
     }
 
-    public static String inventoryFull() {
+    public String inventoryFull() {
         return ChatColor.translateAlternateColorCodes('&', getErrorMessage("inventoryFull"));
     }
 
-    public static String nonePlayer() {
+    public String nonePlayer() {
         return ChatColor.translateAlternateColorCodes('&', getErrorMessage("command_none_player"));
     }
 
-    public static String impossibleItemBuy() {
+    public String impossibleItemBuy() {
         return ChatColor.translateAlternateColorCodes('&', getErrorMessage("impossibleItem_buy"));
     }
 
-    public static String impossibleItemSell() {
+    public String impossibleItemSell() {
         return ChatColor.translateAlternateColorCodes('&', getErrorMessage("impossibleItem_sell"));
     }
 
 
-    public static String noneCash() {
-        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("command_none_cash"));
+    public String nonemileage() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("command_none_mileage"));
     }
 
-    private static String getCashMessage(String path) {
+    private String getmileageMessage(String path) {
 
         return SkyExcelNetworkMileageMain.message.getString("mileage_message." + path);
     }
 
-    private static String getCashShopMessage(String path) {
+    private String getmileageShopMessage(String path) {
 
-        return SkyExcelNetworkMileageMain.message.getString("milesageshop_message." + path);
+        return SkyExcelNetworkMileageMain.message.getString("mileageshop_message." + path);
     }
 
-    private static String getErrorMessage(String path) {
+    private String getErrorMessage(String path) {
 
         return SkyExcelNetworkMileageMain.message.getString("error_message." + path);
     }
 
-    private static String getOtherMessage(String path) {
+    private String getOtherMessage(String path) {
 
         return SkyExcelNetworkMileageMain.message.getString("other_message." + path);
     }
 
 
-    private static String format(long amount) {
+    private String format(long amount) {
         DecimalFormat decFormat = new DecimalFormat("###,###");
 
         return decFormat.format(amount);
