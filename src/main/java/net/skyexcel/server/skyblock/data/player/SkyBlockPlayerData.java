@@ -14,7 +14,6 @@ public class SkyBlockPlayerData {
         this.player = player;
         config = new Config("data/SkyBlock/Player/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
-
     }
 
     public void setName(String name) {
