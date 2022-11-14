@@ -1,6 +1,7 @@
 package net.skyexcel.server.mileage.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
+import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
 import net.skyexcel.server.mileage.util.Translate;
 import net.skyexcel.server.trade.util.Items;
@@ -14,9 +15,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import skyexcel.data.file.Config;
 import skyexcel.data.file.GUI;
 import skyexcel.data.file.util.Stockable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -37,6 +40,10 @@ public class MileageShop extends Stockable {
 
     private Translate translate;
 
+    public MileageShop(){
+        super("","",SkyExcelNetworkMileageMain.plugin);
+
+    }
     public MileageShop(String name) {
         super("shop/mileage", name, SkyExcelNetworkMileageMain.plugin);
         this.name = name;
@@ -98,6 +105,41 @@ public class MileageShop extends Stockable {
                 item.setItemMeta(meta);
             }
         }
+    }
+
+    public void list(Player player, int index) {
+        Config list = new Config("shop/mileage/");
+        list.setPlugin(SkyExcelNetworkCashShopMain.plugin);
+        List<String> result = message(player, list.fileListName(), index);
+
+
+        for (String text : result) {
+            player.sendMessage(text);
+        }
+    }
+
+    private List<String> message(Player player, List<String> help, int index) {
+        List<String> result = new ArrayList<>();
+
+
+        try {
+            player.sendMessage("§8■ §7══════°• §8[ §6마일리지상점 §f목록 §8] §7•°══════ §8■");
+            player.sendMessage("");
+
+            for (int i = 10 * (index - 1); i < 10 * (index); i++) {
+                String line = help.get(i);
+                result.add(line);
+
+                if (help.get(i) == null) {
+                    player.sendMessage("强 해당 페이지는 존재하지 않습니다.");
+                    break;
+                }
+
+            }
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+        return result;
     }
 
     private List<String> getLore(LoreType type, List<String> lore, long buy, long sell) {

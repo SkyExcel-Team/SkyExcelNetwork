@@ -1,6 +1,7 @@
 package net.skyexcel.server.seconomy.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
+import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
 import net.skyexcel.server.seconomy.util.Translate;
 import net.skyexcel.server.trade.util.Items;
@@ -14,9 +15,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import skyexcel.data.file.Config;
 import skyexcel.data.file.GUI;
 import skyexcel.data.file.util.Stockable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -37,6 +40,10 @@ public class SEconomyShop extends Stockable {
 
     private Translate translate;
 
+    public SEconomyShop() {
+        super("", "", SkyExcelNetworkSEconomyMain.plugin);
+
+    }
     public SEconomyShop(String name) {
         super("shop/money", name, SkyExcelNetworkSEconomyMain.plugin);
         this.name = name;
@@ -170,6 +177,8 @@ public class SEconomyShop extends Stockable {
         }
 
     }
+
+
 
     public void purchase(Player player, int slot, int amount) {
         Inventory inv = getInv();
@@ -377,6 +386,40 @@ public class SEconomyShop extends Stockable {
         return type;
     }
 
+    public void list(Player player, int index) {
+        Config list = new Config("shop/money/");
+        list.setPlugin(SkyExcelNetworkCashShopMain.plugin);
+        List<String> result = message(player, list.fileListName(), index);
+
+
+        for (String text : result) {
+            player.sendMessage(text);
+        }
+    }
+
+    private List<String> message(Player player, List<String> help, int index) {
+        List<String> result = new ArrayList<>();
+
+
+        try {
+            player.sendMessage("§8■ §7══════°• §8[ §6캐시상점 §f목록 §8] §7•°══════ §8■");
+            player.sendMessage("");
+
+            for (int i = 10 * (index - 1); i < 10 * (index); i++) {
+                String line = help.get(i);
+                result.add(line);
+
+                if (help.get(i) == null) {
+                    player.sendMessage("强 해당 페이지는 존재하지 않습니다.");
+                    break;
+                }
+
+            }
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+        return result;
+    }
 
     public enum LoreType {
         CANBUY, CANSELL, CANTBOTH, CANBOTH

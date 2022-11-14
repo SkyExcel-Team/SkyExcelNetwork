@@ -287,28 +287,7 @@ public class IslandCmd implements CommandExecutor {
                         if (args.length <= 30) {
                             String name = Translate.collapse(args, 1);
                             SkyBlock data = new SkyBlock(player, name);
-                            if (!data.equalFileName(name)) {
-
-                                try {
-                                    data.create(player);
-                                } catch (InvocationTargetException e) {
-                                    throw new RuntimeException(e);
-                                }
-
-                                Loading loading = new Loading(player, 5);
-
-                                loading.runTaskTimer(SkyExcelNetworkSkyBlockMain.plugin, 0, 10);
-
-                                loading.end(end -> {
-                                    if (data.getLocation() != null)
-                                        data.spawn(player, data.getLocation());
-                                });
-
-
-                                SkyBlockData.loading.put(player.getUniqueId(), loading);
-                            } else {
-                                player.sendMessage("强 이미 사용중인 섬 이름입니다!");
-                            }
+                            data.create(player);
                         } else {
                             player.sendMessage("强 섬 이름은 30글자 미만 이어야 합니다.");
                         }
@@ -579,14 +558,18 @@ public class IslandCmd implements CommandExecutor {
         List<String> result = new ArrayList<>();
 
 
-        for (int i = 10 * (index - 1); i < 10 * (index); i++) {
-            String line = help.get(i);
-            result.add(line);
+        try {
+            for (int i = 10 * (index - 1); i < 10 * (index); i++) {
+                String line = help.get(i);
+                result.add(line);
 
-            if (help.get(i) == null) {
-                player.sendMessage("强 해당 페이지는 존재하지 않습니다.");
-                break;
+                if (help.get(i) == null) {
+                    player.sendMessage("强 해당 페이지는 존재하지 않습니다.");
+                    break;
+                }
+
             }
+        } catch (IndexOutOfBoundsException e) {
 
         }
 

@@ -80,6 +80,16 @@ public class CashShopCmd implements CommandExecutor {
                             player.sendMessage("상점 이름을 입력해 주세요!");
                         }
                     }
+                    case "목록" -> {
+                        if (args.length > 1) {
+                            int index = Integer.parseInt(args[1]);
+                            CashShop cashShop = new CashShop();
+                            cashShop.list(player, index);
+                        } else {
+                            CashShop cashShop = new CashShop();
+                            cashShop.list(player, 1);
+                        }
+                    }
                 }
             }
         }

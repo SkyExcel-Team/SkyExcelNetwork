@@ -1,11 +1,13 @@
 package net.skyexcel.server.skyblock.event;
 
 
+import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.skyblock.data.event.SkyBlockCreateEvent;
 import net.skyexcel.server.skyblock.data.event.SkyBlockDeleteEvent;
 import net.skyexcel.server.skyblock.data.event.SkyBlockJoinEvent;
 import net.skyexcel.server.skyblock.data.event.SkyBlockQuickEvent;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
+import net.skyexcel.server.skyblock.data.island.SkyBlockRecord;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import skyexcel.data.file.Config;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,8 +42,29 @@ public class SkyBlockEvent implements Listener {
     public void onCreate(SkyBlockCreateEvent event) {
         Player player = event.getPlayer();
 
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', event.getName()) + "家 섬 생성에 성공 하였습니다!");
-        player.sendMessage("家 섬 채팅을 사용 하실 수 있습니다! ");
+        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+
+        SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
+
+        if (!equalFileName(event.getName())) {
+            if (!playerData.hasIsland()) {
+                if (!playerData.isOwner()) {
+
+                    if (skyBlock.teleportSkyBlock(player)) {
+                        SkyBlockRecord record = new SkyBlockRecord(skyBlock.getName());
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', event.getName()) + "家 섬 생성에 성공 하였습니다!");
+                        player.sendMessage("家 섬 채팅을 사용 하실 수 있습니다! ");
+                    }
+
+                }
+            } else {
+                player.sendMessage("당신은 이미 섬이 있습니다!");
+                event.setCancelled(true);
+            }
+        } else {
+            player.sendMessage("이미 해당 섬 이름이 있습니다");
+        }
+
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -75,7 +99,6 @@ public class SkyBlockEvent implements Listener {
             }
         }
     }
-
 
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -135,5 +158,11 @@ public class SkyBlockEvent implements Listener {
             Player player = (Player) entity;
             event.setCancelled(true);
         }
+    }
+
+    private boolean equalFileName(String name) {
+        Config config = new Config("SkyBlock/");
+        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        return config.fileListName().contains(name);
     }
 }

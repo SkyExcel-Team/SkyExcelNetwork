@@ -21,7 +21,7 @@ public class SnowParticleScheduler {
     private JavaPlugin plugin;
     private Random random = new Random();
 
-    private final String world = "lobby";
+    private final String world = "SkyBlock";
     private final int centerX = -2;
     private final int centerY = 96;
     private final int centerZ = 70;

@@ -1,8 +1,10 @@
 package net.skyexcel.server.mileage.cmd;
 
 
+import net.skyexcel.server.cashshop.data.CashShop;
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
 import net.skyexcel.server.mileage.data.Mileage;
+import net.skyexcel.server.mileage.data.MileageShop;
 import net.skyexcel.server.mileage.data.StringData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -124,6 +126,7 @@ public class MileageCmd implements CommandExecutor {
                             player.sendMessage(ChatColor.RED + "당신은 관리자가 아닙니다.");
                         }
                     }
+
                 }
             }
         }

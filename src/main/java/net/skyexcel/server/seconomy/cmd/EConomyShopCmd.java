@@ -77,6 +77,16 @@ public class EConomyShopCmd implements CommandExecutor {
                             player.sendMessage("상점 이름을 입력해 주세요!");
                         }
                     }
+                    case "목록" -> {
+                        if (args.length > 1) {
+                            int index = Integer.parseInt(args[1]);
+                            SEconomyShop sEconomyShop = new SEconomyShop();
+                            sEconomyShop.list(player, index);
+                        } else {
+                            SEconomyShop sEconomyShop = new SEconomyShop();
+                            sEconomyShop.list(player, 1);
+                        }
+                    }
                 }
             }
         }

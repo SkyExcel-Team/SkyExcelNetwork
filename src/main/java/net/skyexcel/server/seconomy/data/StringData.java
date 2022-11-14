@@ -16,24 +16,24 @@ public class StringData {
         translate = new Translate();
     }
 
-    public String mymoneny(Player player) {
-        SEConomy moneny = new SEConomy(player);
+    public String myMoney(Player player) {
+        SEConomy money = new SEConomy(player);
 
-        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("my_moneny")
-                .replaceAll("%moneny%", format(moneny.getLong())));
+        return ChatColor.translateAlternateColorCodes('&', getmoneyMessage("my_money")
+                .replaceAll("%money%", format(money.getLong())));
     }
 
-    public String checkPlayermoneny(Player target) {
-        SEConomy moneny = new SEConomy(target);
-        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("check_player_moneny")
-                .replaceAll("%moneny%", format(moneny.getLong()))
+    public String checkPlayerMoney(Player target) {
+        SEConomy money = new SEConomy(target);
+        return ChatColor.translateAlternateColorCodes('&', getmoneyMessage("check_player_money")
+                .replaceAll("%money%", format(money.getLong()))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
-    public String sendmoneny(Player target, long amount) {
+    public String sendMoney(Player target, long amount) {
 
-        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("send_moneny")
-                .replaceAll("%moneny%", format(amount))
+        return ChatColor.translateAlternateColorCodes('&', getmoneyMessage("send_money")
+                .replaceAll("%money%", format(amount))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
@@ -104,86 +104,86 @@ public class StringData {
                 , ""));
     }
 
-    public String sendmonenyAllPlayer(long amount) {
+    public String sendmoneyAllPlayer(long amount) {
 
-        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("send_moneny_all_player")
-                .replaceAll("%moneny%", format(amount)));
+        return ChatColor.translateAlternateColorCodes('&', getmoneyMessage("send_money_all_player")
+                .replaceAll("%money%", format(amount)));
     }
 
-    public String removemoneny(Player target, long amount) {
+    public String removemoney(Player target, long amount) {
 
-        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("remove_moneny")
-                .replaceAll("%moneny%", format(amount))
+        return ChatColor.translateAlternateColorCodes('&', getmoneyMessage("remove_money")
+                .replaceAll("%money%", format(amount))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
-    public String setmoneny(Player target, long amount) {
+    public String setmoney(Player target, long amount) {
 
-        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("set_moneny")
-                .replaceAll("%moneny%", format(amount))
+        return ChatColor.translateAlternateColorCodes('&', getmoneyMessage("set_money")
+                .replaceAll("%money%", format(amount))
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
-    public String resetmoneny(Player target) {
+    public String resetmoney(Player target) {
 
-        return ChatColor.translateAlternateColorCodes('&', getmonenyMessage("reset_moneny")
+        return ChatColor.translateAlternateColorCodes('&', getmoneyMessage("reset_money")
                 .replaceAll("%player%", target.getDisplayName()));
     }
 
     public String buyOne(Player target, int price) {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("buy_one")
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("buy_one")
                 .replaceAll("%item_order%", target.getDisplayName())
                 .replaceAll("%price%", format(price)));
     }
 
     public String sellOne(Player target, int price) {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("sell_one")
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("sell_one")
                 .replaceAll("%item_order%", target.getDisplayName())
                 .replaceAll("%price%", format(price)));
     }
 
     public String settingBuyPrice() {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("setting_buy_price"));
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("setting_buy_price"));
     }
 
     public String settingSellPrice() {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("setting_sell_price"));
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("setting_sell_price"));
     }
 
-    public String createmonenyShop(String name) {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("create_monenyshop")
-                .replaceAll("%monenyshop_name%", name));
+    public String createmoneyShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("create_moneyshop")
+                .replaceAll("%moneyshop_name%", name));
     }
 
-    public String recyclebinmonenyShop(String name) {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("recyclebin_monenyshop")
-                .replaceAll("%monenyshop_name%", name));
+    public String recyclebinmoneyShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("recyclebin_moneyshop")
+                .replaceAll("%moneyshop_name%", name));
     }
 
-    public String deletemonenyShop(String name) {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("delete_monenyshop")
-                .replaceAll("%monenyshop_name%", name));
+    public String deletemoneyShop(String name) {
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("delete_moneyshop")
+                .replaceAll("%moneyshop_name%", name));
     }
 
-    public String setGuiSizemonenyShop(String name, int size) {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("set_gui_size")
-                .replaceAll("%monenyshop_name%", name)
-                .replaceAll("%monenyshop_gui_size%", String.valueOf(size)));
+    public String setGuiSizemoneyShop(String name, int size) {
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("set_gui_size")
+                .replaceAll("%moneyshop_name%", name)
+                .replaceAll("%moneyshop_gui_size%", String.valueOf(size)));
     }
 
 
-    public String setNamemonenyShop(String original, String newName) {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("set_gui_name")
-                .replaceAll("%monenyshop_name%", original)
-                .replaceAll("%set_monenyshop_name%", newName));
+    public String setNamemoneyShop(String original, String newName) {
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("set_gui_name")
+                .replaceAll("%moneyshop_name%", original)
+                .replaceAll("%set_moneyshop_name%", newName));
     }
 
     public List<String> main() {
-        return translate.msgCollapse(SkyExcelNetworkSEconomyMain.message.getConfig().getStringList("other_message.command_monenyshop"));
+        return translate.msgCollapse(SkyExcelNetworkSEconomyMain.message.getConfig().getStringList("other_message.command_moneyshop"));
     }
 
-    public String setBuyPricemonenyShop(int price) {
-        return ChatColor.translateAlternateColorCodes('&', getmonenyShopMessage("set_buy_price")
+    public String setBuyPricemoneyShop(int price) {
+        return ChatColor.translateAlternateColorCodes('&', getmoneyShopMessage("set_buy_price")
                 .replaceAll("%price%", format(price)));
     }
 
@@ -217,18 +217,18 @@ public class StringData {
     }
 
 
-    public String nonemoneny() {
-        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("command_none_moneny"));
+    public String nonemoney() {
+        return ChatColor.translateAlternateColorCodes('&', getErrorMessage("command_none_money"));
     }
 
-    private String getmonenyMessage(String path) {
+    private String getmoneyMessage(String path) {
 
-        return SkyExcelNetworkSEconomyMain.message.getString("moneny_message." + path);
+        return SkyExcelNetworkSEconomyMain.message.getString("money_message." + path);
     }
 
-    private String getmonenyShopMessage(String path) {
+    private String getmoneyShopMessage(String path) {
 
-        return SkyExcelNetworkSEconomyMain.message.getString("monenyshop_message." + path);
+        return SkyExcelNetworkSEconomyMain.message.getString("moneyshop_message." + path);
     }
 
     private String getErrorMessage(String path) {

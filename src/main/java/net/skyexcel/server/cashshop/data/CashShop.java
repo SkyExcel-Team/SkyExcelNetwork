@@ -3,6 +3,7 @@ package net.skyexcel.server.cashshop.data;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.cashshop.util.Translate;
+import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import skyexcel.data.file.Config;
 import skyexcel.data.file.GUI;
 import skyexcel.data.file.util.Stockable;
 
@@ -37,10 +39,21 @@ public class CashShop extends Stockable {
 
     private Translate translate;
 
+    public CashShop() {
+        super("shop/cash", "name", SkyExcelNetworkCashShopMain.plugin);
+
+    }
+
     public CashShop(String name) {
         super("shop/cash", name, SkyExcelNetworkCashShopMain.plugin);
         this.name = name;
         translate = new Translate();
+    }
+
+
+    @Override
+    public void create(Player player) {
+        super.create(player);
     }
 
     public void editGUI(Player player) {
@@ -53,6 +66,46 @@ public class CashShop extends Stockable {
     @Override
     public void open(Player player) {
         super.open(player);
+    }
+
+    public void list(Player player, int index) {
+        Config list = new Config("shop/cash/");
+        list.setPlugin(SkyExcelNetworkCashShopMain.plugin);
+        List<String> result = message(player, list.fileListName(), index);
+
+
+        for (String text : result) {
+            player.sendMessage(text);
+        }
+    }
+
+    private List<String> message(Player player, List<String> help, int index) {
+        List<String> result = new ArrayList<>();
+
+
+        try {
+            player.sendMessage("§8■ §7══════°• §8[ §6캐시상점 §f목록 §8] §7•°══════ §8■");
+            player.sendMessage("");
+
+            for (int i = 10 * (index - 1); i < 10 * (index); i++) {
+                String line = help.get(i);
+                result.add(line);
+
+                if (help.get(i) == null) {
+                    player.sendMessage("强 해당 페이지는 존재하지 않습니다.");
+                    break;
+                }
+
+            }
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+        return result;
+    }
+    public boolean equalFileName(String name) {
+        Config config = new Config("SkyBlock/");
+        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        return config.fileListName().contains(name);
     }
 
     @Override

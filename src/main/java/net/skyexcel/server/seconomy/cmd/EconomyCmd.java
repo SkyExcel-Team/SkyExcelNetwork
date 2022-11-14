@@ -1,8 +1,10 @@
 package net.skyexcel.server.seconomy.cmd;
 
 
+import net.skyexcel.server.cashshop.data.CashShop;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
 import net.skyexcel.server.seconomy.data.SEConomy;
+import net.skyexcel.server.seconomy.data.SEconomyShop;
 import net.skyexcel.server.seconomy.data.StringData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,7 +27,7 @@ public class EconomyCmd implements CommandExecutor {
 
         if (sender instanceof Player player) {
             if (args.length == 0) {
-                player.sendMessage(stringData.mymoneny(player));
+                player.sendMessage(stringData.myMoney(player));
             } else {
                 switch (args[0]) {
                     case "지급" -> {
@@ -38,7 +40,7 @@ public class EconomyCmd implements CommandExecutor {
                                 SEConomy cash = new SEConomy(Objects.requireNonNull(target.getPlayer()));
                                 cash.deposit(amount);
 
-                                player.sendMessage(stringData.sendmoneny(target.getPlayer(), amount));
+                                player.sendMessage(stringData.sendMoney(target.getPlayer(), amount));
                             } catch (NumberFormatException e) {
 
                             }
@@ -57,7 +59,7 @@ public class EconomyCmd implements CommandExecutor {
                                     cash.deposit(amount);
 
                                 });
-                                player.sendMessage(stringData.sendmonenyAllPlayer(amount));
+                                player.sendMessage(stringData.sendmoneyAllPlayer(amount));
                             } catch (NumberFormatException e) {
 
                             }
@@ -75,7 +77,7 @@ public class EconomyCmd implements CommandExecutor {
                                 SEConomy cash = new SEConomy(Objects.requireNonNull(target.getPlayer()));
                                 cash.withdraw(amount);
 
-                                player.sendMessage(stringData.removemoneny(target.getPlayer(), amount));
+                                player.sendMessage(stringData.removemoney(target.getPlayer(), amount));
                             } catch (NumberFormatException e) {
 
                             }
@@ -93,7 +95,7 @@ public class EconomyCmd implements CommandExecutor {
                                 SEConomy cash = new SEConomy(Objects.requireNonNull(target.getPlayer()));
                                 cash.setAmount(amount);
 
-                                player.sendMessage(stringData.setmoneny(target.getPlayer(), amount));
+                                player.sendMessage(stringData.setmoney(target.getPlayer(), amount));
                             } catch (NumberFormatException e) {
 
                             }
@@ -104,14 +106,14 @@ public class EconomyCmd implements CommandExecutor {
                     case "확인" -> {
                         OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-                        player.sendMessage(stringData.checkPlayermoneny(target.getPlayer()));
+                        player.sendMessage(stringData.checkPlayerMoney(target.getPlayer()));
                     }
                     case "초기화" -> {
                         if (player.isOp()) {
                             OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
                             SEConomy cash = new SEConomy(Objects.requireNonNull(target.getPlayer()));
                             cash.setAmount(0);
-                            player.sendMessage(stringData.resetmoneny(target.getPlayer()));
+                            player.sendMessage(stringData.resetmoney(target.getPlayer()));
                         } else {
                             player.sendMessage(ChatColor.RED + "당신은 관리자가 아닙니다.");
                         }
@@ -124,6 +126,7 @@ public class EconomyCmd implements CommandExecutor {
                             player.sendMessage(ChatColor.RED + "당신은 관리자가 아닙니다.");
                         }
                     }
+
                 }
             }
         }

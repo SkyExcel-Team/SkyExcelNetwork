@@ -77,6 +77,16 @@ public class MileageShopCmd implements CommandExecutor {
                             player.sendMessage("상점 이름을 입력해 주세요!");
                         }
                     }
+                    case "목록" -> {
+                        if (args.length > 1) {
+                            int index = Integer.parseInt(args[1]);
+                            MileageShop cashShop = new MileageShop();
+                            cashShop.list(player, index);
+                        } else {
+                            MileageShop cashShop = new MileageShop();
+                            cashShop.list(player, 1);
+                        }
+                    }
                 }
             }
         }
