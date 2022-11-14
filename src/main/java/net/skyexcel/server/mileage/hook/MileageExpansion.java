@@ -1,16 +1,12 @@
 package net.skyexcel.server.mileage.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
-
 import net.skyexcel.server.mileage.data.Mileage;
 import net.skyexcel.server.mileage.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class MileageExpansion extends PlaceholderExpansion {
     private JavaPlugin plugin; // The instance is created in the constructor and won't be modified, so it can be final
@@ -21,7 +17,7 @@ public class MileageExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "Mileage";
+        return "Cash";
     }
 
     @Override
@@ -42,7 +38,7 @@ public class MileageExpansion extends PlaceholderExpansion {
 
     @Override
     public String getRequiredPlugin() {
-        return "SMileage";
+        return "CashShop";
     }
 
     @Override
@@ -52,12 +48,12 @@ public class MileageExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-        if (params.equalsIgnoreCase("mileage_fixed")) {
-            Mileage economy = new Mileage(player);
-            return Translate.decal(economy.getLong());
-        } else if (params.equalsIgnoreCase("mileage")) {
-            Mileage economy = new Mileage(player);
-            return String.valueOf(economy.getLong());
+        Mileage cash = new Mileage(player);
+        Translate translate = new Translate();
+        if (params.equalsIgnoreCase("Cash")) {
+            return String.valueOf(cash.getLong());
+        } else if (params.equalsIgnoreCase("Cash_fixed")) {
+            return translate.decal(cash.getLong());
         }
         return null; // Placeholder is unknown by the expansion
     }
