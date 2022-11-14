@@ -48,7 +48,7 @@ public class SkyExcelNetworkMileageMain {
 
         new MileageExpansion(plugin).register();
 
-        message = new Config("Mileage-message");
+        message = new Config("Mileage-Message");
         message.setPlugin(plugin);
         message.loadDefaultPluginConfig();
     }

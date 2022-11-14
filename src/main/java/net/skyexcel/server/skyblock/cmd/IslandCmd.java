@@ -5,7 +5,8 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.skyexcel.server.menu.menu.Menu;
-import net.skyexcel.server.seconomy.data.economy.SEconomy;
+
+import net.skyexcel.server.seconomy.data.SEConomy;
 import net.skyexcel.server.skyblock.data.SkyBlockData;
 import net.skyexcel.server.skyblock.data.StringData;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
@@ -345,13 +346,13 @@ public class IslandCmd implements CommandExecutor {
                             SkyBlock data = new SkyBlock(playerData.getIsland());
                             SkyBlockVault vault;
                             int amount;
-                            SEconomy money;
+                            SEConomy money;
                             switch (args[1]) {
                                 case "입금" -> {
                                     data = new SkyBlock(player, playerData.getIsland());
                                     vault = data.getVault();
                                     amount = Integer.parseInt(args[2]);
-                                    money = new SEconomy(player);
+                                    money = new SEConomy(player);
 
 
                                     if (vault.deposit(amount) && money.withdraw(amount)) {
@@ -377,7 +378,7 @@ public class IslandCmd implements CommandExecutor {
                                     vault = data.getVault();
                                     amount = Integer.parseInt(args[2]);
                                     vault.setPlayer(player);
-                                    money = new SEconomy(player);
+                                    money = new SEConomy(player);
                                     if (vault.withdraw(amount)) {
                                         money.deposit(amount);
                                         SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());

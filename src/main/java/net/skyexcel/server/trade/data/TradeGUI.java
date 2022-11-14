@@ -1,6 +1,7 @@
 package net.skyexcel.server.trade.data;
 
-import net.skyexcel.server.seconomy.InventoryUpdate;
+
+import net.skyexcel.server.packet.Inventory.InventoryUpdate;
 import net.skyexcel.server.trade.SkyExcelNetworkTradeMain;
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;

@@ -13,7 +13,8 @@ import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
 import net.skyexcel.server.playerprofile.SkyExcelNetworkPlayerProfile;
 import net.skyexcel.server.playtime.SkyExcelNetworkPlayTimeMain;
-import net.skyexcel.server.seconomy.SkyExcelNetworkSEConomyMain;
+
+import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.snowy.SkyExcelSnowyMain;
 import net.skyexcel.server.trade.SkyExcelNetworkTradeMain;
@@ -46,7 +47,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetworkMileageMain(plugin);
         new SkyExcelNetworkPlayerProfile(plugin);
         new SkyExcelNetworkPlayTimeMain(plugin);
-        new SkyExcelNetworkSEConomyMain(plugin);
+        new SkyExcelNetworkSEconomyMain(plugin);
         new SkyExcelNetworkSkyBlockMain(plugin);
         new SkyExcelSnowyMain(plugin);
         new SkyExcelNetworkTradeMain(plugin);
