@@ -16,9 +16,9 @@ public class SkyExcelSnowyMain {
     }
 
     public void onEnable() {
-        plugin.getCommand("눈").setExecutor(new SnowCommand());
+        Bukkit.getPluginCommand("눈").setExecutor(new SnowCommand());
         Bukkit.getPluginCommand("눈").setTabCompleter(new SnowCmdTab());
 
-        new SnowParticleScheduler(plugin);
+        SnowParticleScheduler.enable(plugin);
     }
 }
