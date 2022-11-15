@@ -49,7 +49,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetworkPlayTimeMain(plugin);
         new SkyExcelNetworkSEconomyMain(plugin);
         new SkyExcelNetworkSkyBlockMain(plugin);
-        new SkyExcelSnowyMain(plugin);
+//        new SkyExcelSnowyMain(plugin);
         new SkyExcelNetworkTradeMain(plugin);
         new SkyExcelNetWorkWarp(plugin);
         new SkyExcelNetworkTutorialMain(plugin);

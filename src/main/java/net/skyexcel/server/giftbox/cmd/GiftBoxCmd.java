@@ -17,7 +17,7 @@ public class GiftBoxCmd implements CommandExecutor {
 
             if (args.length > 1) {
                 if ("test".equals(args[0])) {
-                    giftBox.save();
+//                    giftBox.save();
                 } else  if ("open".equals(args[0])) {
 
                     giftBox.next(player);
