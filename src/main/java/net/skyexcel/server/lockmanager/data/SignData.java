@@ -26,84 +26,13 @@ public class SignData {
 
         this.config = new Config("data/sign/sign");
         this.config.setPlugin(SkyExcelNetworkLockManagerMain.getPlugin());
-    }
-
-    public boolean removeSign(Player player) {
-        if (player.isOp()) {
-
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
-     * 데이터 저장 방식
-     * rf
-     *
-     * @param player
-     */
-    public void addSign(Player player, Location sign, Location chest) {
-        addObject("sign.players", player.getUniqueId());
 
 
     }
 
-    public boolean openChest(Player player) {
-        if (player.isOp()) {
-            return true;
-        }
-        return false;
-    }
 
-    public void addObject(String path, Object obj) {
-        if (config.getConfig().get(path) == null) {
-            List<Object> uuid = new ArrayList<>();
-            uuid.add(obj);
-            config.getConfig().set(path, uuid);
-            config.saveConfig();
-        } else {
-            List<Object> uuid = (List<Object>) config.getConfig().getList(path);
-            uuid.add(obj);
-            config.getConfig().set(path, uuid);
-            config.saveConfig();
-        }
-    }
-
-    /*
-     * <p>name</p>
-     * <p>name</p>
-     * <p>name</p>
-     * <p>name</p>
-     * 이미 설치한
-     *
-     *
-     * @param player 표지판을 설치한 플레이어
-     * @param block 설치한 블록이 표지판인지 체크.
-     */
-    public void edit(Player player, Block block) {
-
-
-//
-//        String oneLine = (sign.getLine(0) != null ? sign.getLine(0) : "");
-//        String twoLine = (sign.getLine(1) != null ? sign.getLine(1) : "");
-//        String threeLine = (sign.getLine(2) != null ? sign.getLine(2) : "");
-//        String fourLIne = (sign.getLine(3) != null ? sign.getLine(3) : "");
-        signGUI(player, Arrays.asList("oneLine", "twoLine" ));
+    public void addPlayer(){
 
     }
 
-    private void signGUI(Player target, List<String> lore) {
-        SignEdit edit = new SignEdit(SkyExcelNetworkLockManagerMain.getPlugin());
-        SignEdit.Menu menu = edit.newMenu(List.of())
-                .reopenIfFail(true)
-                .response((player, strings) -> {
-                    if (!strings[3].equalsIgnoreCase("sign")) {
-                        player.sendMessage("Wrong!");
-                        return false;
-                    }
-                    return true;
-                });
-        menu.open(target);
-    }
 }

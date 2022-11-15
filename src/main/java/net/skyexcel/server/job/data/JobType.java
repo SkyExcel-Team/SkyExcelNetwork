@@ -1,9 +1,7 @@
 package net.skyexcel.server.job.data;
 
 public enum JobType {
-    MINE("광부"), FISH("낚시꾼"), FARM("농부"), NULL("NULL");
-
-
+    FARM("농부"),FISHERMAN("낚시꾼"),MINEWORKER("광부");
     private String name;
 
     JobType(String name) {

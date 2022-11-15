@@ -383,6 +383,8 @@ public class IslandCmd implements CommandExecutor {
                                 }
                             }
 
+                        } else{
+                            player.sendMessage("强 소속되어있는 섬이 없어 옵션 설정이 불가능합니다! ");
                         }
                     }
                     case "디스코드" -> {
@@ -493,11 +495,10 @@ public class IslandCmd implements CommandExecutor {
                         data.reset(player);
                     }
 
-                    case "방문객"->{
+                    case "방문객" -> {
 
                         PageVisitor visitor = new PageVisitor("방문객");
                         visitor.update(player);
-
 
 
                     }
@@ -505,85 +506,89 @@ public class IslandCmd implements CommandExecutor {
                         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
                         SkyBlock data = new SkyBlock(playerData.getIsland());
 
-                        switch (args[1]) {
-                            case "밴블록":
-                                if (args.length > 2) {
-                                    switch (args[2]) {
-                                        case "알바" -> {
-                                            MaterialPagePartTime partTime = new MaterialPagePartTime("알바 밴블록");
-                                            partTime.update(player);
-                                            SkyBlockData.partTimePage.put(player.getUniqueId(), partTime);
-                                            player.openInventory(partTime.getInv());
+                        if (playerData.hasIsland()) {
+                            switch (args[1]) {
+                                case "밴블록":
+                                    if (args.length > 2) {
+                                        switch (args[2]) {
+                                            case "알바" -> {
+                                                MaterialPagePartTime partTime = new MaterialPagePartTime("알바 밴블록");
+                                                partTime.update(player);
+                                                SkyBlockData.partTimePage.put(player.getUniqueId(), partTime);
+                                                player.openInventory(partTime.getInv());
+                                            }
+                                            case "섬원" -> {
+                                                MaterialPageMember member = new MaterialPageMember("섬원 밴블록");
+                                                member.update(player);
+                                                player.openInventory(member.getInv());
+                                                SkyBlockData.memberPage.put(player.getUniqueId(), member);
+                                            }
                                         }
-                                        case "섬원" -> {
-                                            MaterialPageMember member = new MaterialPageMember("섬원 밴블록");
-                                            member.update(player);
-                                            player.openInventory(member.getInv());
-                                            SkyBlockData.memberPage.put(player.getUniqueId(), member);
-                                        }
+                                    } else {
+                                        player.sendMessage("밴블록 타겟을 선택 해 주세요!");
                                     }
-                                } else {
-                                    player.sendMessage("밴블록 타겟을 선택 해 주세요!");
-                                }
-                                break;
-                            case "전투":
-                                if (args.length > 2) {
-                                    switch (args[2]) {
-                                        case "활성화" -> {
-                                            data.setPvp(true);
-                                            player.sendMessage("§a● §f전투 활성화");
+                                    break;
+                                case "전투":
+                                    if (args.length > 2) {
+                                        switch (args[2]) {
+                                            case "활성화" -> {
+                                                data.setPvp(true);
+                                                player.sendMessage("§a● §f전투 활성화");
+                                            }
+                                            case "비활성화" -> {
+                                                data.setPvp(false);
+                                                player.sendMessage("§c● §f전투 비활성화");
+                                            }
                                         }
-                                        case "비활성화" -> {
-                                            data.setPvp(false);
-                                            player.sendMessage("§c● §f전투 비활성화");
-                                        }
+                                    } else {
+                                        player.sendMessage("전투허용 옵션을 선택 해 주세요!");
                                     }
-                                } else {
-                                    player.sendMessage("전투허용 옵션을 선택 해 주세요!");
-                                }
 
-                                break;
-                            case "시간":
-                                if (args.length > 2) {
-                                    switch (args[2]) {
-                                        case "아침" -> {
-                                            data.time(player, 1000);
-                                            player.sendMessage("§a● §f§e아침§f으로 변경하였습니다.");
+                                    break;
+                                case "시간":
+                                    if (args.length > 2) {
+                                        switch (args[2]) {
+                                            case "아침" -> {
+                                                data.time(player, 1000);
+                                                player.sendMessage("§a● §f§e아침§f으로 변경하였습니다.");
+                                            }
+                                            case "점심" -> {
+                                                data.time(player, 6000);
+                                                player.sendMessage("§a● §f§e점심§f으로 변경하였습니다.");
+                                            }
+                                            case "저녁" -> {
+                                                data.time(player, 1);
+                                                player.sendMessage("§a● §7저녁§f으로 변경하였습니다.");
+                                            }
+                                            case "일몰" -> {
+                                                data.time(player, 12000);
+                                                player.sendMessage("§a● §f§6일몰§f 시간대로 변경하였습니다.");
+                                            }
+                                            case "일출" -> {
+                                                data.time(player, 23000);
+                                                player.sendMessage("§a● §f일출§f 시간대로변경하였습니다.");
+                                            }
+                                            case "밤" -> {
+                                                data.time(player, 18000);
+                                                player.sendMessage("§a● §0밤§f 시간대로변경하였습니다.");
+                                            }
                                         }
-                                        case "점심" -> {
-                                            data.time(player, 6000);
-                                            player.sendMessage("§a● §f§e점심§f으로 변경하였습니다.");
-                                        }
-                                        case "저녁" -> {
-                                            data.time(player, 1);
-                                            player.sendMessage("§a● §7저녁§f으로 변경하였습니다.");
-                                        }
-                                        case "일몰" -> {
-                                            data.time(player, 12000);
-                                            player.sendMessage("§a● §f§6일몰§f 시간대로 변경하였습니다.");
-                                        }
-                                        case "일출" -> {
-                                            data.time(player, 23000);
-                                            player.sendMessage("§a● §f일출§f 시간대로변경하였습니다.");
-                                        }
-                                        case "밤" -> {
-                                            data.time(player, 18000);
-                                            player.sendMessage("§a● §0밤§f 시간대로변경하였습니다.");
-                                        }
+                                    } else {
+                                        player.sendMessage("시간대를 입력 해 주세요!");
                                     }
-                                } else {
-                                    player.sendMessage("시간대를 입력 해 주세요!");
-                                }
-                                break;
-                            case "월드보더":
-                                data.setWorldBorderVisibilty(player);
-                                break;
+                                    break;
+                                case "월드보더":
+                                    data.setWorldBorderVisibilty(player);
+                                    break;
 
-                            case "열기":
-                                data.setOpen(player);
-                                break;
+                                case "열기":
+                                    data.setOpen(player);
+                                    break;
+                            }
                         }
                     }
+
+
                 }
             }
 
