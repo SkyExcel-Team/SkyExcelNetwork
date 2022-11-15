@@ -32,7 +32,6 @@ public class SEConomyListener implements Listener {
         if (cash.getLong() == -1) {
             cash.setAmount(0);
         }
-        Items.newItem(ChatColor.GREEN + "test", Material.CHAIN, 1, List.of("테스트", "로어", "임", "ㅎㅇ", "ㅎㅎ"), 1, player.getInventory());
     }
 
     @EventHandler

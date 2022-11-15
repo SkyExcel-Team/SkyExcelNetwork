@@ -14,6 +14,7 @@ import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 
 import net.skyexcel.server.skyblock.data.player.SkyBlockRequest;
+import net.skyexcel.server.skyblock.ui.gui.PageVisitor;
 import net.skyexcel.server.skyblock.util.Translate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 
@@ -169,7 +170,7 @@ public class IslandCmd implements CommandExecutor {
                         }
                     }
                     case "초대" -> {
-                        SkyBlockRequest request = new SkyBlockRequest();
+
                         Player target = Bukkit.getPlayer(args[1]);
 
                         assert target != null;
@@ -245,7 +246,7 @@ public class IslandCmd implements CommandExecutor {
                                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
                                 if (skyBlock.removeBlackList(target)) {
-
+                                    player.sendMessage(target.getName() + " 님을 밴해제 하였습니다");
                                 }
                             }
                         }
@@ -309,10 +310,12 @@ public class IslandCmd implements CommandExecutor {
                             SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
 
                             SkyBlock skyBlock = new SkyBlock(targetData.getIsland());
-                            skyBlock.teleportSkyBlock(player);
+                            skyBlock.visitSkyBlock(player);
 
 
                             player.sendMessage("架 §6" + target.getName() + "§f님의 섬을 방문 했습니다!");
+                        } else {
+                            player.sendMessage("방문할 섬 입력해~~~~~ 장애야 ㅉㅉ");
                         }
                     }
                     case "금고" -> {
@@ -320,61 +323,68 @@ public class IslandCmd implements CommandExecutor {
                         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
                         if (playerData.hasIsland()) {
-                            SkyBlock data = new SkyBlock(playerData.getIsland());
+                            SkyBlock data = new SkyBlock(player, playerData.getIsland());
                             SkyBlockVault vault;
                             int amount;
                             SEConomy money;
-                            switch (args[1]) {
-                                case "입금" -> {
-                                    data = new SkyBlock(player, playerData.getIsland());
-                                    vault = data.getVault();
-                                    amount = Integer.parseInt(args[2]);
-                                    money = new SEConomy(player);
+
+                            if (args.length > 1) {
+                                switch (args[1]) {
+                                    case "입금" -> {
+                                        data = new SkyBlock(player, playerData.getIsland());
+                                        vault = data.getVault();
+                                        amount = Integer.parseInt(args[2]);
+                                        money = new SEConomy(player);
 
 
-                                    if (vault.deposit(amount) && money.withdraw(amount)) {
-                                        SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+                                        if (vault.deposit(amount) && money.withdraw(amount)) {
+                                            SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                                        record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
+                                            record.record(player, amount, SkyBlockVaultRecord.Type.DEPOSIT);
 
-                                        player.sendMessage("架 섬에 §6" + format(amount) + "§f을 입금 하였습니다!");
+                                            player.sendMessage("架 섬에 §6" + format(amount) + "§f을 입금 하였습니다!");
 
-                                        List<String> members = data.getMembers();
-                                        for (String member : members) {
-                                            Player online = Bukkit.getPlayer(member);
-                                            online.getPlayer().sendMessage("家 " + player.getPlayer().getDisplayName() + "님이 섬 금고에 §6" + format(amount) + "을 입금 하였습니다!");
+                                            List<String> members = data.getMembers();
+                                            for (String member : members) {
+                                                Player online = Bukkit.getPlayer(member);
+                                                online.getPlayer().sendMessage("家 " + player.getPlayer().getDisplayName() + "님이 섬 금고에 §6" + format(amount) + "을 입금 하였습니다!");
+                                            }
+
+                                        } else {
+                                            player.sendMessage("强 금고에 §6입금§f을 §c실패§f하였습니다!");
                                         }
 
-                                    } else {
-                                        player.sendMessage("强 금고에 §6입금§f을 §c실패§f하였습니다!");
                                     }
+                                    case "출금" -> {
+                                        data = new SkyBlock(player, playerData.getIsland());
+                                        vault = data.getVault();
+                                        amount = Integer.parseInt(args[2]);
+                                        vault.setPlayer(player);
+                                        money = new SEConomy(player);
 
-                                }
-                                case "출금" -> {
-                                    data = new SkyBlock(player, playerData.getIsland());
-                                    vault = data.getVault();
-                                    amount = Integer.parseInt(args[2]);
-                                    vault.setPlayer(player);
-                                    money = new SEConomy(player);
-                                    if (vault.withdraw(amount)) {
-                                        money.deposit(amount);
-                                        SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
+                                        if (vault.withdraw(amount)) {
+                                            money.deposit(amount);
+                                            SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
 
-                                        record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
+                                            record.record(player, amount, SkyBlockVaultRecord.Type.WITHDRAW);
 
-                                        player.sendMessage("架 섬 금고에서 §6" + format(amount) + "§f을 출금 하였습니다!");
+                                            player.sendMessage("架 섬 금고에서 §6" + format(amount) + "§f을 출금 하였습니다!");
 
-                                        List<String> members = data.getMembers();
-                                        for (String member : members) {
-                                            Player online = Bukkit.getPlayer(member);
-                                            online.getPlayer().sendMessage("家 " + player.getPlayer().getDisplayName() + "님이 섬 금고에서 §6" + format(amount) + "을 출금 하였습니다!");
+                                            List<String> members = data.getMembers();
+                                            for (String member : members) {
+                                                Player online = Bukkit.getPlayer(member);
+                                                online.getPlayer().sendMessage("家 " + player.getPlayer().getDisplayName() + "님이 섬 금고에서 §6" + format(amount) + "을 출금 하였습니다!");
+                                            }
+                                        } else {
+                                            player.sendMessage("强 금고에서 §6출금§f을 §c실패§f하였습니다!");
                                         }
-                                    } else {
-                                        player.sendMessage("强 금고에서 §6출금§f을 §c실패§f하였습니다!");
                                     }
+                                    case "잠금" -> data.setVaultLock();
                                 }
-                                case "잠금" -> data.setVaultLock();
                             }
+
+                        } else{
+                            player.sendMessage("强 소속되어있는 섬이 없어 옵션 설정이 불가능합니다! ");
                         }
                     }
                     case "디스코드" -> {
@@ -478,72 +488,107 @@ public class IslandCmd implements CommandExecutor {
                                 data.removeAll();
                         }
                     }
+                    case "초기화" -> {
+                        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+                        SkyBlock data = new SkyBlock(playerData.getIsland());
+                        player.sendMessage("섬을 초기화 합니다");
+                        data.reset(player);
+                    }
+
+                    case "방문객" -> {
+
+                        PageVisitor visitor = new PageVisitor("방문객");
+                        visitor.update(player);
+
+
+                    }
                     case "옵션" -> {
                         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
                         SkyBlock data = new SkyBlock(playerData.getIsland());
 
-                        switch (args[1]) {
-                            case "밴블록":
-                                if (args.length > 2) {
-                                    switch (args[2]) {
-                                        case "알바" -> {
-                                            MaterialPagePartTime partTime = new MaterialPagePartTime("알바 밴블록");
-                                            partTime.update(player);
-                                            SkyBlockData.partTimePage.put(player.getUniqueId(), partTime);
-                                            player.openInventory(partTime.getInv());
+                        if (playerData.hasIsland()) {
+                            switch (args[1]) {
+                                case "밴블록":
+                                    if (args.length > 2) {
+                                        switch (args[2]) {
+                                            case "알바" -> {
+                                                MaterialPagePartTime partTime = new MaterialPagePartTime("알바 밴블록");
+                                                partTime.update(player);
+                                                SkyBlockData.partTimePage.put(player.getUniqueId(), partTime);
+                                                player.openInventory(partTime.getInv());
+                                            }
+                                            case "섬원" -> {
+                                                MaterialPageMember member = new MaterialPageMember("섬원 밴블록");
+                                                member.update(player);
+                                                player.openInventory(member.getInv());
+                                                SkyBlockData.memberPage.put(player.getUniqueId(), member);
+                                            }
                                         }
-                                        case "섬원" -> {
-                                            MaterialPageMember member = new MaterialPageMember("섬원 밴블록");
-                                            member.update(player);
-                                            player.openInventory(member.getInv());
-                                            SkyBlockData.memberPage.put(player.getUniqueId(), member);
-                                        }
+                                    } else {
+                                        player.sendMessage("밴블록 타겟을 선택 해 주세요!");
                                     }
-                                }
-                                break;
-                            case "pvp":
-
-
-                                break;
-                            case "시간":
-                                if (args.length > 2) {
-                                    switch (args[2]) {
-                                        case "아침" -> {
-                                            data.time(player, 1000);
-                                            player.sendMessage("§a● §f§e아침§f으로 변경하였습니다.");
+                                    break;
+                                case "전투":
+                                    if (args.length > 2) {
+                                        switch (args[2]) {
+                                            case "활성화" -> {
+                                                data.setPvp(true);
+                                                player.sendMessage("§a● §f전투 활성화");
+                                            }
+                                            case "비활성화" -> {
+                                                data.setPvp(false);
+                                                player.sendMessage("§c● §f전투 비활성화");
+                                            }
                                         }
-                                        case "점심" -> {
-                                            data.time(player, 6000);
-                                            player.sendMessage("§a● §f§e점심§f으로 변경하였습니다.");
-                                        }
-                                        case "저녁" -> {
-                                            data.time(player, 1);
-                                            player.sendMessage("§a● §7저녁§f으로 변경하였습니다.");
-                                        }
-                                        case "일몰" -> {
-                                            data.time(player, 12000);
-                                            player.sendMessage("§a● §f§6일몰§f 시간대로 변경하였습니다.");
-                                        }
-                                        case "일출" -> {
-                                            data.time(player, 23000);
-                                            player.sendMessage("§a● §f일출§f 시간대로변경하였습니다.");
-                                        }
-                                        case "밤" -> {
-                                            data.time(player, 18000);
-                                            player.sendMessage("§a● §0밤§f 시간대로변경하였습니다.");
-                                        }
+                                    } else {
+                                        player.sendMessage("전투허용 옵션을 선택 해 주세요!");
                                     }
-                                }
-                                break;
-                            case "월드보더":
-                                data.setWorldBorderVisibilty(player);
-                                break;
 
-                            case "열기":
-                                data.setOpen(player);
-                                break;
+                                    break;
+                                case "시간":
+                                    if (args.length > 2) {
+                                        switch (args[2]) {
+                                            case "아침" -> {
+                                                data.time(player, 1000);
+                                                player.sendMessage("§a● §f§e아침§f으로 변경하였습니다.");
+                                            }
+                                            case "점심" -> {
+                                                data.time(player, 6000);
+                                                player.sendMessage("§a● §f§e점심§f으로 변경하였습니다.");
+                                            }
+                                            case "저녁" -> {
+                                                data.time(player, 1);
+                                                player.sendMessage("§a● §7저녁§f으로 변경하였습니다.");
+                                            }
+                                            case "일몰" -> {
+                                                data.time(player, 12000);
+                                                player.sendMessage("§a● §f§6일몰§f 시간대로 변경하였습니다.");
+                                            }
+                                            case "일출" -> {
+                                                data.time(player, 23000);
+                                                player.sendMessage("§a● §f일출§f 시간대로변경하였습니다.");
+                                            }
+                                            case "밤" -> {
+                                                data.time(player, 18000);
+                                                player.sendMessage("§a● §0밤§f 시간대로변경하였습니다.");
+                                            }
+                                        }
+                                    } else {
+                                        player.sendMessage("시간대를 입력 해 주세요!");
+                                    }
+                                    break;
+                                case "월드보더":
+                                    data.setWorldBorderVisibilty(player);
+                                    break;
+
+                                case "열기":
+                                    data.setOpen(player);
+                                    break;
+                            }
                         }
                     }
+
+
                 }
             }
 

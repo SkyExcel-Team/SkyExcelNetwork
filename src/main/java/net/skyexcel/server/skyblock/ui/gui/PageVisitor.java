@@ -1,12 +1,12 @@
 package net.skyexcel.server.skyblock.ui.gui;
 
+import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.skyblock.data.SkyBlockData;
 import net.skyexcel.server.skyblock.data.StringData;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.skyblock.util.Items;
 import net.skyexcel.server.skyblock.util.packet.InventoryUpdate;
-import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MaterialPageMember {
+public class PageVisitor {
     private Inventory inv;
 
     private int currentPage = 1;
@@ -31,35 +31,28 @@ public class MaterialPageMember {
 
     private final String title;
 
-    private final List<Material> currentMaterial = new ArrayList<>();
 
 
-    private final List<Material> materials;
 
-
-    public MaterialPageMember(String title) {
+    public PageVisitor(String title) {
         this.title = title;
-        materials = new ArrayList<>(Arrays.stream(Material.values()).filter(Material::isSolid).toList());
+
 
     }
 
 
     public void update(Player player) {
+        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+        SkyBlock islandData = new SkyBlock(playerData.getIsland());
 
+        int divide = 1;
+        int MAX = 1;
 
-
-        Arrays.stream(SkyBlockData.remove).forEach(materials::remove);
-
-        int divide = 44;
-        int MAX = 44;
-
-        this.totalPage = materials.size() / divide;
+        this.totalPage = islandData.getVisitors().size() / divide;
         if (inv == null)
             inv = Bukkit.createInventory(null, 54, title + " (" + currentPage + "/" + totalPage + ")");
 
         setInv(inv);
-        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
-        SkyBlock islandData = new SkyBlock(playerData.getIsland());
 
         next(); // 다음 버튼 추가
 
@@ -71,63 +64,19 @@ public class MaterialPageMember {
          */
 
         for (int i = (currentPage - 1) * MAX; i <= currentPage * MAX; i++) {
-
             if (slot <= MAX) {
-                Material material = materials.get(materials.indexOf(materials.get(i)));
-                this.currentMaterial.add(material);
-
-                unSelected(material, ++slot);
-
-                /**
-                 * 이미 선택 되어 있는 블록은 Enchant 표시를 해준다.
-                 */
-                if (islandData.getBanBlockMember() != null) {
-                    for (Material banblock : islandData.getBanBlockMember()) {
-                        if (material.equals(banblock)) {
-                            Items.Enchant(new ItemStack(material), List.of(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
-                        }
-                    }
-                }
+                unSelected(islandData.getVisitors().get(i), ++slot);
             }
         }
     }
 
-    public void unSelected(Material material, int slot) {
-        if (material != null)
-            Items.newItem(ChatColor.GRAY + material.name(), material, 1, List.of(ChatColor.WHITE + "클릭하여 선택하세요!"), slot, inv);
+    public void unSelected(String name, int slot) {
+
+        inv.setItem(slot,Items.playerSkull(name,"", List.of()));
     }
-
-
-    public void select(Player player, int slot, boolean shift) {
-
-        Material material = this.currentMaterial.get(slot);
-
-        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
-        SkyBlock islandData = new SkyBlock(playerData.getIsland());
-        List<Material> member = islandData.getBanBlockMember();
-
-
-        if (!shift) {
-            if (!member.contains(material)) {
-                islandData.addBanBlockMember(material);
-                Items.Enchant(new ItemStack(material), List.of(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
-            } else {
-                player.sendMessage(ChatColor.RED + "이미 밴 블록 입니다!");
-            }
-        } else {
-            if (member.contains(material)) {
-                islandData.removeBanBlockMember(material);
-
-                unSelected(material, slot);
-            } else {
-                player.sendMessage(ChatColor.RED + "밴 블록이 아닙니다!");
-            }
-        }
-    }
-
 
     public void nextPage(Player player, boolean isShift) {
-        this.currentMaterial.clear();
+
         if (!isShift) {
             if (currentPage + 1 <= totalPage) {
                 InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin, player, title + " (" + ++currentPage + "/" + totalPage + ")");
@@ -148,7 +97,7 @@ public class MaterialPageMember {
     }
 
     public void previousPage(Player player, boolean isShift) {
-        this.currentMaterial.clear();
+
         if (!isShift) {
             InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin, player, title + " (" + --currentPage + "/" + totalPage + ")");
             update(player);
@@ -169,13 +118,6 @@ public class MaterialPageMember {
                 clearItem(PREVIOUS_PAGE_SLOT);
             }
         }
-    }
-
-    public void deSelectAll() {
-
-    }
-    public void selectAll() {
-
     }
 
     private void next() {

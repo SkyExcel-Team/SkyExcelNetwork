@@ -17,24 +17,29 @@ public class onHit implements Listener {
         Entity damager = event.getDamager();
 
 
-        if (entity instanceof Player && damager instanceof Player) {
-
-            Player player = (Player) entity;
-
-            Player target = (Player) damager;
-
+        if (entity instanceof Player player && damager instanceof Player target) {
 
             SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
             SkyBlock targetIsland = new SkyBlock(targetData.getIsland());
 
-
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
             SkyBlock playerIsland = new SkyBlock(playerData.getIsland());
 
-            if (playerIsland.isPvp()) {
-                target.sendMessage("强 해당 섬에서는 PVP가 비활성화 되어있습니다");
-                event.setCancelled(true);
+            System.out.println(targetIsland.isInIsland(player));
+
+            if (targetIsland.isInIsland(player)) {
+
+                if (!targetIsland.isPvp()) {
+                    target.sendMessage("强 해당 섬에서는 PVP가 비활성화 되어있습니다");
+                    event.setCancelled(true);
+                }
+            } else if (playerIsland.isInIsland(player)) {
+                if (playerIsland.isPvp()) {
+                    target.sendMessage("强 해당 섬에서는 PVP가 비활성화 되어있습니다");
+                    event.setCancelled(true);
+                }
             }
+
         }
     }
 }

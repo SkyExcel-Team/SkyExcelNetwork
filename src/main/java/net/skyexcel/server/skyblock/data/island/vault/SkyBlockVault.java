@@ -59,16 +59,14 @@ public class SkyBlockVault {
 
     public void setLock() {
         if(!isLock()){
+            player.sendMessage("금고 잠금");
             config.getConfig().set("lock", true);
             config.saveConfig();
         } else{
+            player.sendMessage("금고 염");
             config.getConfig().set("lock", false);
             config.saveConfig();
         }
-
-
-
-
     }
 
     public long getAmount() {
@@ -78,6 +76,5 @@ public class SkyBlockVault {
     public boolean isLock() {
         return config.getConfig().getBoolean("lock");
     }
-
 
 }

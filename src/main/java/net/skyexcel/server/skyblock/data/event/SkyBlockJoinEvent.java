@@ -74,7 +74,7 @@ public class SkyBlockJoinEvent extends Event implements Cancellable {
     }
 
     public enum JoinCause {
-        VISIT(), MEMBER();
+        VISIT(), MEMBER(), ISLAND;
     }
 
 }
