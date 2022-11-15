@@ -4,6 +4,7 @@ import net.skyexcel.server.skyblock.data.island.DeleteRunnable;
 import net.skyexcel.server.skyblock.data.island.InviteSkyBlock;
 import net.skyexcel.server.skyblock.ui.gui.MaterialPageMember;
 import net.skyexcel.server.skyblock.ui.gui.MaterialPagePartTime;
+import net.skyexcel.server.skyblock.ui.gui.PageVisitor;
 import net.skyexcel.server.skyblock.ui.title.Loading;
 import org.bukkit.Material;
 
@@ -11,7 +12,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class SkyBlockData {
-    public static HashMap<UUID, Loading> loading = new HashMap<>();
 
     public static HashMap<UUID, MaterialPageMember> memberPage = new HashMap<>();
 
@@ -20,6 +20,9 @@ public class SkyBlockData {
     public static HashMap<UUID, MaterialPagePartTime> testPage = new HashMap<>();
 
     public static HashMap<UUID, DeleteRunnable> delete = new HashMap<>();
+
+    public static HashMap<UUID, PageVisitor> visitorHashMap = new HashMap<>();
+
     public static HashMap<UUID, InviteSkyBlock> inviteSkyBlock = new HashMap<>();
 
     public static Material[] remove = {Material.BEDROCK, Material.BARRIER, Material.COMMAND_BLOCK, Material.SCULK,

@@ -14,6 +14,7 @@ import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 
 import net.skyexcel.server.skyblock.data.player.SkyBlockRequest;
+import net.skyexcel.server.skyblock.ui.gui.PageVisitor;
 import net.skyexcel.server.skyblock.util.Translate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 
@@ -169,7 +170,7 @@ public class IslandCmd implements CommandExecutor {
                         }
                     }
                     case "초대" -> {
-                        SkyBlockRequest request = new SkyBlockRequest();
+
                         Player target = Bukkit.getPlayer(args[1]);
 
                         assert target != null;
@@ -360,6 +361,7 @@ public class IslandCmd implements CommandExecutor {
                                         amount = Integer.parseInt(args[2]);
                                         vault.setPlayer(player);
                                         money = new SEConomy(player);
+
                                         if (vault.withdraw(amount)) {
                                             money.deposit(amount);
                                             SkyBlockVaultRecord record = new SkyBlockVaultRecord(playerData.getIsland());
@@ -489,6 +491,15 @@ public class IslandCmd implements CommandExecutor {
                         SkyBlock data = new SkyBlock(playerData.getIsland());
                         player.sendMessage("섬을 초기화 합니다");
                         data.reset(player);
+                    }
+
+                    case "방문객"->{
+
+                        PageVisitor visitor = new PageVisitor("방문객");
+                        visitor.update(player);
+
+
+
                     }
                     case "옵션" -> {
                         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);

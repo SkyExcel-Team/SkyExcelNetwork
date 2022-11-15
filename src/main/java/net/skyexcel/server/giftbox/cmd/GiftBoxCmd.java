@@ -20,7 +20,7 @@ public class GiftBoxCmd implements CommandExecutor {
                     giftBox.save();
                 } else  if ("open".equals(args[0])) {
 
-                    giftBox.next();
+                    giftBox.next(player);
                 }
             }
 

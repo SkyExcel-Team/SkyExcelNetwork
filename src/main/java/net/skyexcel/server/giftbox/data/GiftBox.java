@@ -4,18 +4,20 @@ import net.skyexcel.server.giftbox.SkyExcelNetworkGiftBoxMain;
 import net.skyexcel.server.giftbox.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import skyexcel.data.file.Config;
 import skyexcel.data.file.GUI;
+import skyexcel.data.file.util.Stockable;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class GiftBox {
+public class GiftBox extends Stockable {
 
-    private Player player;
+    private OfflinePlayer player;
     private Config config;
 
     private GUI gui;
@@ -24,12 +26,13 @@ public class GiftBox {
 
     private Inventory inv;
 
-    final int[] black_glass = {0, 1, 2, 3, 5, 6, 7, 8, 17, 9, 18, 26, 27, 35, 36, 44, 45, 46, 47, 51, 52, 53};
+    public final int[] black_glass = {0, 1, 2, 3, 5, 6, 7, 8, 17, 9, 18, 26, 27, 35, 36, 44, 45, 46, 47, 51, 52, 53};
 
 
-    public GiftBox(Player player) {
+    public GiftBox(OfflinePlayer player) {
+        super("giftbox",player.getUniqueId().toString(),SkyExcelNetworkGiftBoxMain.plugin);
         this.player = player;
-        this.config = new Config("GiftBox-data/" + player.getUniqueId());
+        this.config = new Config("GiftBox/" + player.getUniqueId());
         this.config.setPlugin(SkyExcelNetworkGiftBoxMain.plugin);
         gui = new GUI(config);
     }
@@ -38,7 +41,16 @@ public class GiftBox {
 
     }
 
-    public void next() {
+    @Override
+    public void save(Inventory inv) {
+        for(int i : black_glass){
+            inv.getItem(i).setAmount(0);
+        }
+        super.save(inv);
+    }
+
+
+    public void next(Player player) {
         Inventory inv = Bukkit.createInventory(null, 54, "선물함");
 
 
@@ -48,16 +60,6 @@ public class GiftBox {
         });
         this.inv = inv;
         player.openInventory(inv);
-    }
-
-    public void save() {
-        Arrays.stream(black_glass).forEach(slots -> {
-            ItemStack items = inv.getItem(slots);
-            if (items != null)
-                inv.removeItem(items);
-
-        });
-        gui.saveInventory("shop.1", inv);
     }
 
 

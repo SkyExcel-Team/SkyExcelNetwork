@@ -196,8 +196,6 @@ public class SkyBlock extends SkyBlockMeta {
     }
 
 
-
-
     public void quickSkyBlock(Player player) {
         SkyBlockQuickEvent event = new SkyBlockQuickEvent(name, this, player);
 
@@ -597,6 +595,16 @@ public class SkyBlock extends SkyBlockMeta {
         }
 
         return members;
+    }
+
+    public List<String> getVisitors() {
+        List<String> visitors = new ArrayList<>();
+        for (Player player : Objects.requireNonNull(Bukkit.getWorld("SkyBlock")).getPlayers()) {
+            if(isInIsland(player) && !getMembers().contains(player.getUniqueId().toString())){
+                visitors.add(player.getUniqueId().toString());
+            }
+        }
+        return visitors;
     }
 
     public void removeAll() {
