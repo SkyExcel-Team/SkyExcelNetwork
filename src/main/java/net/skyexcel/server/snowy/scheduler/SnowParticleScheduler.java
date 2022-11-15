@@ -9,6 +9,7 @@ import net.skyexcel.server.snowy.data.SnowToggleData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.xenondevs.particle.ParticleEffect;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -31,30 +32,18 @@ public class SnowParticleScheduler {
     public static void enable(JavaPlugin pl) {
         plugin = pl;
 
-        //CREATE PACKET
-        ProtocolManager pm = ProtocolLibrary.getProtocolManager();
-
-        PacketContainer packet = pm.createPacket(PacketType.Play.Server.WORLD_PARTICLES);
-        packet.getModifier().writeDefaults();
-        packet.getParticles().write(0, EnumWrappers.Particle.END_ROD);
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+            if (Bukkit.getWorld(world) == null) return;
+
             Bukkit.getWorld(world).getPlayers().forEach(player -> {
                 if ((new SnowToggleData(player)).getConfig().getBoolean("snow")) {
 //                    if (getBoolean()) {
-                    packet.getFloat().write(0, (float) player.getLocation().getX())
-                            .write(1, (float) (player.getLocation().getY() + 2))
-                            .write(2, (float) player.getLocation().getZ());
-
-                    try {
-                        pm.sendServerPacket(player, packet);
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
+                    ParticleEffect.END_ROD.display(player.getLocation().subtract(0, -2, 0));
 //                    }
                 }
             });
-        }, 0L, 1L);
+        }, 20L * 10, 5L);
     }
 
     private static boolean getBoolean() {
