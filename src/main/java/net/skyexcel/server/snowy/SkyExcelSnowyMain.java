@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelSnowyMain {
     public static JavaPlugin plugin;
+    SnowParticleScheduler task;
 
     public SkyExcelSnowyMain(JavaPlugin plugin) {
         SkyExcelSnowyMain.plugin = plugin;
@@ -19,6 +20,11 @@ public class SkyExcelSnowyMain {
         Bukkit.getPluginCommand("눈").setExecutor(new SnowCommand());
         Bukkit.getPluginCommand("눈").setTabCompleter(new SnowCmdTab());
 
-        SnowParticleScheduler.enable(plugin);
+        task = new SnowParticleScheduler();
+        (task).runTaskTimerAsynchronously(plugin, 20L * 15, 20L);
+    }
+
+    public void disable() {
+        Bukkit.getScheduler().cancelTask(task.getId());
     }
 }
