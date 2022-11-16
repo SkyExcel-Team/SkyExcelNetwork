@@ -7,7 +7,9 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.xenondevs.particle.ParticleEffect;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -22,7 +24,7 @@ public class SnowParticleScheduler extends BukkitRunnable {
     private static final int minY = 63;
     private static final int maxY = 110;
 
-    private static final int radius = 15; //TODO - CHANGE (95)
+    private static final int radius = 95; //TODO - CHANGE (95)
     private static final int chance = 12;
 
     private static boolean done = false;
@@ -33,9 +35,9 @@ public class SnowParticleScheduler extends BukkitRunnable {
         Location location = new Location(Bukkit.getWorld(worldName), centerX, 0, centerZ);
 
         this.taskId = Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkMain.getPlugin(), () -> {
-            for(int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
-                for(int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
-                    for(int y = maxY; y >= minY; y--) {
+            for (int y = minY; y <= maxY; y++) {
+                for (int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
+                    for (int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
                         Block block = location.getWorld().getBlockAt(x, y, z);
 
                         if (block.getType().isAir())
@@ -53,19 +55,20 @@ public class SnowParticleScheduler extends BukkitRunnable {
     public void run() {
         if (!done) return;
 
-        blocks.forEach(block -> {
+        Iterator<Block> iterator = blocks.iterator();
+        while(iterator.hasNext()) {
+            Block block = iterator.next();
+
             if (getBoolean()) {
-                Location loc = block.getLocation().subtract(
+                Location loc = block.getLocation().add(
                         (float) random.nextGaussian(),
                         (float) random.nextGaussian(),
                         (float) random.nextGaussian()
                 );
 
-//                for (int i = 0; loc.getX() + i <= maxY; i++) {
-//                    if (!loc.getWorld().getBlockAt((int) loc.getX(), ((int) loc.getY() + i), (int) loc.getZ()).getType().isAir()) {
-//                        blocks.remove(block);
-//                        return;
-//                    }
+//                if (block.getLocation().getWorld().getHighestBlockYAt(block.getX(), block.getZ()) > block.getY()) {
+//                    iterator.remove();
+//                    return;
 //                }
 
                 if (getBoolean()) {
@@ -82,11 +85,11 @@ public class SnowParticleScheduler extends BukkitRunnable {
                     });
                 }
             }
-        });
+        }
     }
 
     public Boolean getBoolean() {
-        return random.nextFloat() <= (chance/100F);
+        return random.nextFloat() <= (chance / 100F);
     }
 
     public int getId() {
