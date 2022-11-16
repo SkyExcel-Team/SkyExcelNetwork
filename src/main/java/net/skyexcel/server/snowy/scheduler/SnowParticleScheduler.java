@@ -24,7 +24,7 @@ public class SnowParticleScheduler extends BukkitRunnable {
     private static final int minY = 63;
     private static final int maxY = 110;
 
-    private static final int radius = 95; //TODO - CHANGE (95)
+    private static final int radius = 40; //TODO - CHANGE (95)
     private static final int chance = 12;
 
     private static boolean done = false;
@@ -66,10 +66,10 @@ public class SnowParticleScheduler extends BukkitRunnable {
                         (float) random.nextGaussian()
                 );
 
-//                if (block.getLocation().getWorld().getHighestBlockYAt(block.getX(), block.getZ()) > block.getY()) {
-//                    iterator.remove();
-//                    return;
-//                }
+                if (block.getLocation().getWorld().getHighestBlockYAt(block.getX(), block.getZ()) > block.getY()) {
+                    iterator.remove();
+                    return;
+                }
 
                 if (getBoolean()) {
                     Bukkit.getWorld(worldName).getPlayers().forEach(player -> {
