@@ -11,6 +11,7 @@ import net.skyexcel.server.job.data.type.Farmer;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -57,13 +58,24 @@ public class JobListener implements Listener {
 
                 FeverTime feverTime = new FeverTime();
                 feverTime.run(player, block);
+
                 //TODO 모든 광물 다 불러와야됨 ㅅㄱ
                 BlastFurnace blastFurnace = new BlastFurnace();
-                blastFurnace.run(player);
+                blastFurnace.run(player, block);
+
                 //TODO 이벤트 캔슬 시켜야됨
                 AntiFragile antiFragile = new AntiFragile();
                 antiFragile.run(player);
+
+                ItemStack item = player.getInventory().getItemInMainHand();
+                if (item.getDurability() == 0)
+                    item.setDurability((short) 1);
+
+                item.setDurability((short) (item.getDurability() - 1));
+
+
                 event.setCancelled(true);
+
             } else if (job.getType().equals(JobType.FARM)) { // 농부일때 농부의 축복 페시브를 발동한다.
 
             }
