@@ -108,13 +108,13 @@ public class IslandCmd implements CommandExecutor {
                             for (String text : test) {
                                 player.sendMessage(text);
                             }
-                            player.sendMessage("家 섬 §6도움말 §f페이지 §7[" + page + " /4]");
+                            player.sendMessage("§6§l│ 家 섬 §6도움말 §f페이지 §7[" + page + " /4]");
                         } else {
                             List<String> test = message(player, help, 1);
                             for (String text : test) {
                                 player.sendMessage(text);
                             }
-                            player.sendMessage("家 섬 §6도움말 §f페이지 §7[1/4]");
+                            player.sendMessage("§6§l│ 家 섬 §6도움말 §f페이지 §7[1/4]");
                         }
                     }
                     case "메뉴" -> {
