@@ -93,9 +93,9 @@ public class IslandCmd implements CommandExecutor {
                     SkyBlock data = new SkyBlock(playerData.getIsland());
                     data.spawn(player, data.getLocation());
 
-                    player.sendMessage("架 " + "자신의 섬으로 이동하였습니다 " + ChatColor.GRAY + "[/섬 도움말]");
+                    player.sendMessage("架 " + "자신의 섬으로 이동하였습니다. " + ChatColor.GRAY + "[/섬 도움말]");
                 } else {
-                    player.sendMessage("자신의 섬이 없습니다 [/섬 생성 <이름>]");
+                    player.sendMessage("强 가입한 섬이 없습니다." + ChatColor.GREEN + "[/섬 생성 <이름>]");
                 }
 
 
@@ -247,7 +247,7 @@ public class IslandCmd implements CommandExecutor {
                                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
                                 if (skyBlock.removeBlackList(target)) {
-                                    player.sendMessage(target.getName() + " 님을 밴해제 하였습니다");
+                                    player.sendMessage("架 §6" + target.getName() + "§f님을 섬 밴 목록에서 삭제 하였습니다.");
                                 }
                             }
                         }
@@ -271,7 +271,7 @@ public class IslandCmd implements CommandExecutor {
 
                         SkyBlock data = new SkyBlock(playerData.getIsland());
                         if (!SkyBlockData.delete.containsKey(player.getUniqueId())) {
-                            player.sendMessage("진짜 지울꺼야? ? ? ? ?? ? ? ?? ? ?");
+                            player.sendMessage("可 정말로 섬을 §c삭제§f하시겠습니까? §7(15초안에 다시 타이핑 해주세요!)");
                             DeleteRunnable runnable = new DeleteRunnable(player);
 
                             runnable.runTaskTimer(SkyExcelNetworkSkyBlockMain.plugin, 0, 20);
@@ -314,7 +314,7 @@ public class IslandCmd implements CommandExecutor {
                             skyBlock.visitSkyBlock(player, target);
 
                         } else {
-                            player.sendMessage("방문할 섬 입력해~~~~~ 장애야 ㅉㅉ");
+                            player.sendMessage("强 방문할 섬 이름을 입력해주세요.");
                         }
                     }
                     case "금고" -> {
@@ -431,7 +431,7 @@ public class IslandCmd implements CommandExecutor {
                                                 player.sendMessage("强 알바 추가가 불가능합니다.");
                                             }
                                         } catch (NumberFormatException e) {
-                                            player.sendMessage("强올 바른 숫자를 입력해 주세요!");
+                                            player.sendMessage("强 올바른 숫자를 입력해 주세요!");
                                         }
 
                                     } else {
@@ -490,7 +490,7 @@ public class IslandCmd implements CommandExecutor {
                     case "초기화" -> {
                         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
                         SkyBlock data = new SkyBlock(playerData.getIsland());
-                        player.sendMessage("섬을 초기화 합니다");
+                        player.sendMessage("架 섬에 있는 모든 기록을 §6초기화§f하였습니다!");
                         data.reset(player);
                     }
 
@@ -541,7 +541,7 @@ public class IslandCmd implements CommandExecutor {
                                             }
                                         }
                                     } else {
-                                        player.sendMessage("전투허용 옵션을 선택 해 주세요!");
+                                        player.sendMessage("强 전투허용 옵션을 선택 해 주세요!");
                                     }
 
                                     break;
@@ -562,19 +562,19 @@ public class IslandCmd implements CommandExecutor {
                                             }
                                             case "일몰" -> {
                                                 data.time(player, 12000);
-                                                player.sendMessage("§a● §f§6일몰§f 시간대로 변경하였습니다.");
+                                                player.sendMessage("§a● §f§6일몰§f 시간으로 변경하였습니다.");
                                             }
                                             case "일출" -> {
                                                 data.time(player, 23000);
-                                                player.sendMessage("§a● §f일출§f 시간대로변경하였습니다.");
+                                                player.sendMessage("§a● §f일출§f 시간으로 변경하였습니다.");
                                             }
                                             case "밤" -> {
                                                 data.time(player, 18000);
-                                                player.sendMessage("§a● §0밤§f 시간대로변경하였습니다.");
+                                                player.sendMessage("§a● §0밤§f 시간으로 변경하였습니다.");
                                             }
                                         }
                                     } else {
-                                        player.sendMessage("시간대를 입력 해 주세요!");
+                                        player.sendMessage("强 시간대를 입력 해 주세요!");
                                     }
                                     break;
                                 case "월드보더":

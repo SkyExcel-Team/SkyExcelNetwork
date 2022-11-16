@@ -59,11 +59,11 @@ public class SkyBlockVault {
 
     public void setLock() {
         if(!isLock()){
-            player.sendMessage("금고 잠금");
+            player.sendMessage("架 섬 금고를 잠금 하였습니다!");
             config.getConfig().set("lock", true);
             config.saveConfig();
         } else{
-            player.sendMessage("금고 염");
+            player.sendMessage("架 섬 금고를 열었습니다!");
             config.getConfig().set("lock", false);
             config.saveConfig();
         }

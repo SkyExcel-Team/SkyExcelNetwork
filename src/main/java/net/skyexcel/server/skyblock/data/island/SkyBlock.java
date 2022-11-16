@@ -139,16 +139,21 @@ public class SkyBlock extends SkyBlockMeta {
                     SkyBlockPlayerData memberData = new SkyBlockPlayerData(members);
                     memberData.getConfig().deleteFile();
                     if (members.isOnline()) {
-                        members.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
-                        members.getPlayer().sendMessage("당신의 섬이 지워졌습니다!");
+
+                        members.getPlayer().teleport(warp.getLocation());
+                        members.getPlayer().sendMessage("佳 §6섬장§f이 섬을 §c제거§f하여, 섬에서 자동 §c탈퇴§f되었습니다.");
+
+
+
                     }
                 }
             } else if (!getPartTime().isEmpty()) {
                 for (String uuid : getPartTime()) {
                     Player parttime = Bukkit.getPlayer(UUID.fromString(uuid));
                     if (parttime.isOnline()) {
-                        parttime.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
-                        parttime.sendMessage("당신의 섬이 지워졌습니다!");
+
+                        parttime.teleport(warp.getLocation());
+                        parttime.sendMessage("佳 §6섬장§f이 섬을 §c제거§f하여, 섬에서 자동 §c탈퇴§f되었습니다.");
                     }
                 }
             }
@@ -175,7 +180,7 @@ public class SkyBlock extends SkyBlockMeta {
 
 
     public void reset(Player player) {
-        player.sendMessage("월드 초기화를 진행합니다...");
+        player.sendMessage("佳 섬 초기화를 진행합니다...");
     }
 
 
@@ -199,7 +204,7 @@ public class SkyBlock extends SkyBlockMeta {
     public void setOpen(Player player, boolean is) {
 
         if (is) {
-            player.sendMessage("성공적으로 섬을 열었습니다!");
+            player.sendMessage("架 이제 모든 사람이 섬을 방문할 수 있습니다!");
             config.setBoolean("SkyBlock.option.open", true);
 
             for (Player visitors : Bukkit.getWorld("SkyBlock").getPlayers()) {
@@ -213,14 +218,14 @@ public class SkyBlock extends SkyBlockMeta {
                 if (!getMembers().contains(visitors.getUniqueId().toString())) {
                     if (!getOwner().equalsIgnoreCase(visitors.getUniqueId().toString())) {
                         if (isInIsland(visitors)) {
-                            visitors.sendMessage("해당 섬은 잠궜습니다!");
+                            visitors.sendMessage("强 해당 섬은 방문을 §6잠금§f하여 §a입장§f이 §c불가능§f합니다!");
                             Warp warp = new Warp("spawn");
                             visitors.teleport(warp.getLocation());
                         }
                     }
                 }
             }
-            player.sendMessage("성공적으로 섬을 잠궜습니다! ");
+            player.sendMessage("架 이제 모든 사람이 섬에 방문하지 못합니다!");
             config.setBoolean("SkyBlock.option.open", false);
         }
     }

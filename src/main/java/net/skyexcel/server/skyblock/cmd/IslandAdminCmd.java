@@ -8,6 +8,7 @@ import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.Visitor;
 import net.skyexcel.server.skyblock.data.island.vault.SkyBlockVault;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,14 +40,14 @@ public class IslandAdminCmd implements CommandExecutor {
                                             SkyBlockVault vault = new SkyBlockVault(player, name);
 
                                             if (vault.deposit(amount)) {
-                                                player.sendMessage("입금 완료");
+                                                player.sendMessage("架 §6" + name + "§f님의 섬에 §e" + amount + "§f원을 §a입금§f하였습니다!");
                                             }
 
                                         } catch (NumberFormatException e) {
-                                            player.sendMessage("정수를 입력 해 주세요!");
+                                            player.sendMessage("强 정수를 입력 해 주세요!");
                                         }
                                     } else {
-                                        player.sendMessage("입금할 금액을 입력 해 주세요!");
+                                        player.sendMessage("强 입금할 금액을 입력 해 주세요!");
                                     }
                                 } else if ((args[2].equalsIgnoreCase("출금"))) {
 
@@ -56,7 +57,7 @@ public class IslandAdminCmd implements CommandExecutor {
 
                                         vault.withdraw(amount);
                                     } catch (NumberFormatException e) {
-                                        player.sendMessage("정수를 입력 해 주세요!");
+                                        player.sendMessage("强 정수를 입력 해 주세요!");
                                     }
 
                                 } else if ((args[2].equalsIgnoreCase("설정"))) {
@@ -66,14 +67,14 @@ public class IslandAdminCmd implements CommandExecutor {
                                             SkyBlockVault vault = new SkyBlockVault(player, name);
 
                                             if (vault.setAmount(amount)) {
-                                                player.sendMessage("설정 완료");
+                                                player.sendMessage("架 §6" + name + "§f의 금고 돈을 §e" + amount + "§f로 설정 하였습니다.");
                                             }
 
                                         } catch (NumberFormatException e) {
-                                            player.sendMessage("정수를 입력 해 주세요!");
+                                            player.sendMessage("强 정수를 입력 해 주세요!");
                                         }
                                     } else {
-                                        player.sendMessage("설정할 금액을 입력 해 주세요!");
+                                        player.sendMessage("强 설정할 금액을 입력 해 주세요!");
                                     }
                                 }
                             }
