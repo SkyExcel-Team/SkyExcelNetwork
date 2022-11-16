@@ -158,7 +158,7 @@ public class SkyBlock extends SkyBlockMeta {
                 }
             }
 
-            player.sendMessage("당신의 섬이 지워짐");
+            player.sendMessage("架 성공적으로 섬을 §c제거§f하였습니다!");
 
             org.bukkit.Location pos1 = getLocation(); //자신의 섬의 영역을 불러온다.
             org.bukkit.Location pos2 = getLocation(); //자신의 섬의 영역을 불러온다.

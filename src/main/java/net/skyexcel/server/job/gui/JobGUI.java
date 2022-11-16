@@ -26,9 +26,9 @@ public class JobGUI {
     public void mineWork() {
         Inventory inv = Bukkit.createInventory(null, 27, "광부");
         this.inv = inv;
-        Items.newItem(ChatColor.RED + "용광로", Material.CHEST, 0, List.of("광물을 캘시 일정확률로 구워진 광물이 드롭됩니다."), JobData.slot[0], inv);
-        Items.newItem(ChatColor.YELLOW + "피버 타임", Material.CHEST, 0, List.of("다이아몬드를 캘시 일정확률로 성급함을 부여합니다."), JobData.slot[1], inv);
-        Items.newItem(ChatColor.GRAY + "단단한 곡괭이", Material.CHEST, 0, List.of("일정확률로 광물을 캘시, 내구도가 달지 않습니다."), JobData.slot[2], inv);
+        Items.newItem("§c용광로", Material.CHEST, 0, List.of("", "§6§l│ §f광물을 캘시 일정확률로 §c구워진 §f광물이 §a드롭§f됩니다. ", "§6§l│ §f적용되는 광물:", "§6§l│ §6구리", "§6§l│ §f철", "§6§l│ §e금", ""), JobData.slot[0], inv);
+        Items.newItem("§e피버 타임", Material.CHEST, 0, List.of("", "§6§l│ §b다이아몬드§f를 캘시 §6일정확률§f로 §e성급함§f을 부여합니다. ", ""), JobData.slot[1], inv);
+        Items.newItem("§b단단한 곡괭이", Material.CHEST, 0, List.of("", "§6§l│ §6일정확률§f로 광물을 캘시, 곡괭이의 §e내구도§f가 달지 않습니다. ", ""), JobData.slot[2], inv);
         this.jobType = JobType.MINEWORKER;
         player.openInventory(inv);
     }
@@ -36,8 +36,8 @@ public class JobGUI {
 
         Inventory inv = Bukkit.createInventory(null, 27, "농부");
         this.inv = inv;
-        Items.newItem(ChatColor.RED + "농부의 축복", Material.CHEST, 0, List.of("광물을 캘시 일정확률로 구워진 광물이 드롭됩니다."), JobData.slot[0], inv);
-        Items.newItem(ChatColor.YELLOW + "허수아비", Material.CHEST, 0, List.of("다이아몬드를 캘시 일정확률로 성급함을 부여합니다."), JobData.slot[1], inv);
+        Items.newItem("§6농부의 축복", Material.CHEST, 0, List.of("", "§6§l│ §f농작물을 캘시, §6일정확률§f로 §6농작물§f을 §a추가 §f드롭됩니다. ", "§6§l│ §f적용되는 농작물:", "§6§l│ §f밀", "§6§l│ §f 감자", "§6§l│ §f 당근", "§6§l│ §f ", ""), JobData.slot[0], inv);
+        Items.newItem("§6허수아비", Material.CHEST, 0, List.of("", "§6§l│ §6허수아비§f를 소환해, 주변의 §6농작물§f을 빠르게 자라게 해줍니다. ", "§6§l│ §f사용 방법:", "§6§l│ §f괭이를 들고 §6쉬프트 §f+ §6우클릭", ""), JobData.slot[1], inv);
         this.jobType = JobType.FARM;
         player.openInventory(inv);
     }
@@ -46,8 +46,8 @@ public class JobGUI {
         Inventory inv = Bukkit.createInventory(null, 27, "낚시꾼");
         this.inv = inv;
 
-        Items.newItem(ChatColor.WHITE + "최고급 미끼", Material.CHEST, 0, List.of("광물을 캘시 일정확률로 구워진 광물이 드롭됩니다."), JobData.slot[0], inv);
-        Items.newItem(ChatColor.BLUE + "특별한 물통", Material.CHEST, 0, List.of("다이아몬드를 캘시 일정확률로 성급함을 부여합니다."), JobData.slot[1], inv);
+        Items.newItem("§c최고급 §9미끼", Material.CHEST, 0, List.of("", "§6§l│ §f한단계 높은 §e등급§f의 §9물고기§f(인챈트)(을)를 얻습니다. ", ""), JobData.slot[0], inv);
+        Items.newItem("§6특별한 §9물통", Material.CHEST, 0, List.of("", "§6§l│ §9물고기§f를 §6보관§f할 수 있는 §9물통 ", "§6§l│ §6효과:", "§6§l│ §9물고기§f를 잡을 시 §9물통§f으로 이동됩니다.", "§6§l│ §9물통§f은 §6레벨당 §fGUI 1줄씩 추가됩니다. §7(페이지 존재)", "§6§l│ §f특정 §6레벨 §f달성 시, §9물통§f 안에서 §a판매 §f가능", ""), JobData.slot[1], inv);
         this.jobType = JobType.FISHERMAN;
         player.openInventory(inv);
     }

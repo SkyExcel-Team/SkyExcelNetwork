@@ -40,15 +40,15 @@ public class SkyBlockListener implements Listener {
                 SkyBlockRecord record = new SkyBlockRecord(event.getName());
 
                 record.skyblockRecord(player, SkyBlockRecord.Type.CREATE);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "家 " + event.getName()) + " 이름의 섬 생성에 성공 하였습니다!");
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "架 " + event.getName()) + " 이름의 섬 생성에 성공 하였습니다!");
                 player.sendMessage("家" + ChatColor.GRAY + " 섬 채팅을 사용 하실 수 있습니다! ");
 
             } else {
-                player.sendMessage("당신은 이미 섬이 있습니다!");
+                player.sendMessage("强 당신은 이미 섬이 있습니다!");
                 event.setCancelled(true);
             }
         } else {
-            player.sendMessage("이미 해당 섬 이름이 있습니다");
+            player.sendMessage("强 이미 해당 섬의 이름이 있습니다");
         }
     }
 
@@ -122,7 +122,7 @@ public class SkyBlockListener implements Listener {
                 }
             }
         } else {
-            player.sendMessage("해당 섬은 존재하지 않습니다!");
+            player.sendMessage("强 해당 섬은 존재하지 않습니다!");
         }
 
 
@@ -155,7 +155,7 @@ public class SkyBlockListener implements Listener {
 //                }
 
         } else if (event.getCancelCause().equals(SkyBlockJoinEvent.CancelCause.LOCK)) {
-            player.sendMessage("해당 섬은 잠김 ㅅㄱ");
+            player.sendMessage("强 해당 섬은 방문객 §a입장§f을 §c비활성화 §f하였습니다!");
         }
     }
 

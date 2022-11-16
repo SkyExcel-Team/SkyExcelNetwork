@@ -12,6 +12,7 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import net.skyexcel.server.skyblock.util.world.chunk.EmptyChunkCreator;
+import net.skyexcel.server.warp.data.Warp;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -72,11 +73,6 @@ public class WorldManager {
         created.setSpawnLocation(new Location(created, 0, 0, 0));
         worldBorder(player);
 
-    }
-
-    public void delete(Player player) {
-        player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
-        File file = new File(player.getUniqueId().toString());
     }
 
 

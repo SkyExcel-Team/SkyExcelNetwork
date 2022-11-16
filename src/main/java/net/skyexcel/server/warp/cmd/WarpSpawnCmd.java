@@ -21,7 +21,7 @@ public class WarpSpawnCmd implements CommandExecutor {
 
         Player player = (Player) sender;
         Warp spawn = new Warp("spawn");
-        player.sendMessage("家 " + "스폰으로 이동하였습니다!");
+        player.sendMessage("家 " + "스폰(으)로 이동하였습니다!");
         player.teleport(spawn.getLocation());
 
 

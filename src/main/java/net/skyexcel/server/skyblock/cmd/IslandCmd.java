@@ -44,7 +44,7 @@ public class IslandCmd implements CommandExecutor {
             "§6§l│ §f/섬 도움말 <1~4> : 섬 명령어를 §6모두 §f띄웁니다 ",
             "§6§l│ §f/섬 생성 [이름] : [이름]의 섬을 §a생성§f합니다.",
             "§6§l│ §f/섬 제거 : 자신의 섬을 §c제거§f합니다.",
-            "§6§l│ §f섬 초대 [플레이어] : 자신의 섬에 [플레이어를] §c추가§f합니다",
+            "§6§l│ §f/섬 초대 [플레이어] : 자신의 섬에 [플레이어를] §c추가§f합니다",
             "§6§l│ §f/섬 수락 [플레이어] : 초대온 섬 초대 요청을 §a수락§f합니다.",
             "§6§l│ §f/섬 거절 [플레이어] : 초대온 섬 초대 요청을 §c거절§f합니다.",
             "§6§l│ §f/섬 탈퇴 : 섬에서 §c탈퇴§f합니다.",
@@ -63,25 +63,25 @@ public class IslandCmd implements CommandExecutor {
             "§6§l│ §f/섬 스폰변경 : 섬 스폰위치를 §a변경§f합니다.  ",
             "§6§l│ §f/섬 업그레이드 : 섬 업그레이드 GUI를 띄웁니다.",
             "§6§l│ §f/섬 양도 [플레이어] : 섬 §b소유권§f을 [플레이어]에게 §c양도§f합니다.  ",
-            "§6§l│ §f/섬 권한 : 섬 권한 관련된 GUI를 띄웁니다.",
-            "§6§l│ §f/섬 호퍼 : 섬에 설치된 호퍼 갯수를 확인합니다.",
+            "§6§l│ §f/섬 권한 : 섬 §6권한 §f관련된 GUI를 띄웁니다.",
+            "§6§l│ §f/섬 호퍼 : 섬에 설치된 §8호퍼 §f갯수를 확인합니다.",
             "§6§l│ §f/섬 초기화 : 섬을 §c초기화§f합니다.",
             "§6§l│ §f/섬 홈 : 자신의 섬 스폰을 §a지정§f합니다.",
             "§6§l│ §f/섬 설정 : 섬 세부 사항을 §6설정§fg합니다. \n" +
-                    "§6§l│ ㄴ 밴블록, 시간(아침/점심/저녁/새벽), 날씨(맑음/비/번개), pvp, ",
+                    "§6§l│ ㄴ §c밴블록, §f시간§7(아침/점심/저녁/새벽)§f, 날씨§7(맑음/비/번개), pvp",
 
-            "§6§l│ §f/섬 옵션 전투 §a허용 §7(사망시 섬 스폰으로 이동 됩니다. 패널티 X)",
+            "§6§l│ §f/섬 옵션 전투 §a허용 §7(사망시 섬 스폰으로 이동 됩니다. §7(패널티 X)",
             "§6§l│ §f/섬 옵션 허용 : 섬 방문을 §a허용§f합니다.",
-            "§6§l│ §f/섬 옵션 밴블록 알바",
-            "§6§l│ §f/섬 옵션 밴블록 맴버",
-            "§6§l│ §f/섬 옵션 전투 허용",
-            "§6§l│ §f/섬 블랙리스트 추가 <플레이어> <사유>",
-            "§6§l│ §f/섬 블랙리스트 제거 <Player>",
-            "§6§l│ §f/섬 블랙리스트 목록",
-            "§6§l│ §f/섬 알바 추가 [이름] [돈]",
-            "§6§l│ §f/섬 알바 제거 [이름]",
-            "§6§l│ §f/섬 순위 [페이지]",
-            "§6§l│ §f/섬 멤버");
+            "§6§l│ §f/섬 옵션 밴블록 알바 : 알바의 §c밴블록§f을 §6설정§f합니다.",
+            "§6§l│ §f/섬 옵션 밴블록 섬원 : 섬원의 §c밴블록§f을 §6설정§f합니다.",
+            "§6§l│ §f/섬 옵션 전투 허용 : 섬 §c전투§f를 §a허용§f합니다.",
+            "§6§l│ §f/섬 블랙리스트 추가 <플레이어> <사유> : §6플레이어§f를 섬 §c블랙리스트§f에 §a추가§f합니다.",
+            "§6§l│ §f/섬 블랙리스트 제거 <Player> : 섬에 §c블랙리스트§f한 §6플레이어§f를 §c제거§f합니다.",
+            "§6§l│ §f/섬 블랙리스트 목록 : 섬 §c블랙리스트 §6목록§f을 확인합니다.",
+            "§6§l│ §f/섬 알바 추가 [이름] [돈] : §6플레이어§f를 섬 §e알바§f로 §a추가§f합니다.",
+            "§6§l│ §f/섬 알바 제거 [이름] : §e알바§f가 끝난 §6플레이어§f를 §c제거§f합니다.",
+            "§6§l│ §f/섬 순위 [페이지] : 모든 섬의 §6순위§f를 §a확인§f합니다.",
+            "§6§l│ §f/섬 멤버 : 섬원 GUI를 띄웁니다.");
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -95,7 +95,7 @@ public class IslandCmd implements CommandExecutor {
 
                     player.sendMessage("架 " + "자신의 섬으로 이동하였습니다. " + ChatColor.GRAY + "[/섬 도움말]");
                 } else {
-                    player.sendMessage("强 가입한 섬이 없습니다." + ChatColor.GREEN + "[/섬 생성 <이름>]");
+                    player.sendMessage("强 가입한 섬이 없습니다." + ChatColor.GREEN + " [/섬 생성 <이름>]");
                 }
 
 
@@ -108,13 +108,13 @@ public class IslandCmd implements CommandExecutor {
                             for (String text : test) {
                                 player.sendMessage(text);
                             }
-                            player.sendMessage("§6§l│ 家 섬 §6도움말 §f페이지 §7[" + page + " /4]");
+                            player.sendMessage("§6§l│ §f家 섬 §6도움말 §f페이지 §7[" + page + "/4]");
                         } else {
                             List<String> test = message(player, help, 1);
                             for (String text : test) {
                                 player.sendMessage(text);
                             }
-                            player.sendMessage("§6§l│ 家 섬 §6도움말 §f페이지 §7[1/4]");
+                            player.sendMessage("§6§l│ §f家 섬 §6도움말 §f페이지 §7[1/4]");
                         }
                     }
                     case "메뉴" -> {
