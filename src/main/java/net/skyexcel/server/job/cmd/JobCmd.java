@@ -11,20 +11,20 @@ public class JobCmd implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if(sender instanceof Player player){
-            if(args.length > 0){
+        if (sender instanceof Player player) {
+            if (args.length > 0) {
                 Job job = new Job(player);
-                switch (args[0]){
-                    case "보기" ->{
+                switch (args[0]) {
+                    case "보기" -> {
+                        
                     }
-                    case "초기화"->{
+                    case "초기화" -> {
 
 
                     }
                 }
             }
         }
-
 
 
         return false;

@@ -13,7 +13,16 @@ public class JobMeta {
         this.displayName = displayName;
     }
 
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
     public void setDescription(List<String> description) {
         this.description = description;
+    }
+
+    public List<String> getDescription() {
+        return description;
     }
 }

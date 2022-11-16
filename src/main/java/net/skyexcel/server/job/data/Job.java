@@ -4,11 +4,11 @@ import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import org.bukkit.OfflinePlayer;
 import skyexcel.data.file.Config;
 
+import java.util.Objects;
+
 
 public class Job {
 
-
-    private JobMeta jobMeta;
 
     private JobType jobType = JobType.NONE;
 
@@ -18,7 +18,6 @@ public class Job {
         this.config = new Config("data/" + player.getUniqueId());
         this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
 
-        this.jobMeta = new JobMeta(jobType.getName());
 
 //        switch (jobType) {
 //            case FARM -> {
@@ -37,18 +36,15 @@ public class Job {
     public void setJobType(JobType type) {
         this.jobType = type;
         this.config.setString("job", jobType.name());
-     }
+    }
 
     public boolean hasJob() {
         return !getType().equals(JobType.NONE);
     }
 
+
+
     public JobType getType() {
         return config.getString("job") != null ? JobType.valueOf(config.getString("job")) : JobType.NONE;
-    }
-
-
-    public JobMeta getJobMeta() {
-        return jobMeta;
     }
 }

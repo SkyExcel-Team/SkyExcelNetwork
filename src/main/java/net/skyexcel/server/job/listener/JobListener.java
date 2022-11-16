@@ -4,10 +4,7 @@ package net.skyexcel.server.job.listener;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobData;
 import net.skyexcel.server.job.data.JobType;
-import net.skyexcel.server.job.data.stat.AntiFragile;
-import net.skyexcel.server.job.data.stat.Bait;
-import net.skyexcel.server.job.data.stat.BlastFurnace;
-import net.skyexcel.server.job.data.stat.FeverTime;
+import net.skyexcel.server.job.data.stat.*;
 import net.skyexcel.server.job.data.type.Farmer;
 import net.skyexcel.server.job.gui.JobGUI;
 import org.bukkit.Material;
@@ -21,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -29,7 +27,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class JobListener implements Listener {
 
@@ -37,13 +37,16 @@ public class JobListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        Farmer job = new Farmer(player);
+
+        Job job = new Job(player);
         job.setJobType(JobType.FARM);
 
-
         if (job.hasJob()) {
+
             if (player.isSneaking() && player.getInventory().getItemInMainHand().getType().equals(Material.WOODEN_HOE)) {
-                job.run(player);
+                Farmer farmer = new Farmer();
+                farmer.run(player);
+
             }
 
         } else {
@@ -79,7 +82,7 @@ public class JobListener implements Listener {
                 item.setDurability((short) (item.getDurability() - 1));
 
 
-                event.setCancelled(true);
+
 
             } else if (job.getType().equals(JobType.FARM)) { // 농부일때 농부의 축복 페시브를 발동한다.
 
@@ -92,6 +95,23 @@ public class JobListener implements Listener {
 
     }
 
+    @EventHandler
+    public void onDrag(InventoryDragEvent event) {
+        if (event.getWhoClicked() instanceof Player player) {
+            Inventory inv = event.getInventory();
+            Set<Integer> slot = event.getInventorySlots();
+
+            if (JobData.waterBucket.containsKey(player.getUniqueId())) {
+                WaterBucket waterBucket = JobData.waterBucket.get(player.getUniqueId());
+
+                if (waterBucket.getInv().equals(inv)) {
+                    if (waterBucket.getSlots().contains(slot)) {
+                        event.setCancelled(true);
+                    }
+                }
+            }
+        }
+    }
 
     @EventHandler
     public void Change(PlayerItemHeldEvent event) {
@@ -113,29 +133,30 @@ public class JobListener implements Listener {
 
 
     @EventHandler
-    public void onFish(PlayerFishEvent event){
+    public void onFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
 
-        Entity item=  event.getCaught();
+        Entity item = event.getCaught();
     }
+
     @EventHandler
-    public void onClick(InventoryClickEvent event){
-        if(event.getWhoClicked() instanceof  Player player){
-            if(JobData.gui.containsKey(player.getUniqueId())){
+    public void onClick(InventoryClickEvent event) {
+        if (event.getWhoClicked() instanceof Player player) {
+            Inventory inv = event.getClickedInventory();
+            int slot = event.getSlot();
+            if (JobData.gui.containsKey(player.getUniqueId())) { // 스탯 GUI를 열었을 경우
                 JobGUI jobGUI = JobData.gui.get(player.getUniqueId());
-                Inventory inv = event.getClickedInventory();
-                if(jobGUI.getInv().equals(inv)){
-                    int slot = event.getSlot();
 
-                    switch (jobGUI.getJobType()){
+                if (jobGUI.getInv().equals(inv)) {
+
+                    switch (jobGUI.getJobType()) {
                         case MINEWORKER -> {
-                            if(JobData.slot[0] == slot){
+                            if (JobData.slot[0] == slot) {
                                 BlastFurnace blastFurnace = new BlastFurnace();
-
                                 player.sendMessage("용광로 특성을 업그레이드 하였습니다.");
-                            } else if(JobData.slot[1] == slot){
+                            } else if (JobData.slot[1] == slot) {
                                 player.sendMessage("피버타임 특성을 업그레이드 하였습니다.");
-                            } else if(JobData.slot[2] == slot){
+                            } else if (JobData.slot[2] == slot) {
                                 player.sendMessage("단단한 곡괭이 특성을 업그레이드 하였습니다.");
                             }
                         }
@@ -147,6 +168,17 @@ public class JobListener implements Listener {
                         }
                     }
                     event.setCancelled(true);
+                }
+            } else if (JobData.waterBucket.containsKey(player.getUniqueId())) {
+                WaterBucket waterBucket = JobData.waterBucket.get(player.getUniqueId());
+
+                if (waterBucket.getInv().equals(inv)) {
+                    if (waterBucket.getSlots().contains(slot)) {
+                        event.setCancelled(true);
+                    } else if (slot == 53) {
+                        waterBucket.levelUp(player);
+                        event.setCancelled(true);
+                    }
                 }
             }
         }

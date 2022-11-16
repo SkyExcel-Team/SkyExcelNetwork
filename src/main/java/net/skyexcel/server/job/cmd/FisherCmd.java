@@ -1,7 +1,10 @@
 package net.skyexcel.server.job.cmd;
 
 import net.skyexcel.server.job.data.Job;
+import net.skyexcel.server.job.data.JobData;
 import net.skyexcel.server.job.data.JobType;
+import net.skyexcel.server.job.data.stat.WaterBucket;
+import net.skyexcel.server.job.data.type.Fisher;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,10 +15,18 @@ public class FisherCmd implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if(sender instanceof Player player){
+        if (sender instanceof Player player) {
             Job job = new Job(player);
-            if(job.getType().equals(JobType.FISHERMAN)){
-                
+
+            job.setJobType(JobType.FISHERMAN);
+            if (job.getType().equals(JobType.FISHERMAN)) {
+
+                WaterBucket waterBucket = new WaterBucket();
+                waterBucket.onGUI(player);
+                JobData.waterBucket.put(player.getUniqueId(), waterBucket);
+            } else {
+                Fisher fisher = new Fisher();
+                player.sendMessage(fisher.getDisplayName() + " 직업만 사용 가능한 기능입니다.");
             }
         }
 
