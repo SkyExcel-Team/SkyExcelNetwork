@@ -25,7 +25,9 @@ public class WarpTab implements TabCompleter {
                 result = warp.getList();
 
                 if (player.isOp()) {
-                    result = warp.getList();
+                    if (!warp.getList().isEmpty())
+                        result = warp.getList();
+
                     result.add("생성");
                     result.add("삭제");
                 }

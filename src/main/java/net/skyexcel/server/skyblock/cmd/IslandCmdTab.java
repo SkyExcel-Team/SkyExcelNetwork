@@ -62,7 +62,6 @@ public class IslandCmdTab implements TabCompleter {
                         if (playerData.isOwner()) {
                             result = List.of("추가", "제거");
                         }
-
                         result.add("보기");
                         break;
                     case "금고":
@@ -98,10 +97,10 @@ public class IslandCmdTab implements TabCompleter {
 
                     case "옵션":
                         playerData = new SkyBlockPlayerData(player);
-//                        if (playerData.isOwner()) {
-//                            result = List.of("전투", "밴블록", "열기", "잠금", "시간");
-//                        }
-                        result = List.of("전투", "밴블록", "열기", "잠금", "시간", "월드보더");
+                        if (playerData.isOwner()) {
+                            result = List.of("전투", "밴블록", "열기", "잠금", "시간");
+                        }
+//                        result = List.of("전투", "밴블록", "열기", "잠금", "시간", "월드보더");
                         break;
 
                     case "알바":
@@ -137,11 +136,9 @@ public class IslandCmdTab implements TabCompleter {
                 } else if (equalArgs(args, 0, "옵션")) {
                     if (!equalArgs(args, 1, "열기")) {
                         if (equalArgs(args, 1, "밴블록")) {
-                            result.add("알바");
-                            result.add("섬원");
+                            result = List.of("알바", "섬원");
                         } else if (equalArgs(args, 1, "전투")) {
-                            result.add("활성화");
-                            result.add("비활성화");
+                            result = List.of("활성화", "비활성화");
                         } else if (equalArgs(args, 1, "알바")) {
                             if (equalArgs(args, 2, "추가")) {
                                 playerData = new SkyBlockPlayerData(player);
@@ -155,7 +152,11 @@ public class IslandCmdTab implements TabCompleter {
                                     }
                                 }
                             }
+                        } else if (equalArgs(args, 1, "시간")) {
+                            result = List.of("점심", "아침", "노을", "밤");
                         }
+                    } else {
+                        result = List.of("허용", "비허용");
                     }
                 }
             }

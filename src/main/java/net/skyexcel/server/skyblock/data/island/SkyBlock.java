@@ -6,12 +6,12 @@ import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 
 import net.skyexcel.server.skyblock.data.island.vault.SkyBlockVault;
 import net.skyexcel.server.skyblock.util.world.WorldManager;
+import net.skyexcel.server.warp.data.Warp;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import skyexcel.data.file.Config;
 
-import java.io.File;
 import java.util.*;
 
 public class SkyBlock extends SkyBlockMeta {
@@ -117,6 +117,7 @@ public class SkyBlock extends SkyBlockMeta {
 
                 player.teleport(location);
                 this.config.saveConfig();
+                playerData.getConfig().removeKey("island.loc");
             }
 
         }
@@ -132,12 +133,12 @@ public class SkyBlock extends SkyBlockMeta {
         if (getLocation() != null) {
             if (!getMembers().isEmpty()) { //TODO 맴버가 있을 경우 모든 멤버를 스폰으로 텔레포트 시킨다.
                 for (String uuid : getMembers()) {
-                    Player members = Bukkit.getPlayer(UUID.fromString(uuid));
+                    OfflinePlayer members = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
                     SkyBlockPlayerData memberData = new SkyBlockPlayerData(members);
                     memberData.getConfig().deleteFile();
                     if (members.isOnline()) {
-                        members.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
-                        members.sendMessage("당신의 섬이 지워졌습니다!");
+                        members.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                        members.getPlayer().sendMessage("당신의 섬이 지워졌습니다!");
                     }
                 }
             } else if (!getPartTime().isEmpty()) {
@@ -193,19 +194,31 @@ public class SkyBlock extends SkyBlockMeta {
     }
 
     //Path = SkyBlock.option.open";
-    public void setOpen(Player player) {
+    public void setOpen(Player player, boolean is) {
 
-        if (!isOpen()) {
-
-            player.sendMessage("성공적으로 섬을 잠궜습니다! ");
+        if (is) {
+            player.sendMessage("성공적으로 섬을 열었습니다!");
             config.setBoolean("SkyBlock.option.open", true);
+
             for (Player visitors : Bukkit.getWorld("SkyBlock").getPlayers()) {
                 if (isInIsland(visitors)) {
                     teleportSkyBlock(visitors, Bukkit.getOfflinePlayer(getOwner()));
                 }
             }
+
         } else {
-            player.sendMessage("성공적으로 섬을 열었습니다!");
+            for (Player visitors : Bukkit.getWorld("SkyBlock").getPlayers()) {
+                if (!getMembers().contains(visitors.getUniqueId().toString())) {
+                    if (!getOwner().equalsIgnoreCase(visitors.getUniqueId().toString())) {
+                        if (isInIsland(visitors)) {
+                            visitors.sendMessage("해당 섬은 잠궜습니다!");
+                            Warp warp = new Warp("spawn");
+                            visitors.teleport(warp.getLocation());
+                        }
+                    }
+                }
+            }
+            player.sendMessage("성공적으로 섬을 잠궜습니다! ");
             config.setBoolean("SkyBlock.option.open", false);
         }
     }
@@ -277,11 +290,14 @@ public class SkyBlock extends SkyBlockMeta {
 
 
     public void visitSkyBlock(Player player, OfflinePlayer target) {
-        SkyBlockJoinEvent event = new SkyBlockJoinEvent(name, this, player, target);
-        if (name != null) {
 
+        SkyBlockJoinEvent event = new SkyBlockJoinEvent(name, this, player, target);
+
+        if (name != null) {
             if (!event.isCancelled()) {
                 if (!getMembers().contains(player.getUniqueId().toString())) {
+                    event.setJoinCause(SkyBlockJoinEvent.JoinCause.ISLAND);
+
                     if (isOpen()) {
                         event.setJoinCause(SkyBlockJoinEvent.JoinCause.VISIT);
                     } else {
@@ -290,17 +306,15 @@ public class SkyBlock extends SkyBlockMeta {
                 } else {
                     event.setJoinCause(SkyBlockJoinEvent.JoinCause.MEMBER);
                 }
-
                 Bukkit.getPluginManager().callEvent(event);
             }
         } else {
             event.setCancelCause(SkyBlockJoinEvent.CancelCause.NONE);
             Bukkit.getPluginManager().callEvent(event);
         }
-
     }
 
-    public boolean teleportSkyBlock(Player player, OfflinePlayer target) {
+    public void teleportSkyBlock(Player player, OfflinePlayer target) {
 
         SkyBlockJoinEvent event = new SkyBlockJoinEvent(name, this, player, target);
 
@@ -315,12 +329,9 @@ public class SkyBlock extends SkyBlockMeta {
         if (!event.isCancelled()) {
             if (getSpawn() != null) {
                 spawn(player, getLocation());
-
-                return true;
             }
         }
 
-        return false;
     }
 
     public void setVaultLock() {

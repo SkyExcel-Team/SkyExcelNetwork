@@ -46,7 +46,7 @@ public class Warp {
         ConfigurationSection section = config.getConfig().getConfigurationSection("warp");
         if (section != null)
             return new ArrayList<>(section.getKeys(false));
-        return null;
+        return new ArrayList<>();
     }
 
     public Config getConfig() {

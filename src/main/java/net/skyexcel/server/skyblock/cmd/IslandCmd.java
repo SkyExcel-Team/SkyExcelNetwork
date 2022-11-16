@@ -71,7 +71,7 @@ public class IslandCmd implements CommandExecutor {
                     "ㄴ 밴블록, 시간(아침/점심/저녁/새벽), 날씨(맑음/비/번개), pvp, ",
 
             "/섬 옵션 전투 허용 (죽으면 섬 스폰으로 이동 되며 다른패널티는 없다.)",
-            "/섬 옵션 열기",
+            "/섬 옵션 허용 : 섬 방문을 허용합니다.",
             "/섬 옵션 밴블록 알바",
             "/섬 옵션 밴블록 맴버",
             "/섬 옵션 전투 허용",
@@ -89,12 +89,15 @@ public class IslandCmd implements CommandExecutor {
         if (sender instanceof Player player) {
             if (args.length == 0) {
                 SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
-                SkyBlock data = new SkyBlock(playerData.getIsland());
+                if (playerData.hasIsland()) {
+                    SkyBlock data = new SkyBlock(playerData.getIsland());
+                    data.spawn(player, data.getLocation());
 
+                    player.sendMessage("架 " + "자신의 섬으로 이동하였습니다 " + ChatColor.GRAY + "[/섬 도움말]");
+                } else {
+                    player.sendMessage("자신의 섬이 없습니다 [/섬 생성 <이름>]");
+                }
 
-                data.spawn(player, data.getLocation());
-
-                player.sendMessage("架 " + "자신의 섬으로 이동하였습니다 " + ChatColor.GRAY + "[/섬 도움말]");
 
             } else {
                 switch (args[0]) {
@@ -310,8 +313,6 @@ public class IslandCmd implements CommandExecutor {
                             SkyBlock skyBlock = new SkyBlock(targetData.getIsland());
                             skyBlock.visitSkyBlock(player, target);
 
-
-                            player.sendMessage("架 §6" + target.getName() + "§f님의 섬을 방문 했습니다!");
                         } else {
                             player.sendMessage("방문할 섬 입력해~~~~~ 장애야 ㅉㅉ");
                         }
@@ -504,6 +505,7 @@ public class IslandCmd implements CommandExecutor {
                         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
                         SkyBlock data = new SkyBlock(playerData.getIsland());
 
+                        System.out.println(playerData.hasIsland());
                         if (playerData.hasIsland()) {
                             switch (args[1]) {
                                 case "밴블록":
@@ -554,9 +556,9 @@ public class IslandCmd implements CommandExecutor {
                                                 data.time(player, 6000);
                                                 player.sendMessage("§a● §f§e점심§f으로 변경하였습니다.");
                                             }
-                                            case "저녁" -> {
+                                            case "노을" -> {
                                                 data.time(player, 1);
-                                                player.sendMessage("§a● §7저녁§f으로 변경하였습니다.");
+                                                player.sendMessage("§a● §7노을§f으로 변경하였습니다.");
                                             }
                                             case "일몰" -> {
                                                 data.time(player, 12000);
@@ -580,13 +582,18 @@ public class IslandCmd implements CommandExecutor {
                                     break;
 
                                 case "열기":
-                                    data.setOpen(player);
+                                    if (args.length > 2) {
+                                        if ("허용".equalsIgnoreCase(args[2])) {
+                                            data.setOpen(player, true);
+                                        } else if ("비허용".equalsIgnoreCase(args[2])) {
+                                            data.setOpen(player, false);
+                                        }
+                                    }
+
                                     break;
                             }
                         }
                     }
-
-
                 }
             }
 

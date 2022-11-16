@@ -27,7 +27,12 @@ public class SkyBlockJoinEvent extends Event implements Cancellable {
     private CancelCause cancelCause = CancelCause.DEFAULT;
 
     public SkyBlockJoinEvent(String name, SkyBlock islandData, Player player, OfflinePlayer target) {
-        this.name = name;
+        if (name != null) {
+            this.name = name;
+        } else {
+            this.name = "null";
+        }
+
         this.islandData = islandData;
         this.player = player;
         this.target = target;
@@ -51,6 +56,10 @@ public class SkyBlockJoinEvent extends Event implements Cancellable {
 
     public void setCancelCause(CancelCause cancelCause) {
         this.cancelCause = cancelCause;
+    }
+
+    public OfflinePlayer getTarget() {
+        return target;
     }
 
     public CancelCause getCancelCause() {
