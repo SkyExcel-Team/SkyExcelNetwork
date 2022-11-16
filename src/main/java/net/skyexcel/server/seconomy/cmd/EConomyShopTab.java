@@ -17,7 +17,7 @@ public class EConomyShopTab implements TabCompleter {
         List<String> result = new ArrayList<>();
         if (sender instanceof Player player) {
 
-            Config config = new Config("shop/cash/");
+            Config config = new Config("shop/money/");
             config.setPlugin(SkyExcelNetworkSEconomyMain.plugin);
             if (args.length == 1) {
                 if (player.isOp()) {

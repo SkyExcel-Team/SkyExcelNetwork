@@ -17,7 +17,7 @@ public class MileageShopCmdTab implements TabCompleter {
         List<String> result = new ArrayList<>();
         if (sender instanceof Player player) {
 
-            Config config = new Config("shop/cash/");
+            Config config = new Config("shop/mileage/");
             config.setPlugin(SkyExcelNetworkMileageMain.plugin);
             if (args.length == 1) {
                 if (player.isOp()) {

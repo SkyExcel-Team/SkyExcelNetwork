@@ -1,6 +1,7 @@
 package net.skyexcel.server.skyblock.data.event;
 
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -19,12 +20,17 @@ public class SkyBlockJoinEvent extends Event implements Cancellable {
 
     private Player player;
 
+    private OfflinePlayer target;
+
     private JoinCause joinCause;
 
-    public SkyBlockJoinEvent(String name, SkyBlock islandData, Player player) {
+    private CancelCause cancelCause = CancelCause.DEFAULT;
+
+    public SkyBlockJoinEvent(String name, SkyBlock islandData, Player player, OfflinePlayer target) {
         this.name = name;
         this.islandData = islandData;
         this.player = player;
+        this.target = target;
         this.isCancelled = false;
     }
 
@@ -40,6 +46,15 @@ public class SkyBlockJoinEvent extends Event implements Cancellable {
     @Override
     public boolean isCancelled() {
         return isCancelled;
+    }
+
+
+    public void setCancelCause(CancelCause cancelCause) {
+        this.cancelCause = cancelCause;
+    }
+
+    public CancelCause getCancelCause() {
+        return cancelCause;
     }
 
     @Override
@@ -73,8 +88,13 @@ public class SkyBlockJoinEvent extends Event implements Cancellable {
         return player;
     }
 
+
+    public enum CancelCause {
+        NONE, LOCK, DEFAULT
+    }
+
     public enum JoinCause {
-        VISIT(), MEMBER(), ISLAND;
+        VISIT(), MEMBER(), ISLAND, OWNER;
     }
 
 }

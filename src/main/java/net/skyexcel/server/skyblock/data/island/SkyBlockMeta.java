@@ -28,7 +28,7 @@ public class SkyBlockMeta {
 
     public SkyBlockMeta(String name) {
 
-        this.config = new Config(name);
+        this.config = new Config("data/SkyBlock/SkyBlock/" + name + "/" + name);
         this.config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
     }
 

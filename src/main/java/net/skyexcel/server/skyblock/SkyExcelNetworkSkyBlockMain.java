@@ -27,7 +27,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class SkyExcelNetworkSkyBlockMain implements Listener {
 
@@ -79,7 +78,7 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
         new RankLevelExpansion(plugin).register();
         new RankNameExpansion(plugin).register();
 
-        Listener[] listeners = {new onJoin(), new SkyBlockEvent(), new banBlockEvent(), new onHit(), new onQuit()};
+        Listener[] listeners = {new onJoin(), new SkyBlockListener(), new banBlockEvent(), new onHit(), new onQuit()};
         Arrays.stream(listeners).forEach(listener -> {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
         });

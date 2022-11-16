@@ -91,11 +91,11 @@ public class IslandCmd implements CommandExecutor {
                 SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
                 SkyBlock data = new SkyBlock(playerData.getIsland());
 
-                if (data.teleportSkyBlock(player)) {
-                    player.sendMessage("架 " + "자신의 섬으로 이동하였습니다 " + ChatColor.GRAY + "[/섬 도움말]");
-                } else {
-                    player.sendMessage("强 소속되어있는 섬이 없어 텔레포트가 불가능합니다! ");
-                }
+
+                data.spawn(player, data.getLocation());
+
+                player.sendMessage("架 " + "자신의 섬으로 이동하였습니다 " + ChatColor.GRAY + "[/섬 도움말]");
+
             } else {
                 switch (args[0]) {
                     case "도움말" -> {
@@ -191,8 +191,6 @@ public class IslandCmd implements CommandExecutor {
                         }
                     }
                     case "수락" -> {
-
-
                         Player target = Bukkit.getPlayer(args[1]);
 
                         if (SkyBlockData.inviteSkyBlock.containsKey(player.getUniqueId())) {
@@ -310,7 +308,7 @@ public class IslandCmd implements CommandExecutor {
                             SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
 
                             SkyBlock skyBlock = new SkyBlock(targetData.getIsland());
-                            skyBlock.visitSkyBlock(player);
+                            skyBlock.visitSkyBlock(player, target);
 
 
                             player.sendMessage("架 §6" + target.getName() + "§f님의 섬을 방문 했습니다!");
@@ -383,7 +381,7 @@ public class IslandCmd implements CommandExecutor {
                                 }
                             }
 
-                        } else{
+                        } else {
                             player.sendMessage("强 소속되어있는 섬이 없어 옵션 설정이 불가능합니다! ");
                         }
                     }

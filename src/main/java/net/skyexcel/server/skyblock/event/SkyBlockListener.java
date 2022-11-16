@@ -3,7 +3,6 @@ package net.skyexcel.server.skyblock.event;
 
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.skyblock.data.event.SkyBlockCreateEvent;
-import net.skyexcel.server.skyblock.data.event.SkyBlockDeleteEvent;
 import net.skyexcel.server.skyblock.data.event.SkyBlockJoinEvent;
 import net.skyexcel.server.skyblock.data.event.SkyBlockQuickEvent;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
@@ -12,12 +11,12 @@ import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -26,7 +25,7 @@ import skyexcel.data.file.Config;
 import java.util.List;
 import java.util.UUID;
 
-public class SkyBlockEvent implements Listener {
+public class SkyBlockListener implements Listener {
 
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -105,32 +104,51 @@ public class SkyBlockEvent implements Listener {
 
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
-        if (event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.VISIT)) {
-            Player owner = Bukkit.getPlayer(UUID.fromString(data.getOwner()));
-            owner.sendMessage(player.getDisplayName() + " 님이 섬에 방문 하였습니다.");
-            data.spawn(player, data.getLocation());
 
-        } else {
+
+        if (event.getCancelCause().equals(SkyBlockJoinEvent.CancelCause.DEFAULT)) {
+
             if (playerData.hasIsland()) {
-                Player owner = Bukkit.getPlayer(UUID.fromString(data.getOwner()));
+                OfflinePlayer owner = Bukkit.getOfflinePlayer(UUID.fromString(data.getOwner()));
                 if (event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.ISLAND)) {
+
                     if (data.getMembers() != null) {
                         for (String uuid : data.getMembers()) {
 
                             Player member = Bukkit.getPlayer(UUID.fromString(uuid));
-                            if (!data.getMembers().contains(player.getUniqueId().toString()))
+                            if (!data.getMembers().contains(player.getUniqueId().toString())) {
                                 member.sendMessage("家 §6" + player.getDisplayName() + "§f님이 서버에 §e입장§f하였습니다!");
+                            }
+
                         }
                     }
+                    data.teleportSkyBlock(player, owner);
 
                     if (owner != null) {
                         if (!player.equals(owner)) {
-                            owner.sendMessage("家 §6" + player.getDisplayName() + "§f님이 서버 §e입장§f하였습니다!");
+                            if (owner.isOnline())
+                                owner.getPlayer().sendMessage("家 §6" + player.getDisplayName() + "§f님이 서버 §e입장§f하였습니다!");
                         }
                     }
+                } else if ((event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.MEMBER))) {
+                    if (owner.isOnline())
+                        owner.getPlayer().sendMessage("家 §6" + player.getDisplayName() + "§f님이 섬에 §e입장§f하였습니다!");
+                } else if (event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.VISIT)) {
+                    if (owner.isOnline())
+                        owner.getPlayer().sendMessage(player.getDisplayName() + " 님이 섬에 방문 하였습니다.");
+                    data.spawn(player, data.getLocation());
+
                 }
             }
+
+        } else {
+            if (event.getCancelCause().equals(SkyBlockJoinEvent.CancelCause.NONE)) {
+                player.sendMessage("强 소속되어있는 섬이 없어 텔레포트가 불가능합니다! ");
+            } else if (event.getCancelCause().equals(SkyBlockJoinEvent.CancelCause.LOCK)) {
+                player.sendMessage("해당 섬은 잠김 ㅅㄱ");
+            }
         }
+
 
     }
 
@@ -144,7 +162,7 @@ public class SkyBlockEvent implements Listener {
         if (location.getY() <= MIN_Y) {
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
             SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
-            skyBlock.teleportSkyBlock(player);
+            skyBlock.teleportSkyBlock(player, Bukkit.getOfflinePlayer(skyBlock.getOwner()));
         }
     }
 

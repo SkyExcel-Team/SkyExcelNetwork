@@ -7,13 +7,11 @@ import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.skyblock.data.island.vault.SkyBlockVault;
 import net.skyexcel.server.skyblock.util.world.WorldManager;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import skyexcel.data.file.Config;
-import skyexcel.data.location.Region;
 
-import java.lang.reflect.InvocationTargetException;
+import java.io.File;
 import java.util.*;
 
 public class SkyBlock extends SkyBlockMeta {
@@ -87,35 +85,49 @@ public class SkyBlock extends SkyBlockMeta {
 
             config.saveConfig();
 
-            if (SkyExcelNetworkSkyBlockMain.config.getConfig().get("location") == null) {
-                Location location = new Location(Bukkit.getWorld("SkyBlock"), 0.0D, 0.0D, 0.0D);
-                SkyExcelNetworkSkyBlockMain.config.setLocation("location", location);
+            SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+            if (playerData.getOriginLocation() == null) {
+                if (SkyExcelNetworkSkyBlockMain.config.getConfig().get("location") == null) {
+                    Location location = new Location(Bukkit.getWorld("SkyBlock"), 0.0D, 0.0D, 0.0D);
+                    SkyExcelNetworkSkyBlockMain.config.setLocation("location", location);
+                    WorldManager worldManager = new WorldManager();
+                    worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
+
+                    player.teleport(location);
+                    this.config.setLocation("SkyBlock.location", location);
+                    this.config.saveConfig();
+                } else {
+                    Location location = SkyExcelNetworkSkyBlockMain.config.getLocation("location");
+                    if (location.getX() + 1000.0D <= 2.9999984E7D) {
+                        location.add(1000.0D, 0.0D, 0.0D);
+                        this.config.setLocation("SkyBlock.location", location);
+
+                        WorldManager worldManager = new WorldManager();
+                        worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
+                        player.teleport(location);
+                        SkyExcelNetworkSkyBlockMain.config.setLocation("location", location);
+                        this.config.saveConfig();
+                    }
+                }
+            } else {
+
+                Location location = playerData.getOriginLocation();
                 WorldManager worldManager = new WorldManager();
                 worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
 
                 player.teleport(location);
-                this.config.setLocation("SkyBlock.location", location);
                 this.config.saveConfig();
-            } else {
-                Location location = SkyExcelNetworkSkyBlockMain.config.getLocation("location");
-                if (location.getX() + 1000.0D <= 2.9999984E7D) {
-                    location.add(1000.0D, 0.0D, 0.0D);
-                    this.config.setLocation("SkyBlock.location", location);
-
-                    WorldManager worldManager = new WorldManager();
-                    worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
-                    player.teleport(location);
-                    SkyExcelNetworkSkyBlockMain.config.setLocation("location", location);
-                    this.config.saveConfig();
-                }
             }
+
         }
     }
 
     public void remove(Player player) {
 
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+        playerData.setOriginLocation(getLocation());
         player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+
 
         if (getLocation() != null) {
             if (!getMembers().isEmpty()) { //TODO 맴버가 있을 경우 모든 멤버를 스폰으로 텔레포트 시킨다.
@@ -134,10 +146,11 @@ public class SkyBlock extends SkyBlockMeta {
                     if (parttime.isOnline()) {
                         parttime.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
                         parttime.sendMessage("당신의 섬이 지워졌습니다!");
-
                     }
                 }
             }
+
+            player.sendMessage("당신의 섬이 지워짐");
 
             org.bukkit.Location pos1 = getLocation(); //자신의 섬의 영역을 불러온다.
             org.bukkit.Location pos2 = getLocation(); //자신의 섬의 영역을 불러온다.
@@ -147,10 +160,16 @@ public class SkyBlock extends SkyBlockMeta {
 
             WorldManager.removeBlocks(pos1, pos2);
 
-            config.deleteFile();
-            playerData.getConfig().deleteFile();
+            playerData.getConfig().removeKey("island.name");
+
+            Config folder = new Config("data/SkyBlock/SkyBlock/" + name);
+            folder.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+
+            folder.deleteDir("data/SkyBlock/SkyBlock/" + name + "/record");
+            folder.deleteDir("data/SkyBlock/SkyBlock/" + name + "/");
         }
     }
+
 
     public void reset(Player player) {
         player.sendMessage("월드 초기화를 진행합니다...");
@@ -169,7 +188,8 @@ public class SkyBlock extends SkyBlockMeta {
 
     public void spawn(Player player, Location loc) {
         player.teleport(loc);
-        SkyExcelNetworkSkyBlockMain.getWorldBorderApi().setBorder(player, 50, loc);
+        if (isWorldBorder())
+            SkyExcelNetworkSkyBlockMain.getWorldBorderApi().setBorder(player, 50, loc);
     }
 
     //Path = SkyBlock.option.open";
@@ -181,7 +201,7 @@ public class SkyBlock extends SkyBlockMeta {
             config.setBoolean("SkyBlock.option.open", true);
             for (Player visitors : Bukkit.getWorld("SkyBlock").getPlayers()) {
                 if (isInIsland(visitors)) {
-                    teleportSkyBlock(visitors);
+                    teleportSkyBlock(visitors, Bukkit.getOfflinePlayer(getOwner()));
                 }
             }
         } else {
@@ -250,41 +270,50 @@ public class SkyBlock extends SkyBlockMeta {
         return false;
     }
 
-    public void deleteSkyblock(Player player) {
-
-        SkyBlockKickEvent event = new SkyBlockKickEvent(name, this, player);
-        Bukkit.getPluginManager().callEvent(event);
-
-        Location location = getLocation();
-
-        int size = getSize();
-
-    }
 
     public int getSize() {
         return config.getConfig().getInt("SkyBlock.level.size");
     }
 
 
-    public void visitSkyBlock(Player player) {
-        SkyBlockJoinEvent event = new SkyBlockJoinEvent(name, this, player);
+    public void visitSkyBlock(Player player, OfflinePlayer target) {
+        SkyBlockJoinEvent event = new SkyBlockJoinEvent(name, this, player, target);
+        if (name != null) {
 
+            if (!event.isCancelled()) {
+                if (!getMembers().contains(player.getUniqueId().toString())) {
+                    if (isOpen()) {
+                        event.setJoinCause(SkyBlockJoinEvent.JoinCause.VISIT);
+                    } else {
+                        event.setCancelCause(SkyBlockJoinEvent.CancelCause.LOCK);
+                    }
+                } else {
+                    event.setJoinCause(SkyBlockJoinEvent.JoinCause.MEMBER);
+                }
 
-        if (!event.isCancelled()) {
-            event.setJoinCause(SkyBlockJoinEvent.JoinCause.VISIT);
+                Bukkit.getPluginManager().callEvent(event);
+            }
+        } else {
+            event.setCancelCause(SkyBlockJoinEvent.CancelCause.NONE);
             Bukkit.getPluginManager().callEvent(event);
         }
+
     }
 
-    public boolean teleportSkyBlock(Player player) {
+    public boolean teleportSkyBlock(Player player, OfflinePlayer target) {
 
-        SkyBlockJoinEvent event = new SkyBlockJoinEvent(name, this, player);
-        event.setJoinCause(SkyBlockJoinEvent.JoinCause.MEMBER);
+        SkyBlockJoinEvent event = new SkyBlockJoinEvent(name, this, player, target);
+
+        if (getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
+            event.setJoinCause(SkyBlockJoinEvent.JoinCause.OWNER);
+        } else {
+            event.setJoinCause(SkyBlockJoinEvent.JoinCause.MEMBER);
+        }
+
         Bukkit.getPluginManager().callEvent(event);
 
         if (!event.isCancelled()) {
             if (getSpawn() != null) {
-
                 spawn(player, getLocation());
 
                 return true;
@@ -600,7 +629,7 @@ public class SkyBlock extends SkyBlockMeta {
     public List<String> getVisitors() {
         List<String> visitors = new ArrayList<>();
         for (Player player : Objects.requireNonNull(Bukkit.getWorld("SkyBlock")).getPlayers()) {
-            if(isInIsland(player) && !getMembers().contains(player.getUniqueId().toString())){
+            if (isInIsland(player) && !getMembers().contains(player.getUniqueId().toString())) {
                 visitors.add(player.getUniqueId().toString());
             }
         }
