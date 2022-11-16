@@ -10,8 +10,8 @@ public class SnowToggleData {
     public SnowToggleData(OfflinePlayer player) {
         config = new Config("data/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
-        config.saveDefualtConfig();
         config.loadDefualtConfig();
+        config.saveDefualtConfig();
 
         if (!config.getConfig().contains("snow"))
             config.setBoolean("snow", true);

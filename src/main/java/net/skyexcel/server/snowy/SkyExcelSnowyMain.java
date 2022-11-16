@@ -8,7 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelSnowyMain {
     public static JavaPlugin plugin;
-    SnowParticleScheduler task;
+    private SnowParticleScheduler task;
+    private int taskId;
 
     public SkyExcelSnowyMain(JavaPlugin plugin) {
         SkyExcelSnowyMain.plugin = plugin;
@@ -21,10 +22,11 @@ public class SkyExcelSnowyMain {
         Bukkit.getPluginCommand("눈").setTabCompleter(new SnowCmdTab());
 
         task = new SnowParticleScheduler();
-        (task).runTaskTimerAsynchronously(plugin, 20L * 15, 20L);
+        this.taskId = (task).runTaskTimerAsynchronously(plugin, 0, 20L * 3).getTaskId();
     }
 
     public void disable() {
         Bukkit.getScheduler().cancelTask(task.getId());
+        Bukkit.getScheduler().cancelTask(taskId);
     }
 }
