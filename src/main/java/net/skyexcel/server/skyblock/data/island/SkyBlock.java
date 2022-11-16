@@ -127,7 +127,9 @@ public class SkyBlock extends SkyBlockMeta {
 
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
         playerData.setOriginLocation(getLocation());
-        player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+
+        Warp warp = new Warp("spawn");
+        player.teleport(warp.getLocation());
 
 
         if (getLocation() != null) {
