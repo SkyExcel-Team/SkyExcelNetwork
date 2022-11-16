@@ -21,27 +21,36 @@ public class SnowParticleScheduler extends BukkitRunnable {
     private static final String worldName = "lobby"; //TODO - CHANGE
     private static final int centerX = -2;
     private static final int centerZ = 70;
-    private static final int minY = 63;
-    private static final int maxY = 110;
 
-    private static final int radius = 40; //TODO - CHANGE (95)
-    private static final int chance = 12;
+    private static int radius;
+    private static final int chance = 2;
 
     private static boolean done = false;
 
     private List<Block> blocks = new ArrayList<>();
 
     public SnowParticleScheduler() {
-        Location location = new Location(Bukkit.getWorld(worldName), centerX, 0, centerZ);
-
         this.taskId = Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkMain.getPlugin(), () -> {
-            for (int y = minY; y <= maxY; y++) {
+            Location location = new Location(Bukkit.getWorld(worldName), centerX, 0, centerZ);
+            radius = 40;
+            for (int y = 63; y <= 80; y++) {
                 for (int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
                     for (int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
                         Block block = location.getWorld().getBlockAt(x, y, z);
 
-                        if (block.getType().isAir())
-                            blocks.add(block);
+                        blocks.add(block);
+                    }
+                }
+            }
+
+            location = new Location(Bukkit.getWorld(worldName), 0, 0, 0);
+            radius = 10;
+            for (int y = 65; y <= 80; y++) {
+                for (int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
+                    for (int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
+                        Block block = location.getWorld().getBlockAt(x, y, z);
+
+                        blocks.add(block);
                     }
                 }
             }
@@ -55,21 +64,13 @@ public class SnowParticleScheduler extends BukkitRunnable {
     public void run() {
         if (!done) return;
 
-        Iterator<Block> iterator = blocks.iterator();
-        while(iterator.hasNext()) {
-            Block block = iterator.next();
-
+        blocks.forEach(block -> {
             if (getBoolean()) {
                 Location loc = block.getLocation().add(
                         (float) random.nextGaussian(),
                         (float) random.nextGaussian(),
                         (float) random.nextGaussian()
                 );
-
-                if (block.getLocation().getWorld().getHighestBlockYAt(block.getX(), block.getZ()) > block.getY()) {
-                    iterator.remove();
-                    return;
-                }
 
                 if (getBoolean()) {
                     Bukkit.getWorld(worldName).getPlayers().forEach(player -> {
@@ -85,7 +86,7 @@ public class SnowParticleScheduler extends BukkitRunnable {
                     });
                 }
             }
-        }
+        });
     }
 
     public Boolean getBoolean() {
