@@ -2,21 +2,26 @@ package net.skyexcel.server.job.listener;
 
 
 import net.skyexcel.server.job.data.Job;
+import net.skyexcel.server.job.data.JobData;
 import net.skyexcel.server.job.data.JobType;
 import net.skyexcel.server.job.data.stat.AntiFragile;
 import net.skyexcel.server.job.data.stat.Bait;
 import net.skyexcel.server.job.data.stat.BlastFurnace;
 import net.skyexcel.server.job.data.stat.FeverTime;
 import net.skyexcel.server.job.data.type.Farmer;
+import net.skyexcel.server.job.gui.JobGUI;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Damageable;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockGrowEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.Inventory;
@@ -106,4 +111,44 @@ public class JobListener implements Listener {
         }
     }
 
+
+    @EventHandler
+    public void onFish(PlayerFishEvent event){
+        Player player = event.getPlayer();
+
+        Entity item=  event.getCaught();
+    }
+    @EventHandler
+    public void onClick(InventoryClickEvent event){
+        if(event.getWhoClicked() instanceof  Player player){
+            if(JobData.gui.containsKey(player.getUniqueId())){
+                JobGUI jobGUI = JobData.gui.get(player.getUniqueId());
+                Inventory inv = event.getClickedInventory();
+                if(jobGUI.getInv().equals(inv)){
+                    int slot = event.getSlot();
+
+                    switch (jobGUI.getJobType()){
+                        case MINEWORKER -> {
+                            if(JobData.slot[0] == slot){
+                                BlastFurnace blastFurnace = new BlastFurnace();
+
+                                player.sendMessage("용광로 특성을 업그레이드 하였습니다.");
+                            } else if(JobData.slot[1] == slot){
+                                player.sendMessage("피버타임 특성을 업그레이드 하였습니다.");
+                            } else if(JobData.slot[2] == slot){
+                                player.sendMessage("단단한 곡괭이 특성을 업그레이드 하였습니다.");
+                            }
+                        }
+                        case FARM -> {
+
+                        }
+                        case FISHERMAN -> {
+
+                        }
+                    }
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
 }

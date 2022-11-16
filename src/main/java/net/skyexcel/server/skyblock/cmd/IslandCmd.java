@@ -284,13 +284,18 @@ public class IslandCmd implements CommandExecutor {
 
                     }
                     case "생성" -> {
-                        if (args.length <= 30) {
-                            String name = Translate.collapse(args, 1);
-                            SkyBlock data = new SkyBlock(player, name);
-                            data.create(player);
+                        if (args.length > 1) {
+                            if (args.length <= 30) {
+                                String name = Translate.collapse(args, 1);
+                                SkyBlock data = new SkyBlock(player, name);
+                                data.create(player);
+                            } else {
+                                player.sendMessage("强 섬 이름은 30글자 미만 이어야 합니다.");
+                            }
                         } else {
-                            player.sendMessage("强 섬 이름은 30글자 미만 이어야 합니다.");
+                            player.sendMessage("섬 이름을 입력해 주세요!");
                         }
+
                     }
 
                     case "이름" -> {
