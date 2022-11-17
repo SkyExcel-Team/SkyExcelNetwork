@@ -49,8 +49,7 @@ public class DiscordListener implements EventListener {
                 MessageEmbed embed = new EmbedBuilder()
                         .setColor(embedColor)
                         .setTitle("` \uD83D\uDD17 디스코드 계정 연동하기  \uD83D\uDD17 `")
-                        .setDescription("`ㆍ\uD83E\uDD97 | 메뚜기팜 디스코드 서버를 이용하시려면, ` \n" +
-                                "`ㆍ\uD83C\uDF3E | 마인크래프트 계정을 디스코드 계정에 연동을 하셔야합니다! ` \n" +
+                        .setDescription("`ㆍ\uD83E\uDD97 | 메뚜기팜 디스코드를 이용 하시려면 마인크래프트 계정을 연동해주세요! ` \n" +
                                 "`ㆍ✅ | 아래 '인증번호 입력하기' 버튼을 클릭하여 연동을 하세요! `\n")
                         .build();
 
