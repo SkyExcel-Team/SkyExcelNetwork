@@ -1,13 +1,17 @@
 package net.skyexcel.server.flyticket.data;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
+import net.skyexcel.server.flyticket.SkyExcelNetworkFlyTicketMain;
+import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import org.bukkit.OfflinePlayer;
 import skyexcel.data.Time;
+import skyexcel.data.file.Config;
 
 public class FlyTime {
 
     private Time time;
 
-
+    private Config config;
     private OfflinePlayer offlinePlayer;
 
 
@@ -18,12 +22,19 @@ public class FlyTime {
      */
     public FlyTime(OfflinePlayer offlinePlayer) {
         this.offlinePlayer = offlinePlayer;
+        this.config = new Config("fly/" + offlinePlayer.getUniqueId());
+        this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
+        
+    }
+
+    public void setDefault() {
+        if (this.config == null)
+            this.config.setLong("left", 0);
     }
 
 
-    public void addTimeAsDay(int Day, int Hour, int Minutes, int Second){
-        Time newTime = new Time(Day,Hour,Minutes,Second);
+    public void addTimeAsYear(int Year, int Month, int Day, int Hour, int Minutes, int Second) {
+        Time newTime = new Time(Year, Month, Day, Hour, Minutes, Second);
+        System.out.println(newTime.SECOND_IN_MILLIS());
     }
-
-
 }

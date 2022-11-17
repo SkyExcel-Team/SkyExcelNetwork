@@ -5,6 +5,7 @@ import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
 import net.skyexcel.server.discord.SkyExcelNetworkDiscordMain;
 import net.skyexcel.server.fish.SkyExcelNetworkFishMain;
+import net.skyexcel.server.flyticket.SkyExcelNetworkFlyTicketMain;
 import net.skyexcel.server.giftbox.SkyExcelNetworkGiftBoxMain;
 import net.skyexcel.server.items.SkyExcelNetworkItemsMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
@@ -53,6 +54,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         this.skyExcelNetworkSnowyMain = new SkyExcelSnowyMain(plugin);
         new SkyExcelNetworkTradeMain(plugin);
         new SkyExcelNetWorkWarp(plugin);
+        new SkyExcelNetworkFlyTicketMain(plugin);
         new SkyExcelNetworkTutorialMain(plugin);
     }
 
