@@ -1,5 +1,6 @@
 package net.skyexcel.server.skyblock.data.island;
 
+import net.skyexcel.server.giftbox.util.Items;
 import net.skyexcel.server.skyblock.data.event.*;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
@@ -9,6 +10,7 @@ import net.skyexcel.server.skyblock.util.world.WorldManager;
 import net.skyexcel.server.warp.data.Warp;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 import skyexcel.data.file.Config;
 
@@ -144,7 +146,6 @@ public class SkyBlock extends SkyBlockMeta {
                         members.getPlayer().sendMessage("佳 §6섬장§f이 섬을 §c제거§f하여, 섬에서 자동 §c탈퇴§f되었습니다.");
 
 
-
                     }
                 }
             } else if (!getPartTime().isEmpty()) {
@@ -261,6 +262,8 @@ public class SkyBlock extends SkyBlockMeta {
             }
         }
     }
+
+
 
     public void accept(Player player, Player target) {
         SkyBlockRecord record = new SkyBlockRecord(name);

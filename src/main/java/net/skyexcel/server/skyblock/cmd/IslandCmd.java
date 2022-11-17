@@ -69,9 +69,16 @@ public class IslandCmd implements CommandExecutor {
             "§6§l│ §f/섬 홈 : 자신의 섬 스폰을 §a지정§f합니다.",
             "§6§l│ §f/섬 설정 : 섬 세부 사항을 §6설정§fg합니다. \n" +
                     "§6§l│ ㄴ §c밴블록, §f시간§7(아침/점심/저녁/새벽)§f, 날씨§7(맑음/비/번개), pvp",
-
+            "/섬 옵션 시간 <시간> : 섬의 시간을 설정 합니다.",
+            "/섬 옵션 월드보더 끄기 : 섬의 월드보더를 끕니다.",
+            "/섬 옵션 월드보더 보기 : 섬 월드보더를 보여지게 합니다.",
+            "",
             "§6§l│ §f/섬 옵션 전투 §a허용 §7(사망시 섬 스폰으로 이동 됩니다. §7(패널티 X)",
-            "§6§l│ §f/섬 옵션 허용 : 섬 방문을 §a허용§f합니다.",
+            "§6§l│ §f/섬 옵션 전투 §c비허용 §7(섬에서의 전투를 비활성화 합니다.)",
+
+            "§6§l│ §f/섬 옵션 방문 허용 : 섬 방문을 §a허용§f합니다.",
+            "§6§l│ §f/섬 옵션 방문 잠금 : 섬 방문을 §a잠금§f합니다.",
+
             "§6§l│ §f/섬 옵션 밴블록 알바 : 알바의 §c밴블록§f을 §6설정§f합니다.",
             "§6§l│ §f/섬 옵션 밴블록 섬원 : 섬원의 §c밴블록§f을 §6설정§f합니다.",
             "§6§l│ §f/섬 옵션 전투 허용 : 섬 §c전투§f를 §a허용§f합니다.",
@@ -81,7 +88,7 @@ public class IslandCmd implements CommandExecutor {
             "§6§l│ §f/섬 알바 추가 [이름] [돈] : §6플레이어§f를 섬 §e알바§f로 §a추가§f합니다.",
             "§6§l│ §f/섬 알바 제거 [이름] : §e알바§f가 끝난 §6플레이어§f를 §c제거§f합니다.",
             "§6§l│ §f/섬 순위 [페이지] : 모든 섬의 §6순위§f를 §a확인§f합니다.",
-            "§6§l│ §f/섬 멤버 : 섬원 GUI를 띄웁니다.");
+            "§6§l│ §f/섬 섬원 : 섬원 GUI를 띄웁니다.");
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -599,6 +606,7 @@ public class IslandCmd implements CommandExecutor {
                             }
                         }
                     }
+
                 }
             }
 

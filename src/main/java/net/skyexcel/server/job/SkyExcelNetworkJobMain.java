@@ -8,9 +8,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import skyexcel.data.file.Config;
 
 public class SkyExcelNetworkJobMain {
     public static JavaPlugin plugin;
+
+    public static Config config;
 
     public SkyExcelNetworkJobMain(JavaPlugin plugin) {
         SkyExcelNetworkJobMain.plugin = plugin;
@@ -28,6 +31,10 @@ public class SkyExcelNetworkJobMain {
 //            Scarecrow scarecrow = new Scarecrow(offlinePlayer);
 //            scarecrow.getCoolTime().runTaskTimer(plugin, 0, 20);
 //        }
+
+        config = new Config("Job-Config");
+        config.setPlugin(plugin);
+        config.loadDefaultPluginConfig();
     }
 
 
