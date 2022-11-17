@@ -114,9 +114,11 @@ public class SkyBlockListener implements Listener {
                         if (event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.VISIT)) {
                             if (owner.isOnline())
                                 owner.getPlayer().sendMessage(player.getDisplayName() + " 님이 섬에 방문 하였습니다.");
+
+                            player.sendMessage("架 §6" + owner.getName() + "§f님의 섬을 방문 했습니다!");
                             data.spawn(player, data.getLocation());
 
-                            player.sendMessage("架 §6" + player.getName() + "§f님의 섬을 방문 했습니다!");
+
                         }
                     }
                 }

@@ -264,7 +264,6 @@ public class SkyBlock extends SkyBlockMeta {
     }
 
 
-
     public void accept(Player player, Player target) {
         SkyBlockRecord record = new SkyBlockRecord(name);
 
@@ -318,9 +317,6 @@ public class SkyBlock extends SkyBlockMeta {
                 }
                 Bukkit.getPluginManager().callEvent(event);
             }
-        } else {
-            event.setCancelCause(SkyBlockJoinEvent.CancelCause.NONE);
-            Bukkit.getPluginManager().callEvent(event);
         }
     }
 

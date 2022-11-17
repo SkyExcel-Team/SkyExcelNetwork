@@ -21,7 +21,7 @@ public class FlyTicketListener implements org.bukkit.event.Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        FlyTime flyTime = new FlyTime(player);
+
 
         if (player.isFlying()) {
             ActionBar.sendMessage(player, " 123년 1달 1일 1시간 1분 1초 남았습니다");
