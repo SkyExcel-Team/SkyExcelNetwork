@@ -62,7 +62,7 @@ public class DiscordListener implements EventListener {
                         .addComponents(ActionRow.of(openVerifyModal, howToVerify, askForVerify))
                         .build();
 
-                e.reply("생성함 ㅅㄱ").setEphemeral(true).queue();
+                e.reply("인증 임베드를 생성하였습니다!").setEphemeral(true).queue();
                 e.getChannel().sendMessage(message).queue();
             }
         } else if (event instanceof ButtonInteractionEvent e) {
@@ -105,7 +105,7 @@ public class DiscordListener implements EventListener {
                     SkyExcelNetworkDiscordMain.data.setString(VerifyUtils.getPlayerUuid(currentCode).toString(), e.getUser().getId());
                     OfflinePlayer t = Bukkit.getOfflinePlayer(VerifyUtils.getPlayerUuid(currentCode));
                     if (t.isOnline()) {
-                        t.getPlayer().sendMessage("디스코드 계정(" + e.getUser().getAsTag() + ")과 해당 계정이 연동되었습니다!");
+                        t.getPlayer().sendMessage("架 디스코드 계정 §7(" + e.getUser().getAsTag() + ")§f와 §a연동§f되었습니다!");
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
