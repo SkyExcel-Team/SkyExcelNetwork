@@ -44,6 +44,7 @@ public class SkyExcelNetworkDiscordMain {
         Bukkit.getPluginManager().registerEvents(new DiscordListener(), plugin);
 
         Bukkit.getPluginCommand("인증").setExecutor(VerifyCommand);
+        Bukkit.getPluginCommand("인증코드").setExecutor(VerifyCommand);
         Bukkit.getPluginCommand("인증").setTabCompleter(new DiscordVerifyCommandTabComplete());
 
 

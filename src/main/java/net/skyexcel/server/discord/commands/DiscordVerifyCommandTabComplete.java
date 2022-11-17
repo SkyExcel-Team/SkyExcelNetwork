@@ -25,8 +25,6 @@ public class DiscordVerifyCommandTabComplete implements TabCompleter {
                 if (player.isOp()) {
                     completions.add("리로드");
                 }
-
-                completions.add("발급");
             }
         }
         return completions;

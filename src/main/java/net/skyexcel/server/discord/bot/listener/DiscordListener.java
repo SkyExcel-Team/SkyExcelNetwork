@@ -142,25 +142,29 @@ public class DiscordListener implements EventListener {
                 }
 
                 //닉네임 변경
-                if (SkyExcelNetworkDiscordMain.botConfig.getBoolean("bot_settings.changeDiscordName.enable")) {
-                    try {
-                        String nickname = SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.changeDiscordName.name")
-                                .replace( "%minecraft_name%",
-                                        Bukkit.getPlayer(VerifyUtils.getPlayerUuid(currentCode)).getName())
-                                .replace("%discord_name%", e.getUser().getName())
-                                .replace("%discord_tag%",
-                                        e.getUser().getAsTag().substring(e.getUser().getAsTag().length() - 4))
-                                .replace("%discord_full%", e.getUser().getAsTag());
+                try {
+                    if (SkyExcelNetworkDiscordMain.botConfig.getBoolean("bot_settings.changeDiscordName.enable")) {
+                        try {
+                            String nickname = SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.changeDiscordName.name")
+                                    .replace( "%minecraft_name%",
+                                            Bukkit.getPlayer(VerifyUtils.getPlayerUuid(currentCode)).getName())
+                                    .replace("%discord_name%", e.getUser().getName())
+                                    .replace("%discord_tag%",
+                                            e.getUser().getAsTag().substring(e.getUser().getAsTag().length() - 4))
+                                    .replace("%discord_full%", e.getUser().getAsTag());
 
-                        Guild guild = SkyExcelNetworkDiscordMain.bot.getJDA().getGuildById(SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.guildId"));
+                            Guild guild = SkyExcelNetworkDiscordMain.bot.getJDA().getGuildById(SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.guildId"));
 
-                        guild.getMember(e.getUser()).modifyNickname(nickname).queue();
-                    } catch (Exception ex) {
-                        if (ex instanceof HierarchyException) {
-                            return;
-                        } else
-                            ex.printStackTrace();
+                            guild.getMember(e.getUser()).modifyNickname(nickname).queue();
+                        } catch (Exception ex) {
+                            if (ex instanceof HierarchyException) {
+                                return;
+                            } else
+                                ex.printStackTrace();
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         }

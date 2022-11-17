@@ -41,8 +41,9 @@ commands:
 
   #Discord
   인증:
-    description: 디스코드 인증 명령어
-    aliases: [ verify ]
+    description: 디스코드 인증 관련 명령어
+  인증코드:
+    description: 디스코드 인증코드 발급 명령어
 
   #Fish
   낚시:
