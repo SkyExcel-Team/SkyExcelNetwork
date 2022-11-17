@@ -48,7 +48,10 @@ public class SkyExcelNetworkDiscordMain {
         titleSchedulerId = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
             if (config.getBoolean("messages.notVerifiedTitle.titleEnable"))
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    if (data.getString(player.getUniqueId().toString()).equals("")) {
+                    String discordId = data.getString(player.getUniqueId().toString());
+
+                    if (discordId == null) return;
+                    if (discordId.equals("")) {
                         player.sendTitle(ChatColor.translateAlternateColorCodes('&', config.getString("messages.notVerifiedTitle.title")),
                                 ChatColor.translateAlternateColorCodes('&', config.getString("messages.notVerifiedTitle.subtitle")),
                                 config.getInteger("messages.notVerifiedTitle.fadein") * 20,
