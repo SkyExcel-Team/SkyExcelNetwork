@@ -25,13 +25,15 @@ public class SkyExcelNetworkDiscordMain {
     }
 
     public void onEnable() {
-        config = new Config("Discord-config");
-        config.setPlugin(plugin);
-        config.loadDefaultPluginConfig();
-
         botConfig = new Config("Discord-bot");
         botConfig.setPlugin(plugin);
         botConfig.loadDefaultPluginConfig();
+
+        if (!botConfig.getBoolean("bot_settings.enable")) return;
+
+        config = new Config("Discord-config");
+        config.setPlugin(plugin);
+        config.loadDefaultPluginConfig();
 
         data = new Config("Discord-discordVerifies");
         data.setPlugin(plugin);

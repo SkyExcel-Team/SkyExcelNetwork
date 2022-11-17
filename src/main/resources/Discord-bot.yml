@@ -1,5 +1,8 @@
 bot_settings:
 
+  # 봇 활성화 설정
+  enable: true
+
   # 봇 토큰
   token: "MTA0MTMwNzAzMjMzMjAyNTg2Ng.GpQURZ.mKQJga8mtuhh4LahzVXOspbe1bR_60WqoNmKAo"
 
