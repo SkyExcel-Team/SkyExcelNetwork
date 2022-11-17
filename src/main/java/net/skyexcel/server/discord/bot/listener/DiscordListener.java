@@ -177,8 +177,8 @@ public class DiscordListener implements EventListener {
     private Boolean isModerator(Guild guild, User user) {
         Role role = guild.getRoleById(SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.roles.moderatorRole"));
 
-        if (!guild.getMemberById(user.getId())
-                .getRoles().contains(role)) return true;
+        if (guild.getMemberById(user.getId()).getRoles().contains(role))
+            return true;
         else
             return false;
     }
