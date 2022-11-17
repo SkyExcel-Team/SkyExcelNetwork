@@ -86,7 +86,7 @@ public class DiscordVerify {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', SkyExcelNetworkDiscordMain.config.getString("messages.expiredVerifyCode")));
                         }
                     }
-                }, (SkyExcelNetworkDiscordMain.config.getInteger("others.verifyCodeExpiredSeconds") * 20L));
+                }, 20L * (SkyExcelNetworkDiscordMain.config.getInteger("others.verifyCodeExpiredSeconds")));
             }
         }
 

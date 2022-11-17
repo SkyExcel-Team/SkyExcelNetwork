@@ -105,11 +105,14 @@ public class DiscordListener implements EventListener {
                     SkyExcelNetworkDiscordMain.data.setString(VerifyUtils.getPlayerUuid(currentCode).toString(), e.getUser().getId());
                     OfflinePlayer t = Bukkit.getOfflinePlayer(VerifyUtils.getPlayerUuid(currentCode));
                     if (t.isOnline()) {
-                        t.getPlayer().sendMessage("架 디스코드 계정 §7(" + e.getUser().getAsTag() + ")§f와 §a연동§f되었습니다!");
+                        t.getPlayer().sendMessage("架 디스코드 계정 §7(" + e.getUser().getAsTag() + ")§f과 §a연동§f되었습니다!");
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+
+                //코드 삭제
+                VerifyUtils.removeVerifyCode(currentCode);
 
                 //성공 임베드 전송
                 e.replyEmbeds(getEmbed("successVerify")).setEphemeral(true).queue();
@@ -159,8 +162,6 @@ public class DiscordListener implements EventListener {
                             ex.printStackTrace();
                     }
                 }
-
-                VerifyUtils.removeVerifyCode(currentCode);
             }
         }
     }

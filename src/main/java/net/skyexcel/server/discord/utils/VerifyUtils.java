@@ -22,28 +22,16 @@ public class VerifyUtils {
     }
 
     public static Boolean containsCode(String verifyCode) {
-        for (Map.Entry<String, UUID> entry : verifyCodes.entrySet()) {
-            if (entry.getKey().equals(verifyCode)) return true;
-        }
-
-        return false;
+        return verifyCodes.containsKey(verifyCode);
     }
 
     public static Boolean containsPlayer(Player player) {
         UUID currentUuid = player.getUniqueId();
 
-        for (Map.Entry<String, UUID> entry : verifyCodes.entrySet()) {
-            if (entry.getValue().equals(currentUuid)) return true;
-        }
-
-        return false;
+        return verifyCodes.containsValue(currentUuid);
     }
 
     public static Boolean containsPlayer(UUID uuid) {
-        for (Map.Entry<String, UUID> entry : verifyCodes.entrySet()) {
-            if (entry.getValue().equals(uuid)) return true;
-        }
-
-        return false;
+        return verifyCodes.containsValue(uuid);
     }
 }
