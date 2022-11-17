@@ -24,11 +24,9 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
-import java.util.logging.Logger;
 
 public class DiscordListener implements EventListener {
     private Color embedColor;
-    private final Logger log = Bukkit.getLogger();
 
     @Override
     public void onEvent(@NotNull GenericEvent event) {
