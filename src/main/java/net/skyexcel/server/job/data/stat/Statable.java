@@ -2,6 +2,9 @@ package net.skyexcel.server.job.data.stat;
 
 import skyexcel.data.file.Config;
 
+/**
+ * 스탯포인트를 찍을 수 있는 클래스 입니다.
+ */
 public class Statable {
 
     private int level;

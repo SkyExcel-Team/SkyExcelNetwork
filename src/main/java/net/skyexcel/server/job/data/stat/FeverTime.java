@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data.stat;
 
+import net.skyexcel.server.job.data.PercentData;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -10,10 +11,11 @@ import org.bukkit.potion.PotionEffectType;
 public class FeverTime implements Percent {
 
     public void run(Player player, Block block) {
-        double percent = 100;
-        if (block.getType().equals(Material.DIAMOND_ORE)) {
-            if (chance(percent)) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 50, 1));
+
+        PercentData percentData = new PercentData();
+        if (block.getType().equals(percentData.getFeverTimeType())) {
+            if (percentData.getFeverTimeChance()) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, percentData.getFeverTimeAmplifier(), percentData.getFeverTimeAmplifier()));
             }
         }
     }

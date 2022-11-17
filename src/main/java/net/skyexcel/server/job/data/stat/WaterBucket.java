@@ -21,20 +21,25 @@ public class WaterBucket extends Statable implements JobPlayerData {
 
     private List<Integer> slots = new ArrayList<>();
 
-    private int level = 1; // 4/ 10 = 2
+
+    private double level = 1; // 4/ 10 = 2
 
     private final double stat = 5;
 
 
     public WaterBucket() {
-        super("물병");
+        super("WaterBucket");
+
     }
 
     public void onGUI(Player player) {
+        //TODO 레벨업을 하면, 다음 페이지로 이동 함. 다음 페이지 값을 콘피그에 저장 후, 불러올 때 저장 시킴.
+
+        level = getLevel(player);
         inv = Bukkit.createInventory(null, 54, "[1] 특별한 물병 레벨 : " + level);
 
-        for (int i = 9 * level; i < 45; i++) {
-            Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), i, inv);
+        for (double i = 9 * level; i < 45; i++) {
+            Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int)i, inv);
             System.out.println(i);
         }
 
@@ -45,16 +50,19 @@ public class WaterBucket extends Statable implements JobPlayerData {
 
     public void levelUp(Player player) {
 
-        if (getStatPoint(player) != -1) {
-            if (getStatPoint(player) > stat) {
-                int tempLevel = level;
-                int nextPage = (level) / 5;
+
+        if (getStatPoint(player,getName()) != -1) {
+            if (getStatPoint(player , getName()) > stat) {
+                int tempLevel = (int)level;
+                int nextPage = (int) (level) / 5;
                 tempLevel -= nextPage * 5;
 
-                int pre = nextPage + 1;
+                double pre = nextPage + 1;
                 inv.clear();
+                slots.clear();
                 for (int i = 9 * (tempLevel + 1); i < 45; i++) {
-                    Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), i, inv);
+                    slots.add(i);
+                    Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int)i, inv);
                     System.out.println(i);
                 }
 

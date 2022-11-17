@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data.stat;
 
+import net.skyexcel.server.job.data.PercentData;
 import net.skyexcel.server.job.data.StatMeta;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -16,8 +17,9 @@ public class BlastFurnace extends StatMeta implements Percent {
     }
 
     public void run(Player player, Block block) {
+        PercentData percentData = new PercentData();
 
-        if (chance(100)) {
+        if (percentData.getBlastFuranceChance()) {
             switch (block.getType()) {
                 case IRON_ORE, DEEPSLATE_IRON_ORE -> {
                     player.getWorld().dropItem(block.getLocation(), new ItemStack(Material.IRON_INGOT));

@@ -1,0 +1,11 @@
+percent:
+  MineWorker:
+    Bait: 100
+    FeverTime:
+      type: EMERALD_ORE
+      duration: 50 # 시간
+      amplifier: 4 #세기
+      chance: 10 #확률 10 = 10%
+    BlastFurnace: 100
+  Famer:
+    blessing: 100
