@@ -55,7 +55,7 @@ public class DiscordListener implements EventListener {
 
                 Button openVerifyModal = Button.primary("openVerifyModal", "인증번호 입력하기");
                 Button howToVerify = Button.secondary("howToVerify", "어떻게 연동하나요?");
-                Button askForVerify = Button.secondary("AskForVerify", "문의하기");
+                Button askForVerify = Button.secondary("askForVerify", "문의하기");
 
                 MessageCreateData message = new MessageCreateBuilder()
                         .addEmbeds(embed)
@@ -79,9 +79,9 @@ public class DiscordListener implements EventListener {
 
                 e.replyModal(modal).queue();
             } else if (e.getButton().getId().equals("howToVerify")) {
-                e.replyEmbeds(getEmbed("howToVerify")).queue();
-            } else if (e.getButton().getId().equals("AskForVerify")) {
-                e.replyEmbeds(getEmbed("AskForVerify")).queue();
+                e.replyEmbeds(getEmbed("howToVerify")).setEphemeral(true).queue();
+            } else if (e.getButton().getId().equals("askForVerify")) {
+                e.replyEmbeds(getEmbed("askForVerify")).setEphemeral(true).queue();
             }
         } else if (event instanceof ModalInteractionEvent e) {
             if (e.getModalId().equals("verifyCode")) {
