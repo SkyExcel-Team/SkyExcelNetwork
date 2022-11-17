@@ -31,25 +31,25 @@
 cash_message:
 
   # When checking the cash you have
-  my_cash: "보유중인 캐시: %cash%"
+  my_cash: "家 보유중인 캐시: &x&5&6&9&d&f&b%cash%"
 
   # When checking the cash that the other person has
-  check_player_cash: "%player%님께서 보유중인 캐시: %cash%"
+  check_player_cash: "家 &6%player%&f님께서 보유중인 캐시: &x&5&6&9&d&f&b%cash%"
 
   # When sending cash to a player
-  send_cash: "&a%player%님에게 %cash%만큼의 캐시를 지급하였습니다!"
+  send_cash: "架 &6%player%&f님에게 &x&5&6&9&d&f&b%cash%&f의 캐시를 보냈습니다! "
 
   # When sending cash to all players
-  send_cash_all_player: "모든 플레이어에게 %cash%만큼의 캐시를 지급하였습니다!"
+  send_cash_all_player: "架 &6모든 플레이어&f에게 &x&5&6&9&d&f&b%cash%&f의 캐시를 &a지급&f하였습니다!"
 
   # When removing the player's cash
-  remove_cash: "%player%님의 캐시를 %cash%만큼 제거하였습니다!"
+  remove_cash: "架 &6%player%&f님의 캐시를 &x&5&6&9&d&f&b%cash%&f만큼 &c제거&f하였습니다!"
 
   # When setting the player's cash
-  set_cash: "%player%님의 캐시를 %cash%만큼 설정하였습니다!"
+  set_cash: "架 &6%player%&f님의 캐시를 &x&5&6&9&d&f&b%cash%&f로 &6설정&f하였습니다!"
 
   # When initializing the player's cash
-  reset_cash: "%player%님의 캐시를 초기화하였습니다!"
+  reset_cash: "架 &6%player%&f님의 캐시를 초기화하였습니다!"
 
 
   # +----------------------------------------------------------------------------------------------+ #
@@ -63,39 +63,39 @@ cash_message:
 cashshop_message:
 
   # When a player purchases or sells one item at Cash Shop
-  buy_one: "%item_order%을 1개를 %price%캐시로 구매하였습니다!"
-  sell_one: "%item_order%을 1개를 %price%캐시로 판매하였습니다!"
+  buy_one: "架 %item_order%을 1개를 %price%캐시로 구매하였습니다!"
+  sell_one: "架 %item_order%을 1개를 %price%캐시로 판매하였습니다!"
 
   # When a player purchases or sells 64 item at Cash Shop
-  buy_64: "%item_order%을 64개를 %price%캐시로 구매하였습니다!"
-  sell_64: "%item_order%을 64개를 %price%캐시로 판매하였습니다!"
+  buy_64: "架 %item_order%을 64개를 %price%캐시로 구매하였습니다!"
+  sell_64: "架 %item_order%을 64개를 %price%캐시로 판매하였습니다!"
 
   # Notify me to set a purchase price
-  setting_buy_price: "&a구매가격을 채팅에 입력해주세요! -1을 치면 구매 불가능으로 설정됩니다."
+  setting_buy_price: "家 &a구매가격을 채팅에 입력해주세요! -1을 치면 구매 불가능으로 설정됩니다."
 
   # Notify me to set a sell price
-  setting_sell_price: "&a판매가격을 채팅에 입력해주세요! -1을 치면 판매 불가능으로 설정됩니다."
+  setting_sell_price: "家 &a판매가격을 채팅에 입력해주세요! -1을 치면 판매 불가능으로 설정됩니다."
 
   # When you create a cashshop
-  create_cashshop: "%cashshop_name%의 캐시상점을 생성하였습니다!"
+  create_cashshop: "架 %cashshop_name%의 캐시상점을 생성하였습니다!"
 
   # When you move the cash shop to the trash can
-  recyclebin_cashshop: "%cashshop_name%의 캐시상점을 휴지통으로 이동하였습니다! 10초안에 같은 메세지를 타이핑할 시 영구제거가 됩니다!"
+  recyclebin_cashshop: "家 %cashshop_name%의 캐시상점을 휴지통으로 이동하였습니다! 10초안에 같은 메세지를 타이핑할 시 영구제거가 됩니다!"
 
   # When cashshop is removed
-  delete_cashshop: "%cashshop_name%의 캐시상점을 영구적으로 제거하였습니다!"
+  delete_cashshop: "架 %cashshop_name%의 캐시상점을 영구적으로 제거하였습니다!"
 
   # When setting the guy size of the cash shop
-  set_gui_size: "%cashshop_name%의 캐시상점의 GUI 사이즈를 %cashshop_gui_size%로 설정하였습니다!"
+  set_gui_size: "架 %cashshop_name%의 캐시상점의 GUI 사이즈를 %cashshop_gui_size%로 설정하였습니다!"
 
   # When you set the name of the cashshop
-  set_gui_name: "%cashshop_name%의 캐시상점의 이름을 %set_cashshop_name%으로 설정하였습니다!"
+  set_gui_name: "架 %cashshop_name%의 캐시상점의 이름을 %set_cashshop_name%으로 설정하였습니다!"
 
   # When the item purchase price is set
-  set_buy_price: "아이템 구매 가격을 %price%캐시로 설정하였습니다!"
+  set_buy_price: "架 아이템 구매 가격을 %price%캐시로 설정하였습니다!"
 
   # When the item sell price is set
-  set_sell_price: "아이템 판매 가격을 %price%캐시로 설정하였습니다!"
+  set_sell_price: "架 아이템 판매 가격을 %price%캐시로 설정하였습니다!"
 
 
 
@@ -111,28 +111,28 @@ cashshop_message:
 error_message:
 
   # When the cash you have exceeds the value of 2,147,483,647
-  overflow: "보유중인 캐시가 2,147,483,647를 넘을 수 없습니다!"
+  overflow: "强 보유중인 캐시가 2,147,483,647를 넘을 수 없습니다!"
 
   # When the item cannot be purchased due to lack of cash
-  cannot_buy: "당신은 캐시가 부족하여 아이템 구매가 불가능합니다."
+  cannot_buy: "强 당신은 캐시가 부족하여 아이템 구매가 불가능합니다."
 
   # When it is impossible to sell due to lack of items
-  cannot_sell: "당신은 아이템이 부족하여 판매가 불가능합니다."
+  cannot_sell: "强 당신은 아이템이 부족하여 판매가 불가능합니다."
 
   # Insufficient inventory space to purchase
-  inventoryFull: "인벤토리 공간이 부족하여 구매가 불가능합니다!"
+  inventoryFull: "强 인벤토리 공간이 부족하여 구매가 불가능합니다!"
 
   # When you do not enter a playername in the command
-  command_none_player: "플레이어 닉네임을 입력해주세요!"
+  command_none_player: "佳 플레이어 닉네임을 입력해주세요!"
 
   # When you do not enter cash amount in the command
-  command_none_cash: "금액을 입력해주세요!"
+  command_none_cash: "佳 금액을 입력해주세요!"
 
   # When you attempt to purchase an item that cannot be purchased
-  impossibleItem_buy: "구매가 불가능한 상품입니다!"
+  impossibleItem_buy: "强 구매가 불가능한 상품입니다!"
 
   #When you attempt to sell an item that cannot be sold
-  impossibleItem_sell: "판매가 불가능한 상품입니다!"
+  impossibleItem_sell: "强 판매가 불가능한 상품입니다!"
 
 
 
@@ -148,7 +148,7 @@ error_message:
 other_message:
 
   # When I reloaded the all config
-  reload_config: "&a콘피그를 성공적으로 리로드하였습니다!"
+  reload_config: "架 &a콘피그를 성공적으로 리로드하였습니다!"
 
   # What is displayed in the chat when you type command /cashshop
   command_cashshop:

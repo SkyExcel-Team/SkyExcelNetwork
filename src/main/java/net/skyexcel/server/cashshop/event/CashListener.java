@@ -5,6 +5,7 @@ import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.cashshop.data.Cash;
 import net.skyexcel.server.cashshop.data.CashShop;
 import net.skyexcel.server.cashshop.data.CashShopData;
+import net.skyexcel.server.cashshop.data.StringData;
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,6 +27,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class CashListener implements Listener {
+
+
+    StringData stringData = new StringData();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -127,10 +131,10 @@ public class CashListener implements Listener {
                         }
                     }
                     case SELL -> {
-                        player.sendMessage("판매 가격을 입력 해 주세요!");
+                        player.sendMessage(stringData.settingSellPrice());
                     }
                     case BUY -> {
-                        player.sendMessage("구매 가격을 입력 해 주세요!");
+                        player.sendMessage(stringData.settingBuyPrice());
                     }
                     case CLOSE, DEFAULT, EDIT -> {
                         System.out.println(event.getInventory());
@@ -163,7 +167,7 @@ public class CashListener implements Listener {
                     }
                 }, 0);
             } catch (NumberFormatException e) {
-                player.sendMessage("정수를 입력해 주세요!");
+                player.sendMessage("强 정수의 값을 입력해 주세요!");
             }
         }
     }

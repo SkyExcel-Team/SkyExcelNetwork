@@ -278,14 +278,14 @@ public class CashShop extends Stockable {
 
                         purchaseCompare(meta, player, select, amount);
                     } else {
-                        player.sendMessage("인벤토리가 꽉 찼습니다!");
+                        player.sendMessage(stringData.inventoryFull());
                         cash.deposit(buy);
                     }
                 } else {
-                    player.sendMessage("캐시가 부족하여 구매를 하지 못합니다!");
+                    player.sendMessage(stringData.canNotBuy());
                 }
             } else {
-                player.sendMessage("해당 아이템은 구매를 하지 못합니다.");
+                player.sendMessage(stringData.impossibleItemBuy());
             }
         }
     }
