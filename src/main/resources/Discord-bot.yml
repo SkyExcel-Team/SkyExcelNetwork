@@ -1,16 +1,16 @@
 bot_settings:
 
   # 봇 토큰
-  token: "YOUR_TOKEN" # MTA0MTMwNzAzMjMzMjAyNTg2Ng.GpQURZ.mKQJga8mtuhh4LahzVXOspbe1bR_60WqoNmKAo
+  token: "MTA0MTMwNzAzMjMzMjAyNTg2Ng.GpQURZ.mKQJga8mtuhh4LahzVXOspbe1bR_60WqoNmKAo"
 
   # 봇 상태 [online, dnd, idle]
-  status: "online"
+  status: "dnd"
 
   # 봇 활동
   richPresence:
 
     # 활동 이름
-    name: "YOUR_STATUS"
+    name: "메뚜기팜"
 
     # 활동 타입 [playing, watching, listening]
     type: "playing"
@@ -19,10 +19,13 @@ bot_settings:
   roles:
 
     # 인증됨
-    verifiedRole: "YOUR_ROLE_ID" # 1041307689860485181
+    verifiedRole: "1041307689860485181"
+
+    # 관리자
+    moderatorRole: "1042259604572229652"
 
   # 봇이 작동할 길드 ID 지정
-  guildId: "YOUR_GUILD_ID" # 1041307307394482247
+  guildId: "1041307307394482247"
 
   # 인증 시 서버 닉네임 변경
   changeDiscordName:
@@ -40,7 +43,7 @@ bot_settings:
 bot_messages:
 
   # 임베드 색깔
-  embedColor: "#FFFFFF"
+  embedColor: "#6ec279"
 
   # 서버내 명령어 사용 시도
   onlyGuild:
@@ -93,4 +96,16 @@ bot_messages:
   failedModifyNick:
     title: "닉네임 변경에 실패했습니다!"
     description: "관리자의 닉네임은 변경할 수 없습니다!"
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 어떻게 인증하나요?
+  howToVerify:
+    title: "테스트 | 임시값"
+    description: "테스트 | 임시값"
+    thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
+
+  # 문의하기 (인증)
+  askForVerify:
+    title: "테스트 | 임시값"
+    description: "테스트 | 임시값"
     thumbnailURL: "https://media.discordapp.net/attachments/1038091650674724954/1038356684323704872/a2840417cda1b957.gif"
