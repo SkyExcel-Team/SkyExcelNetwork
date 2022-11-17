@@ -46,16 +46,20 @@ public class DiscordListener implements EventListener {
                     return;
                 }
 
+                if (!isModerator(e.getGuild(), e.getUser())) return;
+
                 MessageEmbed embed = new EmbedBuilder()
-                        .setTitle("SkyExcel Network | 디스코드 연동")
-                        .setDescription("(디스코드-마인크래프트) 계정 연동을 통해 더 많은 기능을 사용하실 수 있습니다.")
+                        .setTitle("**디스코드 계정 연동하기** 📩")
+                        .setDescription("메뚜기팜의 디스코드 서버를 이용하시려면 마인크래프트 계정과 디스코드 계정을 연동해야합니다.")
                         .build();
 
-                Button openVerifyModal = Button.primary("openVerifyModal", "연동하기");
+                Button openVerifyModal = Button.primary("openVerifyModal", "인증번호 입력하기");
+                Button howToVerify = Button.secondary("howToVerify", "어떻게 연동하나요?");
+                Button askForVerify = Button.secondary("AskForVerify", "문의하기");
 
                 MessageCreateData message = new MessageCreateBuilder()
                         .addEmbeds(embed)
-                        .addComponents(ActionRow.of(openVerifyModal))
+                        .addComponents(ActionRow.of(openVerifyModal, howToVerify, askForVerify))
                         .build();
 
                 e.reply("생성함 ㅅㄱ").setEphemeral(true).queue();
@@ -74,6 +78,10 @@ public class DiscordListener implements EventListener {
                         .build();
 
                 e.replyModal(modal).queue();
+            } else if (e.getButton().getId().equals("howToVerify")) {
+                e.replyEmbeds(getEmbed("howToVerify")).queue();
+            } else if (e.getButton().getId().equals("AskForVerify")) {
+                e.replyEmbeds(getEmbed("AskForVerify")).queue();
             }
         } else if (event instanceof ModalInteractionEvent e) {
             if (e.getModalId().equals("verifyCode")) {
@@ -164,5 +172,14 @@ public class DiscordListener implements EventListener {
                 .setDescription(SkyExcelNetworkDiscordMain.botConfig.getString("bot_messages." + key + ".description"))
                 .setThumbnail(SkyExcelNetworkDiscordMain.botConfig.getString("bot_messages." + key + ".thumbnailURL"))
                 .build();
+    }
+
+    private Boolean isModerator(Guild guild, User user) {
+        Role role = guild.getRoleById(SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.roles.moderatorRole"));
+
+        if (!guild.getMemberById(user.getId())
+                .getRoles().contains(role)) return true;
+        else
+            return false;
     }
 }
