@@ -27,9 +27,15 @@ public class WarpCmd implements CommandExecutor {
                 if (!List.of("생성", "삭제").contains(args[0])) {
                     String name = args[0];
                     Warp warp = new Warp(name);
+
                     Location location = warp.getLocation();
-                    player.teleport(location);
-                    player.sendMessage("家 " + name + "(으)로 이동하였습니다!");
+                    if (location != null) {
+                        player.teleport(location);
+                        player.sendMessage("家 " + name + "(으)로 이동하였습니다!");
+                    } else {
+                        player.sendMessage("응 꺼쪄~");
+                    }
+
                 }
             } else if (args.length == 2) {
                 if (!List.of("생성", "삭제").contains(args[0])) {
@@ -38,8 +44,13 @@ public class WarpCmd implements CommandExecutor {
 
                     Warp warp = new Warp(name);
                     Location location = warp.getLocation();
-                    target.teleport(location);
-                    player.sendMessage("家 " + target.getDisplayName() + " 님을 " + name + "(으)로 이동하였습니다!");
+                    if (location != null) {
+                        target.teleport(location);
+                        player.sendMessage("家 " + target.getDisplayName() + " 님을 " + name + "(으)로 이동하였습니다!");
+                    } else {
+                        player.sendMessage("응 꺼쪄~");
+                    }
+
                 }
             }
 

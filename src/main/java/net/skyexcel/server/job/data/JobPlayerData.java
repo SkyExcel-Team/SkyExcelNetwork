@@ -14,8 +14,9 @@ public interface JobPlayerData {
 
     /**
      * 플레이어 스탯 포인트가 존재하지 않을 때 무조건 value 값으로 저장을 합니다.
+     *
      * @param player - 스텟 포인트를 저장할 곳.
-     * @param name 스텟 포인트
+     * @param name   스텟 포인트
      * @param value
      */
     default void increase(Player player, String name, double value) {
@@ -32,8 +33,9 @@ public interface JobPlayerData {
 
     /**
      * 플레이어 스탯 포인트가 존재하지 않을 때 save가 true일경우, value값으로 저장을 합니다.
+     *
      * @param player - 스텟 포인트를 저장할 곳.
-     * @param name 스텟 포인트
+     * @param name   스텟 포인트
      * @param value
      * @param save
      */
@@ -60,6 +62,14 @@ public interface JobPlayerData {
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
 
         return config.getDouble(name);
+    }
+
+
+    default void setLevel(Player player, double value) {
+        Config config = new Config("job/" + player.getUniqueId());
+        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+
+        config.setDouble("level", value);
     }
 
     default double getLevel(Player player) {

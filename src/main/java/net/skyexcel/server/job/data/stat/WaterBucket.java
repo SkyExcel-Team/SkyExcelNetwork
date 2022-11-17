@@ -29,7 +29,6 @@ public class WaterBucket extends Statable implements JobPlayerData {
 
     public WaterBucket() {
         super("WaterBucket");
-
     }
 
     public void onGUI(Player player) {
@@ -39,7 +38,7 @@ public class WaterBucket extends Statable implements JobPlayerData {
         inv = Bukkit.createInventory(null, 54, "[1] 특별한 물병 레벨 : " + level);
 
         for (double i = 9 * level; i < 45; i++) {
-            Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int)i, inv);
+            Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int) i, inv);
             System.out.println(i);
         }
 
@@ -47,13 +46,17 @@ public class WaterBucket extends Statable implements JobPlayerData {
         player.openInventory(inv);
     }
 
+    public void setDefault(Player player) {
+        setStatPoint(player, getName(), 0);
+    }
+
 
     public void levelUp(Player player) {
 
 
-        if (getStatPoint(player,getName()) != -1) {
-            if (getStatPoint(player , getName()) > stat) {
-                int tempLevel = (int)level;
+        if (getStatPoint(player, getName()) != -1) {
+            if (getStatPoint(player, getName()) > stat) {
+                int tempLevel = (int) level;
                 int nextPage = (int) (level) / 5;
                 tempLevel -= nextPage * 5;
 
@@ -62,7 +65,7 @@ public class WaterBucket extends Statable implements JobPlayerData {
                 slots.clear();
                 for (int i = 9 * (tempLevel + 1); i < 45; i++) {
                     slots.add(i);
-                    Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int)i, inv);
+                    Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int) i, inv);
                     System.out.println(i);
                 }
 

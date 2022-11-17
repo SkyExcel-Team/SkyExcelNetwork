@@ -3,14 +3,20 @@ package net.skyexcel.server.fish.event;
 import net.skyexcel.server.fish.SkyExcelNetworkFishMain;
 import net.skyexcel.server.fish.data.FishData;
 import net.skyexcel.server.fish.data.FishStatus;
+import net.skyexcel.server.trade.util.Items;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Fish;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 import skyexcel.util.ActionBar;
 
 import java.util.Random;
@@ -27,7 +33,10 @@ public class FishEvent implements Listener {
         String[] test = {"철갑상어", "자이언트 구라미", "도라도", "아로와나", "가물치", "메기", "뱀장어", "쏘가리"};
 
         Random random = new Random();
+
         if (fish != null) {
+
+
             if (getPercent(85)) {
                 size = random.nextInt(10) + 1; // 사이즈
 
@@ -42,7 +51,19 @@ public class FishEvent implements Listener {
                 String name = test[index];
                 ActionBar.sendMessage(player, ChatColor.YELLOW + "" + size + ChatColor.WHITE + "cm 크기의 " + name + " 물고기를 낚았습니다! ");
             }
+
         }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+
+        Player player = event.getPlayer();
+
+        ItemStack test = new ItemStack(Material.FISHING_ROD, 1);
+        test.addUnsafeEnchantment(Enchantment.LURE, 255);
+        player.getInventory().addItem(test);
+
     }
 
     @EventHandler
