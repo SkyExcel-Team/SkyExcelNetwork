@@ -45,7 +45,7 @@ public class FishEvent implements Listener {
     @EventHandler
     public void test(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        FishType fishType = FishType.COOKEDANCHOVY;
+        FishType fishType = FishType.GOLIATHGROUPER;
 
         player.getInventory().addItem(fishType.item(1));
     }
