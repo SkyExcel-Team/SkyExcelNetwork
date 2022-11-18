@@ -23,6 +23,7 @@ worlds:
 commands:
   #CashShop
   캐시:
+  test:
 
   캐시상점:
     aliases: [ cash ]
