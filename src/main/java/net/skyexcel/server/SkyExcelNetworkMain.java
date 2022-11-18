@@ -4,6 +4,7 @@ import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
 import net.skyexcel.server.discord.SkyExcelNetworkDiscordMain;
+import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
 import net.skyexcel.server.fish.SkyExcelNetworkFishMain;
 import net.skyexcel.server.flyticket.SkyExcelNetworkFlyTicketMain;
 import net.skyexcel.server.giftbox.SkyExcelNetworkGiftBoxMain;
@@ -56,6 +57,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetWorkWarp(plugin);
         new SkyExcelNetworkFlyTicketMain(plugin);
         new SkyExcelNetworkTutorialMain(plugin);
+        new SkyExcelNetworkEssentialsMain(plugin);
     }
 
     @Override
