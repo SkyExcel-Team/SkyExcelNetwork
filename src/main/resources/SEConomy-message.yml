@@ -9,63 +9,71 @@
 money_message:
 
   # When checking the money you have
-  my_money: "보유중인 금액: %money%"
+  my_money: "家 보유중인 돈: &x&5&6&9&d&f&b%money%"
 
   # When checking the money that the other person has
-  check_player_money: "%player%님께서 보유중인 돈: %money%"
+  check_player_money: "家 &6%player%&f님께서 보유중인 돈: &x&5&6&9&d&f&b%money%"
 
   # When sending money to a player
-  send_money: "%player%님에게 %money%만큼의 돈을 지급하였습니다!"
+  send_money: "架 &6%player%&f님에게 &x&5&6&9&d&f&b%money%의 돈을 보냈습니다!"
 
   # When sending money to all players
-  send_money_all_player: "모든 플레이어에게 %money%만큼의 돈을 지급하였습니다!"
+  send_money_all_player: "架 &6모든 플레이어&f에게 &x&5&6&9&d&f&b%money%&f의 돈을 &a지급&f하였습니다!"
 
   # When removing the player's money
-  remove_money: "%player%님의 돈을 %money%만큼 제거하였습니다!"
+  remove_money: "架 &6%player%&f님의 돈을 &x&5&6&9&d&f&b%money%&f만큼 &c제거&f하였습니다!"
 
   # When setting the player's money
-  set_money: "%player%님의 돈을 %money%만큼 설정하였습니다!"
+  set_money: "架 &6%player%&f님의 돈을 &x&5&6&9&d&f&b%money%&f로 &6설정&f하였습니다!"
 
   # When initializing the player's money
-  reset_money: "%player%님의 돈을 초기화하였습니다!"
+  reset_money: "架 &6%player%&f님의 돈을 초기화하였습니다!"
+
+
+  # +----------------------------------------------------------------------------------------------+ #
+  # │                                                                                              │ #
+  # │                                    ■  Economy Shop Message  ■                                │ #
+  # │                           # The below is messages about EconomyShop #                        │ #
+  # │                                                                                              │ #
+  # +----------------------------------------------------------------------------------------------+ #
 
 
 economyshop_message:
 
-  # When a player purchases or sells one item at money Shop
-  buy_one: "%item_order%을 1개를 %price%캐시로 구매하였습니다!"
-  sell_one: "%item_order%을 1개를 %price%캐시로 판매하였습니다!"
+  # When a player purchases or sells one item at economyshop
+  buy_one: "架 %item_order%을 1개를 %price%캐시로 구매하였습니다!"
+  sell_one: "架 %item_order%을 1개를 %price%캐시로 판매하였습니다!"
 
-  # When a player purchases or sells 64 item at money Shop
-  buy_64: "%item_order%을 64개를 %price%캐시로 구매하였습니다!"
-  sell_64: "%item_order%을 64개를 %price%캐시로 판매하였습니다!"
+  # When a player purchases or sells 64 item at economyshop
+  buy_64: "架 %item_order%을 64개를 %price%캐시로 구매하였습니다!"
+  sell_64: "架 %item_order%을 64개를 %price%캐시로 판매하였습니다!"
 
   # Notify me to set a purchase price
-  setting_buy_price: "&a구매가격을 채팅에 입력해주세요! -1을 치면 구매 불가능으로 설정됩니다."
+  setting_buy_price: "家 &a구매가격을 채팅에 입력해주세요! -1을 치면 구매 불가능으로 설정됩니다."
 
   # Notify me to set a sell price
-  setting_sell_price: "&a판매가격을 채팅에 입력해주세요! -1을 치면 판매 불가능으로 설정됩니다."
+  setting_sell_price: "家 &a판매가격을 채팅에 입력해주세요! -1을 치면 판매 불가능으로 설정됩니다."
 
   # When you create a economyshop
-  create_economyshop: "%name%의 상점을 생성하였습니다!"
+  create_economyshop: "架 %economyshop_name%의 상점을 생성하였습니다!"
 
-  # When you move the money shop to the trash can
-  recyclebin_economyshop: "%name%의 상점을 휴지통으로 이동하였습니다! 10초안에 같은 메세지를 타이핑할 시 영구제거가 됩니다!"
+  # When you move the economy shop to the trash can
+  recyclebin_economyshop: "家 %economyshop_name%의 상점을 휴지통으로 이동하였습니다! 10초안에 같은 메세지를 타이핑할 시 영구제거가 됩니다!"
 
   # When economyshop is removed
-  delete_economyshop: "%name%의 상점을 영구적으로 제거하였습니다!"
+  delete_economyshop: "架 %economyshop_name%의 상점을 영구적으로 제거하였습니다!"
 
-  # When setting the guy size of the money shop
-  set_gui_size: "%name%의 상점의 GUI 사이즈를 %size%로 설정하였습니다!"
+  # When setting the guy size of the economyshop
+  set_gui_size: "架 %economyshop_name%의 상점의 GUI 사이즈를 %economyshop_gui_size%로 설정하였습니다!"
 
   # When you set the name of the economyshop
-  set_gui_name: "%name%의 상점의 이름을 %set_name%으로 설정하였습니다!"
+  set_gui_name: "架 %economyshop_name%의 상점의 이름을 %set_economyshop_name%으로 설정하였습니다!"
 
   # When the item purchase price is set
-  set_buy_price: "아이템 구매 가격을 %price%캐시로 설정하였습니다!"
+  set_buy_price: "架 아이템 구매 가격을 %price%돈으로 설정하였습니다!"
 
   # When the item sell price is set
-  set_sell_price: "아이템 판매 가격을 %price%캐시로 설정하였습니다!"
+  set_sell_price: "架 아이템 판매 가격을 %price%돈으로 설정하였습니다!"
 
 
 
@@ -80,29 +88,29 @@ economyshop_message:
 
 error_message:
 
-  # When the money you have exceeds the value of 2,147,483,647
-  overflow: "보유중인 캐시가 9,223,372,036,854,775,807를 넘을 수 없습니다!"
+  # When the cash you have exceeds the value of 2,147,483,647
+  overflow: "强 보유중인 돈이 2,147,483,647를 넘을 수 없습니다!"
 
-  # When the item cannot be purchased due to lack of money
-  cannot_buy: "당신은 캐시가 부족하여 아이템 구매가 불가능합니다."
+  # When the item cannot be purchased due to lack of cash
+  cannot_buy: "强 당신은 돈이 부족하여 아이템 구매가 불가능합니다."
 
   # When it is impossible to sell due to lack of items
-  cannot_sell: "당신은 아이템이 부족하여 판매가 불가능합니다."
+  cannot_sell: "强 당신은 아이템이 부족하여 판매가 불가능합니다."
 
   # Insufficient inventory space to purchase
-  inventory_full: "인벤토리 공간이 부족하여 구매가 불가능합니다!"
+  inventoryFull: "强 인벤토리 공간이 부족하여 구매가 불가능합니다!"
 
   # When you do not enter a playername in the command
-  command_none_player: "플레이어 닉네임을 입력해주세요!"
+  command_none_player: "佳 플레이어 닉네임을 입력해주세요!"
 
-  # When you do not enter money amount in the command
-  command_none_money: "금액을 입력해주세요!"
+  # When you do not enter cash amount in the command
+  command_none_cash: "佳 금액을 입력해주세요!"
 
   # When you attempt to purchase an item that cannot be purchased
-  cannot_buy_impossible_item: "구매가 불가능한 상품입니다!"
+  impossibleItem_buy: "强 구매가 불가능한 상품입니다!"
 
   #When you attempt to sell an item that cannot be sold
-  cannot_sell_impossible_item: "판매가 불가능한 상품입니다!"
+  impossibleItem_sell: "强 판매가 불가능한 상품입니다!"
 
 
 

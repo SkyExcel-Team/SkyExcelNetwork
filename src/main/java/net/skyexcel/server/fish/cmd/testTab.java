@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class testTab implements TabCompleter {
@@ -18,8 +19,9 @@ public class testTab implements TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> result = new ArrayList<>();
         if (args.length == 1) {
-            for (FishType name : FishType.values()) {
-                result.add(name.name());
+            List<FishType> fishTypes = new ArrayList<>(Arrays.stream(FishType.values()).filter(FishType::hasRank).toList());
+            for(FishType type : fishTypes){
+                result.add(type.name());
             }
         }
         return result;
