@@ -13,8 +13,6 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.List;
 
-import static net.skyexcel.server.trade.data.StringData.title;
-
 public class JobSelectGUI {
 
 

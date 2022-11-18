@@ -11,12 +11,13 @@ public class FishCmd implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if(sender instanceof Player player){
-            if(args.length > 1){
+        if (sender instanceof Player player) {
+            if (args.length > 1) {
                 FishData fishData = new FishData(player);
-                switch (args[0]){
+                switch (args[0]) {
                     case "보관함":
                         break;
+
                 }
             }
         }

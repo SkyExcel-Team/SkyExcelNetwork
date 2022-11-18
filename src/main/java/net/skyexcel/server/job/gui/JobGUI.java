@@ -39,8 +39,8 @@ public class JobGUI {
 
         this.inv = Bukkit.createInventory(null, 27, "농부");
 
-        newItem("§6농부의 축복", Material.CHEST, 1, List.of("", "§6§l│ §f농작물을 캘시, §6일정확률§f로 §6농작물§f을 §a추가 §f드롭됩니다. ", "§6§l│ §f적용되는 농작물:", "§6§l│ §f밀", "§6§l│ §f 감자", "§6§l│ §f 당근", "§6§l│ §f ", ""), JobData.slot[0], this.inv);
-        newItem("§6허수아비", Material.CHEST, 1, List.of("", "§6§l│ §6허수아비§f를 소환해, 주변의 §6농작물§f을 빠르게 자라게 해줍니다. ", "§6§l│ §f사용 방법:", "§6§l│ §f괭이를 들고 §6쉬프트 §f+ §6우클릭", ""), JobData.slot[1], this.inv);
+        Items.newItem("§6농부의 축복", Material.CHEST, 1, List.of("", "§6§l│ §f농작물을 캘시, §6일정확률§f로 §6농작물§f을 §a추가 §f드롭됩니다. ", "§6§l│ §f적용되는 농작물:", "§6§l│ §f밀", "§6§l│ §f 감자", "§6§l│ §f 당근", "§6§l│ §f ", ""), JobData.slot[0], this.inv);
+        Items.newItem("§6허수아비", Material.CHEST, 1, List.of("", "§6§l│ §6허수아비§f를 소환해, 주변의 §6농작물§f을 빠르게 자라게 해줍니다. ", "§6§l│ §f사용 방법:", "§6§l│ §f괭이를 들고 §6쉬프트 §f+ §6우클릭", ""), JobData.slot[1], this.inv);
         this.jobType = JobType.FARM;
         player.openInventory(this.inv);
     }
@@ -49,12 +49,12 @@ public class JobGUI {
 
         Inventory inv = Bukkit.createInventory(null, 27, "낚시꾼 스텟포인트 [0] ");
 
-        newItem("§c최고급 §9미끼", Material.FISHING_ROD, 1, List.of("", "§6§l│ §f한단계 높은 §e등급§f의 §9물고기§f(인챈트)(을)를 얻습니다. ", "",
+        Items.newItem("§c최고급 §9미끼", Material.FISHING_ROD, 1, List.of("", "§6§l│ §f한단계 높은 §e등급§f의 §9물고기§f(인챈트)(을)를 얻습니다. ", "",
                 ChatColor.GRAY + "1/5"), JobData.FishSlot[0], inv);
-        newItem("§6특별한 §9물통", Material.CHEST, 1, List.of("", "§6§l│ §9물고기§f를 §6보관§f할 수 있는 §9물통 ", "§6§l│ §6효과:", "§6§l│ §9물고기§f를 잡을 시 §9물통§f으로 이동됩니다.", "§6§l│ §9물통§f은 §6레벨당 §fGUI 1줄씩 추가됩니다. §7(페이지 존재)", "§6§l│ §f특정 §6레벨 §f달성 시, §9물통§f 안에서 §a판매 §f가능", "",
+        Items.newItem("§6특별한 §9물통", Material.CHEST, 1, List.of("", "§6§l│ §9물고기§f를 §6보관§f할 수 있는 §9물통 ", "§6§l│ §6효과:", "§6§l│ §9물고기§f를 잡을 시 §9물통§f으로 이동됩니다.", "§6§l│ §9물통§f은 §6레벨당 §fGUI 1줄씩 추가됩니다. §7(페이지 존재)", "§6§l│ §f특정 §6레벨 §f달성 시, §9물통§f 안에서 §a판매 §f가능", "",
                 ChatColor.GRAY + "1/5"), JobData.FishSlot[1], inv);
         this.jobType = JobType.FISHERMAN;
-        System.out.println(jobType.getName());
+
         this.inv = inv;
         player.openInventory(inv);
     }
@@ -68,12 +68,4 @@ public class JobGUI {
     }
 
 
-    public void newItem(String name, Material type, int stack, List<String> lore, int loc, Inventory inv) {
-        ItemStack item = new ItemStack(type, stack);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(name);
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        inv.setItem(loc, item);
-    }
 }

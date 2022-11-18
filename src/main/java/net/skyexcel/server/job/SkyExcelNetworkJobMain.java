@@ -3,6 +3,7 @@ package net.skyexcel.server.job;
 
 import net.skyexcel.server.job.cmd.FisherCmd;
 import net.skyexcel.server.job.cmd.JobCmd;
+import net.skyexcel.server.job.cmd.JobTab;
 import net.skyexcel.server.job.listener.JobListener;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -25,8 +26,9 @@ public class SkyExcelNetworkJobMain {
 
 
     public void init() {
-        plugin.getCommand("물병").setExecutor(new FisherCmd());
+        plugin.getCommand("물통").setExecutor(new FisherCmd());
         plugin.getCommand("직업").setExecutor(new JobCmd());
+        plugin.getCommand("직업").setTabCompleter(new JobTab());
 //        for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
 //            Scarecrow scarecrow = new Scarecrow(offlinePlayer);
 //            scarecrow.getCoolTime().runTaskTimer(plugin, 0, 20);

@@ -1,6 +1,7 @@
 package net.skyexcel.server.job.listener;
 
 
+import net.skyexcel.server.fish.data.FishType;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobData;
 import net.skyexcel.server.job.data.JobPlayerData;
@@ -43,7 +44,6 @@ public class JobListener implements Listener, JobPlayerData {
         Player player = event.getPlayer();
 
         Job job = new Job(player);
-        job.setJobType(JobType.FARM);
 
         if (job.hasJob()) {
 
@@ -65,29 +65,30 @@ public class JobListener implements Listener, JobPlayerData {
 
         Job job = new Job(player);
         if (job.hasJob()) {
-            job.setJobType(JobType.MINEWORKER);
-            if (job.getType().equals(JobType.MINEWORKER)) { //광부일때 광부 패시브를 발동한다.
+            if (!job.getType().equals(JobType.NONE)) {
+                if (job.getType().equals(JobType.MINEWORKER)) { //광부일때 광부 패시브를 발동한다.
 
-                FeverTime feverTime = new FeverTime();
-                feverTime.run(player, block);
+                    FeverTime feverTime = new FeverTime();
+                    feverTime.run(player, block);
 
-                //TODO 모든 광물 다 불러와야됨 ㅅㄱ
-                BlastFurnace blastFurnace = new BlastFurnace();
-                blastFurnace.run(player, block);
+                    //TODO 모든 광물 다 불러와야됨 ㅅㄱ
+                    BlastFurnace blastFurnace = new BlastFurnace();
+                    blastFurnace.run(player, block);
 
-                //TODO 이벤트 캔슬 시켜야됨
-                AntiFragile antiFragile = new AntiFragile();
-                antiFragile.run(player);
+                    //TODO 이벤트 캔슬 시켜야됨
+                    AntiFragile antiFragile = new AntiFragile();
+                    antiFragile.run(player);
 
-                ItemStack item = player.getInventory().getItemInMainHand();
-                if (item.getDurability() == 0)
-                    item.setDurability((short) 1);
+                    ItemStack item = player.getInventory().getItemInMainHand();
+                    if (item.getDurability() == 0)
+                        item.setDurability((short) 1);
 
-                item.setDurability((short) (item.getDurability() - 1));
+                    item.setDurability((short) (item.getDurability() - 1));
 
 
-            } else if (job.getType().equals(JobType.FARM)) { // 농부일때 농부의 축복 페시브를 발동한다.
+                } else if (job.getType().equals(JobType.FARM)) { // 농부일때 농부의 축복 페시브를 발동한다.
 
+                }
             }
         }
     }
@@ -123,12 +124,10 @@ public class JobListener implements Listener, JobPlayerData {
         ItemStack previous = player.getInventory().getItem(event.getPreviousSlot());
         Job job = new Job(player);
         if (job.hasJob()) {
-            job.setJobType(JobType.FISHERMAN);
+
             if (job.getType().equals(JobType.FISHERMAN)) {
                 Bait bait = new Bait();
                 bait.run(player, item, previous);
-            } else {
-                player.sendMessage("응 너 어부아ㅏㅇ님");
             }
         }
     }
@@ -148,7 +147,6 @@ public class JobListener implements Listener, JobPlayerData {
             int slot = event.getSlot();
             if (JobData.gui.containsKey(player.getUniqueId())) { // 스탯 GUI를 열었을 경우
                 JobGUI jobGUI = JobData.gui.get(player.getUniqueId());
-                System.out.println(jobGUI.getJobType());
 
                 switch (jobGUI.getJobType()) {
                     case MINEWORKER -> {
@@ -227,6 +225,8 @@ public class JobListener implements Listener, JobPlayerData {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
+        player.sendMessage("test");
 
 
     }

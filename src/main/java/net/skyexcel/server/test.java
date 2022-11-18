@@ -1,22 +1,25 @@
 package net.skyexcel.server;
 
+import net.skyexcel.server.fish.data.FishRank;
+import net.skyexcel.server.fish.data.FishType;
+
 import java.util.Locale;
 
 public class test {
     public static void main(String[] args) throws Exception {
-        String asdf = "bigbillybass : 매우큰입 우럭 : 1\n" +
-                "colossalarapaima : 피라루쿠 : 2\n" +
-                "flareflounder : 넙치 : 38\n" +
-                "gleamingrainbowtrout : 무지개 송어 : 39\n" +
-                "goliathgrouper : 골리앗참바리 : 40\n" +
-                "slimycatfish : 메기 : 41\n" +
-                "toothfish : 비막치어 : 42";
+        String asdf = "bigbillybass : 매우큰입 우럭 : 1 : S\n" +
+                "colossalarapaima : 피라루쿠 : 2 : S\n" +
+                "flareflounder : 넙치 : 38 : S\n" +
+                "gleamingrainbowtrout : 무지개 송어 : 39 : S\n" +
+                "goliathgrouper : 골리앗참바리 : 40 : S\n" +
+                "slimycatfish : 메기 : 41 : S\n" +
+                "toothfish : 비막치어 : 42 : S";
 
 
-        test(asdf);
+        rank(asdf);
 
-        String qwer = "cookedaligatorgar : 구운 앨리게이터가아 : 3\n" +
-                "cookedanchovy : 구운 앤초비 : 4\n" +
+        String qwer = "cookedaligatorgar : 구운 앨리게이터가아 : 3 \n" +
+                "cookedanchovy : 구운 앤초비 : 4 \n" +
                 "cookedbrowntrout : 구운 브라운 송어 : 5\n" +
                 "cookedbullheadcatfish : 구운 눈동자개 : 6 \n" +
                 "cookedcherryshrimp : 구운 체리새우 : 7\n" +
@@ -49,59 +52,58 @@ public class test {
                 "cookedtambaqui : 구운 땀바끼 : 34\n" +
                 "cookedtigertrout : 구운 타이거 송어 : 35\n" +
                 "cookedtilapia : 구운 틸라피아 : 36\n" +
-                "cookedtuna : 구운 참치 : 37";
+                "cookedtuna : 구운 참치 : 37\n";
 
-
-        test(qwer);
-
+        rank(qwer);
         String zxcv =
-                "rawaligatorgar : 생 악어 가르 : 43\n" +
-                        "rawanchovy : 생 앤초비 : 44\n" +
-                        "rawbrowntrout : 생 브라운 송어 : 45\n" +
-                        "rawbullheadcatfish : 생 눈동자개 : 46\n" +
-                        "rawcherryshrimp : 생 체리새우 : 47\n" +
-                        "rawcrappie : 생 크래피 : 48\n" +
-                        "rawcrayfish : 생 가재 : 49\n" +
-                        "rawdesertsunfish : 생 사막 개복치 : 50\n" +
-                        "rawelectriceel : 생 전기뱀장어 : 51\n" +
-                        "rawfairyshrimp : 생 풍년 새우 : 52\n" +
-                        "rawforestcrayfish : 생 산 가재 : 53\n" +
-                        "rawforestsunfish : 생 산 개복치 : 54\n" +
-                        "rawjunglecatfish : 생 정글 메기 : 55\n" +
-                        "rawlargemouthbass : 생 큰입 우럭 : 56\n" +
-                        "rawlionfish : 생 쏠배감펭속 : 57\n" +
-                        "rawmandarin : 생 만다린 : 58\n" +
-                        "rawmudcarp : 생 머드 잉어 : 59\n" +
-                        "rawoctopus : 생 문어 : 60\n" +
-                        "rawperch : 생 농어 : 61\n" +
-                        "rawpike : 생 강꼬치고기 : 62\n" +
-                        "rawpiranha : 생 피라냐 : 63\n" +
-                        "rawpupfish : 생 펍피쉬 : 64\n" +
-                        "rawrivercrayfish : 생 민물 가재 : 65\n" +
-                        "rawriversunfish : 생 민물 개복치 : 66\n" +
-                        "rawsandfish : 생 도루묵 : 67\n" +
-                        "rawscorpioncarp : 생 전갈 잉어 : 68\n" +
-                        "rawsmallmouthbass : 생 작은입 우럭 : 69\n" +
-                        "rawsole : 생 서대기 : 70\n" +
-                        "rawsturgeon : 생 철갑상어 : 71\n" +
-                        "rawswampcatfish : 생 늪 메기 : 72\n" +
-                        "rawswampsunfish : 생 늪 개복치 : 73\n" +
-                        "rawtambaqui : 생 땀바끼 : 74\n" +
-                        "rawtigertrout : 생 타이거 송어 : 75\n" +
-                        "rawtilapia : 생 틸라피아 : 76\n" +
-                        "rawtuna : 생 참치 : 77";
+                "rawaligatorgar : 생 악어 가르 : 43 : B\n" +
+                        "rawanchovy : 생 앤초비 : 44 : B\n" +
+                        "rawbrowntrout : 생 브라운 송어 : 45 : A \n" +
+                        "rawbullheadcatfish : 생 눈동자개 : 46 : B\n" +
+                        "rawcherryshrimp : 생 체리새우 : 47 : C\n" +
+                        "rawcrappie : 생 크래피 : 48 : B\n" +
+                        "rawcrayfish : 생 가재 : 49 : C\n" +
+                        "rawdesertsunfish : 생 사막 개복치 : 50 : B\n" +
+                        "rawelectriceel : 생 전기뱀장어 : 51 : B\n" +
+                        "rawfairyshrimp : 생 풍년 새우 : 52 : C\n" +
+                        "rawforestcrayfish : 생 산 가재 : 53 : B\n" +
+                        "rawforestsunfish : 생 산 개복치 : 54 : B\n" +
+                        "rawjunglecatfish : 생 정글 메기 : 55 : B\n" +
+                        "rawlargemouthbass : 생 큰입 우럭 : 56 : A\n" +
+                        "rawlionfish : 생 쏠배감펭속 : 57 : A\n" +
+                        "rawmandarin : 생 만다린 : 58 : A\n" +
+                        "rawmudcarp : 생 머드 잉어 : 59 : C\n" +
+                        "rawoctopus : 생 문어 : 60 : C\n" +
+                        "rawperch : 생 농어 : 61 : C\n" +
+                        "rawpike : 생 강꼬치고기 : 62 : C\n" +
+                        "rawpiranha : 생 피라냐 : 63 : C\n" +
+                        "rawpupfish : 생 펍피쉬 : 64 : B\n" +
+                        "rawrivercrayfish : 생 민물 가재 : 65 : C\n" +
+                        "rawriversunfish : 생 민물 개복치 : 66 : B\n" +
+                        "rawsandfish : 생 도루묵 : 67 : C\n" +
+                        "rawscorpioncarp : 생 전갈 잉어 : 68 : C\n" +
+                        "rawsmallmouthbass : 생 작은입 우럭 : 69 : C\n" +
+                        "rawsole : 생 서대기 : 70 : C\n" +
+                        "rawsturgeon : 생 철갑상어 : 71 : B\n" +
+                        "rawswampcatfish : 생 늪 메기 : 72 : C\n" +
+                        "rawswampsunfish : 생 늪 개복치 : 73 : B\n" +
+                        "rawtambaqui : 생 땀바끼 : 74 : B\n" +
+                        "rawtigertrout : 생 타이거 송어 : 75 : C\n" +
+                        "rawtilapia : 생 틸라피아 : 76 : C";
 
+        rank(zxcv);
         try {
-            test(zxcv);
+
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("값이 없습니다.");
         }
 
     }
 
-    public static void test(String asdf) {
+    public static void rank(String asdf) {
 
         String[] result = asdf.split("\n");
+
 
         for (String s : result) {
 
@@ -112,8 +114,16 @@ public class test {
             translate = translate.substring(1);
             int modelData = Integer.parseInt(s.split(":")[2].replace(" ", ""));
 
-            System.out.println(namespace + "(\"" + translate + "\"," + modelData + "),");
+
+            try {
+                FishRank fishType = FishRank.valueOf(s.split(":")[3].substring(1));
+
+                System.out.println(namespace + "(\"" + translate + "\"," + modelData + ", FishRank." + fishType + "),");
+            } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
+                System.out.println(namespace + "(\"" + translate + "\"," + modelData + "),");
+            }
+
+
         }
     }
-
 }
