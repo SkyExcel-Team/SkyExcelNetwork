@@ -46,6 +46,7 @@ public class WhisperCommand implements CommandExecutor {
                 .replace("%to%", t.getName())
                 .replace("%message%", message);
 
+        p.sendMessage(finalMessage);
         t.sendMessage(finalMessage);
 
         return true;
