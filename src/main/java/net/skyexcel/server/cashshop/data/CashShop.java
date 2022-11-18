@@ -320,25 +320,31 @@ public class CashShop extends Stockable {
             PersistentDataContainer pdc = meta.getPersistentDataContainer();
             NamespacedKey sell_key = new NamespacedKey(SkyExcelNetworkMain.getPlugin(), "sell");
             NamespacedKey buy_key = new NamespacedKey(SkyExcelNetworkMain.getPlugin(), "buy");
+
             long sell = (pdc.get(sell_key, PersistentDataType.LONG) != null ? pdc.get(sell_key, PersistentDataType.LONG) : -1);
 
             long buy = (pdc.get(buy_key, PersistentDataType.LONG) != null ? pdc.get(buy_key, PersistentDataType.LONG) : -1);
 
             if (sell != -1) {
-                if (removeItems(player.getInventory(), select.getType(), amount)) {
-                    isSimilar(player, select, buy, sell, amount);
-                    sellCompare(meta, player, select, amount);
-                } else {
-                    player.sendMessage("판매할 아이템이 부족합니다.");
-                }
 
-            } else {
-                player.sendMessage("해당 상품은 판매가 불가능합니다");
+
+//                for (int slots = 0; slots < player.getInventory().getSize(); slots++) {
+//                    ItemStack test = player.getInventory().getItem(slots);
+//                    if (test != null) {
+//                        removeItems(player.getInventory(), select.getType(), amount);
+//                        isSimilar(player, select, buy, sell, amount);
+//                        sellCompare(meta, player, select, amount);
+//                        break;
+//                    }
+//
+//                }
+
+
             }
-
         } else {
-            player.sendMessage("해당 아이템은 판매가 불가능 합니다.");
+            player.sendMessage("해당 상품은 판매가 불가능합니다");
         }
+
     }
 
     private boolean isInventoryFull(Player p) {
@@ -375,23 +381,28 @@ public class CashShop extends Stockable {
         newItem.setItemMeta(meta);
         Inventory inv = player.getInventory();
 
-        removeItems(inv, newItem.getType(), amount);
+//        removeItems(inv, newItem.getType(), amount);
 
     }
 
-    private boolean removeItems(Inventory inventory, Material type, int amount) {
-
-        int amounts = 0;
-        boolean result = false;
-
-        if (amount <= 0) return true;
+    public void removeItems(Inventory inventory, Material type, int amount) {
+        if (amount <= 0) return;
         int size = inventory.getSize();
         for (int slot = 0; slot < size; slot++) {
             ItemStack is = inventory.getItem(slot);
-
+            if (is == null) continue;
+            if (type == is.getType()) {
+                int newAmount = is.getAmount() - amount;
+                if (newAmount > 0) {
+                    is.setAmount(newAmount);
+                    break;
+                } else {
+                    inventory.clear(slot);
+                    amount = -newAmount;
+                    if (amount == 0) break;
+                }
+            }
         }
-
-        return result;
     }
 
 
