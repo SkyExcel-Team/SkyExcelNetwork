@@ -4,7 +4,8 @@ package net.skyexcel.server.job.data.fisher;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.StatMeta;
-import net.skyexcel.server.job.data.stat.Statable;
+
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
@@ -17,7 +18,8 @@ public class Anglers extends StatMeta implements JobPlayerData {
     private String path = "job/";
 
     public Anglers(Player player) {
-        super("강태공", List.of());
+        super("강태공", List.of("", "§6§l│ §f한단계 높은 §e등급§f의 §9물고기§f(인챈트)(을)를 얻습니다. ", "",
+                ChatColor.GRAY + "1/5"));
         this.player = player;
     }
 
@@ -29,5 +31,4 @@ public class Anglers extends StatMeta implements JobPlayerData {
         config.getConfig().set("level", 0);
         config.saveConfig();
     }
-
 }

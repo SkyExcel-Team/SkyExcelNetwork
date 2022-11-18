@@ -3,7 +3,8 @@ package net.skyexcel.server.job.data.farmer;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.StatMeta;
-import net.skyexcel.server.job.data.stat.Statable;
+import net.skyexcel.server.job.data.farmer.scheduler.coolTime;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -12,11 +13,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.EulerAngle;
-import skyexcel.data.Time;
-import skyexcel.data.file.Config;
 
+import org.bukkit.util.EulerAngle;
+import skyexcel.data.file.Config;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,7 +61,7 @@ public class Scarecrow extends StatMeta {
         this.config.saveConfig();
     }
 
-    public void spawn(Player player) {
+    public void spawn(OfflinePlayer player) {
 
 
         //TODO 아머스탠드 중복 소환 방지 해야함.
@@ -109,11 +108,12 @@ public class Scarecrow extends StatMeta {
             armorStand.setLeftArmPose(eulerAngle);
             armorStand.setRightArmPose(right);
             this.armorStand = armorStand;
-            this.coolTime = new coolTime();
+            this.coolTime = new coolTime(player);
+            this.coolTime.setArmorStand(armorStand);
             this.coolTime.runTaskTimer(SkyExcelNetworkJobMain.plugin, 0, 20);
-            player.sendMessage(getDisplayName() + " 스킬을 사용 하였습니다.");
+            player.getPlayer().sendMessage(getDisplayName() + " 스킬을 사용 하였습니다.");
         } else {
-            player.sendMessage("허수아비를 이미 스폰 했습니다");
+            player.getPlayer().sendMessage("허수아비를 이미 스폰 했습니다");
         }
     }
 
@@ -121,28 +121,6 @@ public class Scarecrow extends StatMeta {
         Scarecrow scarecrow = new Scarecrow(player.getLocation(), 1, player);
         scarecrow.spawn(player);
 
-    }
-
-    public class coolTime extends BukkitRunnable {
-
-        private static Time time;
-
-        static {
-            time = new Time(0, 0, 0, 3);
-        }
-
-
-        @Override
-        public void run() {
-            if (time.MINUTE() == 0 && time.SECOND() == 0) {
-
-                armorStand.remove();
-                cancel();
-            } else {
-                armorStand.setCustomName(time.MINUTE() + " 분 " + time.SECOND() + " 초 남았습니다.");
-                time.minSecond(1);
-            }
-        }
     }
 
 

@@ -19,7 +19,7 @@ public class Bait extends StatMeta implements JobPlayerData {
 
 
     public Bait(Player player) {
-        super("단단한 곡괭이", List.of());
+        super("단단한 곡괭이", List.of("", "§6§l│ §6일정확률§f로 광물을 캘시, 곡괭이의 §e내구도§f가 달지 않습니다. ", ""));
         this.player = player;
     }
 

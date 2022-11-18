@@ -14,7 +14,7 @@ public class FlyTicketListener implements org.bukkit.event.Listener {
     @EventHandler
     public void on(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
-        player.sendMessage("날아다님 시간 줄음 ㅅㄱ");
+
 
     }
 

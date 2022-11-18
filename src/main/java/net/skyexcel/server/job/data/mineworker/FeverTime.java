@@ -23,7 +23,7 @@ public class FeverTime extends StatMeta implements Percent, JobPlayerData {
 
 
     public FeverTime(OfflinePlayer player) {
-        super("피버 타임", List.of());
+        super("피버 타임", List.of("", "§6§l│ §b다이아몬드§f를 캘시 §6일정확률§f로 §e성급함§f을 부여합니다. ", ""));
         this.player = player;
     }
 

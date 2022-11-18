@@ -1,6 +1,5 @@
 package net.skyexcel.server.essentials;
 
-import net.skyexcel.server.essentials.nospam.SkyExcelNetworkNoSpamMain;
 import net.skyexcel.server.essentials.trashbin.SkyExcelNetworkTrashBinMain;
 import net.skyexcel.server.essentials.whisper.SkyExcelNetworkWhisperMain;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,7 +20,6 @@ public class SkyExcelNetworkEssentialsMain {
         config.setPlugin(plugin);
         config.loadDefaultPluginConfig();
 
-        new SkyExcelNetworkNoSpamMain(plugin);
         new SkyExcelNetworkWhisperMain(plugin);
         new SkyExcelNetworkTrashBinMain(plugin);
     }

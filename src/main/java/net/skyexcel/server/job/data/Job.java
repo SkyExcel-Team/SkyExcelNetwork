@@ -18,13 +18,7 @@ public class Job {
     private OfflinePlayer offlinePlayer;
 
     public Job(OfflinePlayer player) {
-        this.config = new Config("data/" + player.getUniqueId());
-        this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
-        this.offlinePlayer = player;
-    }
 
-
-    public Job(Player player) {
         this.config = new Config("data/" + player.getUniqueId());
         this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
         this.offlinePlayer = player;

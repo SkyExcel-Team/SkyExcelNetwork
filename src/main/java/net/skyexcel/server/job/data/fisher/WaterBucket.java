@@ -2,10 +2,12 @@ package net.skyexcel.server.job.data.fisher;
 
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
+import net.skyexcel.server.job.data.StatMeta;
 import net.skyexcel.server.job.data.stat.Statable;
 import net.skyexcel.server.packet.Inventory.InventoryUpdate;
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -15,13 +17,14 @@ import skyexcel.data.file.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WaterBucket extends Statable implements JobPlayerData {
+public class WaterBucket extends StatMeta implements JobPlayerData {
 
 
     private Inventory inv;
 
     private final int line = 9; //
 
+    private final String name = "WaterBucket";
     private List<Integer> slots = new ArrayList<>();
 
 
@@ -33,7 +36,8 @@ public class WaterBucket extends Statable implements JobPlayerData {
 
 
     public WaterBucket(OfflinePlayer player) {
-        super("WaterBucket", "job/" + player.getUniqueId() + "/WaterBucket", player);
+        super("특별한 물통", List.of("", "§6§l│ §9물고기§f를 §6보관§f할 수 있는 §9물통 ", "§6§l│ §6효과:", "§6§l│ §9물고기§f를 잡을 시 §9물통§f으로 이동됩니다.", "§6§l│ §9물통§f은 §6레벨당 §fGUI 1줄씩 추가됩니다. §7(페이지 존재)", "§6§l│ §f특정 §6레벨 §f달성 시, §9물통§f 안에서 §a판매 §f가능", "",
+                ChatColor.GRAY + "1/5"));
     }
 
     public void onGUI(Player player) {
@@ -54,7 +58,7 @@ public class WaterBucket extends Statable implements JobPlayerData {
     public void setDefault(Player player) {
 
         path = path + player.getUniqueId();
-        Config config = new Config(path + "/" + getName());
+        Config config = new Config("job/" + player.getUniqueId() + "/WaterBucket");
 
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
         config.getConfig().set("level", 0);
@@ -64,10 +68,8 @@ public class WaterBucket extends Statable implements JobPlayerData {
 
 
     public void levelUp(Player player) {
-
-
-        if (getStatPoint(player, getName()) != -1) {
-            if (getStatPoint(player, getName()) > stat) {
+        if (getStatPoint(player, name) != -1) {
+            if (getStatPoint(player, name) > stat) {
                 int tempLevel = (int) level;
                 int nextPage = (int) (level) / 5;
                 tempLevel -= nextPage * 5;

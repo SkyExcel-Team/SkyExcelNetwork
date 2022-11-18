@@ -15,6 +15,7 @@ import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 
 import net.skyexcel.server.skyblock.data.player.SkyBlockRequest;
 import net.skyexcel.server.skyblock.ui.gui.PageVisitor;
+import net.skyexcel.server.skyblock.ui.gui.UpgradeGUI;
 import net.skyexcel.server.skyblock.util.Translate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 
@@ -511,6 +512,14 @@ public class IslandCmd implements CommandExecutor {
                         PageVisitor visitor = new PageVisitor("방문객");
                         visitor.update(player);
 
+
+                    }
+                    case "업그레이드" -> {
+                        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+                        if (playerData.isOwner()) {
+                            UpgradeGUI upgradeGUI = new UpgradeGUI(playerData.getIsland());
+                            upgradeGUI.create(player);
+                        }
 
                     }
                     case "옵션" -> {

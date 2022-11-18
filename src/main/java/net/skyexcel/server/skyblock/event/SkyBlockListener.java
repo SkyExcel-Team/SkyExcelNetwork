@@ -145,7 +145,7 @@ public class SkyBlockListener implements Listener {
                     }
                 }
             }
-            data.teleportSkyBlock(player, owner);
+//            data.teleportSkyBlock(player, owner);
 
             if (owner != null) {
                 if (!player.equals(owner)) {

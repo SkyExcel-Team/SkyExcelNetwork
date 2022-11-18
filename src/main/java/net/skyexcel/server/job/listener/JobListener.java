@@ -43,15 +43,12 @@ public class JobListener implements Listener, JobPlayerData {
         Job job = new Job(player);
 
         if (job.hasJob()) {
-
-            if (player.isSneaking() && player.getInventory().getItemInMainHand().getType().equals(Material.WOODEN_HOE)) {
-                Farmer farmer = new Farmer();
-                farmer.run(player);
-
+            if (job.getType().equals(JobType.FARM)) {
+                if (player.isSneaking() && player.getInventory().getItemInMainHand().getType().equals(Material.WOODEN_HOE)) {
+                    Farmer farmer = new Farmer();
+                    farmer.run(player);
+                }
             }
-
-        } else {
-            player.sendMessage("직업이 없습니다!");
         }
     }
 
@@ -162,7 +159,7 @@ public class JobListener implements Listener, JobPlayerData {
                     case FISHERMAN -> {
 
                         if (JobData.FishSlot[0] == slot) {
-                            
+
                         } else if (JobData.FishSlot[1] == slot) {
                             if (event.isShiftClick()) {
                                 WaterBucket waterBucket = new WaterBucket(player);

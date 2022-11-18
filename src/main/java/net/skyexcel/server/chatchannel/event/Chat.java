@@ -6,6 +6,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.skyexcel.server.chatchannel.data.ChatRecord;
 import net.skyexcel.server.chatchannel.util.Translate;
+import net.skyexcel.server.essentials.util.CoolDownUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -26,6 +27,14 @@ public class Chat implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
+
+        if (CoolDownUtils.isCoolDownNow(player)) {
+            player.sendMessage("채팅 치지마 ^.^");
+            event.setCancelled(true);
+            return;
+        } else {
+            CoolDownUtils.coolDown(player);
+        }
 
         if(!isCancelled){
             ChatRecord record = new ChatRecord(player.getUniqueId().toString());

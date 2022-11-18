@@ -22,11 +22,11 @@ public class FisherCmd implements CommandExecutor {
             if (job.getType().equals(JobType.FISHERMAN)) {
 
                 WaterBucket waterBucket = new WaterBucket(player);
-                if (waterBucket.getLevel() != 0) {
+                if (waterBucket.getLevel(player) != 0) {
                     waterBucket.onGUI(player);
                     JobData.waterBucket.put(player.getUniqueId(), waterBucket);
                 } else {
-                    player.sendMessage("물통 레벨이 0이다 애송아");
+                    player.sendMessage("물통 레벨이 0입니다.");
                 }
 
             } else {

@@ -1,12 +1,14 @@
-package net.skyexcel.server.essentials.nospam.util;
+package net.skyexcel.server.essentials.util;
 
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
-import net.skyexcel.server.essentials.nospam.SkyExcelNetworkNoSpamMain;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CoolDownUtils {
     private static final List<Player> coolDownPlayers = new ArrayList<>();
@@ -18,9 +20,9 @@ public class CoolDownUtils {
     public static void coolDown(Player player) {
         coolDownPlayers.add(player);
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkNoSpamMain.plugin, () -> {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkEssentialsMain.plugin, () -> {
             removeCoolDown(player);
-        }, SkyExcelNetworkEssentialsMain.config.getLong("no_spam.chat.coolTick"));
+        }, SkyExcelNetworkEssentialsMain.config.getConfig().getLong("no_spam.chat.coolTick")); //혹시 몰라 ㅅㅂ
     }
 
     public static void removeCoolDown(Player player) {

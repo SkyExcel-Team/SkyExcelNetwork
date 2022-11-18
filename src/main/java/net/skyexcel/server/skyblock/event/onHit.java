@@ -34,7 +34,7 @@ public class onHit implements Listener {
                     event.setCancelled(true);
                 }
             } else if (playerIsland.isInIsland(player)) {
-                if (playerIsland.isPvp()) {
+                if (!playerIsland.isPvp()) {
                     target.sendMessage("强 해당 섬에서는 PVP가 비활성화 되어있습니다");
                     event.setCancelled(true);
                 }
