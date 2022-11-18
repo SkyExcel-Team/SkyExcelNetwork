@@ -12,9 +12,9 @@ public class test implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
 
-        if (args.length > 1) {
+        if (args.length > 0) {
             Player player = (Player) sender;
-            FishType fishType = FishType.GOLIATHGROUPER;
+            FishType fishType = FishType.valueOf(args[0]);
             player.getInventory().addItem(fishType.item(1));
 
         }
