@@ -1,0 +1,8 @@
+# 쓰레기통
+trash_bin:
+  title: "%player%님의 쓰레기통"
+  lines: 3
+
+# 귓속말
+whisper:
+  message: "[%from%] -> [%to%] : %message%"
