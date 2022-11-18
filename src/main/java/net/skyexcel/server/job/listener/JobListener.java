@@ -144,7 +144,7 @@ public class JobListener implements Listener, JobPlayerData {
             int slot = event.getSlot();
             if (JobData.gui.containsKey(player.getUniqueId())) { // 스탯 GUI를 열었을 경우
                 JobGUI jobGUI = JobData.gui.get(player.getUniqueId());
-                
+
                 switch (jobGUI.getJobType()) {
                     case MINEWORKER -> {
                         if (JobData.slot[0] == slot) {
@@ -162,7 +162,7 @@ public class JobListener implements Listener, JobPlayerData {
                     case FISHERMAN -> {
 
                         if (JobData.FishSlot[0] == slot) {
-
+                            
                         } else if (JobData.FishSlot[1] == slot) {
                             if (event.isShiftClick()) {
                                 WaterBucket waterBucket = new WaterBucket(player);

@@ -2,6 +2,7 @@ package net.skyexcel.server.job.data.farmer;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
+import net.skyexcel.server.job.data.StatMeta;
 import net.skyexcel.server.job.data.stat.Statable;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,9 +17,10 @@ import org.bukkit.util.EulerAngle;
 import skyexcel.data.Time;
 import skyexcel.data.file.Config;
 
+import java.util.List;
 import java.util.Objects;
 
-public class Scarecrow extends Statable {
+public class Scarecrow extends StatMeta {
 
     private Location location;
 
@@ -41,14 +43,14 @@ public class Scarecrow extends Statable {
      * @param player
      */
     public Scarecrow(Location location, int level, OfflinePlayer player) {
-        super("허수아비", "", player);
+        super("허수아비", List.of("", "§6§l│ §6허수아비§f를 소환해, 주변의 §6농작물§f을 빠르게 자라게 해줍니다. ", "§6§l│ §f사용 방법:", "§6§l│ §f괭이를 들고 §6쉬프트 §f+ §6우클릭", ""));
         this.location = location;
         this.level = level;
         this.player = player;
     }
 
     public Scarecrow(OfflinePlayer offlinePlayer) {
-        super("허수아비", "", null);
+        super("허수아비", List.of("", "§6§l│ §6허수아비§f를 소환해, 주변의 §6농작물§f을 빠르게 자라게 해줍니다. ", "§6§l│ §f사용 방법:", "§6§l│ §f괭이를 들고 §6쉬프트 §f+ §6우클릭", ""));
         this.player = offlinePlayer;
         this.config = new Config("job/" + offlinePlayer.getUniqueId() + "/Scarecrow");
         this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
@@ -109,7 +111,7 @@ public class Scarecrow extends Statable {
             this.armorStand = armorStand;
             this.coolTime = new coolTime();
             this.coolTime.runTaskTimer(SkyExcelNetworkJobMain.plugin, 0, 20);
-            player.sendMessage(getName() + " 스킬을 사용 하였습니다.");
+            player.sendMessage(getDisplayName() + " 스킬을 사용 하였습니다.");
         } else {
             player.sendMessage("허수아비를 이미 스폰 했습니다");
         }

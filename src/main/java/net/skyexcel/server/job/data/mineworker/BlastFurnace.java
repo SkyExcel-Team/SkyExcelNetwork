@@ -5,6 +5,7 @@ import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.PercentData;
 import net.skyexcel.server.job.data.StatMeta;
+import net.skyexcel.server.job.data.stat.Leveling;
 import net.skyexcel.server.job.data.stat.Percent;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -13,7 +14,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import skyexcel.data.file.Config;
 
-public class BlastFurnace extends StatMeta implements Percent, JobPlayerData {
+import java.util.List;
+
+public class BlastFurnace extends StatMeta implements Percent, JobPlayerData, Leveling {
     private Player player;
 
     private String path = "job/";
@@ -33,9 +36,18 @@ public class BlastFurnace extends StatMeta implements Percent, JobPlayerData {
 
 
     public BlastFurnace(Player player) {
-        super("용광로");
+        super("용광로", List.of());
         this.player = player;
         this.job = new Job(player);
+    }
+
+    public void levelUp() {
+        double now = getStatPoint(player);
+
+        double level = getLevel(player, "");
+        if (now > step) { //현제
+
+        }
     }
 
     public void run(Player player, Block block) {
@@ -59,7 +71,7 @@ public class BlastFurnace extends StatMeta implements Percent, JobPlayerData {
 
     public void setDefault() {
         path = path + player.getUniqueId();
-        Config config = new Config(path + "/blessing");
+        Config config = new Config(path + "/BlastFurnace");
 
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
         config.getConfig().set("level", 0);

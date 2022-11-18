@@ -6,12 +6,17 @@ public class StatMeta {
     private String displayName;
     private List<String> description;
 
-    public StatMeta(String displayName) {
+    public StatMeta(String displayName, List<String> description) {
         this.displayName = displayName;
+        this.description = description;
     }
 
 
-    public void setDescription(List<String> description) {
-        this.description = description;
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public List<String> getDescription() {
+        return description;
     }
 }

@@ -64,6 +64,13 @@ public interface JobPlayerData {
         return config.getDouble(name);
     }
 
+    default double getStatPoint(Player player) {
+        Config config = new Config("job/" + player.getUniqueId());
+        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+
+        return config.getDouble("statpoint");
+    }
+
 
     default void setLevel(Player player, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
