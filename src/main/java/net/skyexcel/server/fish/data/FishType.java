@@ -2,8 +2,11 @@ package net.skyexcel.server.fish.data;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 public enum FishType {
 
@@ -90,21 +93,16 @@ public enum FishType {
     private String translate;
     private int modelData;
 
-
     private int size;
 
     private Material material = Material.COD;
 
     private FishRank fishRank;
 
-    private String code;
-
-
     FishType(String translate, int modelData) {
         this.translate = translate;
         this.modelData = modelData;
     }
-
 
     FishType(String translate, int modelData, FishRank fishRank) {
         this.translate = translate;
@@ -112,22 +110,49 @@ public enum FishType {
         this.fishRank = fishRank;
     }
 
-    FishType(String translate, int modelData, String code, FishRank fishRank) {
-        this.translate = translate;
-        this.modelData = modelData;
-        this.fishRank = fishRank;
-        this.code = code;
-    }
-
     public ItemStack item(int amount) {
         ItemStack itemStack = new ItemStack(material, amount);
+        System.out.println(itemStack);
         ItemMeta meta = itemStack.getItemMeta();
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "§f[" + fishRank.name() + "] " + translate + " §7(" + size + "cm)"));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "§f[" + fishRank.getName() + "] " + translate + " §7(" + size + "cm)"));
         meta.setCustomModelData(modelData);
+
+        itemStack.addUnsafeEnchantment(Enchantment.RIPTIDE, 1);
+
+        if (List.of(FishRank.SPlus, FishRank.APlus, FishRank.BPlus, FishRank.CPlus, FishRank.DPlus, FishRank.CPlus).contains(getFishRank())) {
+            System.out.println("test");
+        }
         itemStack.setItemMeta(meta);
 
         return itemStack;
+    }
+
+    public FishType fishRankUp() {
+        if (hasRank()) {
+            switch (getFishRank()) {
+                case S -> {
+                    setFishRank(FishRank.SPlus);
+                }
+                case A -> {
+                    setFishRank(FishRank.APlus);
+                }
+                case B -> {
+                    setFishRank(FishRank.BPlus);
+                }
+                case C -> {
+                    setFishRank(FishRank.CPlus);
+                }
+                case D -> {
+                    setFishRank(FishRank.DPlus);
+                }
+            }
+        }
+        return this;
+    }
+
+    public void setFishRank(FishRank fishRank) {
+        this.fishRank = fishRank;
     }
 
     public void setSize(int size) {

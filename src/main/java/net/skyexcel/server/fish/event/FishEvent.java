@@ -2,19 +2,16 @@ package net.skyexcel.server.fish.event;
 
 import net.skyexcel.server.fish.data.FishRank;
 import net.skyexcel.server.fish.data.FishType;
-
+import net.skyexcel.server.job.data.Job;
+import net.skyexcel.server.job.data.JobType;
 import org.bukkit.Bukkit;
-
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-
-
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
-
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -30,45 +27,56 @@ public class FishEvent implements Listener {
     @EventHandler
     public void onFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
-
-
+        
         if (event.getCaught() instanceof Item) {
-            Item stack = (Item) event.getCaught();
+            Job job = new Job(player);
 
+            job.setJobType(JobType.FISHERMAN);
 
-            Random random = new Random();
+            if (job.hasJob()) {
 
+                ItemStack itemStack = caught((Item) event.getCaught(), player, job.getType().equals(JobType.FISHERMAN));
 
-            List<FishType> fishTypes = new ArrayList<>(Arrays.stream(FishType.values()).filter(FishType::hasRank).toList());
-
-
-            int rand = random.nextInt(fishTypes.size() - 1);
-            FishType value = fishTypes.get(rand);
-
-
-            int size;
-            if (value.getFishRank() != null) {
-
-                if (getPercent(85)) {
-                    size = random.nextInt(10) + 1;
-                } else {
-                    size = random.nextInt(20 - 10 + 1) + 10;
-                }
-
-                if (value.getFishRank() == FishRank.S || value.getFishRank() == FishRank.SPlus) {
-
-                    Bukkit.getOnlinePlayers().forEach(players -> {
-                        players.sendMessage(player.getDisplayName() + "님이 " + "[" + value.getFishRank().name() + "] " + value.getTranslate() + " 물고기를 잡았습니다! §7(" + size + "cm)");
-                    });
-                } else {
-                    ActionBar.sendMessage(player, "[" + value.getFishRank().name() + "] " + value.getTranslate() + " 물고기를 잡았습니다! §7(" + size + "cm)");
-                }
-
-                value.setSize(size);
-
-                stack.setItemStack(value.item(1)); //Your new itemstack here!
             }
         }
+    }
+
+    private ItemStack caught(Item stack, Player player, boolean upgrade) {
+        Random random = new Random();
+        List<FishType> fishTypes = new ArrayList<>(Arrays.stream(FishType.values()).filter(FishType::hasRank).toList());
+
+        int rand = random.nextInt(fishTypes.size() - 1);
+        FishType value = fishTypes.get(rand);
+
+        if (upgrade) {
+            value.fishRankUp();
+        }
+
+        int size;
+
+        if (value.getFishRank() != null) {
+            if (getPercent(85)) {
+                size = random.nextInt(10) + 5;
+            } else {
+                size = random.nextInt(20 - 10 + 1) + 10;
+            }
+
+            if (value.getFishRank() == FishRank.S || value.getFishRank() == FishRank.SPlus) {
+                Bukkit.getOnlinePlayers().forEach(players -> {
+                    players.sendMessage(player.getDisplayName() + "님이 " + "[" + value.getFishRank().getName() + "] "
+                            + value.getTranslate() + " 물고기를 잡았습니다! §7(" + size + "cm)");
+                });
+            } else {
+                ActionBar.sendMessage(player, "[" + value.getFishRank().getName() + "] " + value.getTranslate() +
+                        " 물고기를 잡았습니다! §7(" + size + "cm)");
+            }
+
+            value.setSize(size);
+            ItemStack result = value.item(1);
+            stack.setItemStack(result); //Your new itemstack here!
+            return result;
+        }
+        return null;
     }
 
     @EventHandler

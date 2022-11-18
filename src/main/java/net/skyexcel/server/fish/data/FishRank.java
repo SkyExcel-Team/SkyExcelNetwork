@@ -1,11 +1,15 @@
 package net.skyexcel.server.fish.data;
 
 public enum FishRank {
-    SPlus("S 플러스"), S("S"), APlus("name"), A("name"), BPlus("name"), B("name"), CPlus("name"), C("name"), DPlus("name"), D("name"), EPlus("name"), E("name"), FPlus("name"), F("name");
+    SPlus("S+"), S("S"), APlus("A+"), A("A"), BPlus("B+"), B("B"), CPlus("C+"), C("C"), DPlus("D+"), D("D");
 
     private String name;
 
     FishRank(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }
