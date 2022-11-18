@@ -1,6 +1,7 @@
 package net.skyexcel.server;
 
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import net.skyexcel.server.regionafk.SkyExcelNetworkAFKMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
 import net.skyexcel.server.discord.SkyExcelNetworkDiscordMain;
@@ -16,11 +17,13 @@ import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
 import net.skyexcel.server.playerprofile.SkyExcelNetworkPlayerProfile;
 import net.skyexcel.server.playtime.SkyExcelNetworkPlayTimeMain;
 
+import net.skyexcel.server.rank.SkyExcelNetworkRankMain;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.snowy.SkyExcelSnowyMain;
 import net.skyexcel.server.trade.SkyExcelNetworkTradeMain;
 import net.skyexcel.server.tutorial.SkyExcelNetworkTutorialMain;
+import net.skyexcel.server.upgrade.SkyExcelNetworkUpgradeMain;
 import net.skyexcel.server.warp.SkyExcelNetWorkWarp;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -58,6 +61,9 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetworkFlyTicketMain(plugin);
         new SkyExcelNetworkTutorialMain(plugin);
         new SkyExcelNetworkEssentialsMain(plugin);
+        new SkyExcelNetworkAFKMain(plugin);
+        new SkyExcelNetworkRankMain(plugin);
+        new SkyExcelNetworkUpgradeMain(plugin);
     }
 
     @Override
