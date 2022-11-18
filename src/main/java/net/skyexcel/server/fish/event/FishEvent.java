@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +28,7 @@ public class FishEvent implements Listener {
     @EventHandler
     public void onFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
-        
+
         if (event.getCaught() instanceof Item) {
             Job job = new Job(player);
 
@@ -39,6 +40,14 @@ public class FishEvent implements Listener {
 
             }
         }
+    }
+
+    @EventHandler
+    public void test(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        FishType fishType = FishType.COOKEDANCHOVY;
+
+        player.getInventory().addItem(fishType.item(1));
     }
 
     private ItemStack caught(Item stack, Player player, boolean upgrade) {

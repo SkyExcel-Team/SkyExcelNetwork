@@ -102,6 +102,7 @@ public class CashShop extends Stockable {
         }
         return result;
     }
+
     public boolean equalFileName(String name) {
         Config config = new Config("SkyBlock/");
         config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
@@ -324,8 +325,13 @@ public class CashShop extends Stockable {
             long buy = (pdc.get(buy_key, PersistentDataType.LONG) != null ? pdc.get(buy_key, PersistentDataType.LONG) : -1);
 
             if (sell != -1) {
-                isSimilar(player, select, buy, sell, amount);
-                sellCompare(meta, player, select, amount);
+                if (removeItems(player.getInventory(), select.getType(), amount)) {
+                    isSimilar(player, select, buy, sell, amount);
+                    sellCompare(meta, player, select, amount);
+                } else {
+                    player.sendMessage("판매할 아이템이 부족합니다.");
+                }
+
             } else {
                 player.sendMessage("해당 상품은 판매가 불가능합니다");
             }
@@ -373,24 +379,19 @@ public class CashShop extends Stockable {
 
     }
 
-    private void removeItems(Inventory inventory, Material type, int amount) {
-        if (amount <= 0) return;
+    private boolean removeItems(Inventory inventory, Material type, int amount) {
+
+        int amounts = 0;
+        boolean result = false;
+
+        if (amount <= 0) return true;
         int size = inventory.getSize();
         for (int slot = 0; slot < size; slot++) {
             ItemStack is = inventory.getItem(slot);
-            if (is == null) continue;
-            if (type == is.getType()) {
-                int newAmount = is.getAmount() - amount;
-                if (newAmount > 0) {
-                    is.setAmount(newAmount);
-                    break;
-                } else {
-                    inventory.clear(slot);
-                    amount = -newAmount;
-                    if (amount == 0) break;
-                }
-            }
+
         }
+
+        return result;
     }
 
 
