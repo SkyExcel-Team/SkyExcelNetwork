@@ -42,12 +42,7 @@ public class FishEvent implements Listener {
         }
     }
 
-    @EventHandler
-    public void test(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
 
-
-    }
 
     private ItemStack caught(Item stack, Player player, boolean upgrade) {
         Random random = new Random();
