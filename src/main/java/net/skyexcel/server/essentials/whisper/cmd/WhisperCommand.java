@@ -39,6 +39,10 @@ public class WhisperCommand implements CommandExecutor {
             sender.sendMessage("해당 플레이어에게는 메세지를 보낼 수 없습니다.");
             return false;
         }
+        if (t.getName().equals(p.getName())) {
+            sender.sendMessage("본인에게는 메세지를 보낼 수 없습니다.");
+            return false;
+        }
 
         String message = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
         String finalMessage = SkyExcelNetworkEssentialsMain.config.getString("whisper.message")
