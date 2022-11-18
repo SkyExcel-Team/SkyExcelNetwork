@@ -1,19 +1,20 @@
 package net.skyexcel.server.job.listener;
 
 
-import net.skyexcel.server.fish.data.FishType;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobData;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.JobType;
+import net.skyexcel.server.job.data.fisher.WaterBucket;
+import net.skyexcel.server.job.data.mineworker.Bait;
+import net.skyexcel.server.job.data.mineworker.BlastFurnace;
+import net.skyexcel.server.job.data.mineworker.FeverTime;
 import net.skyexcel.server.job.data.stat.*;
 import net.skyexcel.server.job.data.type.Farmer;
 import net.skyexcel.server.job.gui.JobGUI;
 import net.skyexcel.server.job.gui.JobSelectGUI;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,12 +29,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public class JobListener implements Listener, JobPlayerData {
@@ -68,11 +65,11 @@ public class JobListener implements Listener, JobPlayerData {
             if (!job.getType().equals(JobType.NONE)) {
                 if (job.getType().equals(JobType.MINEWORKER)) { //광부일때 광부 패시브를 발동한다.
 
-                    FeverTime feverTime = new FeverTime();
+                    FeverTime feverTime = new FeverTime(player);
                     feverTime.run(player, block);
 
                     //TODO 모든 광물 다 불러와야됨 ㅅㄱ
-                    BlastFurnace blastFurnace = new BlastFurnace();
+                    BlastFurnace blastFurnace = new BlastFurnace(player);
                     blastFurnace.run(player, block);
 
                     //TODO 이벤트 캔슬 시켜야됨
@@ -126,7 +123,7 @@ public class JobListener implements Listener, JobPlayerData {
         if (job.hasJob()) {
 
             if (job.getType().equals(JobType.FISHERMAN)) {
-                Bait bait = new Bait();
+                Bait bait = new Bait(player);
                 bait.run(player, item, previous);
             }
         }
@@ -147,11 +144,11 @@ public class JobListener implements Listener, JobPlayerData {
             int slot = event.getSlot();
             if (JobData.gui.containsKey(player.getUniqueId())) { // 스탯 GUI를 열었을 경우
                 JobGUI jobGUI = JobData.gui.get(player.getUniqueId());
-
+                
                 switch (jobGUI.getJobType()) {
                     case MINEWORKER -> {
                         if (JobData.slot[0] == slot) {
-                            BlastFurnace blastFurnace = new BlastFurnace();
+                            BlastFurnace blastFurnace = new BlastFurnace(player);
                             player.sendMessage("용광로 특성을 업그레이드 하였습니다.");
                         } else if (JobData.slot[1] == slot) {
                             player.sendMessage("피버타임 특성을 업그레이드 하였습니다.");
@@ -168,7 +165,7 @@ public class JobListener implements Listener, JobPlayerData {
 
                         } else if (JobData.FishSlot[1] == slot) {
                             if (event.isShiftClick()) {
-                                WaterBucket waterBucket = new WaterBucket();
+                                WaterBucket waterBucket = new WaterBucket(player);
                                 if (waterBucket.getStatPoint(player, "StatPoint") == -1) {
                                     waterBucket.onGUI(player);
                                 }
@@ -197,25 +194,28 @@ public class JobListener implements Listener, JobPlayerData {
                         jobSelectGUI.setJob(JobType.FARM);
                         jobSelectGUI.select(player);
                         jobSelectGUI.setSelect(true);
+
                     } else if (slot == jobSelectGUI.getFISH()) {
                         jobSelectGUI.setJob(JobType.FISHERMAN);
                         jobSelectGUI.select(player);
                         jobSelectGUI.setSelect(true);
-                        jobSelectGUI.setDefaults(player);
+
+
                     } else if (slot == jobSelectGUI.getMINE()) {
                         jobSelectGUI.setJob(JobType.MINEWORKER);
                         jobSelectGUI.select(player);
                         jobSelectGUI.setSelect(true);
                     }
+
                 } else {
                     if (slot == jobSelectGUI.getYES()) {
+                        jobSelectGUI.setDefaults(player);
                         player.closeInventory();
                     } else if (slot == jobSelectGUI.getNO()) {
                         jobSelectGUI.open(player);
                         jobSelectGUI.setSelect(false);
                     }
                 }
-
 
                 event.setCancelled(true);
             }
@@ -225,8 +225,6 @@ public class JobListener implements Listener, JobPlayerData {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
-        player.sendMessage("test");
 
 
     }

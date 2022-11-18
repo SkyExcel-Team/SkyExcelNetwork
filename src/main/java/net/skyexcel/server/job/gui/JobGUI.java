@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.gui;
 
+import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobData;
 import net.skyexcel.server.job.data.JobType;
 import net.skyexcel.server.job.data.type.Farmer;
@@ -19,19 +20,24 @@ public class JobGUI {
 
     private Inventory inv;
 
+
+    private Job job;
     private JobType jobType = JobType.NONE;
 
     public JobGUI(Player player) {
         this.player = player;
+        job = new Job(player);
+
     }
 
     public void mineWork() {
-        Inventory inv = Bukkit.createInventory(null, 27, "광부");
-        this.inv = inv;
+        this.inv = Bukkit.createInventory(null, 27, "광부");
+
         Items.newItem("§c용광로", Material.CHEST, 1, List.of("", "§6§l│ §f광물을 캘시 일정확률로 §c구워진 §f광물이 §a드롭§f됩니다. ", "§6§l│ §f적용되는 광물:", "§6§l│ §6구리", "§6§l│ §f철", "§6§l│ §e금", ""), JobData.slot[0], inv);
         Items.newItem("§e피버 타임", Material.CHEST, 1, List.of("", "§6§l│ §b다이아몬드§f를 캘시 §6일정확률§f로 §e성급함§f을 부여합니다. ", ""), JobData.slot[1], inv);
         Items.newItem("§b단단한 곡괭이", Material.CHEST, 1, List.of("", "§6§l│ §6일정확률§f로 광물을 캘시, 곡괭이의 §e내구도§f가 달지 않습니다. ", ""), JobData.slot[2], inv);
         this.jobType = JobType.MINEWORKER;
+
         player.openInventory(inv);
     }
 
@@ -47,7 +53,7 @@ public class JobGUI {
 
     public void fish() {
 
-        Inventory inv = Bukkit.createInventory(null, 27, "낚시꾼 스텟포인트 [0] ");
+        this.inv = Bukkit.createInventory(null, 27, "낚시꾼 스텟포인트 [0]");
 
         Items.newItem("§c최고급 §9미끼", Material.FISHING_ROD, 1, List.of("", "§6§l│ §f한단계 높은 §e등급§f의 §9물고기§f(인챈트)(을)를 얻습니다. ", "",
                 ChatColor.GRAY + "1/5"), JobData.FishSlot[0], inv);
@@ -55,7 +61,6 @@ public class JobGUI {
                 ChatColor.GRAY + "1/5"), JobData.FishSlot[1], inv);
         this.jobType = JobType.FISHERMAN;
 
-        this.inv = inv;
         player.openInventory(inv);
     }
 

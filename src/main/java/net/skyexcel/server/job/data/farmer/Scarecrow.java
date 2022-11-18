@@ -1,9 +1,11 @@
-package net.skyexcel.server.job.data.stat;
+package net.skyexcel.server.job.data.farmer;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
+import net.skyexcel.server.job.data.stat.Statable;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -12,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import skyexcel.data.Time;
+import skyexcel.data.file.Config;
 
 import java.util.Objects;
 
@@ -27,16 +30,35 @@ public class Scarecrow extends Statable {
 
     private coolTime coolTime;
 
+    private OfflinePlayer player;
+
+    private Config config;
+
+
     /**
      * @param location 허수아비가 스폰 될 위치
      * @param level
+     * @param player
      */
-    public Scarecrow(Location location, int level) {
-        super("농부의 축복");
+    public Scarecrow(Location location, int level, OfflinePlayer player) {
+        super("허수아비", "", player);
         this.location = location;
         this.level = level;
+        this.player = player;
     }
 
+    public Scarecrow(OfflinePlayer offlinePlayer) {
+        super("허수아비", "", null);
+        this.player = offlinePlayer;
+        this.config = new Config("job/" + offlinePlayer.getUniqueId() + "/Scarecrow");
+        this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
+    }
+
+    public void setDefault() {
+        this.config.setLong("level", 0);
+        this.config.getConfig().set("location", null);
+        this.config.saveConfig();
+    }
 
     public void spawn(Player player) {
 
@@ -94,7 +116,7 @@ public class Scarecrow extends Statable {
     }
 
     public void run(Player player) {
-        Scarecrow scarecrow = new Scarecrow(player.getLocation(), 1);
+        Scarecrow scarecrow = new Scarecrow(player.getLocation(), 1, player);
         scarecrow.spawn(player);
 
     }

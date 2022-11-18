@@ -2,7 +2,7 @@ package net.skyexcel.server.job.data.type;
 
 import net.skyexcel.server.job.data.JobMeta;
 import net.skyexcel.server.job.data.JobPlayerData;
-import net.skyexcel.server.job.data.stat.WaterBucket;
+import net.skyexcel.server.job.data.fisher.WaterBucket;
 import org.bukkit.entity.Player;
 
 public class Fisher extends JobMeta implements JobPlayerData {

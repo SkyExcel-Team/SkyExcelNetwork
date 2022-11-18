@@ -1,5 +1,7 @@
 package net.skyexcel.server.job.cmd;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -17,6 +19,13 @@ public class JobTab implements TabCompleter {
         List<String> result = new ArrayList<>();
         if (args.length == 1) {
             result = List.of("보기", "초기화", "선택");
+        } else if (args.length == 2) {
+            if (List.of("보기", "초기화").contains(args[0])) {
+                for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
+                    result.add(offlinePlayer.getName());
+                }
+            }
+
         }
         return result;
     }

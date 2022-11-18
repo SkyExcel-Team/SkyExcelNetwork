@@ -7,7 +7,7 @@ import skyexcel.data.file.Config;
 public interface JobPlayerData {
 
     default void setStatPoint(Player player, String name, double value) {
-        Config config = new Config("job/" + player.getUniqueId());
+        Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
         config.setDouble(name, value);
     }
@@ -20,7 +20,7 @@ public interface JobPlayerData {
      * @param value
      */
     default void increase(Player player, String name, double value) {
-        Config config = new Config("job/" + player.getUniqueId());
+        Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
 
         if (getStatPoint(player, name) != -1) {
@@ -40,7 +40,7 @@ public interface JobPlayerData {
      * @param save
      */
     default void increase(Player player, String name, double value, boolean save) {
-        Config config = new Config("job/" + player.getUniqueId());
+        Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
 
         if (getStatPoint(player, name) != -1) {
@@ -52,7 +52,7 @@ public interface JobPlayerData {
     }
 
     default void decrease(Player player, String name, double value) {
-        Config config = new Config("job/" + player.getUniqueId());
+        Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
         config.setDouble(name, getStatPoint(player, name) - value);
     }
@@ -66,14 +66,15 @@ public interface JobPlayerData {
 
 
     default void setLevel(Player player, double value) {
-        Config config = new Config("job/" + player.getUniqueId());
+        Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
 
         config.setDouble("level", value);
     }
 
     default double getLevel(Player player) {
-        Config config = new Config("job/" + player.getUniqueId());
+        Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
+
         config.setPlugin(SkyExcelNetworkJobMain.plugin);
 
         return config.getDouble("level");

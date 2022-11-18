@@ -1,12 +1,24 @@
-package net.skyexcel.server.job.data.stat;
+package net.skyexcel.server.job.data.mineworker;
 
+import net.skyexcel.server.job.SkyExcelNetworkJobMain;
+import net.skyexcel.server.job.data.JobPlayerData;
+import net.skyexcel.server.job.data.stat.Statable;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import skyexcel.data.file.Config;
 
-public class Bait {
+public class Bait extends Statable implements JobPlayerData {
 
+    private Player player;
+
+
+    public Bait(Player player) {
+        super("단단한 곡괭이", "job/" + player.getUniqueId() + "/bait", player);
+        this.player = player;
+    }
 
     public void run(Player player, ItemStack item, ItemStack previous) {
         if (item != null) {
@@ -27,5 +39,14 @@ public class Bait {
                 }
             }
         }
+    }
+
+    public void setDefault() {
+
+        Config config = new Config(getPath());
+
+        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.getConfig().set("level", 0);
+        config.saveConfig();
     }
 }

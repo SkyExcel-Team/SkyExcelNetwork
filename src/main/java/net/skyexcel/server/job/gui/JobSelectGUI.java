@@ -1,9 +1,18 @@
 package net.skyexcel.server.job.gui;
 
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
+import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobType;
-import net.skyexcel.server.job.data.stat.WaterBucket;
+import net.skyexcel.server.job.data.farmer.Blessing;
+import net.skyexcel.server.job.data.fisher.Anglers;
+import net.skyexcel.server.job.data.farmer.Scarecrow;
+import net.skyexcel.server.job.data.fisher.WaterBucket;
+import net.skyexcel.server.job.data.mineworker.Bait;
+import net.skyexcel.server.job.data.mineworker.BlastFurnace;
+import net.skyexcel.server.job.data.mineworker.FeverTime;
+import net.skyexcel.server.job.data.type.Farmer;
 import net.skyexcel.server.job.data.type.Fisher;
+import net.skyexcel.server.job.data.type.MineWorker;
 import net.skyexcel.server.packet.Inventory.InventoryUpdate;
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
@@ -64,17 +73,42 @@ public class JobSelectGUI {
 
 
     public void setDefaults(Player player) {
+        Job job = new Job(player);
         switch (jobType) {
             case MINEWORKER -> {
+                MineWorker mineWorker = new MineWorker();
+
+                FeverTime feverTime = new FeverTime(player);
+                BlastFurnace blastFurnace = new BlastFurnace(player);
+                Bait bait = new Bait(player);
+                blastFurnace.setDefault();
+                feverTime.setDefault();
+                bait.setDefault();
+                mineWorker.setDefault(player);
+
+                job.setJobType(JobType.MINEWORKER);
 
             }
             case FARM -> {
+                Farmer farmer = new Farmer();
+
+                Blessing blessing = new Blessing(player);
+                Scarecrow scarecrow = new Scarecrow(player);
+                scarecrow.setDefault();
+                farmer.setDefault(player);
+                blessing.setDefault();
+
+                job.setJobType(JobType.FARM);
             }
             case FISHERMAN -> {
                 Fisher fisher = new Fisher();
-                WaterBucket waterBucket = new WaterBucket();
+                WaterBucket waterBucket = new WaterBucket(player);
+                Anglers anglers = new Anglers(player);
                 waterBucket.setDefault(player);
                 fisher.setDefault(player);
+                anglers.setDefault();
+
+                job.setJobType(JobType.FISHERMAN);
             }
         }
     }

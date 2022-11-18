@@ -2,6 +2,7 @@ package net.skyexcel.server.job.data;
 
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 import java.util.Objects;
@@ -14,22 +15,19 @@ public class Job {
 
     private Config config;
 
+    private OfflinePlayer offlinePlayer;
+
     public Job(OfflinePlayer player) {
         this.config = new Config("data/" + player.getUniqueId());
         this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        this.offlinePlayer = player;
+    }
 
 
-//        switch (jobType) {
-//            case FARM -> {
-//                jobMeta.setDescription(List.of("이건 농부에 대한 설명 입니다."));
-//            }
-//            case FISHERMAN -> {
-//                jobMeta.setDescription(List.of("이건 낚시꾼 대한 설명 입니다."));
-//            }
-//            case MINEWORKER -> {
-//                jobMeta.setDescription(List.of("이건 광부에 대한 설명 입니다."));
-//            }
-//        }
+    public Job(Player player) {
+        this.config = new Config("data/" + player.getUniqueId());
+        this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        this.offlinePlayer = player;
     }
 
 
@@ -38,13 +36,22 @@ public class Job {
         this.config.setString("job", jobType.name());
     }
 
+    public void reset() {
+        this.config.removeKey("job");
+        this.config.deleteDir("job/" + offlinePlayer.getUniqueId());
+    }
+
     public boolean hasJob() {
         return !getType().equals(JobType.NONE);
     }
 
 
+    public void increase() {
+
+    }
 
     public JobType getType() {
+
         return config.getString("job") != null ? JobType.valueOf(config.getString("job")) : JobType.NONE;
     }
 }

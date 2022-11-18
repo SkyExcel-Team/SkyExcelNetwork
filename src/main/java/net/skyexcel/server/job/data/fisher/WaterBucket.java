@@ -1,13 +1,16 @@
-package net.skyexcel.server.job.data.stat;
+package net.skyexcel.server.job.data.fisher;
 
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
+import net.skyexcel.server.job.data.stat.Statable;
 import net.skyexcel.server.packet.Inventory.InventoryUpdate;
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import skyexcel.data.file.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +29,11 @@ public class WaterBucket extends Statable implements JobPlayerData {
 
     private final double stat = 5;
 
+    private String path = "job/";
 
-    public WaterBucket() {
-        super("WaterBucket");
+
+    public WaterBucket(OfflinePlayer player) {
+        super("WaterBucket", "job/" + player.getUniqueId() + "/WaterBucket", player);
     }
 
     public void onGUI(Player player) {
@@ -47,7 +52,14 @@ public class WaterBucket extends Statable implements JobPlayerData {
     }
 
     public void setDefault(Player player) {
-        setStatPoint(player, getName(), 0);
+
+        path = path + player.getUniqueId();
+        Config config = new Config(path + "/" + getName());
+
+        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.getConfig().set("level", 0);
+        config.getConfig().set("items", new ArrayList<>());
+        config.saveConfig();
     }
 
 
