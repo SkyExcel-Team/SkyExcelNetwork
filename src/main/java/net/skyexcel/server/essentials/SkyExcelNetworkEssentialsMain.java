@@ -1,6 +1,7 @@
 package net.skyexcel.server.essentials;
 
 import net.skyexcel.server.essentials.trashbin.TrashBinMain;
+import net.skyexcel.server.essentials.whisper.SkyExcelNetworkWhisperMain;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
 
@@ -20,5 +21,6 @@ public class SkyExcelNetworkEssentialsMain {
         config.loadDefaultPluginConfig();
 
         new TrashBinMain(plugin);
+        new SkyExcelNetworkWhisperMain(plugin);
     }
 }
