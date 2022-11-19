@@ -16,3 +16,10 @@ no_spam:
 shout:
   coolTick: 100
   money: 10
+
+# Shift + F
+shiftf:
+  execute:
+    - '[player] say HI'
+    - '[server] say HI'
+    - '[sound] entity.shulker.shoot'

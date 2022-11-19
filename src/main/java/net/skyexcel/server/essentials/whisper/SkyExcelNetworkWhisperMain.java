@@ -14,7 +14,7 @@ public class SkyExcelNetworkWhisperMain {
         onEnable();
     }
 
-    public void onEnable() {
+    private void onEnable() {
         Bukkit.getPluginCommand("w").setExecutor(new WhisperCommand());
         Bukkit.getPluginCommand("w").setTabCompleter(new WhisperCmdTabComplete());
     }
