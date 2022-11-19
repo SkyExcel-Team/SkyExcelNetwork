@@ -30,7 +30,8 @@ shift_f:
 
 # 자동청소
 auto_clean:
-  period:
+  period: 10
   messages:
     30SecRemains: "30초후에 아이템 삭제됨 ㅅㄱ"
     10SecRemains: "10초후에 아이템 삭제됨 ㅅㄱ"
+    removed: "응 아이템 %removed%개 증발함 ㅅㄱ"
