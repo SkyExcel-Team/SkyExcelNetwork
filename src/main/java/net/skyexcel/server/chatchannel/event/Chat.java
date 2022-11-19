@@ -29,9 +29,11 @@ public class Chat implements Listener {
         Player player = event.getPlayer();
 
         if (SkyExcelNetworkEssentialsMain.chatCoolDown.isCoolDownNow(player)) {
-            player.sendMessage("채팅 치지마 ^.^");
-            event.setCancelled(true);
-            return;
+            if (!player.isOp()) {
+                player.sendMessage("채팅 치지마 ^.^");
+                event.setCancelled(true);
+                return;
+            }
         } else {
             SkyExcelNetworkEssentialsMain.chatCoolDown.coolDown(player, SkyExcelNetworkEssentialsMain.config.getConfig().getLong("no_spam.chat.coolTick"));
         }

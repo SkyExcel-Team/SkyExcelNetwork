@@ -13,10 +13,7 @@ public class ChatCoolDownUtils {
     public ChatCoolDownUtils() {}
 
     public boolean isCoolDownNow(Player player) {
-        if (player.isOp())
-            return false;
-        else
-            return coolDownPlayers.contains(player);
+        return coolDownPlayers.contains(player);
     }
 
     public void coolDown(Player player, long coolTick) {
