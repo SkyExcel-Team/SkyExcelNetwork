@@ -3,6 +3,8 @@ package net.skyexcel.server.fish.data;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -123,23 +125,30 @@ public enum FishType {
         return itemStack;
     }
 
-    public FishType fishRankUp() {
+    public FishType fishRankUp(ItemStack itemStack) {
+        ItemMeta meta = itemStack.getItemMeta();
+
         if (hasRank()) {
             switch (getFishRank()) {
                 case S -> {
                     setFishRank(FishRank.SPlus);
+                    meta.addEnchant(Enchantment.CHANNELING, 1, true);
+                    itemStack.setItemMeta(meta);
                 }
                 case A -> {
                     setFishRank(FishRank.APlus);
+                    meta.addEnchant(Enchantment.CHANNELING, 1, true);
+                    itemStack.setItemMeta(meta);
                 }
                 case B -> {
                     setFishRank(FishRank.BPlus);
+                    meta.addEnchant(Enchantment.CHANNELING, 1, true);
+                    itemStack.setItemMeta(meta);
                 }
                 case C -> {
                     setFishRank(FishRank.CPlus);
-                }
-                case D -> {
-                    setFishRank(FishRank.DPlus);
+                    meta.addEnchant(Enchantment.CHANNELING, 1, true);
+                    itemStack.setItemMeta(meta);
                 }
             }
         }

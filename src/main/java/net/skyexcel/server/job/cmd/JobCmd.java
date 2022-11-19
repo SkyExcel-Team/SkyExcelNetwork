@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.cmd;
 
+import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobData;
 import net.skyexcel.server.job.data.JobType;
@@ -64,7 +65,10 @@ public class JobCmd implements CommandExecutor {
                         } else {
                             player.sendMessage("이미 직업 있음 ㅅㄱ");
                         }
-
+                    }
+                    case "리로드" -> {
+                        SkyExcelNetworkJobMain.config.reloadConfig();
+                        player.sendMessage("콘피그가 리로드 됩니다.");
                     }
                 }
             }
