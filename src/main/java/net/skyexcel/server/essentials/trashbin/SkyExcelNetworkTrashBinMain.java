@@ -13,7 +13,7 @@ public class SkyExcelNetworkTrashBinMain {
         onEnable();
     }
 
-    public void onEnable() {
+    private void onEnable() {
         Bukkit.getPluginCommand("trashbin").setExecutor(new TrashBinCommand());
     }
 }

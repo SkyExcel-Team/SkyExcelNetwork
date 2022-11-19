@@ -18,7 +18,7 @@ public class SkyExcelNetworkFarmProtectMain {
         onEnable();
     }
 
-    public void onEnable() {
+    private void onEnable() {
         Bukkit.getPluginCommand("farmprotect").setExecutor(new FarmProtectCommand());
         Bukkit.getPluginCommand("farmprotect").setTabCompleter(new FarmProtectCmdTabComplete());
 

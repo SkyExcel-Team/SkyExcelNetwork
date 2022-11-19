@@ -18,7 +18,7 @@ public class SkyExcelNetworkEssentialsMain {
         onEnable();
     }
 
-    public void onEnable() {
+    private void onEnable() {
         config = new Config("Essentials-config");
         config.setPlugin(plugin);
         config.loadDefaultPluginConfig();

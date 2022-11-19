@@ -13,7 +13,7 @@ public class SkyExcelNetworkShoutMain {
         onEnable();
     }
 
-    public void onEnable() {
+    private void onEnable() {
         Bukkit.getPluginCommand("shout").setExecutor(new ShoutCommand());
     }
 }
