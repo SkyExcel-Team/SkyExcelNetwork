@@ -6,27 +6,20 @@ import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobType;
 import net.skyexcel.server.job.data.stat.Percent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.checkerframework.checker.units.qual.C;
 import skyexcel.data.file.Config;
 import skyexcel.util.ActionBar;
 
 import java.util.*;
-
-import static net.skyexcel.server.snowy.scheduler.SnowParticleScheduler.chance;
 
 public class FishEvent implements Listener, Percent {
 
@@ -98,9 +91,10 @@ public class FishEvent implements Listener, Percent {
         ranks.put(config.getDouble("percent.FishCaught.Rank.C"), FishRank.C);
 
         if (percent <= chances.get(0)) {
-            System.out.println(ChatColor.BLUE + "" + (index < SChance) + " / " + Math.random() * 100 + " < " + SChance);
-            List<FishType> S = getByRank(FishRank.S);
-            fishType = selector(S);
+//            System.out.println(ChatColor.BLUE + "" + (index < SChance) + " / " + Math.random() * 100 + " < " + SChance);
+            
+            List<FishType> types = getByRank(ranks.get(chances.get(0)));
+            fishType = selector(types);
             size = getSizeByRand(config.getInteger("percent.FishCaught.Size.Under"));
             item = fishType.item(1);
 
@@ -108,10 +102,11 @@ public class FishEvent implements Listener, Percent {
                 rankUp(fishType, item);
             }
 
-        } else if (percent <= chances.get(1)) {
-            System.out.println(ChatColor.YELLOW + "" + (index < AChance) + " / " + Math.random() * 100 + " < " + AChance);
-            List<FishType> A = getByRank(FishRank.A);
-            fishType = selector(A);
+        } else if (percent <= chances.get(0) + chances.get(1)) {
+//            System.out.println(ChatColor.YELLOW + "" + (index < AChance) + " / " + Math.random() * 100 + " < " + AChance);
+            
+            List<FishType> types = getByRank(ranks.get(chances.get(1)));
+            fishType = selector(types);
             size = getSizeByRand(config.getInteger("percent.FishCaught.Size.Under"));
             item = fishType.item(1);
 
@@ -120,11 +115,11 @@ public class FishEvent implements Listener, Percent {
             }
 
 
-        } else if (percent <= chances.get(2)) {
-            System.out.println(ChatColor.GOLD + "" + (index < BChance) + " / " + Math.random() * 100 + " < " + BChance);
+        } else if (percent <= chances.get(0) + chances.get(1) + chances.get(2)) {
+//            System.out.println(ChatColor.GOLD + "" + (index < BChance) + " / " + Math.random() * 100 + " < " + BChance);
 
-            List<FishType> B = getByRank(FishRank.B);
-            fishType = selector(B);
+            List<FishType> types = getByRank(ranks.get(chances.get(2)));
+            fishType = selector(types);
             size = getSizeByRand(config.getInteger("percent.FishCaught.Size.Under"));
             item = fishType.item(1);
 
@@ -132,12 +127,12 @@ public class FishEvent implements Listener, Percent {
                 rankUp(fishType, item);
             }
 
-        } else if (percent <= chances.get(3)) {
-            System.out.println(ChatColor.GREEN + "" + (index < CChance) + " / " + Math.random() * 100 + " < " + CChance);
+        } else if (percent <= chances.get(0) + chances.get(1) + chances.get(2) + chances.get(3)) {
+//            System.out.println(ChatColor.GREEN + "" + (index < CChance) + " / " + Math.random() * 100 + " < " + CChance);
 
-            List<FishType> C = getByRank(FishRank.C);
-            System.out.println(C);
-            fishType = selector(C);
+            List<FishType> types = getByRank(ranks.get(chances.get(3)));
+            System.out.println(types);
+            fishType = selector(types);
             size = getSizeByRand(config.getInteger("percent.FishCaught.Size.Under"));
             item = fishType.item(1);
 
