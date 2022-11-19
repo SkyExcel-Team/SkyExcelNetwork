@@ -17,9 +17,11 @@ public class ShoutCommand implements CommandExecutor {
             return false;
         }
 
-        if (SkyExcelNetworkEssentialsMain.chatCoolDown.isCoolDownNow(p)) {
-            p.sendMessage("채팅 치지마 ^.^");
-            return false;
+        if (!p.isOp()) {
+            if (SkyExcelNetworkEssentialsMain.chatCoolDown.isCoolDownNow(p)) {
+                p.sendMessage("채팅 치지마 ^.^");
+                return false;
+            }
         }
 
         if (args.length < 1) {
@@ -27,15 +29,17 @@ public class ShoutCommand implements CommandExecutor {
             return false;
         }
 
-        SEConomy seConomy = new SEConomy(p);
-        if (seConomy.getLong() < SkyExcelNetworkEssentialsMain.config.getInteger("shout.money")) {
-            p.sendMessage("잔액이 부족합니다!");
-            return false;
+        if (!p.isOp()) {
+            SEConomy seConomy = new SEConomy(p);
+            if (seConomy.getLong() < SkyExcelNetworkEssentialsMain.config.getInteger("shout.money")) {
+                p.sendMessage("잔액이 부족합니다!");
+                return false;
+            }
+
+            seConomy.withdraw(SkyExcelNetworkEssentialsMain.config.getInteger("shout.money"));
         }
 
-        seConomy.withdraw(SkyExcelNetworkEssentialsMain.config.getInteger("shout.money"));
-
-        String message = "§l>§r §c[§6확성기§c]§f" + p.getDisplayName() + " : " + String.join(" ", args);
+        String message = "§l>§r §c[§6확성기§c] §f" + p.getDisplayName() + " : " + String.join(" ", args);
         Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message));
 
         SkyExcelNetworkEssentialsMain.chatCoolDown.coolDown(p, SkyExcelNetworkEssentialsMain.config.getConfig().getLong("shout.coolTick"));
