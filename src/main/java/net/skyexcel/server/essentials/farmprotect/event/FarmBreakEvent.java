@@ -20,11 +20,7 @@ public class FarmBreakEvent implements Listener {
             Entity entity = event.getEntity();
 
             if (entity instanceof Player p) {
-                Config data = new Config("data/" + p.getUniqueId());
-                data.setPlugin(SkyExcelNetworkEssentialsMain.plugin);
-                data.loadDefualtConfig();
-
-                if (data.getBoolean("farmprotect"))
+                if (SkyExcelNetworkEssentialsMain.config.getBoolean("farmprotect.enable"))
                     event.setCancelled(true);
             } else
                 event.setCancelled(true);
@@ -35,13 +31,7 @@ public class FarmBreakEvent implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if(event.getAction() == Action.PHYSICAL) {
             if(event.getClickedBlock().getType() == Material.FARMLAND) {
-                Player p = event.getPlayer();
-
-                Config data = new Config("data/" + p.getUniqueId());
-                data.setPlugin(SkyExcelNetworkEssentialsMain.plugin);
-                data.loadDefualtConfig();
-
-                if (data.getBoolean("farmprotect"))
+                if (SkyExcelNetworkEssentialsMain.config.getBoolean("farmprotect.enable"))
                     event.setCancelled(true);
             }
         }

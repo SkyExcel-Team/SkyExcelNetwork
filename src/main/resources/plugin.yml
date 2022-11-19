@@ -94,5 +94,3 @@ commands:
     aliases: [ ㅈ, 귓, 귓말, 귓속말, whisper, msg, tell ]
   shout:
     aliases: [ s, ㄴ, 확성기 ]
-  farmprotect:
-    aliases: [ 밭보호, fp ]

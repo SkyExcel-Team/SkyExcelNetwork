@@ -17,6 +17,10 @@ shout:
   coolTick: 100
   money: 10
 
+# 밭보호
+farmprotect:
+  enable: true
+
 # Shift + F
 shiftf:
   execute:
