@@ -1,5 +1,6 @@
 package net.skyexcel.server.essentials;
 
+import net.skyexcel.server.essentials.autoclean.SkyExcelNetworkAutoCleanMain;
 import net.skyexcel.server.essentials.farmprotect.SkyExcelNetworkFarmProtectMain;
 import net.skyexcel.server.essentials.shiftf.SkyExcelNetworkShiftFMain;
 import net.skyexcel.server.essentials.shout.SkyExcelNetworkShoutMain;
@@ -12,6 +13,8 @@ import skyexcel.data.file.Config;
 public class SkyExcelNetworkEssentialsMain {
     public static JavaPlugin plugin;
     public static Config config;
+
+    private SkyExcelNetworkAutoCleanMain autoclean;
     public static final ChatCoolDownUtils chatCoolDown = new ChatCoolDownUtils();
 
     public SkyExcelNetworkEssentialsMain(JavaPlugin plugin) {
@@ -25,10 +28,15 @@ public class SkyExcelNetworkEssentialsMain {
         config.setPlugin(plugin);
         config.loadDefaultPluginConfig();
 
+        autoclean = new SkyExcelNetworkAutoCleanMain(plugin);
         new SkyExcelNetworkFarmProtectMain(plugin);
         new SkyExcelNetworkShiftFMain(plugin);
         new SkyExcelNetworkShoutMain(plugin);
         new SkyExcelNetworkTrashBinMain(plugin);
         new SkyExcelNetworkWhisperMain(plugin);
+    }
+
+    public void disable() {
+        autoclean.disable();
     }
 }

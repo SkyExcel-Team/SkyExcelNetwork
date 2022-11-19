@@ -35,7 +35,8 @@ public class SkyExcelNetworkMain extends JavaPlugin {
     private static JavaPlugin plugin;
     public static HeadDatabaseAPI hdb;
 
-    private volatile SkyExcelNetworkDiscordMain discord = null;
+    private volatile SkyExcelNetworkDiscordMain skyExcelNetworkDiscordMain = null;
+    private SkyExcelNetworkEssentialsMain skyExcelNetworkEssentialsMain;
     private SkyExcelNetworkJobMain skyExcelNetworkJobMain;
     private SkyExcelSnowyMain skyExcelNetworkSnowyMain;
     public static WorldEditPlugin WorldEdit;
@@ -49,7 +50,8 @@ public class SkyExcelNetworkMain extends JavaPlugin {
 
         new SkyExcelNetworkChatChannelMain(plugin);
         new SkyExcelNetworkCashShopMain(plugin);
-        discord = new SkyExcelNetworkDiscordMain(plugin);
+        this.skyExcelNetworkDiscordMain = new SkyExcelNetworkDiscordMain(plugin);
+        this.skyExcelNetworkEssentialsMain = new SkyExcelNetworkEssentialsMain(plugin);
         new SkyExcelNetworkFishMain(plugin);
         new SkyExcelNetworkGiftBoxMain(plugin);
         new SkyExcelNetworkItemsMain(plugin);
@@ -66,7 +68,6 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetWorkWarp(plugin);
         new SkyExcelNetworkFlyTicketMain(plugin);
         new SkyExcelNetworkTutorialMain(plugin);
-        new SkyExcelNetworkEssentialsMain(plugin);
         new SkyExcelNetworkAFKMain(plugin);
         new SkyExcelNetworkRankMain(plugin);
         new SkyExcelNetworkUpgradeMain(plugin);
@@ -74,14 +75,15 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         if (Bukkit.getServer().getPluginManager().getPlugin("WorldEdit") != null) {
             WorldEdit = getWorldEditPlugin();
         } else {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + " WorldEdit 플러그인이 존재하지 않습니다. 일부 기능이 작동 하지 않을 수 있습니다.");
+            Bukkit.getLogger().warning("WorldEdit 플러그인이 존재하지 않습니다. 일부 기능이 작동 하지 않을 수 있습니다.");
         }
     }
 
     @Override
     public void onDisable() {
-        discord.onDisable();
-
+        if (skyExcelNetworkDiscordMain != null)
+            this.skyExcelNetworkDiscordMain.disable();
+        this.skyExcelNetworkEssentialsMain.disable();
         this.skyExcelNetworkSnowyMain.disable();
         this.skyExcelNetworkJobMain.disable();
     }

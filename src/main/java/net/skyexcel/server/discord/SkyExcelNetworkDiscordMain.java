@@ -65,7 +65,7 @@ public class SkyExcelNetworkDiscordMain {
         }, 0, (config.getInteger("others.notVerifiedTitlePeriodSeconds") * 20L)).getTaskId();
     }
 
-    public void onDisable() {
+    public void disable() {
         Bukkit.getScheduler().cancelTask(titleSchedulerId);
 
         if (bot.getJDA() != null)
