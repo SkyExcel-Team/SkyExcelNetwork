@@ -1,7 +1,7 @@
 package net.skyexcel.server.seconomy.data;
 
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
-import net.skyexcel.server.skyblock.util.Translate;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -32,7 +32,8 @@ public class SEconomyRecord {
     }
 
     public void playerRecord(Player player, Player target, long amount, Type type) {
-        String time = Translate.getDate();
+        Translate translate = new Translate();
+        String time = translate.getDate();
         try {
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
             section.set("time", time);
@@ -62,7 +63,8 @@ public class SEconomyRecord {
     }
 
     public void playerRecord(Player player, OfflinePlayer target, long amount, Type type) {
-        String time = Translate.getDate();
+        Translate translate = new Translate();
+        String time = translate.getDate();
         try {
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
             section.set("time", time);

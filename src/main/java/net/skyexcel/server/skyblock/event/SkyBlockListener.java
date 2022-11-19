@@ -101,10 +101,14 @@ public class SkyBlockListener implements Listener {
         Player player = event.getPlayer();
         SkyBlock data = event.getIslandData();
 
+        System.out.println(event.getTarget());
+
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
         SkyBlockPlayerData target = new SkyBlockPlayerData(event.getTarget());
-        OfflinePlayer owner = Bukkit.getOfflinePlayer(UUID.fromString(data.getOwner()));
+
+        SkyBlock targetData = new SkyBlock(target.getIsland());
+        OfflinePlayer owner = Bukkit.getOfflinePlayer(UUID.fromString(targetData.getOwner()));
 
 
         if (data.getOwner() != null) {
@@ -112,15 +116,12 @@ public class SkyBlockListener implements Listener {
             if (event.getName() != null) {
                 if (target.hasIsland()) {
                     if (event.getCancelCause().equals(SkyBlockJoinEvent.CancelCause.DEFAULT)) {
-
                         if (event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.VISIT)) {
                             if (owner.isOnline())
                                 owner.getPlayer().sendMessage(player.getDisplayName() + " 님이 섬에 방문 하였습니다.");
 
                             player.sendMessage("架 §6" + owner.getName() + "§f님의 섬을 방문 했습니다!");
-                            data.spawn(player, data.getLocation());
-
-
+                            targetData.spawn(player, targetData.getLocation());
                         }
                     }
                 }

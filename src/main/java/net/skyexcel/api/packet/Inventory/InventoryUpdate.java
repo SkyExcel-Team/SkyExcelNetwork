@@ -1,9 +1,8 @@
-package net.skyexcel.server.skyblock.util.packet;
+package net.skyexcel.api.packet.Inventory;
 
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;

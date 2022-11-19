@@ -1,24 +1,27 @@
 package net.skyexcel.server.regionafk.event;
 
+
 import net.skyexcel.server.regionafk.SkyExcelNetworkAFKMain;
 import net.skyexcel.server.regionafk.data.AFK;
-import net.skyexcel.server.regionafk.data.AFKArea;
+
 import net.skyexcel.server.regionafk.data.AFKData;
 import net.skyexcel.server.regionafk.data.AFKShop;
 import net.skyexcel.server.cashshop.data.StringData;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
+
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+
 import org.bukkit.event.player.PlayerJoinEvent;
+ 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -142,18 +145,6 @@ public class AFKListener implements Listener {
                 }
             }
         }
-    }
-
-
-    @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        Block block = event.getClickedBlock();
-        Location location = block.getLocation();
-
-        AFKArea afkArea = new AFKArea(player);
-        afkArea.setPos1(location);
-
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

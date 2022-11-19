@@ -4,6 +4,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.menu.menu.Menu;
 
 import net.skyexcel.server.seconomy.data.SEConomy;
@@ -16,7 +17,6 @@ import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 import net.skyexcel.server.skyblock.data.player.SkyBlockRequest;
 import net.skyexcel.server.skyblock.ui.gui.PageVisitor;
 import net.skyexcel.server.skyblock.ui.gui.UpgradeGUI;
-import net.skyexcel.server.skyblock.util.Translate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 
 import net.skyexcel.server.skyblock.data.island.vault.SkyBlockVault;
@@ -108,6 +108,7 @@ public class IslandCmd implements CommandExecutor {
 
 
             } else {
+
                 switch (args[0]) {
                     case "도움말" -> {
                         if (args.length > 1) {
@@ -155,7 +156,8 @@ public class IslandCmd implements CommandExecutor {
 
                         SkyBlock island = new SkyBlock(playerData.getIsland());
 
-                        String reason = Translate.collapse(args, 2);
+                        Translate translate = new Translate();
+                        String reason = translate.collapse(args, 2);
 
                         assert target != null;
                         if (island.kickMember(player, target, reason)) {
@@ -292,22 +294,31 @@ public class IslandCmd implements CommandExecutor {
 
                     }
                     case "생성" -> {
-                        if (args.length > 1) {
-                            if (args.length <= 30) {
-                                String name = Translate.collapse(args, 1);
+                        SkyBlockPlayerData skyBlockPlayerData = new SkyBlockPlayerData(player);
+                        if (!skyBlockPlayerData.hasIsland()) {
+                            if (args.length > 1) {
+                                Translate translate = new Translate();
+                                String name = translate.collapse(args, 1);
                                 SkyBlock data = new SkyBlock(player, name);
-                                data.create(player);
-                            } else {
-                                player.sendMessage("强 섬 이름은 30글자 미만 이어야 합니다.");
-                            }
-                        } else {
-                            player.sendMessage("섬 이름을 입력해 주세요!");
-                        }
 
+                                if (name.length() <= 30) {
+                                    data.create(player);
+                                } else {
+                                    player.sendMessage("强 섬 이름은 30글자 미만 이어야 합니다.");
+                                }
+                            } else {
+                                player.sendMessage("섬 이름을 입력해 주세요!");
+                            }
+
+                        } else {
+                            player.sendMessage("당신은 이미 섬에 가입되어 있습니다.");
+                        }
                     }
 
+
                     case "이름" -> {
-                        String name = Translate.collapse(args, 1);
+                        Translate translate = new Translate();
+                        String name = translate.collapse(args, 1);
 
                         SkyBlock data = new SkyBlock(name);
                         if (data.rename(name)) {
@@ -320,6 +331,7 @@ public class IslandCmd implements CommandExecutor {
 
                             OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
+                            System.out.println("test" + target);
                             assert target != null;
                             SkyBlockPlayerData targetData = new SkyBlockPlayerData(target);
 
@@ -565,6 +577,23 @@ public class IslandCmd implements CommandExecutor {
                                         player.sendMessage("强 전투허용 옵션을 선택 해 주세요!");
                                     }
 
+                                    break;
+                                case "워프":
+                                    Translate translate = new Translate();
+                                    if (args.length > 2) {
+                                        switch (args[2]) {
+                                            case "생성" -> {
+                                                if (args.length > 3) {
+                                                    String name = translate.collapse(args, 3);
+                                                    data.addWarp(player);
+                                                    player.sendMessage(name + " 의 워프지역이 생성 되었습니다!");
+                                                }
+                                            }
+                                            case "제거" -> {
+                                            }
+
+                                        }
+                                    }
                                     break;
                                 case "시간":
                                     if (args.length > 2) {

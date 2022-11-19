@@ -1,12 +1,12 @@
 package net.skyexcel.server.skyblock.ui.gui;
 
+import net.skyexcel.api.packet.Inventory.InventoryUpdate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
-import net.skyexcel.server.skyblock.data.SkyBlockData;
 import net.skyexcel.server.skyblock.data.StringData;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
-import net.skyexcel.server.skyblock.util.Items;
-import net.skyexcel.server.skyblock.util.packet.InventoryUpdate;
+import net.skyexcel.api.util.Items;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,8 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PageVisitor {

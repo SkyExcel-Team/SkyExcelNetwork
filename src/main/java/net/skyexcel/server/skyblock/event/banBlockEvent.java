@@ -86,8 +86,9 @@ public class banBlockEvent implements Listener {
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
         SkyBlock islandData = new SkyBlock(playerData.getIsland());
-        if(!player.isOp()){
+        if (!player.isOp()) {
             if (!islandData.isInIsland(player)) {
+                player.sendMessage("强 다른 섬에 블록을 설치할 수 없습니다!");
                 event.setCancelled(true);
             }
         }
@@ -115,13 +116,11 @@ public class banBlockEvent implements Listener {
                     if (entity instanceof Player) {
                         Player players = (Player) entity;
                         SkyBlockPlayerData playersData = new SkyBlockPlayerData(players);
-                        if (playersData.isOwner()) {
-                            player.sendMessage("家 섬장은 는 §6" + players.getDisplayName() + "§f님 입니다!");
-                            break;
-                        }
+                        player.sendMessage("强 다른 섬의 블록은 부술 수 없습니다!");
+                        break;
                     }
                 }
-                player.sendMessage("强 다른 섬의 블록은 부술 수 없습니다!");
+
                 event.setCancelled(true);
             } else { //자신의 섬 일때
                 if (islandData.getOwner() != null) {

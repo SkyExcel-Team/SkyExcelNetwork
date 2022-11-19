@@ -1,10 +1,11 @@
 package net.skyexcel.server.job.data.fisher;
 
+import net.skyexcel.api.packet.Inventory.InventoryUpdate;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.StatMeta;
 import net.skyexcel.server.job.data.stat.Statable;
-import net.skyexcel.server.packet.Inventory.InventoryUpdate;
+
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

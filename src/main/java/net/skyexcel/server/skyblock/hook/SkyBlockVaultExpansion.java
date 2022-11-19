@@ -1,9 +1,8 @@
 package net.skyexcel.server.skyblock.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
-import net.skyexcel.server.skyblock.util.Translate;
-import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.skyblock.data.island.vault.SkyBlockVault;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -55,7 +54,8 @@ public class SkyBlockVaultExpansion extends PlaceholderExpansion {
         if (params.equalsIgnoreCase("vault_fixed")) {
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(Objects.requireNonNull(player.getPlayer()));
             SkyBlockVault vault = new SkyBlockVault(player.getPlayer(), playerData.getIsland());
-            return Translate.decal(vault.getAmount());
+            Translate translate = new Translate();
+            return translate.decal(vault.getAmount());
         } else if (params.equalsIgnoreCase("vault")) {
 
             SkyBlockPlayerData playerData = new SkyBlockPlayerData(Objects.requireNonNull(player.getPlayer()));

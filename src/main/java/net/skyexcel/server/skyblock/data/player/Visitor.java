@@ -1,8 +1,9 @@
 package net.skyexcel.server.skyblock.data.player;
 
+import net.skyexcel.api.packet.Inventory.InventoryUpdate;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
-import net.skyexcel.server.skyblock.util.Items;
-import net.skyexcel.server.skyblock.util.packet.InventoryUpdate;
+import net.skyexcel.api.util.Items;
+
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

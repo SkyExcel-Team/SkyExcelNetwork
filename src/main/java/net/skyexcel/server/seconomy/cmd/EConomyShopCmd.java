@@ -1,9 +1,9 @@
 package net.skyexcel.server.seconomy.cmd;
 
 
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.seconomy.data.SEconomyShop;
 import net.skyexcel.server.seconomy.data.SEConomyShopData;
-import net.skyexcel.server.skyblock.util.Translate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,11 +19,12 @@ public class EConomyShopCmd implements CommandExecutor {
             if (args.length == 0) {
 
             } else {
+                Translate translate = new Translate();
                 switch (args[0]) {
                     case "생성" -> {
                         if (player.isOp()) {
                             if (args.length > 1) {
-                                String name = Translate.collapse(args, 1);
+                                String name = translate.collapse(args, 1);
                                 SEconomyShop shop = new SEconomyShop(name);
                                 shop.create(player);
                                 SEConomyShopData.shop.put(player.getUniqueId(), shop);
@@ -36,7 +37,7 @@ public class EConomyShopCmd implements CommandExecutor {
                     }
                     case "열기" -> {
                         if (args.length > 1) {
-                            String name = Translate.collapse(args, 1);
+                            String name = translate.collapse(args, 1);
                             SEconomyShop shop = new SEconomyShop(name);
                             shop.setType(SEconomyShop.Type.OPEN);
                             shop.load(player);
@@ -49,7 +50,7 @@ public class EConomyShopCmd implements CommandExecutor {
                         if (player.isOp()) {
                             if (args.length > 1) {
 
-                                String name = Translate.collapse(args, 1);
+                                String name = translate.collapse(args, 1);
                                 SEconomyShop shop = new SEconomyShop(name);
                                 shop.setType(SEconomyShop.Type.EDIT);
                                 shop.load(player);
@@ -66,7 +67,7 @@ public class EConomyShopCmd implements CommandExecutor {
                     case "제거" -> {
                         if (args.length > 1) {
                             if (player.isOp()) {
-                                String name = Translate.collapse(args, 1);
+                                String name = translate.collapse(args, 1);
                                 SEconomyShop shop = new SEconomyShop(name);
                             } else {
                                 player.sendMessage("당신은 권한이 없습니다.");

@@ -1,4 +1,4 @@
-package net.skyexcel.server.skyblock.util;
+package net.skyexcel.api.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.List;
 
 public class Items {
-    public static void newItem(String name, Material type, int stack, List<String> lore, int loc, Inventory inv) {
+    public void newItem(String name, Material type, int stack, List<String> lore, int loc, Inventory inv) {
         ItemStack item = new ItemStack(type, stack);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
@@ -23,7 +23,7 @@ public class Items {
         inv.setItem(loc, item);
     }
 
-    public static void Enchant(ItemStack item, Inventory inv, int pos) {
+    public void Enchant(ItemStack item, Inventory inv, int pos) {
         item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -32,7 +32,7 @@ public class Items {
         inv.setItem(pos, item);
     }
 
-    public static void Enchant(ItemStack item, List<String> lore, Inventory inv, int pos) {
+    public void Enchant(ItemStack item, List<String> lore, Inventory inv, int pos) {
         item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -41,7 +41,7 @@ public class Items {
         inv.setItem(pos, item);
     }
 
-    public static ItemStack playerSkull(String name, String display, List<String> lore) {
+    public ItemStack playerSkull(String name, String display, List<String> lore) {
         OfflinePlayer owner = Bukkit.getOfflinePlayer(name);
 
 

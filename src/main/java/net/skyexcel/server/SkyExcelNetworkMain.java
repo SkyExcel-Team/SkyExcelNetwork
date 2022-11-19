@@ -1,5 +1,6 @@
 package net.skyexcel.server;
 
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import net.skyexcel.server.regionafk.SkyExcelNetworkAFKMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
@@ -25,6 +26,9 @@ import net.skyexcel.server.trade.SkyExcelNetworkTradeMain;
 import net.skyexcel.server.tutorial.SkyExcelNetworkTutorialMain;
 import net.skyexcel.server.upgrade.SkyExcelNetworkUpgradeMain;
 import net.skyexcel.server.warp.SkyExcelNetWorkWarp;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelNetworkMain extends JavaPlugin {
@@ -34,6 +38,8 @@ public class SkyExcelNetworkMain extends JavaPlugin {
     private volatile SkyExcelNetworkDiscordMain discord = null;
     private SkyExcelNetworkJobMain skyExcelNetworkJobMain;
     private SkyExcelSnowyMain skyExcelNetworkSnowyMain;
+    public static WorldEditPlugin WorldEdit;
+
 
     @Override
     public void onEnable() {
@@ -64,6 +70,12 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         new SkyExcelNetworkAFKMain(plugin);
         new SkyExcelNetworkRankMain(plugin);
         new SkyExcelNetworkUpgradeMain(plugin);
+
+        if (Bukkit.getServer().getPluginManager().getPlugin("WorldEdit") != null) {
+            WorldEdit = getWorldEditPlugin();
+        } else {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + " WorldEdit 플러그인이 존재하지 않습니다. 일부 기능이 작동 하지 않을 수 있습니다.");
+        }
     }
 
     @Override
@@ -74,7 +86,11 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         this.skyExcelNetworkJobMain.disable();
     }
 
-
+    public static WorldEditPlugin getWorldEditPlugin() {
+        Plugin worldedit = Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+        if (worldedit instanceof WorldEditPlugin) return (WorldEditPlugin) worldedit;
+        else return null;
+    }
     public static JavaPlugin getPlugin() {
         return plugin;
     }

@@ -1,7 +1,8 @@
 package net.skyexcel.server.cashshop.data;
 
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
-import net.skyexcel.server.cashshop.util.Translate;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

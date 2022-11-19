@@ -1,8 +1,9 @@
 package net.skyexcel.server.cashshop.data;
 
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
-import net.skyexcel.server.cashshop.util.Translate;
+
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;

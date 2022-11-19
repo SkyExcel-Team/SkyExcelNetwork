@@ -1,15 +1,12 @@
 package net.skyexcel.server.skyblock.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.skyexcel.server.skyblock.util.Translate;
-import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.skyblock.data.island.rank.Ranking;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class RankExpansion extends PlaceholderExpansion {
     private JavaPlugin plugin; // The instance is created in the constructor and won't be modified, so it can be final
@@ -58,18 +55,18 @@ public class RankExpansion extends PlaceholderExpansion {
     }
 
     private String getRankLevel(String params, Ranking ranking) {
-
+        Translate translate = new Translate();
         return switch (Integer.parseInt(params)) {
-            case 1 -> Translate.decal(ranking.getRank(1));
-            case 2 -> Translate.decal(ranking.getRank(2));
-            case 3 -> Translate.decal(ranking.getRank(3));
-            case 4 -> Translate.decal(ranking.getRank(4));
-            case 5 -> Translate.decal(ranking.getRank(5));
-            case 6 -> Translate.decal(ranking.getRank(6));
-            case 7 -> Translate.decal(ranking.getRank(7));
-            case 8 -> Translate.decal(ranking.getRank(8));
-            case 9 -> Translate.decal(ranking.getRank(9));
-            case 10 -> Translate.decal(ranking.getRank(10));
+            case 1 -> translate.decal(ranking.getRank(1));
+            case 2 -> translate.decal(ranking.getRank(2));
+            case 3 -> translate.decal(ranking.getRank(3));
+            case 4 -> translate.decal(ranking.getRank(4));
+            case 5 -> translate.decal(ranking.getRank(5));
+            case 6 -> translate.decal(ranking.getRank(6));
+            case 7 -> translate.decal(ranking.getRank(7));
+            case 8 -> translate.decal(ranking.getRank(8));
+            case 9 -> translate.decal(ranking.getRank(9));
+            case 10 -> translate.decal(ranking.getRank(10));
             default -> "#N/A";
         };
     }

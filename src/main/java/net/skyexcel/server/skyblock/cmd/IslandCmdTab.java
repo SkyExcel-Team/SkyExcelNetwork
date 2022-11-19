@@ -97,10 +97,10 @@ public class IslandCmdTab implements TabCompleter {
 
                     case "옵션":
                         playerData = new SkyBlockPlayerData(player);
+
                         if (playerData.isOwner()) {
-                            result = List.of("전투", "밴블록", "열기", "잠금", "시간");
+                            result = List.of("전투", "밴블록", "열기", "잠금", "시간", "워프");
                         }
-//                        result = List.of("전투", "밴블록", "열기", "잠금", "시간", "월드보더");
                         break;
 
                     case "알바":
@@ -108,6 +108,7 @@ public class IslandCmdTab implements TabCompleter {
                         if (playerData.isOwner()) {
                             result = List.of("추가", "제거", "완료");
                         }
+                        break;
                     case "방문":
                         for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
                             SkyBlockPlayerData skyBlockPlayerData = new SkyBlockPlayerData(offlinePlayer);
@@ -140,25 +141,29 @@ public class IslandCmdTab implements TabCompleter {
                         } else if (equalArgs(args, 1, "전투")) {
                             result = List.of("활성화", "비활성화");
                         } else if (equalArgs(args, 1, "알바")) {
-                            if (equalArgs(args, 2, "추가")) {
+                            if (equalArgs(args, 3, "추가")) {
                                 playerData = new SkyBlockPlayerData(player);
 
                                 SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
                                 List<String> members = skyBlock.getMembers();
 
                                 for (Player online : Bukkit.getOnlinePlayers()) {
-                                    if (members.contains(online.getUniqueId().toString())) {
+                                    if (!members.contains(online.getUniqueId().toString())) {
                                         result.add(online.getDisplayName());
                                     }
                                 }
                             }
                         } else if (equalArgs(args, 1, "시간")) {
                             result = List.of("점심", "아침", "노을", "밤");
+                        } else if (equalArgs(args, 1, "워프")) {
+                            result = List.of("생성", "제거");
                         }
                     } else {
                         result = List.of("허용", "비허용");
                     }
                 }
+            } else if (args.length == 4) {
+
             }
         }
         return result;

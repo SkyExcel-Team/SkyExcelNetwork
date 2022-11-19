@@ -1,7 +1,7 @@
 package net.skyexcel.server.skyblock.data.island.vault;
 
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
-import net.skyexcel.server.skyblock.util.Translate;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
@@ -21,11 +21,11 @@ public class SkyBlockVaultRecord {
     }
 
     public void record(Player player, int amount, Type type) {
-
+        Translate translate = new Translate();
         try {
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
             if (section != null) {
-                section.set("time", Translate.getDate());
+                section.set("time", translate.getDate());
                 section.set("player", player.getName());
                 section.set("amount", amount);
                 section.set("purchase", type.getName());
@@ -35,7 +35,7 @@ public class SkyBlockVaultRecord {
         } catch (NullPointerException e) {
              
             ConfigurationSection newSection = record.getConfig().createSection("record.0");
-            newSection.set("time", Translate.getDate());
+            newSection.set("time", translate.getDate());
             newSection.set("player", player.getName());
             newSection.set("amount", amount);
             newSection.set("purchase", type.getName());

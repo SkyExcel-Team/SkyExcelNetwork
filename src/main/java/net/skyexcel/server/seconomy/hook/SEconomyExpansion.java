@@ -1,8 +1,8 @@
 package net.skyexcel.server.seconomy.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.seconomy.data.SEConomy;
-import net.skyexcel.server.seconomy.util.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;

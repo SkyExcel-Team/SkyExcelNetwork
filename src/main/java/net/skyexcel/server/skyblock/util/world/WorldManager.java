@@ -9,7 +9,9 @@ import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.internal.annotation.Selection;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import net.skyexcel.server.skyblock.util.world.chunk.EmptyChunkCreator;
 import net.skyexcel.server.warp.data.Warp;
@@ -29,6 +31,11 @@ public class WorldManager {
 
 
     public void create() {
+
+//        BlockVector3 pos1 = MobArena.WorldEdit.getSession(player).getSelection().getBoundingBox().getPos1();
+//        BlockVector3 pos2 = MobArena.WorldEdit.getSession(player).getSelection().getBoundingBox().getPos2();
+
+
 
         WorldCreator wc = new WorldCreator("SkyBlock");
         wc.generator(new EmptyChunkCreator());
@@ -108,11 +115,13 @@ public class WorldManager {
         Clipboard clipboard;
         File file = new File(path);
 
+
         ClipboardFormat format = ClipboardFormats.findByFile(file);
         try {
             assert format != null;
             try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
                 clipboard = reader.read();
+
 
                 try (EditSession editSession = WorldEdit.getInstance().newEditSession(weWorld)) {
                     Operation operation = new ClipboardHolder(clipboard)

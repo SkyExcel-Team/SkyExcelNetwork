@@ -30,6 +30,10 @@ dependencies {
     compileOnly(group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0");
     compileOnly("com.github.yannicklamprecht:worldborderapi:1.180.0")
     implementation 'xyz.xenondevs:particle:1.8.1'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
     api "net.dv8tion:JDA:5.0.0-alpha.22"
 
     compileOnly fileTree(dir: 'api', include: ['*.jar'])

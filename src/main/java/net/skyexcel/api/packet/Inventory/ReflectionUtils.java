@@ -1,4 +1,5 @@
-package net.skyexcel.server.skyblock.util.packet;
+package net.skyexcel.api.packet.Inventory;
+
 
 import org.bukkit.entity.Player;
 

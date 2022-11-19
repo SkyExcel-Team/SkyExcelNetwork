@@ -1,6 +1,9 @@
 package net.skyexcel.server.regionafk.cmd;
 
+
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.regionafk.data.AFK;
+import net.skyexcel.server.regionafk.data.AFKArea;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -17,6 +20,7 @@ public class AFKCmd implements CommandExecutor {
 
         if (sender instanceof Player player) {
             if (args.length > 0) {
+                Translate translate = new Translate();
                 switch (args[0]) {
                     case "포인트":
                         if (args.length > 1) {
@@ -32,14 +36,13 @@ public class AFKCmd implements CommandExecutor {
                             player.sendMessage("플레이어를 입력해 주세요!");
                         }
 
-
                         break;
-
                     case "구역":
                         if (args.length > 2) {
                             switch (args[1]) {
                                 case "생성" -> {
-
+                                    AFKArea afkArea = new AFKArea(player, translate.collapse(args, 2));
+                                    afkArea.create();
                                 }
                                 case "제거" -> {
 

@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 import skyexcel.data.file.Config;
+import skyexcel.exception.ListLimitException;
 
 import java.util.*;
 
@@ -49,79 +50,84 @@ public class SkyBlock extends SkyBlockMeta {
         SkyBlockPlayerData data = new SkyBlockPlayerData(player);
         SkyBlockCreateEvent event = new SkyBlockCreateEvent(name, this, player);
 
-        if (!event.isCancelled()) {
-            Bukkit.getPluginManager().callEvent(event);
-            data.setName(name);
-            vault.create();
-            config.setString("SkyBlock.name", name);
-            config.setString("SkyBlock.discord", "");
-            config.getConfig().set("SkyBlock.worldtime", 0);
+        if (!config.isFileExist()) {
+            if (!event.isCancelled()) {
+                Bukkit.getPluginManager().callEvent(event);
+                data.setName(name);
+                vault.create();
+                config.setString("SkyBlock.name", name);
+                config.setString("SkyBlock.discord", "");
+                config.getConfig().set("SkyBlock.worldtime", 0);
 
-            config.getConfig().set("SkyBlock.level.level", 1);
-            config.getConfig().set("SkyBlock.level.size", 50);
+                config.getConfig().set("SkyBlock.level.level", 1);
+                config.getConfig().set("SkyBlock.level.size", 50);
 
-            config.getConfig().set("SkyBlock.level.member", 0);
-            config.getConfig().set("SkyBlock.level.banblock", 0);
-            config.getConfig().set("SkyBlock.level.stand", 0);
-            config.getConfig().set("SkyBlock.level.hopper", 0);
+                config.getConfig().set("SkyBlock.level.member", 0);
+                config.getConfig().set("SkyBlock.level.banblock", 0);
+                config.getConfig().set("SkyBlock.level.stand", 0);
+                config.getConfig().set("SkyBlock.level.hopper", 0);
 
-            config.setString("SkyBlock.owner", player.getUniqueId().toString());
+                config.setString("SkyBlock.owner", player.getUniqueId().toString());
 
-            config.getConfig().set("SkyBlock.blacklist", new ArrayList<>());
-            config.getConfig().set("SkyBlock.member", new ArrayList<>());
-            config.getConfig().set("SkyBlock.rule", new ArrayList<>());
-            config.getConfig().set("SkyBlock.parttime.player", new ArrayList<>());
-            config.getConfig().set("SkyBlock.parttime.money", new ArrayList<>());
+                config.getConfig().set("SkyBlock.blacklist", new ArrayList<>());
+                config.getConfig().set("SkyBlock.member", new ArrayList<>());
+                config.getConfig().set("SkyBlock.rule", new ArrayList<>());
+                config.getConfig().set("SkyBlock.warplist", new ArrayList<>());
+                config.getConfig().set("SkyBlock.parttime.player", new ArrayList<>());
+                config.getConfig().set("SkyBlock.parttime.money", new ArrayList<>());
 
-            config.getConfig().set("SkyBlock.option.pvp", false);
-            config.getConfig().set("SkyBlock.option.worldBorder", true);
-            config.getConfig().set("SkyBlock.option.open", true);
+                config.getConfig().set("SkyBlock.option.pvp", false);
+                config.getConfig().set("SkyBlock.option.worldBorder", true);
+                config.getConfig().set("SkyBlock.option.open", true);
 
-            config.getConfig().set("SkyBlock.option.banblock.member", new ArrayList<>());
-            config.getConfig().set("SkyBlock.option.banblock.parttime", new ArrayList<>());
+                config.getConfig().set("SkyBlock.option.banblock.member", new ArrayList<>());
+                config.getConfig().set("SkyBlock.option.banblock.parttime", new ArrayList<>());
 
-            config.getConfig().set("SkyBlock.option.weather", WeatherType.CLEAR.name());
+                config.getConfig().set("SkyBlock.option.weather", WeatherType.CLEAR.name());
 
-            // 1000 = day, noon = 6000 night = 13000 midnight = 18000
-            config.getConfig().set("SkyBlock.option.time", 1000);
+                // 1000 = day, noon = 6000 night = 13000 midnight = 18000
+                config.getConfig().set("SkyBlock.option.time", 1000);
 
-            config.saveConfig();
+                config.saveConfig();
 
-            SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
-            if (playerData.getOriginLocation() == null) {
-                if (SkyExcelNetworkSkyBlockMain.config.getConfig().get("location") == null) {
-                    Location location = new Location(Bukkit.getWorld("SkyBlock"), 0.0D, 0.0D, 0.0D);
-                    SkyExcelNetworkSkyBlockMain.config.setLocation("location", location);
+                SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+                if (playerData.getOriginLocation() == null) {
+                    if (SkyExcelNetworkSkyBlockMain.config.getConfig().get("location") == null) {
+                        Location location = new Location(Bukkit.getWorld("SkyBlock"), 0.0D, 0.0D, 0.0D);
+                        SkyExcelNetworkSkyBlockMain.config.setLocation("location", location);
+                        WorldManager worldManager = new WorldManager();
+                        worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
+
+                        player.teleport(location);
+                        this.config.setLocation("SkyBlock.location", location);
+                        this.config.saveConfig();
+                    } else {
+                        Location location = SkyExcelNetworkSkyBlockMain.config.getLocation("location");
+                        if (location.getX() + 1000.0D <= 2.9999984E7D) {
+                            location.add(1000.0D, 0.0D, 0.0D);
+                            this.config.setLocation("SkyBlock.location", location);
+
+                            WorldManager worldManager = new WorldManager();
+                            worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
+                            player.teleport(location);
+                            SkyExcelNetworkSkyBlockMain.config.setLocation("location", location);
+                            this.config.saveConfig();
+                        }
+                    }
+                } else {
+
+                    Location location = playerData.getOriginLocation();
                     WorldManager worldManager = new WorldManager();
                     worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
 
                     player.teleport(location);
-                    this.config.setLocation("SkyBlock.location", location);
                     this.config.saveConfig();
-                } else {
-                    Location location = SkyExcelNetworkSkyBlockMain.config.getLocation("location");
-                    if (location.getX() + 1000.0D <= 2.9999984E7D) {
-                        location.add(1000.0D, 0.0D, 0.0D);
-                        this.config.setLocation("SkyBlock.location", location);
+                    playerData.getConfig().removeKey("island.loc");
 
-                        WorldManager worldManager = new WorldManager();
-                        worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
-                        player.teleport(location);
-                        SkyExcelNetworkSkyBlockMain.config.setLocation("location", location);
-                        this.config.saveConfig();
-                    }
                 }
-            } else {
-
-                Location location = playerData.getOriginLocation();
-                WorldManager worldManager = new WorldManager();
-                worldManager.paste(location.getWorld(), location, "islands/Based/large.schem");
-
-                player.teleport(location);
-                this.config.saveConfig();
-                playerData.getConfig().removeKey("island.loc");
             }
-
+        } else {
+            player.sendMessage("이미 생성된 이름이 있습니다.");
         }
     }
 
@@ -534,6 +540,15 @@ public class SkyBlock extends SkyBlockMeta {
         return members;
     }
 
+
+    public void addWarp(Player player) throws ListLimitException {
+        try {
+            config.addLocation("SkyBlock.warplist", player.getLocation(), 4);
+        } catch (ListLimitException e) {
+            e.setMsg("워프개수를 늘리세요!");
+            player.sendMessage(e.getMessage());
+        }
+    }
 
     public boolean removeBlackList(OfflinePlayer player) {
         if (config != null) {

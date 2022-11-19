@@ -1,7 +1,7 @@
 package net.skyexcel.server.seconomy.data;
 
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
-import net.skyexcel.server.seconomy.util.Translate;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

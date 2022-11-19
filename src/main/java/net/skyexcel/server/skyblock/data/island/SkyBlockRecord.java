@@ -1,6 +1,6 @@
 package net.skyexcel.server.skyblock.data.island;
 
-import net.skyexcel.server.skyblock.util.Translate;
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -21,7 +21,8 @@ public class SkyBlockRecord {
     }
 
     public void playerRecord(Player player, OfflinePlayer target, String reason, Type type) {
-        String time = Translate.getDate();
+        Translate translate = new Translate();
+        String time = translate.getDate();
         try {
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
             section.set("time", time);
@@ -46,10 +47,11 @@ public class SkyBlockRecord {
     }
 
     public void skyblockRecord(Player player, Type type) {
-
+        Translate translate = new Translate();
         try {
+
             ConfigurationSection section = record.getConfig().createSection("record." + record.getConfig().getConfigurationSection("record").getKeys(false).size());
-            section.set("time", Translate.getDate());
+            section.set("time", translate.getDate());
             section.set("player", player.getName());
             section.set("action", type.getName());
 
@@ -58,7 +60,7 @@ public class SkyBlockRecord {
         } catch (NullPointerException e) {
 
             ConfigurationSection newSection = record.getConfig().createSection("record.0");
-            newSection.set("time", Translate.getDate());
+            newSection.set("time", translate.getDate());
             newSection.set("player", player.getName());
 
             newSection.set("action", type.getName());

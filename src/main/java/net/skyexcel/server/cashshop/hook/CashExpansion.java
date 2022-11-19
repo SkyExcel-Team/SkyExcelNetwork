@@ -1,9 +1,10 @@
 package net.skyexcel.server.cashshop.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.cashshop.data.Cash;
-import net.skyexcel.server.cashshop.util.Translate;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.gui;
 
+import net.skyexcel.api.packet.Inventory.InventoryUpdate;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobType;
@@ -13,7 +14,7 @@ import net.skyexcel.server.job.data.mineworker.FeverTime;
 import net.skyexcel.server.job.data.type.Farmer;
 import net.skyexcel.server.job.data.type.Fisher;
 import net.skyexcel.server.job.data.type.MineWorker;
-import net.skyexcel.server.packet.Inventory.InventoryUpdate;
+
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
