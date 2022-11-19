@@ -1,6 +1,7 @@
 package net.skyexcel.server.essentials.autoclean.scheduler;
 
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
+import net.skyexcel.server.essentials.autoclean.Util.ClearUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -17,19 +18,16 @@ public class AutoCleanScheduler extends BukkitRunnable {
     @Override
     public void run() {
         if (--remaining == 0) {
-            int removed = 0;
+            int totalRemoved = 0;
 
             for (World world : Bukkit.getWorlds()) {
-                for (Entity entity : world.getEntitiesByClass(Item.class)) {
-                    entity.remove();
-                    removed++;
-                }
+                totalRemoved += ClearUtils.clearWorld(world);
             }
 
             remaining = SkyExcelNetworkEssentialsMain.config.getInteger("auto_clean.period");
 
             Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.removed")
-                    .replace("%removed%", String.valueOf(removed)));
+                    .replace("%removed%", String.valueOf(totalRemoved)));
         } else {
             if (remaining == 30) {
                 Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.30SecRemains"));
