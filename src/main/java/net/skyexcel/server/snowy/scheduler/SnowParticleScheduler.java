@@ -31,6 +31,8 @@ public class SnowParticleScheduler extends BukkitRunnable {
 
     public SnowParticleScheduler() {
         this.taskId = Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkMain.getPlugin(), () -> {
+            while(Bukkit.getWorld(worldName) == null) {}
+
             Location location = new Location(Bukkit.getWorld(worldName), centerX, 0, centerZ);
             radius = 40;
             for (int y = 63; y <= 80; y++) {
