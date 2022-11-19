@@ -11,3 +11,8 @@ whisper:
 no_spam:
   chat:
     coolTick: 5
+
+# 확성기
+shout:
+  coolTick: 100
+  money: 10

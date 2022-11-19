@@ -90,6 +90,7 @@ commands:
   #Essentials
   trashbin:
     aliases: [ 쓰레기통, trash ]
-
   w:
     aliases: [ ㅈ, 귓, 귓말, 귓속말, whisper, msg, tell ]
+  shout:
+    aliases: [ s, ㄴ, 확성기 ]
