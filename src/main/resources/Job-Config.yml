@@ -9,3 +9,11 @@ percent:
     BlastFurnace: 100
   Famer:
     blessing: 100
+  FishCaught:
+    RankUp:
+      Default: 80
+      Job: 100
+      # 10 ~ 5cm 잡을 확률 ex:  90%이면, 10~5cm 가 낚일 확률이 90%가 되는거고, 10%의 확률로
+      # 10~20cm 가 잡히는거임.
+    Size:
+      Under: 90

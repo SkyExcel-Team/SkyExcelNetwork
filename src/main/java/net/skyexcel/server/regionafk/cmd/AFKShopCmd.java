@@ -1,8 +1,10 @@
 package net.skyexcel.server.regionafk.cmd;
 
 import net.skyexcel.api.util.Translate;
-import net.skyexcel.server.cashshop.data.CashShop;
-import net.skyexcel.server.cashshop.data.CashShopData;
+
+import net.skyexcel.server.regionafk.data.AFK;
+import net.skyexcel.server.regionafk.data.AFKData;
+import net.skyexcel.server.regionafk.data.AFKShop;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,10 +23,10 @@ public class AFKShopCmd implements CommandExecutor {
                     if (player.isOp()) {
                         if (args.length > 1) {
                             String name = translate.collapse(args, 1);
-                            CashShop shop = new CashShop(name);
+                            AFKShop shop = new AFKShop(name);
                             shop.create(player);
 
-                            CashShopData.shop.put(player.getUniqueId(), shop);
+                            AFKData.shop.put(player.getUniqueId(), shop);
                         } else {
                             player.sendMessage("상점 이름을 입력해 주세요!");
                         }
@@ -35,10 +37,10 @@ public class AFKShopCmd implements CommandExecutor {
                 case "열기" -> {
                     if (args.length > 1) {
                         String name = translate.collapse(args, 1);
-                        CashShop shop = new CashShop(name);
-                        shop.setType(CashShop.Type.OPEN);
+                        AFKShop shop = new AFKShop(name);
+                        shop.setType(AFKShop.Type.OPEN);
                         shop.load(player);
-                        CashShopData.shop.put(player.getUniqueId(), shop);
+                        AFKData.shop.put(player.getUniqueId(), shop);
                     } else {
                         player.sendMessage("상점 이름을 입력해 주세요!");
                     }
@@ -48,11 +50,11 @@ public class AFKShopCmd implements CommandExecutor {
                         if (args.length > 1) {
 
                             String name = translate.collapse(args, 1);
-                            CashShop shop = new CashShop(name);
-                            shop.setType(CashShop.Type.EDIT);
+                            AFKShop shop = new AFKShop(name);
+                            shop.setType(AFKShop.Type.EDIT);
                             shop.load(player);
 
-                            CashShopData.shop.put(player.getUniqueId(), shop);
+                            AFKData.shop.put(player.getUniqueId(), shop);
 
                         } else {
                             player.sendMessage("상점 이름을 입력해 주세요!");
@@ -65,7 +67,7 @@ public class AFKShopCmd implements CommandExecutor {
                     if (args.length > 1) {
                         if (player.isOp()) {
                             String name = translate.collapse(args, 1);
-                            CashShop shop = new CashShop(name);
+                            AFKShop shop = new AFKShop(name);
                         } else {
                             player.sendMessage("당신은 권한이 없습니다.");
                         }
@@ -78,11 +80,11 @@ public class AFKShopCmd implements CommandExecutor {
                 case "목록" -> {
                     if (args.length > 1) {
                         int index = Integer.parseInt(args[1]);
-                        CashShop cashShop = new CashShop();
-                        cashShop.list(player, index);
+                        AFKShop AFKShop = new AFKShop();
+                        AFKShop.list(player, index);
                     } else {
-                        CashShop cashShop = new CashShop();
-                        cashShop.list(player, 1);
+                        AFKShop AFKShop = new AFKShop();
+                        AFKShop.list(player, 1);
                     }
                 }
             }
