@@ -1,5 +1,7 @@
 package net.skyexcel.server.essentials;
 
+import net.skyexcel.server.essentials.farmprotect.SkyExcelNetworkFarmProtectMain;
+import net.skyexcel.server.essentials.shiftf.SkyExcelNetworkShiftFMain;
 import net.skyexcel.server.essentials.shout.SkyExcelNetworkShoutMain;
 import net.skyexcel.server.essentials.trashbin.SkyExcelNetworkTrashBinMain;
 import net.skyexcel.server.essentials.util.ChatCoolDownUtils;
@@ -23,8 +25,10 @@ public class SkyExcelNetworkEssentialsMain {
         config.setPlugin(plugin);
         config.loadDefaultPluginConfig();
 
+        new SkyExcelNetworkFarmProtectMain(plugin);
+        new SkyExcelNetworkShiftFMain(plugin);
         new SkyExcelNetworkShoutMain(plugin);
-        new SkyExcelNetworkWhisperMain(plugin);
         new SkyExcelNetworkTrashBinMain(plugin);
+        new SkyExcelNetworkWhisperMain(plugin);
     }
 }
