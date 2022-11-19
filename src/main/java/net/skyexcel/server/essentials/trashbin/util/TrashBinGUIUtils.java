@@ -11,7 +11,6 @@ public class TrashBinGUIUtils {
                 SkyExcelNetworkEssentialsMain.config.getInteger("trash_bin.lines") * 9,
                 SkyExcelNetworkEssentialsMain.config.getString("trash_bin.title").replace("%player%", player.getDisplayName()));
 
-        player.sendMessage("쓰레기통을 열고있습니다..");
         player.openInventory(inv);
     }
 }
