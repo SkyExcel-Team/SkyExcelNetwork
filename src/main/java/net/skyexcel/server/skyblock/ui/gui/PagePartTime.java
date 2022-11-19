@@ -36,17 +36,16 @@ public class PagePartTime {
 
 
     private final List<Material> materials;
-
+    private Items items;
 
     public PagePartTime(String title) {
         this.title = title;
         materials = new ArrayList<>(Arrays.stream(Material.values()).filter(Material::isSolid).toList());
-
+        items = new Items();
     }
 
 
     public void update(Player player) {
-
 
 
         Arrays.stream(SkyBlockData.remove).forEach(materials::remove);
@@ -85,7 +84,7 @@ public class PagePartTime {
                 if (islandData.getBanBlockMember() != null) {
                     for (Material banblock : islandData.getBanBlockMember()) {
                         if (material.equals(banblock)) {
-                            Items.Enchant(new ItemStack(material), List.of(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
+                            items.Enchant(new ItemStack(material), List.of(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
                         }
                     }
                 }
@@ -95,7 +94,7 @@ public class PagePartTime {
 
     public void unSelected(Material material, int slot) {
         if (material != null)
-            Items.newItem(ChatColor.GRAY + material.name(), material, 1, List.of(ChatColor.WHITE + "클릭하여 선택하세요!"), slot, inv);
+            items.newItem(ChatColor.GRAY + material.name(), material, 1, List.of(ChatColor.WHITE + "클릭하여 선택하세요!"), slot, inv);
     }
 
 
@@ -111,7 +110,7 @@ public class PagePartTime {
         if (!shift) {
             if (!member.contains(material)) {
                 islandData.addBanBlockMember(material);
-                Items.Enchant(new ItemStack(material), List.of(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
+                items.Enchant(new ItemStack(material), List.of(ChatColor.RED + "(쉬프트 + 클릭) 밴블록 해제"), inv, slot);
             } else {
                 player.sendMessage(ChatColor.RED + "이미 밴 블록 입니다!");
             }
@@ -175,16 +174,17 @@ public class PagePartTime {
     public void deSelectAll() {
 
     }
+
     public void selectAll() {
 
     }
 
     private void next() {
-        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 끝으로 갈 수 있습니다."), NEXT_PAGE_SLOT, inv);
+        items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 끝으로 갈 수 있습니다."), NEXT_PAGE_SLOT, inv);
     }
 
     private void previous() {
-        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 처음으로 갈 수 있습니다."), PREVIOUS_PAGE_SLOT, inv);
+        items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 처음으로 갈 수 있습니다."), PREVIOUS_PAGE_SLOT, inv);
     }
 
     private void clearItem(int slot) {

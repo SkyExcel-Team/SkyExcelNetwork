@@ -66,7 +66,8 @@ public class Visitor {
         Inventory inv = Bukkit.createInventory(null, 54, name + " 방문객  " + getVisitors().size() + " 명");
         getVisitors().forEach(visitors -> {
             if (!visitors.getUniqueId().toString().equalsIgnoreCase(skyBlock.getOwner())) {
-                ItemStack item = Items.playerSkull(visitors.getName(), "", List.of());
+                Items items = new Items();
+                ItemStack item = items.playerSkull(visitors.getName(), "", List.of());
                 inv.setItem(0, item);
             }
         });

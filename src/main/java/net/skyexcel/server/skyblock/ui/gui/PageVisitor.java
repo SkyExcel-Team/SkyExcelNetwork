@@ -28,14 +28,13 @@ public class PageVisitor {
     private final int PREVIOUS_PAGE_SLOT = 48;
 
     private final String title;
-
-
+    private Items items;
 
 
     public PageVisitor(String title) {
         this.title = title;
 
-
+        items = new Items();
     }
 
 
@@ -70,7 +69,7 @@ public class PageVisitor {
 
     public void unSelected(String name, int slot) {
 
-        inv.setItem(slot,Items.playerSkull(name,"", List.of()));
+        inv.setItem(slot, items.playerSkull(name, "", List.of()));
     }
 
     public void nextPage(Player player, boolean isShift) {
@@ -119,11 +118,11 @@ public class PageVisitor {
     }
 
     private void next() {
-        Items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 끝으로 갈 수 있습니다."), NEXT_PAGE_SLOT, inv);
+        items.newItem(StringData.NextPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 끝으로 갈 수 있습니다."), NEXT_PAGE_SLOT, inv);
     }
 
     private void previous() {
-        Items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 처음으로 갈 수 있습니다."), PREVIOUS_PAGE_SLOT, inv);
+        items.newItem(StringData.PreviousPageName, Material.OAK_SIGN, 1, List.of(ChatColor.GRAY + "쉬프트를 눌러 페이지의 처음으로 갈 수 있습니다."), PREVIOUS_PAGE_SLOT, inv);
     }
 
     private void clearItem(int slot) {
