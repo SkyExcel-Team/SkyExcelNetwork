@@ -17,7 +17,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class Chat implements Listener {
 
-    private final String prefix = "> ";
+    private final String prefix = "> §7";
 
     private final String split = " : ";
 
@@ -56,7 +56,6 @@ public class Chat implements Listener {
             tPrefix.addExtra(message);
 
             for (Player online : Bukkit.getOnlinePlayers()) {
-
                 online.spigot().sendMessage(tPrefix);
             }
             record.record(player, event.getMessage());
