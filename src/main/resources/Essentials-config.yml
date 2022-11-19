@@ -22,4 +22,4 @@ shiftf:
   execute:
     - '[player] say HI'
     - '[server] say HI'
-    - '[sound] entity.shulker.shoot'
+    - '[sound] ENTITY_SHULKER_SHOOT'
