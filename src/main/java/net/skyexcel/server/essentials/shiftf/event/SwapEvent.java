@@ -1,8 +1,10 @@
 package net.skyexcel.server.essentials.shiftf.event;
 
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
+import net.skyexcel.server.essentials.autoclean.Util.ClearUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
