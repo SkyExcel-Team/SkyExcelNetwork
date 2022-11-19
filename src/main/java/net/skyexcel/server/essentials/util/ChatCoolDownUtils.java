@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatCoolDownUtils {
-    private static final List<Player> coolDownPlayers = new ArrayList<>();
+    private final List<Player> coolDownPlayers = new ArrayList<>();
 
-    public static boolean isCoolDownNow(Player player) {
+    public ChatCoolDownUtils() {}
+
+    public boolean isCoolDownNow(Player player) {
         return coolDownPlayers.contains(player);
     }
 
-    public static void coolDown(Player player, long coolTick) {
+    public void coolDown(Player player, long coolTick) {
         coolDownPlayers.add(player);
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkEssentialsMain.plugin, () -> {
@@ -22,7 +24,7 @@ public class ChatCoolDownUtils {
         }, coolTick);
     }
 
-    public static void removeCoolDown(Player player) {
+    public void removeCoolDown(Player player) {
         if (isCoolDownNow(player)) {
             coolDownPlayers.remove(player);
         }

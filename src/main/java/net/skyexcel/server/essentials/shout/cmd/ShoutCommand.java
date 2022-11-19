@@ -1,7 +1,6 @@
 package net.skyexcel.server.essentials.shout.cmd;
 
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
-import net.skyexcel.server.essentials.util.ChatCoolDownUtils;
 import net.skyexcel.server.seconomy.data.SEConomy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -18,7 +17,7 @@ public class ShoutCommand implements CommandExecutor {
             return false;
         }
 
-        if (ChatCoolDownUtils.isCoolDownNow(p)) {
+        if (SkyExcelNetworkEssentialsMain.chatCoolDown.isCoolDownNow(p)) {
             p.sendMessage("채팅 치지마 ^.^");
             return false;
         }
@@ -39,7 +38,7 @@ public class ShoutCommand implements CommandExecutor {
         String message = "§l>§r §c[§6확성기§c]§f" + p.getDisplayName() + " : " + String.join(" ", args);
         Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message));
 
-        ChatCoolDownUtils.coolDown(p, SkyExcelNetworkEssentialsMain.config.getConfig().getLong("shout.coolTick"));
+        SkyExcelNetworkEssentialsMain.chatCoolDown.coolDown(p, SkyExcelNetworkEssentialsMain.config.getConfig().getLong("shout.coolTick"));
 
         return true;
     }
