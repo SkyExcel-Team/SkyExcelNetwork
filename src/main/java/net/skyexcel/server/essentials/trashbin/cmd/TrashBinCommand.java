@@ -17,7 +17,7 @@ public class TrashBinCommand implements CommandExecutor {
         }
 
         if (args.length > 0) {
-            p.sendMessage("입력값이 너무 많습니다!");
+            p.sendMessage("입력값이 많습니다!");
             return false;
         }
 
