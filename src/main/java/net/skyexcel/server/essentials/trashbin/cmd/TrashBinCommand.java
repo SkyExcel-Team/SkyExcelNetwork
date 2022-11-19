@@ -21,8 +21,7 @@ public class TrashBinCommand implements CommandExecutor {
             return false;
         }
 
-        TrashBinGUIUtils.openTrashBin(p, SkyExcelNetworkEssentialsMain.config.getInteger("trash_bin.lines"),
-                SkyExcelNetworkEssentialsMain.config.getString("trash_bin.title").replace("%player%", p.getName()));
+        TrashBinGUIUtils.openTrashBin(p);
 
         return true;
     }
