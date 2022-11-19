@@ -14,6 +14,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -23,10 +24,9 @@ import org.checkerframework.checker.units.qual.C;
 import skyexcel.data.file.Config;
 import skyexcel.util.ActionBar;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
+import static net.skyexcel.server.snowy.scheduler.SnowParticleScheduler.chance;
 
 public class FishEvent implements Listener, Percent {
 
@@ -53,12 +53,7 @@ public class FishEvent implements Listener, Percent {
 
     private void caught(Item stack, Player player, boolean upgrade) {
 
-
-        stack.setItemStack(FishType.RAWTIGERTROUT.item(1));
-
         Config config = SkyExcelNetworkJobMain.config;
-
-
         System.out.println(upgrade);
 
         if (upgrade) {
@@ -85,18 +80,24 @@ public class FishEvent implements Listener, Percent {
 
         double DefaultRankUp = config.getDouble("percent.FishCaught.RankUp.Default");
 
-        double SChance = config.getDouble("percent.FishCaught.Rank.S");
-        double AChance = config.getDouble("percent.FishCaught.Rank.A");
-        double BChance = config.getDouble("percent.FishCaught.Rank.B");
-        double CChance = config.getDouble("percent.FishCaught.Rank.C");
-
-
         System.out.println(getByRank(FishRank.S));
 
         double percent = Math.random() * 100; //물고기 잡을 확률
 
         double RankUpPercent = Math.random() * 100; //랭크를 업할 확률
-        if (percent <= SChance) {
+
+        List<Double> chances = new ArrayList<>(List.of(config.getDouble("percent.FishCaught.Rank.S"),
+                config.getDouble("percent.FishCaught.Rank.A"),
+                config.getDouble("percent.FishCaught.Rank.B"),
+                config.getDouble("percent.FishCaught.Rank.C")));
+        Collections.sort(chances);
+        Map<Double, FishRank> ranks = new HashMap<>();
+        ranks.put(config.getDouble("percent.FishCaught.Rank.S"), FishRank.S);
+        ranks.put(config.getDouble("percent.FishCaught.Rank.A"), FishRank.A);
+        ranks.put(config.getDouble("percent.FishCaught.Rank.B"), FishRank.B);
+        ranks.put(config.getDouble("percent.FishCaught.Rank.C"), FishRank.C);
+
+        if (percent <= chances.get(0)) {
             System.out.println(ChatColor.BLUE + "" + (index < SChance) + " / " + Math.random() * 100 + " < " + SChance);
             List<FishType> S = getByRank(FishRank.S);
             fishType = selector(S);
@@ -107,8 +108,7 @@ public class FishEvent implements Listener, Percent {
                 rankUp(fishType, item);
             }
 
-
-        } else if (percent <= AChance) {
+        } else if (percent <= chances.get(1)) {
             System.out.println(ChatColor.YELLOW + "" + (index < AChance) + " / " + Math.random() * 100 + " < " + AChance);
             List<FishType> A = getByRank(FishRank.A);
             fishType = selector(A);
@@ -120,7 +120,7 @@ public class FishEvent implements Listener, Percent {
             }
 
 
-        } else if (percent <= BChance) {
+        } else if (percent <= chances.get(2)) {
             System.out.println(ChatColor.GOLD + "" + (index < BChance) + " / " + Math.random() * 100 + " < " + BChance);
 
             List<FishType> B = getByRank(FishRank.B);
@@ -132,21 +132,18 @@ public class FishEvent implements Listener, Percent {
                 rankUp(fishType, item);
             }
 
-        } else if (percent <= CChance) {
+        } else if (percent <= chances.get(3)) {
             System.out.println(ChatColor.GREEN + "" + (index < CChance) + " / " + Math.random() * 100 + " < " + CChance);
 
             List<FishType> C = getByRank(FishRank.C);
             System.out.println(C);
-//            fishType = selector(C);
-//
-//
-//
-//            size = getSizeByRand(config.getInteger("percent.FishCaught.Size.Under"));
-//            item = fishType.item(1);
-//
-//            if (RankUpPercent <= JobRankUp) {
-//                rankUp(fishType, item);
-//            }
+            fishType = selector(C);
+            size = getSizeByRand(config.getInteger("percent.FishCaught.Size.Under"));
+            item = fishType.item(1);
+
+            if (RankUpPercent <= JobRankUp) {
+                rankUp(fishType, item);
+            }
 
         }
 
@@ -172,13 +169,6 @@ public class FishEvent implements Listener, Percent {
         player.getInventory().addItem(test);
 
     }
-
-    @EventHandler
-    public void pickUp(PlayerPickupItemEvent event) {
-        Player player = event.getPlayer();
-
-    }
-
 
     private FishType rankUp(FishType rank, ItemStack item) {
         return rank.fishRankUp(item);
@@ -217,11 +207,6 @@ public class FishEvent implements Listener, Percent {
     }
 
     private List<FishType> getByRank(FishRank rank) {
-        return Arrays.stream(FishType.values()).filter(values -> {
-            if (values.hasRank()) {
-                return values.getFishRank().equalRank(rank);
-            }
-            return false;
-        }).toList();
+        return Arrays.stream(FishType.values()).filter(values -> (values.hasRank() && values.getFishRank().equalRank(rank))).toList();
     }
 }
