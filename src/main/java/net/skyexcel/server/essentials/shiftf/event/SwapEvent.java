@@ -9,15 +9,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
-import java.util.ArrayList;
-
 public class SwapEvent implements Listener {
     @EventHandler
     public void onSwap(PlayerSwapHandItemsEvent e) {
         Player p = e.getPlayer();
 
         if (p.isSneaking()) {
-            SkyExcelNetworkEssentialsMain.config.getConfig().getList("shiftf.execute").forEach(key -> {
+            SkyExcelNetworkEssentialsMain.config.getConfig().getList("shift_f.execute").forEach(key -> {
                 runCommand(p, (String) key);
             });
 

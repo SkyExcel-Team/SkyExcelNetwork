@@ -18,12 +18,19 @@ shout:
   money: 10
 
 # 밭보호
-farmprotect:
+farm_protect:
   enable: true
 
 # Shift + F
-shiftf:
+shift_f:
   execute:
     - '[player] say HI'
     - '[server] say HI'
     - '[sound] ENTITY_SHULKER_SHOOT'
+
+# 자동청소
+auto_clean:
+  period:
+  messages:
+    30SecRemains: "30초후에 아이템 삭제됨 ㅅㄱ"
+    10SecRemains: "10초후에 아이템 삭제됨 ㅅㄱ"
