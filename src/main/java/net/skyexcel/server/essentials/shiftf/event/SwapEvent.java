@@ -18,8 +18,6 @@ public class SwapEvent implements Listener {
 
         if (p.isSneaking()) {
             SkyExcelNetworkEssentialsMain.config.getConfig().getList("shiftf.execute").forEach(key -> {
-                System.out.println(key);
-
                 runCommand(p, (String) key);
             });
 
