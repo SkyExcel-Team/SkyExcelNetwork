@@ -10,6 +10,7 @@ percent:
   Famer:
     blessing: 100
   FishCaught:
+    #Plus등급을 얻을 확률
     RankUp:
       Default: 80
       Job: 100
@@ -17,3 +18,11 @@ percent:
       # 10~20cm 가 잡히는거임.
     Size:
       Under: 90
+    #각각의 Rank를 얻을 확률 총 합해서 100%가 되어야됨.ㅇㅇ
+    Rank:
+      S: 5
+      A: 15
+      B: 30
+      C: 50
+
+      
