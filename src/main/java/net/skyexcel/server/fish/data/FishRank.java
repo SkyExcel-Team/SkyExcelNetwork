@@ -12,4 +12,13 @@ public enum FishRank {
     public String getName() {
         return name;
     }
+
+
+    public boolean equalRank(FishRank rank) {
+        return (rank.getName().equalsIgnoreCase(getName()));
+    }
+
+    public boolean isPlus() {
+        return name.contains("+");
+    }
 }

@@ -114,15 +114,10 @@ public enum FishType {
         ItemStack itemStack = new ItemStack(material, amount);
         System.out.println(itemStack);
         ItemMeta meta = itemStack.getItemMeta();
-
+        itemStack.addUnsafeEnchantment(Enchantment.CHANNELING, 1);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "§f[" + fishRank.getName() + "] " + translate + " §7(" + size + "cm)"));
         meta.setCustomModelData(modelData);
 
-        itemStack.addUnsafeEnchantment(Enchantment.RIPTIDE, 1);
-
-        if (List.of(FishRank.SPlus, FishRank.APlus, FishRank.BPlus, FishRank.CPlus, FishRank.DPlus, FishRank.CPlus).contains(getFishRank())) {
-            System.out.println("test");
-        }
         itemStack.setItemMeta(meta);
 
         return itemStack;
