@@ -6,7 +6,6 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.skyexcel.server.trade.Request;
 import net.skyexcel.server.trade.data.Data;
-import net.skyexcel.server.trade.data.TradeGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,14 +20,14 @@ public class TradeCmd implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Player target;
-            TradeGUI tradeGUI;
+
             if (args.length > 0) {
                 Request request = new Request();
                 switch (args[0]) {
                     case "요청":
                         if (args.length > 1) {
                             target = Bukkit.getPlayer(args[1]);
-                            tradeGUI = new TradeGUI();
+
 
                             if (Request.send(request, target, player)) {
                                 TextComponent accept = new TextComponent("§a수락");
@@ -48,10 +47,6 @@ public class TradeCmd implements CommandExecutor {
 
                                 target.spigot().sendMessage(result);
                                 player.sendMessage("초대를 보냈습니다!");
-                                tradeGUI.setPlayer(player);
-                                tradeGUI.setTarget(target);
-                                Data.tradeGui.put(player.getUniqueId(), tradeGUI);
-                                Data.tradeGui.put(target.getUniqueId(), tradeGUI);
                             }
                         }
                         break;
@@ -59,13 +54,6 @@ public class TradeCmd implements CommandExecutor {
                         target = Bukkit.getPlayer(args[1]);
 
                         assert target != null;
-                        tradeGUI = Data.tradeGui.get(target.getUniqueId());
-                        tradeGUI.setTarget(target);
-                        tradeGUI.openGUI();
-
-                        tradeGUI = Data.tradeGui.get(player.getUniqueId());
-                        tradeGUI.setTarget(player);
-                        tradeGUI.openGUI();
 
                         if (Request.accept(request, player, target)) {
                             player.sendMessage("수락을 받았습니다!");
