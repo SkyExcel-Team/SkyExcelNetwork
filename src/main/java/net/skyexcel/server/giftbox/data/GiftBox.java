@@ -31,7 +31,7 @@ public class GiftBox extends Stockable {
 
 
     public GiftBox(OfflinePlayer player) {
-        super("giftbox",player.getUniqueId().toString(),SkyExcelNetworkMain.getPlugin());
+        super("giftbox", player.getUniqueId().toString(), SkyExcelNetworkMain.getPlugin());
         this.player = player;
         this.config = new Config("GiftBox/" + player.getUniqueId());
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
@@ -44,7 +44,7 @@ public class GiftBox extends Stockable {
 
     @Override
     public void save(Inventory inv) {
-        for(int i : black_glass){
+        for (int i : black_glass) {
             inv.getItem(i).setAmount(0);
         }
         super.save(inv);
@@ -53,7 +53,6 @@ public class GiftBox extends Stockable {
 
     public void next(Player player) {
         Inventory inv = Bukkit.createInventory(null, 54, "선물함");
-
 
         inv.setItem(4, Items.playerSkull(player.getName(), "", Arrays.asList("")));
         Arrays.stream(black_glass).forEach(slots -> {
