@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +26,10 @@ public class SkyExcelSnowyMain implements Listener {
 
         task = new SnowParticleScheduler();
         task.runTaskTimerAsynchronously(plugin, 0, 20L * 3);
+
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.kickPlayer("아직 서버 로딩작업이 진행되고 있습니다.\n잠시 후에 다시 접속해주세요.");
+        });
     }
 
     @EventHandler
@@ -32,10 +37,18 @@ public class SkyExcelSnowyMain implements Listener {
         task.cancel();
     }
 
+//    @EventHandler
+//    public void onPreLogin(AsyncPlayerPreLoginEvent e) {
+//        if (!task.isDone())
+//            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "아직 서버 로딩작업이 진행되고 있습니다.\n잠시 후에 다시 시도해주세요.");
+//    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
+        if (p.isOp())
+            return;
         if (!task.isDone())
             p.kickPlayer("아직 서버 로딩작업이 진행되고 있습니다.\n잠시 후에 다시 시도해주세요.");
     }
