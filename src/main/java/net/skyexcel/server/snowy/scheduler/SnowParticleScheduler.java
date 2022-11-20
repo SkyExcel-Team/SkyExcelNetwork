@@ -93,10 +93,6 @@ public class SnowParticleScheduler extends BukkitRunnable {
         return random.nextFloat() <= (chance / 100F);
     }
 
-    public Boolean isDone() {
-        return done;
-    }
-
     public int getTaskId2() {
         return taskId;
     }
