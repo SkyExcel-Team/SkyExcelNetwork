@@ -15,6 +15,7 @@ import net.skyexcel.server.job.gui.JobGUI;
 import net.skyexcel.server.job.gui.JobSelectGUI;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -90,6 +91,9 @@ public class JobListener implements Listener, JobPlayerData {
     @EventHandler
     public void onGrow(BlockGrowEvent event) {
 
+        BlockData blockData = event.getBlock().getBlockData();
+        event.getBlock().setBlockData(event.getBlock().getBlockData());
+
     }
 
     @EventHandler
@@ -106,22 +110,6 @@ public class JobListener implements Listener, JobPlayerData {
                         event.setCancelled(true);
                     }
                 }
-            }
-        }
-    }
-
-    @EventHandler
-    public void Change(PlayerItemHeldEvent event) {
-        Player player = event.getPlayer();
-
-        ItemStack item = player.getInventory().getItem(event.getNewSlot());
-        ItemStack previous = player.getInventory().getItem(event.getPreviousSlot());
-        Job job = new Job(player);
-        if (job.hasJob()) {
-
-            if (job.getType().equals(JobType.FISHERMAN)) {
-                Bait bait = new Bait(player);
-                bait.run(player, item, previous);
             }
         }
     }

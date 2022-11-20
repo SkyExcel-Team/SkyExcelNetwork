@@ -72,7 +72,7 @@ public enum FishType {
     RAWLARGEMOUTHBASS("생 큰입 우럭", 56, FishRank.A),
     RAWLIONFISH("생 쏠배감펭속", 57, FishRank.A),
     RAWMANDARIN("생 만다린", 58, FishRank.A),
-    RAWMUDCARP("생 머드 잉어", 59, FishRank.C),
+
     RAWOCTOPUS("생 문어", 60, FishRank.C),
     RAWPERCH("생 농어", 61, FishRank.C),
     RAWPIKE("생 강꼬치고기", 62, FishRank.C),
@@ -89,7 +89,8 @@ public enum FishType {
     RAWSWAMPSUNFISH("생 늪 개복치", 73, FishRank.B),
     RAWTAMBAQUI("생 땀바끼", 74, FishRank.B),
     RAWTIGERTROUT("생 타이거 송어", 75, FishRank.C),
-    RAWTILAPIA("생 틸라피아", 76, FishRank.C);
+    RAWTILAPIA("생 틸라피아", 76, FishRank.C),
+    NULL();
 
 
     private String translate;
@@ -100,6 +101,10 @@ public enum FishType {
     private Material material = Material.COD;
 
     private FishRank fishRank;
+
+
+    FishType() {
+    }
 
     FishType(String translate, int modelData) {
         this.translate = translate;
@@ -114,9 +119,11 @@ public enum FishType {
 
     public ItemStack item(int amount) {
         ItemStack itemStack = new ItemStack(material, amount);
-        System.out.println(itemStack);
+
         ItemMeta meta = itemStack.getItemMeta();
+
         itemStack.addUnsafeEnchantment(Enchantment.CHANNELING, 1);
+
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "§f[" + fishRank.getName() + "] " + translate + " §7(" + size + "cm)"));
         meta.setCustomModelData(modelData);
 
@@ -132,22 +139,34 @@ public enum FishType {
             switch (getFishRank()) {
                 case S -> {
                     setFishRank(FishRank.SPlus);
+
                     meta.addEnchant(Enchantment.CHANNELING, 1, true);
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
                     itemStack.setItemMeta(meta);
                 }
                 case A -> {
                     setFishRank(FishRank.APlus);
+
                     meta.addEnchant(Enchantment.CHANNELING, 1, true);
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
                     itemStack.setItemMeta(meta);
                 }
                 case B -> {
                     setFishRank(FishRank.BPlus);
+
                     meta.addEnchant(Enchantment.CHANNELING, 1, true);
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
                     itemStack.setItemMeta(meta);
                 }
                 case C -> {
                     setFishRank(FishRank.CPlus);
+
                     meta.addEnchant(Enchantment.CHANNELING, 1, true);
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
                     itemStack.setItemMeta(meta);
                 }
             }
