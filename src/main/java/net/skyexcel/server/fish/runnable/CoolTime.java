@@ -60,7 +60,7 @@ public class CoolTime {
         }
 
 
-//        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyExcelNetworkFishMain.plugin, new Runnable() {
+//        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyExcelNetworkMain.getPlugin(), new Runnable() {
 //
 
 //            final int digit = (int) Math.log10(time.SECOND_IN_MILLIS()) + 1;

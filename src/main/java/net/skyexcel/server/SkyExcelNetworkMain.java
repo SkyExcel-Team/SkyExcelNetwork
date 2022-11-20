@@ -2,7 +2,9 @@ package net.skyexcel.server;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
-import net.skyexcel.server.regionafk.SkyExcelNetworkAFKMain;
+import net.skyexcel.server.essentials.events.PluginDisableEvent;
+import net.skyexcel.server.essentials.events.PluginEnableEvent;
+import net.skyexcel.server.glow.SkyExcelNetworkGlowMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
 import net.skyexcel.server.discord.SkyExcelNetworkDiscordMain;
@@ -15,30 +17,28 @@ import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.lockmanager.SkyExcelNetworkLockManagerMain;
 import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
-import net.skyexcel.server.playerprofile.SkyExcelNetworkPlayerProfile;
+import net.skyexcel.server.playerprofile.SkyExcelNetworkPlayerProfileMain;
 import net.skyexcel.server.playtime.SkyExcelNetworkPlayTimeMain;
 
 import net.skyexcel.server.rank.SkyExcelNetworkRankMain;
+import net.skyexcel.server.regionafk.SkyExcelNetworkRegionAFKMain;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.snowy.SkyExcelSnowyMain;
 import net.skyexcel.server.trade.SkyExcelNetworkTradeMain;
 import net.skyexcel.server.tutorial.SkyExcelNetworkTutorialMain;
 import net.skyexcel.server.upgrade.SkyExcelNetworkUpgradeMain;
-import net.skyexcel.server.warp.SkyExcelNetWorkWarp;
+import net.skyexcel.server.warp.SkyExcelNetWorkWarpMain;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 public class SkyExcelNetworkMain extends JavaPlugin {
     private static JavaPlugin plugin;
     public static HeadDatabaseAPI hdb;
-
-    private volatile SkyExcelNetworkDiscordMain skyExcelNetworkDiscordMain = null;
-    private SkyExcelNetworkEssentialsMain skyExcelNetworkEssentialsMain;
-    private SkyExcelNetworkJobMain skyExcelNetworkJobMain;
-    private SkyExcelSnowyMain skyExcelNetworkSnowyMain;
     public static WorldEditPlugin WorldEdit;
 
 
@@ -46,46 +46,30 @@ public class SkyExcelNetworkMain extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
+        //Load HeadDatabaseAPI
         hdb = new HeadDatabaseAPI();
 
-        new SkyExcelNetworkChatChannelMain(plugin);
-        new SkyExcelNetworkCashShopMain(plugin);
-        this.skyExcelNetworkDiscordMain = new SkyExcelNetworkDiscordMain(plugin);
-        this.skyExcelNetworkEssentialsMain = new SkyExcelNetworkEssentialsMain(plugin);
-        new SkyExcelNetworkFishMain(plugin);
-        new SkyExcelNetworkGiftBoxMain(plugin);
-        new SkyExcelNetworkItemsMain(plugin);
-        this.skyExcelNetworkJobMain = new SkyExcelNetworkJobMain(plugin);
-        new SkyExcelNetworkLockManagerMain(plugin);
-        new SkyExcelNetworkMenuMain(plugin);
-        new SkyExcelNetworkMileageMain(plugin);
-        new SkyExcelNetworkPlayerProfile(plugin);
-        new SkyExcelNetworkPlayTimeMain(plugin);
-        new SkyExcelNetworkSEconomyMain(plugin);
-        new SkyExcelNetworkSkyBlockMain(plugin);
-        this.skyExcelNetworkSnowyMain = new SkyExcelSnowyMain(plugin);
-        new SkyExcelNetworkTradeMain(plugin);
-        new SkyExcelNetWorkWarp(plugin);
-        new SkyExcelNetworkFlyTicketMain(plugin);
-        new SkyExcelNetworkTutorialMain(plugin);
-        new SkyExcelNetworkAFKMain(plugin);
-        new SkyExcelNetworkRankMain(plugin);
-        new SkyExcelNetworkUpgradeMain(plugin);
+        //Register Listeners
+        Listener[] listeners = { new SkyExcelNetworkCashShopMain(), new SkyExcelNetworkChatChannelMain(), new SkyExcelNetworkDiscordMain(), new SkyExcelNetworkEssentialsMain(), new SkyExcelNetworkFishMain(),
+                                    new SkyExcelNetworkFlyTicketMain(), new SkyExcelNetworkGiftBoxMain(), new SkyExcelNetworkGlowMain(), new SkyExcelNetworkItemsMain(), new SkyExcelNetworkJobMain(),
+                                    new SkyExcelNetworkLockManagerMain(), new SkyExcelNetworkMenuMain(), new SkyExcelNetworkMileageMain(), new SkyExcelNetworkPlayerProfileMain(), new SkyExcelNetworkPlayTimeMain(),
+                                    new SkyExcelNetworkRankMain(), new SkyExcelNetworkRegionAFKMain(), new SkyExcelNetworkSEconomyMain(), new SkyExcelNetworkSkyBlockMain(), new SkyExcelSnowyMain(),
+                                    new SkyExcelNetworkTradeMain(), new SkyExcelNetworkTutorialMain(), new SkyExcelNetworkUpgradeMain(), new SkyExcelNetWorkWarpMain()};
+        Arrays.stream(listeners).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, plugin));
 
-        if (Bukkit.getServer().getPluginManager().getPlugin("WorldEdit") != null) {
+        //Call Event
+        Bukkit.getPluginManager().callEvent(new PluginEnableEvent(plugin));
+
+        //WorldEdit
+        if (Bukkit.getServer().getPluginManager().getPlugin("WorldEdit") != null)
             WorldEdit = getWorldEditPlugin();
-        } else {
+        else
             Bukkit.getLogger().warning("WorldEdit 플러그인이 존재하지 않습니다. 일부 기능이 작동 하지 않을 수 있습니다.");
-        }
     }
 
     @Override
     public void onDisable() {
-        if (skyExcelNetworkDiscordMain != null)
-            this.skyExcelNetworkDiscordMain.disable();
-        this.skyExcelNetworkEssentialsMain.disable();
-        this.skyExcelNetworkSnowyMain.disable();
-        this.skyExcelNetworkJobMain.disable();
+        Bukkit.getPluginManager().callEvent(new PluginDisableEvent());
     }
 
     public static WorldEditPlugin getWorldEditPlugin() {
@@ -93,6 +77,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
         if (worldedit instanceof WorldEditPlugin) return (WorldEditPlugin) worldedit;
         else return null;
     }
+
     public static JavaPlugin getPlugin() {
         return plugin;
     }

@@ -1,30 +1,32 @@
 package net.skyexcel.server.discord;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.discord.bot.Bot;
 import net.skyexcel.server.discord.commands.DiscordVerifyCommandTabComplete;
 import net.skyexcel.server.discord.event.DiscordListener;
+import net.skyexcel.server.essentials.events.PluginDisableEvent;
+import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
 
 import static net.skyexcel.server.discord.commands.DiscordVerify.VerifyCommand;
 
-public class SkyExcelNetworkDiscordMain {
-    public static JavaPlugin plugin;
+public class SkyExcelNetworkDiscordMain implements Listener {
+    private static JavaPlugin plugin;
     public static Config config;
     public static Config botConfig;
     public static Config data;
-    public static Bot bot;
-    private int titleSchedulerId;
+    public static Bot bot = null;
+    private int titleSchedulerId = 0;
 
-    public SkyExcelNetworkDiscordMain(JavaPlugin plugin) {
-        SkyExcelNetworkDiscordMain.plugin = plugin;
+    @EventHandler
+    public void onEnable(PluginEnableEvent e) {
+        plugin = e.getPlugin();
 
-        onEnable();
-    }
-
-    public void onEnable() {
         botConfig = new Config("Discord-bot");
         botConfig.setPlugin(plugin);
         botConfig.loadDefaultPluginConfig();
@@ -65,8 +67,10 @@ public class SkyExcelNetworkDiscordMain {
         }, 0, (config.getInteger("others.notVerifiedTitlePeriodSeconds") * 20L)).getTaskId();
     }
 
-    public void disable() {
-        Bukkit.getScheduler().cancelTask(titleSchedulerId);
+    @EventHandler
+    public void onDisable(PluginDisableEvent e) {
+        if (titleSchedulerId != 0)
+            Bukkit.getScheduler().cancelTask(titleSchedulerId);
 
         if (bot.getJDA() != null)
             bot.getJDA().shutdown();

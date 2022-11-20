@@ -1,6 +1,7 @@
 package net.skyexcel.server.skyblock.event;
 
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.skyblock.data.event.SkyBlockCreateEvent;
 import net.skyexcel.server.skyblock.data.event.SkyBlockJoinEvent;
@@ -203,7 +204,7 @@ public class SkyBlockListener implements Listener {
 
     private boolean equalFileName(String name) {
         Config config = new Config("SkyBlock/");
-        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         return config.fileListName().contains(name);
     }
 }

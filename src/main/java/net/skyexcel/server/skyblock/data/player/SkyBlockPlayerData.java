@@ -1,5 +1,6 @@
 package net.skyexcel.server.skyblock.data.player;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import org.bukkit.Location;
@@ -14,7 +15,7 @@ public class SkyBlockPlayerData {
     public SkyBlockPlayerData(OfflinePlayer player) {
         this.player = player;
         config = new Config("data/SkyBlock/Player/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
     public void setName(String name) {

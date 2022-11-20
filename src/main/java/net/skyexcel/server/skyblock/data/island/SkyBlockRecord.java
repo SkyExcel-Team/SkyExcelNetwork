@@ -1,6 +1,7 @@
 package net.skyexcel.server.skyblock.data.island;
 
 import net.skyexcel.api.util.Translate;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -16,7 +17,7 @@ public class SkyBlockRecord {
     public SkyBlockRecord(String name) {
         this.name = name;
         this.record = new Config("data/SkyBlock/SkyBlock/" + name + "/record/record");
-        this.record.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        this.record.setPlugin(SkyExcelNetworkMain.getPlugin());
 
     }
 

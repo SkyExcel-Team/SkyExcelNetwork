@@ -1,5 +1,6 @@
 package net.skyexcel.server.playtime.data;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.playtime.SkyExcelNetworkPlayTimeMain;
 import org.bukkit.entity.Player;
 import skyexcel.data.Time;
@@ -20,7 +21,7 @@ public class PlayTime {
         this.player = player;
 
         this.config = new Config("data/playtime/" + player.getUniqueId());
-        this.config.setPlugin(SkyExcelNetworkPlayTimeMain.plugin);
+        this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         this.time = new Time();
 

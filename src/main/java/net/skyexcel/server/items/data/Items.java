@@ -1,10 +1,9 @@
 package net.skyexcel.server.items.data;
 
-import net.skyexcel.server.items.SkyExcelNetworkItemsMain;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import skyexcel.data.file.Config;
 import skyexcel.data.file.GUI;
 
@@ -31,7 +30,7 @@ public class Items {
     public Items(String name) {
         this.name = name;
         this.config = new Config("items/" + name);
-        config.setPlugin(SkyExcelNetworkItemsMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         gui = new GUI(config);
 
 

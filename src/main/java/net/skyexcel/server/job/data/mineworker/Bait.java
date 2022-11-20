@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data.mineworker;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.StatMeta;
@@ -48,7 +49,7 @@ public class Bait extends StatMeta implements JobPlayerData {
 
         Config config = new Config("job/" + player.getUniqueId() + "/bait");
 
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.getConfig().set("level", 0);
         config.saveConfig();
     }

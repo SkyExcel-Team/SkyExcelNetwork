@@ -52,7 +52,7 @@ public class Scarecrow extends StatMeta {
         super("허수아비", List.of("", "§6§l│ §6허수아비§f를 소환해, 주변의 §6농작물§f을 빠르게 자라게 해줍니다. ", "§6§l│ §f사용 방법:", "§6§l│ §f괭이를 들고 §6쉬프트 §f+ §6우클릭", ""));
         this.player = offlinePlayer;
         this.config = new Config("job/" + offlinePlayer.getUniqueId() + "/Scarecrow");
-        this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
     public void setDefault() {
@@ -110,7 +110,7 @@ public class Scarecrow extends StatMeta {
             this.armorStand = armorStand;
             this.coolTime = new coolTime(player);
             this.coolTime.setArmorStand(armorStand);
-            this.coolTime.runTaskTimer(SkyExcelNetworkJobMain.plugin, 0, 20);
+            this.coolTime.runTaskTimer(SkyExcelNetworkMain.getPlugin(), 0, 20);
             player.getPlayer().sendMessage(getDisplayName() + " 스킬을 사용 하였습니다.");
         } else {
             player.getPlayer().sendMessage("허수아비를 이미 스폰 했습니다");

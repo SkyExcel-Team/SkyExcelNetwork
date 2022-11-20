@@ -1,5 +1,6 @@
 package net.skyexcel.server.seconomy.event;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
 import net.skyexcel.server.seconomy.data.SEConomy;
 import net.skyexcel.server.seconomy.data.SEconomyShop;
@@ -114,7 +115,7 @@ public class SEConomyListener implements Listener {
                 switch (cashShop.getType()) {
                     case SET -> {
                         if (event.getInventory().equals(cashShop.getEditGUI())) {
-                            Bukkit.getScheduler().runTaskLater(SkyExcelNetworkSEconomyMain.plugin, new Runnable() {
+                            Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                                 @Override
                                 public void run() {
                                     cashShop.load(player);
@@ -148,7 +149,7 @@ public class SEConomyListener implements Listener {
         if (SEConomyShopData.shop.containsKey(player.getUniqueId())) {
             try {
                 String finalMessage = message;
-                Bukkit.getScheduler().runTaskLater(SkyExcelNetworkSEconomyMain.plugin, new Runnable() {
+                Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         long amount = Long.parseLong(finalMessage);

@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data.stat;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import org.bukkit.OfflinePlayer;
 import skyexcel.data.file.Config;
@@ -25,7 +26,7 @@ public abstract class Statable {
         this.player = player;
         this.path = path;
         this.config = new Config(path);
-        this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
 

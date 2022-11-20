@@ -2,14 +2,13 @@ package net.skyexcel.server.skyblock.event;
 
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class onHit implements Listener {
+public class OnHit implements Listener {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

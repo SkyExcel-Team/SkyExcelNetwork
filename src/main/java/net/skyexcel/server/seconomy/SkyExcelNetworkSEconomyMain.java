@@ -1,5 +1,6 @@
 package net.skyexcel.server.seconomy;
 
+import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import net.skyexcel.server.seconomy.cmd.EconomyCmd;
 import net.skyexcel.server.seconomy.cmd.EConomyCmdTab;
 import net.skyexcel.server.seconomy.cmd.EConomyShopCmd;
@@ -8,32 +9,24 @@ import net.skyexcel.server.seconomy.event.SEConomyListener;
 import net.skyexcel.server.seconomy.hook.SEconomyExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
 
 import java.util.Arrays;
 
-public class SkyExcelNetworkSEconomyMain {
-    public static JavaPlugin plugin;
+public class SkyExcelNetworkSEconomyMain implements Listener {
+    private static JavaPlugin plugin;
 
     public static Config message;
     public static Config cashShop;
 
-    public SkyExcelNetworkSEconomyMain(JavaPlugin plugin) {
-        SkyExcelNetworkSEconomyMain.plugin = plugin;
+    @EventHandler
+    public void onEnable(PluginEnableEvent e) {
+        plugin = e.getPlugin();
 
-        init();
-    }
-
-
-    private void init() {
-        Listener[] listeners = {new SEConomyListener()};
-
-        Arrays.stream(listeners).forEach(listener -> {
-                    Bukkit.getPluginManager().registerEvents(listener, plugin);
-                }
-        );
+        Bukkit.getPluginManager().registerEvents(new SEConomyListener(), plugin);
 
 
         plugin.getCommand("돈").setTabCompleter(new EConomyCmdTab());
@@ -48,7 +41,7 @@ public class SkyExcelNetworkSEconomyMain {
         message.setPlugin(plugin);
         message.loadDefaultPluginConfig();
 
-        cashShop = new Config("SEConomy-defualt");
+        cashShop = new Config("SEConomy-default");
         cashShop.setPlugin(plugin);
         cashShop.loadDefaultPluginConfig();
     }

@@ -1,6 +1,7 @@
 package net.skyexcel.server.cashshop.cmd;
 
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.cashshop.data.Cash;
 import net.skyexcel.server.cashshop.data.StringData;
@@ -133,7 +134,7 @@ public class CashCmd implements CommandExecutor {
     }
 
     public void registerCmd() {
-        Cmd cmd = new Cmd(SkyExcelNetworkCashShopMain.plugin, "캐시");
+        Cmd cmd = new Cmd(SkyExcelNetworkMain.getPlugin(), "캐시");
 
 
         cmd.label(action -> {

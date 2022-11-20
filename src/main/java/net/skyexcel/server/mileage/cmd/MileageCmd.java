@@ -1,6 +1,7 @@
 package net.skyexcel.server.mileage.cmd;
 
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cashshop.data.CashShop;
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
 import net.skyexcel.server.mileage.data.Mileage;
@@ -136,7 +137,7 @@ public class MileageCmd implements CommandExecutor {
     }
 
     public void registerCmd() {
-        Cmd cmd = new Cmd(SkyExcelNetworkMileageMain.plugin, "캐시");
+        Cmd cmd = new Cmd(SkyExcelNetworkMain.getPlugin(), "캐시");
 
 
         cmd.label(action -> {

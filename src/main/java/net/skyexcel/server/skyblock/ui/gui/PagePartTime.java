@@ -1,6 +1,7 @@
 package net.skyexcel.server.skyblock.ui.gui;
 
 import net.skyexcel.api.packet.Inventory.InventoryUpdate;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.skyblock.data.SkyBlockData;
 import net.skyexcel.server.skyblock.data.StringData;
@@ -130,7 +131,7 @@ public class PagePartTime {
         this.currentMaterial.clear();
         if (!isShift) {
             if (currentPage + 1 <= totalPage) {
-                InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin, player, title + " (" + ++currentPage + "/" + totalPage + ")");
+                InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, title + " (" + ++currentPage + "/" + totalPage + ")");
                 update(player);
                 previous(); //이전 버튼 추가
 
@@ -140,7 +141,7 @@ public class PagePartTime {
         } else {
             this.currentPage = totalPage;
             previous();
-            InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin, player, title + " (" + currentPage + "/" + totalPage + ")");
+            InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, title + " (" + currentPage + "/" + totalPage + ")");
             update(player);
             clearItem(NEXT_PAGE_SLOT);
         }
@@ -150,7 +151,7 @@ public class PagePartTime {
     public void previousPage(Player player, boolean isShift) {
         this.currentMaterial.clear();
         if (!isShift) {
-            InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin, player, title + " (" + --currentPage + "/" + totalPage + ")");
+            InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, title + " (" + --currentPage + "/" + totalPage + ")");
             update(player);
 
             if (currentPage != 1) {
@@ -160,7 +161,7 @@ public class PagePartTime {
             }
         } else {
             currentPage = 1;
-            InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin, player, title + " (" + currentPage + "/" + totalPage + ")");
+            InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, title + " (" + currentPage + "/" + totalPage + ")");
             update(player);
 
             if (currentPage != 1) {

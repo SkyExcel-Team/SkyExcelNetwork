@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data.mineworker;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobPlayerData;
@@ -79,7 +80,7 @@ public class BlastFurnace extends StatMeta implements Percent, JobPlayerData, Le
         path = path + player.getUniqueId();
         Config config = new Config(path + "/BlastFurnace");
 
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.getConfig().set("level", 0);
         config.saveConfig();
     }

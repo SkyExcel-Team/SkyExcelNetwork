@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
@@ -8,7 +9,7 @@ public interface JobPlayerData {
 
     default void setStatPoint(Player player, String name, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.setDouble(name, value);
     }
 
@@ -21,7 +22,7 @@ public interface JobPlayerData {
      */
     default void increase(Player player, String name, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         if (getStatPoint(player, name) != -1) {
             config.setDouble(name, getStatPoint(player, name) + value);
@@ -41,7 +42,7 @@ public interface JobPlayerData {
      */
     default void increase(Player player, String name, double value, boolean save) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         if (getStatPoint(player, name) != -1) {
             config.setDouble(name, getStatPoint(player, name) + value);
@@ -53,20 +54,20 @@ public interface JobPlayerData {
 
     default void decrease(Player player, String name, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.setDouble(name, getStatPoint(player, name) - value);
     }
 
     default double getStatPoint(Player player, String name) {
         Config config = new Config("job/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         return config.getDouble(name);
     }
 
     default double getStatPoint(Player player) {
         Config config = new Config("job/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         return config.getDouble("statpoint");
     }
@@ -74,14 +75,14 @@ public interface JobPlayerData {
 
     default void setLevel(Player player, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         config.setDouble("level", value);
     }
 
     default double getLevel(Player player, String name) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + name);
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         return config.getDouble("level");
     }
@@ -89,7 +90,7 @@ public interface JobPlayerData {
     default double getLevel(Player player) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
 
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         return config.getDouble("level");
     }

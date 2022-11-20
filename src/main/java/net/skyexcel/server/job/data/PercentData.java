@@ -1,6 +1,6 @@
 package net.skyexcel.server.job.data;
 
-import net.skyexcel.server.job.SkyExcelNetworkJobMain;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.Material;
 import skyexcel.data.file.Config;
 
@@ -9,7 +9,7 @@ public class PercentData {
 
     public PercentData() {
         config = new Config("Job-Config.yml");
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
     public boolean getBaitChance() {

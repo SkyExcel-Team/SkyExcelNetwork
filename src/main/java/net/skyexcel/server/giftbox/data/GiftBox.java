@@ -1,5 +1,6 @@
 package net.skyexcel.server.giftbox.data;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.giftbox.SkyExcelNetworkGiftBoxMain;
 import net.skyexcel.server.giftbox.util.Items;
 import org.bukkit.Bukkit;
@@ -30,10 +31,10 @@ public class GiftBox extends Stockable {
 
 
     public GiftBox(OfflinePlayer player) {
-        super("giftbox",player.getUniqueId().toString(),SkyExcelNetworkGiftBoxMain.plugin);
+        super("giftbox",player.getUniqueId().toString(),SkyExcelNetworkMain.getPlugin());
         this.player = player;
         this.config = new Config("GiftBox/" + player.getUniqueId());
-        this.config.setPlugin(SkyExcelNetworkGiftBoxMain.plugin);
+        this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
         gui = new GUI(config);
     }
 

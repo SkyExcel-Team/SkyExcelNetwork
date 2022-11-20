@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class Job {
     public Job(OfflinePlayer player) {
 
         this.config = new Config("data/" + player.getUniqueId());
-        this.config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
         this.offlinePlayer = player;
     }
 

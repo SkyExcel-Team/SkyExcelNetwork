@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.skyexcel.api.util.Translate;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.menu.menu.Menu;
 
 import net.skyexcel.server.seconomy.data.SEConomy;
@@ -284,7 +285,7 @@ public class IslandCmd implements CommandExecutor {
                             player.sendMessage("可 정말로 섬을 §c삭제§f하시겠습니까? §7(15초안에 다시 타이핑 해주세요!)");
                             DeleteRunnable runnable = new DeleteRunnable(player);
 
-                            runnable.runTaskTimer(SkyExcelNetworkSkyBlockMain.plugin, 0, 20);
+                            runnable.runTaskTimer(SkyExcelNetworkMain.getPlugin(), 0, 20);
                             SkyBlockData.delete.put(player.getUniqueId(), runnable);
 
                         } else {

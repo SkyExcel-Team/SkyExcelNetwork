@@ -3,7 +3,7 @@ package net.skyexcel.server.trade.data;
 
 
 import net.skyexcel.api.packet.Inventory.InventoryUpdate;
-import net.skyexcel.server.trade.SkyExcelNetworkTradeMain;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -146,8 +146,8 @@ public class TradeGUI {
     }
 
     private void updateTitle(String title) {
-        InventoryUpdate.updateInventory(SkyExcelNetworkTradeMain.plugin, player, title);
-        InventoryUpdate.updateInventory(SkyExcelNetworkTradeMain.plugin, target, title);
+        InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, title);
+        InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), target, title);
     }
 
     public static class Decoration {

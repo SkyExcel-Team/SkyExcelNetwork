@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.UUID;
 
-public class onJoin implements Listener {
+public class OnJoin implements Listener {
 
 
     @EventHandler

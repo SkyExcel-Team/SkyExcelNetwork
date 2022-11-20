@@ -1,5 +1,6 @@
 package net.skyexcel.server.warp.cmd;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.warp.data.Warp;
 import org.bukkit.ChatColor;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 public class WarpDefault {
 
     public void register() {
-        Cmd cmd = new Cmd(SkyExcelNetworkCashShopMain.plugin, "tutorial");
+        Cmd cmd = new Cmd(SkyExcelNetworkMain.getPlugin(), "tutorial");
         cmd.label(action -> {
             Player player = (Player) action.getSender();
 

@@ -1,5 +1,6 @@
 package net.skyexcel.server.skyblock.cmd;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,7 +26,7 @@ public class IslandAdminCmdTab implements TabCompleter {
 
                 List<String> result = new ArrayList<>();
                 Config config = new Config("SkyBlock/");
-                config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+                config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
                 if (args.length == 1) {
                     result.add("랭킹갱신");

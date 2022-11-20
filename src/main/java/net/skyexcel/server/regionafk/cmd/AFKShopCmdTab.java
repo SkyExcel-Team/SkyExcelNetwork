@@ -1,5 +1,6 @@
 package net.skyexcel.server.regionafk.cmd;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,7 +19,7 @@ public class AFKShopCmdTab implements TabCompleter {
         if (sender instanceof Player player) {
 
             Config config = new Config("shop/afk/");
-            config.setPlugin(SkyExcelNetworkCashShopMain.plugin);
+            config.setPlugin(SkyExcelNetworkMain.getPlugin());
             if (args.length == 1) {
                 if (player.isOp()) {
                     result = List.of("생성", "제거", "편집", "줄", "제목", "목록", "리로드", "열기");

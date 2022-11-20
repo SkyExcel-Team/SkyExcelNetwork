@@ -1,5 +1,6 @@
 package net.skyexcel.server.skyblock.data.island.rank;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import org.bukkit.entity.Player;
@@ -22,10 +23,10 @@ public class Ranking {
 
     public Ranking() {
         config = new Config("SkyBlock/");
-        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         rankdata = new Config("rank");
-        rankdata.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        rankdata.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
 

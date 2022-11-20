@@ -1,7 +1,7 @@
 package net.skyexcel.server.skyblock.data.island.vault;
 
 import net.skyexcel.api.util.Translate;
-import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
@@ -16,7 +16,7 @@ public class SkyBlockVaultRecord {
     public SkyBlockVaultRecord(String name) {
         this.name = name;
         this.record = new Config("data/SkyBlock/Skyblock/" + name + "/vaultRecord");
-        this.record.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        this.record.setPlugin(SkyExcelNetworkMain.getPlugin());
 
     }
 

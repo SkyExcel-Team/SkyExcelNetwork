@@ -1,6 +1,7 @@
 package net.skyexcel.server.job.data.fisher;
 
 import net.skyexcel.api.packet.Inventory.InventoryUpdate;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.StatMeta;
@@ -61,7 +62,7 @@ public class WaterBucket extends StatMeta implements JobPlayerData {
         path = path + player.getUniqueId();
         Config config = new Config("job/" + player.getUniqueId() + "/WaterBucket");
 
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.getConfig().set("level", 0);
         config.getConfig().set("items", new ArrayList<>());
         config.saveConfig();
@@ -84,7 +85,7 @@ public class WaterBucket extends StatMeta implements JobPlayerData {
                     System.out.println(i);
                 }
 
-                InventoryUpdate.updateInventory(SkyExcelNetworkJobMain.plugin, player, "[" + pre + "] 특별한 물통 레벨 : " + ++level);
+                InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, "[" + pre + "] 특별한 물통 레벨 : " + ++level);
 
                 System.out.println(nextPage + "/ " + tempLevel);
                 Items.newItem("물병 레벨을 올리세요!", Material.EXPERIENCE_BOTTLE, 1, List.of(""), 53, inv);

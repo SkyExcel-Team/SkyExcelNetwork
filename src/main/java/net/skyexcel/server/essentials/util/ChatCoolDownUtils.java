@@ -1,5 +1,6 @@
 package net.skyexcel.server.essentials.util;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ public class ChatCoolDownUtils {
     public void coolDown(Player player, long coolTick) {
         coolDownPlayers.add(player);
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkEssentialsMain.plugin, () -> {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkMain.getPlugin(), () -> {
             removeCoolDown(player);
         }, coolTick);
     }

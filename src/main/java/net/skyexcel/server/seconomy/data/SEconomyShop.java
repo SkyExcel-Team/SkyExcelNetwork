@@ -41,11 +41,11 @@ public class SEconomyShop extends Stockable {
     private Translate translate;
 
     public SEconomyShop() {
-        super("", "", SkyExcelNetworkSEconomyMain.plugin);
+        super("", "", SkyExcelNetworkMain.getPlugin());
 
     }
     public SEconomyShop(String name) {
-        super("shop/money", name, SkyExcelNetworkSEconomyMain.plugin);
+        super("shop/money", name, SkyExcelNetworkMain.getPlugin());
         this.name = name;
         translate = new Translate();
     }
@@ -388,7 +388,7 @@ public class SEconomyShop extends Stockable {
 
     public void list(Player player, int index) {
         Config list = new Config("shop/money/");
-        list.setPlugin(SkyExcelNetworkCashShopMain.plugin);
+        list.setPlugin(SkyExcelNetworkMain.getPlugin());
         List<String> result = message(player, list.fileListName(), index);
 
 

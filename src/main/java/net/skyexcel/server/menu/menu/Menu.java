@@ -1,5 +1,6 @@
 package net.skyexcel.server.menu.menu;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
 import net.skyexcel.server.menu.event.ClickEvent;
 import net.skyexcel.server.menu.util.Item;
@@ -36,7 +37,7 @@ public class Menu {
         this.name = name;
         config = new Config("Menu-menu/" + name);
         this.title = name;
-        config.setPlugin(SkyExcelNetworkMenuMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
     public void create() {

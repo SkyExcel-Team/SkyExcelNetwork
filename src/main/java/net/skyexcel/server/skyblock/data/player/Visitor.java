@@ -1,6 +1,7 @@
 package net.skyexcel.server.skyblock.data.player;
 
 import net.skyexcel.api.packet.Inventory.InventoryUpdate;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.api.util.Items;
 
@@ -77,11 +78,11 @@ public class Visitor {
     }
 
     public void update(Player player, String title) {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyExcelNetworkSkyBlockMain.plugin, new Runnable() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyExcelNetworkMain.getPlugin(), new Runnable() {
             @Override
             public void run() {
                 if (inv != null) {
-                    InventoryUpdate.updateInventory(SkyExcelNetworkSkyBlockMain.plugin, player, title);
+                    InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, title);
                 }
             }
         }, 0, 20);

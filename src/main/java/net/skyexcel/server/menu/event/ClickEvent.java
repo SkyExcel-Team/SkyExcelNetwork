@@ -1,5 +1,6 @@
 package net.skyexcel.server.menu.event;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
 import net.skyexcel.server.menu.menu.Menu;
 import org.bukkit.Bukkit;
@@ -24,13 +25,13 @@ public class ClickEvent implements Listener {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
         config = new Config("Menu-menu/");
-        config.setPlugin(SkyExcelNetworkMenuMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         if (inv != null) {
             try {
                 for (String file : config.fileListName()) {
                     menuConfig = new Config("Menu-menu/" + file);
-                    menuConfig.setPlugin(SkyExcelNetworkMenuMain.plugin);
+                    menuConfig.setPlugin(SkyExcelNetworkMain.getPlugin());
 
                     if (menuConfig.getString("menu_title").equalsIgnoreCase(event.getView().getTitle())) {
                         event.setCancelled(true);

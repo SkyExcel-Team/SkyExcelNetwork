@@ -1,6 +1,7 @@
 package net.skyexcel.server.job.gui;
 
 import net.skyexcel.api.packet.Inventory.InventoryUpdate;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobType;
@@ -57,7 +58,7 @@ public class JobSelectGUI {
             player.openInventory(inv);
         } else {
             inv.clear();
-            InventoryUpdate.updateInventory(SkyExcelNetworkJobMain.plugin, player, title);
+            InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, title);
 
             Items.newItem("어부", Material.FISHING_ROD, 1, List.of(), FISH, inv);
             Items.newItem("농부", Material.NETHERITE_HOE, 1, List.of(), FARM, inv);
@@ -67,7 +68,7 @@ public class JobSelectGUI {
 
     public void select(Player player) {
         inv.clear();
-        InventoryUpdate.updateInventory(SkyExcelNetworkJobMain.plugin, player, "정말? ? ? ? ? ? ???? ? ??");
+        InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, "정말? ? ? ? ? ? ???? ? ??");
         Items.newItem(YES_NAME, Material.BLUE_WOOL, 1, List.of(), YES, inv);
         Items.newItem(NO_NAME, Material.RED_WOOL, 1, List.of(), NO, inv);
     }

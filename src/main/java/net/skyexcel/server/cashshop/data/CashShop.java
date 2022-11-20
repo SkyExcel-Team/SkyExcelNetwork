@@ -41,12 +41,12 @@ public class CashShop extends Stockable {
     private Translate translate;
 
     public CashShop() {
-        super("shop/cash", "name", SkyExcelNetworkCashShopMain.plugin);
+        super("shop/cash", "name", SkyExcelNetworkMain.getPlugin());
 
     }
 
     public CashShop(String name) {
-        super("shop/cash", name, SkyExcelNetworkCashShopMain.plugin);
+        super("shop/cash", name, SkyExcelNetworkMain.getPlugin());
         this.name = name;
         translate = new Translate();
     }
@@ -71,7 +71,7 @@ public class CashShop extends Stockable {
 
     public void list(Player player, int index) {
         Config list = new Config("shop/cash/");
-        list.setPlugin(SkyExcelNetworkCashShopMain.plugin);
+        list.setPlugin(SkyExcelNetworkMain.getPlugin());
         List<String> result = message(player, list.fileListName(), index);
 
 
@@ -106,7 +106,7 @@ public class CashShop extends Stockable {
 
     public boolean equalFileName(String name) {
         Config config = new Config("SkyBlock/");
-        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         return config.fileListName().contains(name);
     }
 

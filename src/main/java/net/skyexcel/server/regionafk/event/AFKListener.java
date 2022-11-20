@@ -1,7 +1,7 @@
 package net.skyexcel.server.regionafk.event;
 
 
-import net.skyexcel.server.regionafk.SkyExcelNetworkAFKMain;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.regionafk.data.AFK;
 
 import net.skyexcel.server.regionafk.data.AFKData;
@@ -120,7 +120,7 @@ public class AFKListener implements Listener {
                 switch (AFKShop.getType()) {
                     case SET -> {
                         if (event.getInventory().equals(AFKShop.getEditGUI())) {
-                            Bukkit.getScheduler().runTaskLater(SkyExcelNetworkAFKMain.getPlugin(), new Runnable() {
+                            Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                                 @Override
                                 public void run() {
                                     AFKShop.load(player);
@@ -155,7 +155,7 @@ public class AFKListener implements Listener {
         if (AFKData.shop.containsKey(player.getUniqueId())) {
             try {
                 String finalMessage = message;
-                Bukkit.getScheduler().runTaskLater(SkyExcelNetworkAFKMain.getPlugin(), new Runnable() {
+                Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         long amount = Long.parseLong(finalMessage);

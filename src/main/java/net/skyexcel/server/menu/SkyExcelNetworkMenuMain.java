@@ -1,29 +1,28 @@
 package net.skyexcel.server.menu;
 
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import net.skyexcel.server.menu.cmd.MenuCommand;
 import net.skyexcel.server.menu.event.ClickEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyexcel.data.file.Config;
 
 import java.util.Arrays;
 
-public class SkyExcelNetworkMenuMain {
+public class SkyExcelNetworkMenuMain implements Listener {
 
-    public static JavaPlugin plugin;
+    private static JavaPlugin plugin;
 
     public static Config defaultConfig;
     public static HeadDatabaseAPI hdb;
 
-    public SkyExcelNetworkMenuMain(JavaPlugin plugin) {
-        SkyExcelNetworkMenuMain.plugin = plugin;
+    @EventHandler
+    public void onEnable(PluginEnableEvent e) {
+        plugin = e.getPlugin();
 
-        onEnable();
-    }
-
-    public void onEnable() {
         new MenuCommand();
         hdb = new HeadDatabaseAPI();
 
@@ -37,6 +36,5 @@ public class SkyExcelNetworkMenuMain {
                     Bukkit.getPluginManager().registerEvents(listener, plugin);
                 }
         );
-
     }
 }

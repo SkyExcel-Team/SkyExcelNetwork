@@ -44,11 +44,11 @@ public class AFKShop extends Stockable {
     private Translate translate;
 
     public AFKShop() {
-        super("shop/afk", "name", SkyExcelNetworkCashShopMain.plugin);
+        super("shop/afk", "name", SkyExcelNetworkMain.getPlugin());
     }
 
     public AFKShop(String name) {
-        super("shop/afk", name, SkyExcelNetworkCashShopMain.plugin);
+        super("shop/afk", name, SkyExcelNetworkMain.getPlugin());
         this.name = name;
         translate = new Translate();
     }
@@ -73,7 +73,7 @@ public class AFKShop extends Stockable {
 
     public void list(Player player, int index) {
         Config list = new Config("shop/cash/");
-        list.setPlugin(SkyExcelNetworkCashShopMain.plugin);
+        list.setPlugin(SkyExcelNetworkMain.getPlugin());
         List<String> result = message(player, list.fileListName(), index);
 
 
@@ -108,7 +108,7 @@ public class AFKShop extends Stockable {
 
     public boolean equalFileName(String name) {
         Config config = new Config("SkyBlock/");
-        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         return config.fileListName().contains(name);
     }
 

@@ -1,7 +1,6 @@
 package net.skyexcel.server;
 
 import net.skyexcel.server.fish.data.FishRank;
-import net.skyexcel.server.fish.data.FishType;
 
 import java.util.Locale;
 

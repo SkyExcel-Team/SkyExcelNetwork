@@ -1,5 +1,6 @@
 package net.skyexcel.server.discord.commands;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.discord.SkyExcelNetworkDiscordMain;
 import net.skyexcel.server.discord.utils.VerifyUtils;
 import org.bukkit.Bukkit;
@@ -87,7 +88,7 @@ public class DiscordVerify {
                     .replace("%verify_code%", finalVerifyCode)));
 
 
-            Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkDiscordMain.plugin, new Runnable() {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                 @Override
                 public void run() {
                     if (VerifyUtils.containsCode(finalVerifyCode)) {

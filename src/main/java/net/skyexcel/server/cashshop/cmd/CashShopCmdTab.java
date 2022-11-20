@@ -1,5 +1,6 @@
 package net.skyexcel.server.cashshop.cmd;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,7 +19,7 @@ public class CashShopCmdTab implements TabCompleter {
         if (sender instanceof Player player) {
 
             Config config = new Config("shop/cash/");
-            config.setPlugin(SkyExcelNetworkCashShopMain.plugin);
+            config.setPlugin(SkyExcelNetworkMain.getPlugin());
             if (args.length == 1) {
                 if (player.isOp()) {
                     result = List.of("생성", "제거", "편집", "줄", "제목", "목록", "리로드", "열기");

@@ -1,6 +1,6 @@
 package net.skyexcel.server.snowy.data;
 
-import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.OfflinePlayer;
 import skyexcel.data.file.Config;
 
@@ -9,7 +9,7 @@ public class SnowToggleData {
 
     public SnowToggleData(OfflinePlayer player) {
         config = new Config("data/" + player.getUniqueId());
-        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.loadDefualtConfig();
         config.saveDefualtConfig();
 

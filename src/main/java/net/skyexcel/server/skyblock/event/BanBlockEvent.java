@@ -17,7 +17,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class banBlockEvent implements Listener {
+public class BanBlockEvent implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {

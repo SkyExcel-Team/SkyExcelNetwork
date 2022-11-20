@@ -9,7 +9,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -58,7 +57,7 @@ public class SnowParticleScheduler extends BukkitRunnable {
             }
 
             done = true;
-            System.out.println("끝남");
+            System.out.println("파티클 구역 로딩이 완료되었습니다!");
         }, 20L * 5).getTaskId();
     }
 
@@ -95,7 +94,7 @@ public class SnowParticleScheduler extends BukkitRunnable {
         return random.nextFloat() <= (chance / 100F);
     }
 
-    public int getId() {
-        return taskId;
+    public Boolean isDone() {
+        return done;
     }
 }

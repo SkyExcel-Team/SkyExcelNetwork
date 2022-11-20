@@ -1,6 +1,7 @@
 package net.skyexcel.server.job.data.fisher;
 
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.StatMeta;
@@ -27,7 +28,7 @@ public class Anglers extends StatMeta implements JobPlayerData {
         path = path + player.getUniqueId();
         Config config = new Config("job/" + player.getUniqueId() + "/Anglers");
 
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.getConfig().set("level", 0);
         config.saveConfig();
     }

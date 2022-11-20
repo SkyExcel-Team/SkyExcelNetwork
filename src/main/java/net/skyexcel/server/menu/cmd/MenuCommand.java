@@ -1,6 +1,6 @@
 package net.skyexcel.server.menu.cmd;
 
-import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.menu.gui.PlayerProfile;
 import net.skyexcel.server.menu.menu.Menu;
 import org.bukkit.ChatColor;
@@ -11,7 +11,7 @@ public class MenuCommand {
 
     public MenuCommand() {
         String label = "메뉴";
-        Cmd cmd = new Cmd(SkyExcelNetworkMenuMain.plugin, label);
+        Cmd cmd = new Cmd(SkyExcelNetworkMain.getPlugin(), label);
         cmd.label(action -> {
 
         });

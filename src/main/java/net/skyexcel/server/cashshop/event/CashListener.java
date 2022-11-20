@@ -1,6 +1,7 @@
 package net.skyexcel.server.cashshop.event;
 
 import com.google.common.base.Preconditions;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.cashshop.data.Cash;
 import net.skyexcel.server.cashshop.data.CashShop;
@@ -121,7 +122,7 @@ public class CashListener implements Listener {
                 switch (cashShop.getType()) {
                     case SET -> {
                         if (event.getInventory().equals(cashShop.getEditGUI())) {
-                            Bukkit.getScheduler().runTaskLater(SkyExcelNetworkCashShopMain.plugin, new Runnable() {
+                            Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                                 @Override
                                 public void run() {
                                     cashShop.load(player);
@@ -155,7 +156,7 @@ public class CashListener implements Listener {
         if (CashShopData.shop.containsKey(player.getUniqueId())) {
             try {
                 String finalMessage = message;
-                Bukkit.getScheduler().runTaskLater(SkyExcelNetworkCashShopMain.plugin, new Runnable() {
+                Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         long amount = Long.parseLong(finalMessage);

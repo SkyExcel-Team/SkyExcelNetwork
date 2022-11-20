@@ -1,5 +1,6 @@
 package net.skyexcel.server.skyblock.data.island;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import org.bukkit.Location;
 import org.bukkit.WeatherType;
@@ -29,7 +30,7 @@ public class SkyBlockMeta {
     public SkyBlockMeta(String name) {
 
         this.config = new Config("data/SkyBlock/SkyBlock/" + name + "/" + name);
-        this.config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
     public void setWorldBorderVisibilty(Player player) {

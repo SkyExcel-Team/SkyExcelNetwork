@@ -1,5 +1,6 @@
 package net.skyexcel.server.chatchannel.data;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
@@ -19,7 +20,7 @@ public class ChatRecord {
     public ChatRecord(String name) {
         this.name = name;
         this.record = new Config("ChatChannel-data/" + name);
-        this.record.setPlugin(SkyExcelNetworkChatChannelMain.plugin);
+        this.record.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         if (record.getConfig().get("record.message") == null) {
             record.getConfig().set("record.message", new ArrayList<>());

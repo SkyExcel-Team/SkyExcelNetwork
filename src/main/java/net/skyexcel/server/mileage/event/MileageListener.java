@@ -1,5 +1,6 @@
 package net.skyexcel.server.mileage.event;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.mileage.SkyExcelNetworkMileageMain;
 import net.skyexcel.server.mileage.data.Mileage;
 import net.skyexcel.server.mileage.data.MileageShop;
@@ -114,7 +115,7 @@ public class MileageListener implements Listener {
                 switch (cashShop.getType()) {
                     case SET -> {
                         if (event.getInventory().equals(cashShop.getEditGUI())) {
-                            Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMileageMain.plugin, new Runnable() {
+                            Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                                 @Override
                                 public void run() {
                                     cashShop.load(player);
@@ -148,7 +149,7 @@ public class MileageListener implements Listener {
         if (MileageShopData.shop.containsKey(player.getUniqueId())) {
             try {
                 String finalMessage = message;
-                Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMileageMain.plugin, new Runnable() {
+                Bukkit.getScheduler().runTaskLater(SkyExcelNetworkMain.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         long amount = Long.parseLong(finalMessage);

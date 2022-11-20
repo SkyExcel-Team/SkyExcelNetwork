@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
 import com.github.yannicklamprecht.worldborder.api.WorldBorderApi;
+import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import net.skyexcel.server.skyblock.cmd.IslandAdminCmd;
 import net.skyexcel.server.skyblock.cmd.IslandAdminCmdTab;
 import net.skyexcel.server.skyblock.cmd.IslandCmd;
@@ -21,6 +22,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,19 +32,16 @@ import java.util.Arrays;
 
 public class SkyExcelNetworkSkyBlockMain implements Listener {
 
-    public static JavaPlugin plugin;
+    private static JavaPlugin plugin;
     public static Config config;
 
     private static ProtocolManager protocolManager;
     private static WorldBorderApi worldBorderApi;
 
-    public SkyExcelNetworkSkyBlockMain(JavaPlugin newplugin) {
-        plugin = newplugin;
-        init();
-    }
+    @EventHandler
+    public void onEnable(PluginEnableEvent e) {
+        plugin = e.getPlugin();
 
-
-    public void init() {
         RankStand rankStand = new RankStand();
 //        rankStand.create();
 
@@ -66,19 +65,18 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
         worldManager.create();
 
         plugin.getCommand("섬").setExecutor(new IslandCmd());
-
-        Bukkit.getServer().getPluginCommand("섬").setTabCompleter(new IslandCmdTab());
+        Bukkit.getPluginCommand("섬").setTabCompleter(new IslandCmdTab());
 
 
         plugin.getCommand("섬어드민").setExecutor(new IslandAdminCmd());
-        Bukkit.getServer().getPluginCommand("섬어드민").setTabCompleter(new IslandAdminCmdTab());
+        Bukkit.getPluginCommand("섬어드민").setTabCompleter(new IslandAdminCmdTab());
 
         new SkyBlockVaultExpansion(plugin).register();
         new RankExpansion(plugin).register();
         new RankLevelExpansion(plugin).register();
         new RankNameExpansion(plugin).register();
 
-        Listener[] listeners = {new onJoin(), new SkyBlockListener(), new banBlockEvent(), new onHit(), new onQuit()};
+        Listener[] listeners = {new OnJoin(), new SkyBlockListener(), new BanBlockEvent(), new OnHit(), new OnQuit()};
         Arrays.stream(listeners).forEach(listener -> {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
         });

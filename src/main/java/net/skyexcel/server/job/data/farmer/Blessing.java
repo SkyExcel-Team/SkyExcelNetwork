@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data.farmer;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.StatMeta;
@@ -29,7 +30,7 @@ public class Blessing extends StatMeta implements JobPlayerData {
         path = path + player.getUniqueId();
         Config config = new Config("job/" + player.getUniqueId() + "/blessing");
 
-        config.setPlugin(SkyExcelNetworkJobMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.getConfig().set("level", 0);
         config.saveConfig();
     }

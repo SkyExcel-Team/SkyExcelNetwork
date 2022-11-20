@@ -4,12 +4,9 @@ import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.math.BlockVector3;
 import net.skyexcel.server.SkyExcelNetworkMain;
 
-import net.skyexcel.server.regionafk.SkyExcelNetworkAFKMain;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
-
-import java.util.Vector;
 
 public class AFKArea {
 
@@ -24,7 +21,7 @@ public class AFKArea {
         this.player = player;
         this.name = name;
         this.config = new Config(name);
-        this.config.setPlugin(SkyExcelNetworkAFKMain.getPlugin());
+        this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
 

@@ -1,5 +1,6 @@
 package net.skyexcel.server.skyblock.data.island;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.giftbox.util.Items;
 import net.skyexcel.server.skyblock.data.event.*;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
@@ -34,7 +35,7 @@ public class SkyBlock extends SkyBlockMeta {
         this.path = "data/SkyBlock/SkyBlock/" + name + "/" + name;
 
         config = new Config(path);
-        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
     public SkyBlock(Player player, String name) {
@@ -43,7 +44,7 @@ public class SkyBlock extends SkyBlockMeta {
 
         vault = new SkyBlockVault(player, name);
         config = new Config("data/SkyBlock/SkyBlock/" + name + "/" + name);
-        config.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
     public void create(Player player) {
@@ -178,7 +179,7 @@ public class SkyBlock extends SkyBlockMeta {
             playerData.getConfig().removeKey("island.name");
 
             Config folder = new Config("data/SkyBlock/SkyBlock/" + name);
-            folder.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+            folder.setPlugin(SkyExcelNetworkMain.getPlugin());
 
             folder.deleteDir("data/SkyBlock/SkyBlock/" + name + "/record");
             folder.deleteDir("data/SkyBlock/SkyBlock/" + name + "/");
@@ -670,7 +671,7 @@ public class SkyBlock extends SkyBlockMeta {
 
     public void removeAll() {
         Config SkyBlockConfig = new Config("SkyBlock/");
-        SkyBlockConfig.setPlugin(SkyExcelNetworkSkyBlockMain.plugin);
+        SkyBlockConfig.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         for (String name : SkyBlockConfig.fileListName()) {
             Config record = new Config("SkyBlock/" + name + "/record/");
