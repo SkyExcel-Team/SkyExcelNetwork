@@ -35,13 +35,8 @@ public class SkyExcelSnowyMain implements Listener {
     @EventHandler
     public void onDisable(PluginDisableEvent e) {
         task.cancel();
+        Bukkit.getScheduler().cancelTask(task.getTaskId2());
     }
-
-//    @EventHandler
-//    public void onPreLogin(AsyncPlayerPreLoginEvent e) {
-//        if (!task.isDone())
-//            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "아직 서버 로딩작업이 진행되고 있습니다.\n잠시 후에 다시 시도해주세요.");
-//    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {

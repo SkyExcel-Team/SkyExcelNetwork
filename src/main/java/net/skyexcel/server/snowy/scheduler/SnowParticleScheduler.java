@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class SnowParticleScheduler extends BukkitRunnable {
-    private int taskId;
-
+    public static int taskId;
     private static Random random = new Random();
 
     private static final String worldName = "lobby"; //TODO - CHANGE
@@ -96,5 +95,9 @@ public class SnowParticleScheduler extends BukkitRunnable {
 
     public Boolean isDone() {
         return done;
+    }
+
+    public int getTaskId2() {
+        return taskId;
     }
 }
