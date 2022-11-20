@@ -28,7 +28,8 @@ public class SkyExcelSnowyMain implements Listener {
         task.runTaskTimerAsynchronously(plugin, 0, 20L * 3);
 
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.kickPlayer("아직 서버 로딩작업이 진행되고 있습니다.\n잠시 후에 다시 접속해주세요.");
+            if (!player.isOp())
+                player.kickPlayer("아직 서버 로딩작업이 진행되고 있습니다.\n잠시 후에 다시 접속해주세요.");
         });
     }
 
