@@ -29,7 +29,7 @@ public class SkyExcelNetworkEssentialsMain implements Listener {
         config.setPlugin(plugin);
         config.loadDefaultPluginConfig();
 
-//        autoclean = new SkyExcelNetworkAutoCleanMain(plugin); TODO
+        autoclean = new SkyExcelNetworkAutoCleanMain(plugin);
         new SkyExcelNetworkFarmProtectMain(plugin);
         new SkyExcelNetworkShiftFMain(plugin);
         new SkyExcelNetworkShoutMain(plugin);
@@ -39,6 +39,6 @@ public class SkyExcelNetworkEssentialsMain implements Listener {
 
     @EventHandler
     public void onDisable(PluginDisableEvent e) {
-//        autoclean.disable();
+        autoclean.disable();
     }
 }

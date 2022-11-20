@@ -30,8 +30,17 @@ shift_f:
 
 # 자동청소
 auto_clean:
-  period: 10
+  period: 1800
   messages:
+    20MinRemains: "20분후에 아이템 삭제됨 ㅅㄱ"
+    10MinRemains: "10분후에 아이템 삭제됨 ㅅㄱ"
+    5MinRemains: "5분후에 아이템 삭제됨 ㅅㄱ"
+    1MinRemains: "1분후에 아이템 삭제됨 ㅅㄱ"
     30SecRemains: "30초후에 아이템 삭제됨 ㅅㄱ"
     10SecRemains: "10초후에 아이템 삭제됨 ㅅㄱ"
+    5SecRemains: "5초후에 아이템 삭제됨 ㅅㄱ"
+    4SecRemains: "4초후에 아이템 삭제됨 ㅅㄱ"
+    3SecRemains: "3초후에 아이템 삭제됨 ㅅㄱ"
+    2SecRemains: "2초후에 아이템 삭제됨 ㅅㄱ"
+    1SecRemains: "1초후에 아이템 삭제됨 ㅅㄱ"
     removed: "응 아이템 %removed%개 증발함 ㅅㄱ"

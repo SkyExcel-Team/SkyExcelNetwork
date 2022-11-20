@@ -29,10 +29,20 @@ public class AutoCleanScheduler extends BukkitRunnable {
             Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.removed")
                     .replace("%removed%", String.valueOf(totalRemoved)));
         } else {
-            if (remaining == 30) {
+            if (remaining == 20 * 60)
+                Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.20MinRemains"));
+            else if (remaining == 10 * 60)
+                Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.10MinRemains"));
+            else if (remaining == 5 * 60)
+                Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.5MinRemains"));
+            else if (remaining == 60)
+                Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.1MinRemains"));
+            else if (remaining == 30)
                 Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.30SecRemains"));
-            } else if (remaining == 10) {
+            else if (remaining == 10)
                 Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages.10SecRemains"));
+            else if (remaining <= 5) {
+                Bukkit.broadcastMessage(SkyExcelNetworkEssentialsMain.config.getString("auto_clean.messages." + remaining + "SecRemains"));
             }
         }
     }

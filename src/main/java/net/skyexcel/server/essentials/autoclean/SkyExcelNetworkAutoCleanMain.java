@@ -16,7 +16,8 @@ public class SkyExcelNetworkAutoCleanMain {
     }
 
     private void onEnable() {
-        taskId = new AutoCleanScheduler().runTaskTimerAsynchronously(plugin, SkyExcelNetworkEssentialsMain.config.getLong("auto_clean.period"), 20L).getTaskId();
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () ->
+                taskId = new AutoCleanScheduler().runTaskTimer(plugin, SkyExcelNetworkEssentialsMain.config.getLong("auto_clean.period"), 20L).getTaskId());
     }
 
     public void disable() {
