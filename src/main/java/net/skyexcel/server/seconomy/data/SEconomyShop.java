@@ -1,10 +1,8 @@
 package net.skyexcel.server.seconomy.data;
 
+import net.skyexcel.api.util.Items;
 import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
-import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
-import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,6 +38,7 @@ public class SEconomyShop extends Stockable {
 
     private Translate translate;
 
+    private Items items = new Items();
     public SEconomyShop() {
         super("", "", SkyExcelNetworkMain.getPlugin());
 
@@ -53,7 +52,7 @@ public class SEconomyShop extends Stockable {
     public void editGUI(Player player) {
 
         editGUI = Bukkit.createInventory(null, 27, "구매가격/판매가격");
-        Items.newItem("가격 설정", Material.LIME_WOOL, 1, translate.msgCollapse(List.of("", "&f[&b!&f]좌클릭시 구매가격을 설정합니다 !", "&f[&b!&f]우클릭시 판매가격을 설정합니다 !")), 13, editGUI);
+        items.newItem("가격 설정", Material.LIME_WOOL, 1, translate.msgCollapse(List.of("", "&f[&b!&f]좌클릭시 구매가격을 설정합니다 !", "&f[&b!&f]우클릭시 판매가격을 설정합니다 !")), 13, editGUI);
         player.openInventory(editGUI);
     }
 
@@ -210,7 +209,7 @@ public class SEconomyShop extends Stockable {
 
                 if (cash.withdraw(buy)) {
                     if (!isInventoryFull(player)) {
-                        ItemStack newItem = Items.newItem(select.getItemMeta().getDisplayName(), select.getType(), amount, select.getItemMeta().getLore());
+                        ItemStack newItem = items.newItem(select.getItemMeta().getDisplayName(), select.getType(), amount, select.getItemMeta().getLore());
 
                         ItemMeta newItemMeta = newItem.getItemMeta();
                         List<String> lore = newItemMeta.getLore();
@@ -309,7 +308,7 @@ public class SEconomyShop extends Stockable {
 
         List<String> CANBUY = stringData.canBuy(buy);
 
-        ItemStack newItem = Items.newItem(compare.getItemMeta().getDisplayName(), compare.getType(), compare.getAmount(), compare.getItemMeta().getLore());
+        ItemStack newItem = items.newItem(compare.getItemMeta().getDisplayName(), compare.getType(), compare.getAmount(), compare.getItemMeta().getLore());
 
         ItemMeta meta = newItem.getItemMeta();
 

@@ -1,8 +1,8 @@
 package net.skyexcel.server.job.gui;
 
 import net.skyexcel.api.packet.Inventory.InventoryUpdate;
+import net.skyexcel.api.util.Items;
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobType;
 import net.skyexcel.server.job.data.farmer.Blessing;
@@ -16,7 +16,6 @@ import net.skyexcel.server.job.data.type.Farmer;
 import net.skyexcel.server.job.data.type.Fisher;
 import net.skyexcel.server.job.data.type.MineWorker;
 
-import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -45,14 +44,16 @@ public class JobSelectGUI {
 
     private boolean isSelect = false;
 
+    private Items items = new Items();
+    
 
     public void open(Player player) {
         if (inv == null) {
             Inventory inv = Bukkit.createInventory(null, 27, title);
 
-            Items.newItem("어부", Material.FISHING_ROD, 1, List.of(), FISH, inv);
-            Items.newItem("농부", Material.NETHERITE_HOE, 1, List.of(), FARM, inv);
-            Items.newItem("광부", Material.NETHERITE_PICKAXE, 1, List.of(), MINE, inv);
+            items.newItem("어부", Material.FISHING_ROD, 1, List.of(), FISH, inv);
+            items.newItem("농부", Material.NETHERITE_HOE, 1, List.of(), FARM, inv);
+            items.newItem("광부", Material.NETHERITE_PICKAXE, 1, List.of(), MINE, inv);
 
             this.inv = inv;
             player.openInventory(inv);
@@ -60,17 +61,17 @@ public class JobSelectGUI {
             inv.clear();
             InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, title);
 
-            Items.newItem("어부", Material.FISHING_ROD, 1, List.of(), FISH, inv);
-            Items.newItem("농부", Material.NETHERITE_HOE, 1, List.of(), FARM, inv);
-            Items.newItem("광부", Material.NETHERITE_PICKAXE, 1, List.of(), MINE, inv);
+            items.newItem("어부", Material.FISHING_ROD, 1, List.of(), FISH, inv);
+            items.newItem("농부", Material.NETHERITE_HOE, 1, List.of(), FARM, inv);
+            items.newItem("광부", Material.NETHERITE_PICKAXE, 1, List.of(), MINE, inv);
         }
     }
 
     public void select(Player player) {
         inv.clear();
         InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, "정말? ? ? ? ? ? ???? ? ??");
-        Items.newItem(YES_NAME, Material.BLUE_WOOL, 1, List.of(), YES, inv);
-        Items.newItem(NO_NAME, Material.RED_WOOL, 1, List.of(), NO, inv);
+        items.newItem(YES_NAME, Material.BLUE_WOOL, 1, List.of(), YES, inv);
+        items.newItem(NO_NAME, Material.RED_WOOL, 1, List.of(), NO, inv);
     }
 
 

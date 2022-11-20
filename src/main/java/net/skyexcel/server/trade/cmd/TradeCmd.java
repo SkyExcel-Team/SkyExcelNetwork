@@ -6,6 +6,8 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.skyexcel.server.trade.Request;
 import net.skyexcel.server.trade.data.Data;
+import net.skyexcel.server.trade.data.PlayerInfo;
+import net.skyexcel.server.trade.data.TargetInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -53,7 +55,20 @@ public class TradeCmd implements CommandExecutor {
                     case "수락":
                         target = Bukkit.getPlayer(args[1]);
 
-                        assert target != null;
+                        TargetInfo targetInfo = new TargetInfo(target);
+                        targetInfo.setTarget(player);
+
+                        PlayerInfo playerInfo = new PlayerInfo(player);
+                        playerInfo.setTarget(target);
+
+                        targetInfo.open();
+                        playerInfo.open();
+
+                        System.out.println(target.getName() + "타겟 : " + targetInfo.getTarget());
+                        System.out.println(player.getName() + "타겟" + playerInfo.getTarget());
+
+                        Data.playerInfo.put(player.getUniqueId(), playerInfo);
+                        Data.targetInfo.put(target.getUniqueId(), targetInfo);
 
                         if (Request.accept(request, player, target)) {
                             player.sendMessage("수락을 받았습니다!");

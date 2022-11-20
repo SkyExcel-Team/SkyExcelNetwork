@@ -1,21 +1,15 @@
 package net.skyexcel.server.cashshop.event;
 
-import com.google.common.base.Preconditions;
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.cashshop.data.Cash;
 import net.skyexcel.server.cashshop.data.CashShop;
 import net.skyexcel.server.cashshop.data.CashShopData;
 import net.skyexcel.server.cashshop.data.StringData;
-import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -23,9 +17,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
-import java.util.Objects;
 
 public class CashListener implements Listener {
 

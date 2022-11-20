@@ -1,13 +1,11 @@
 package net.skyexcel.server.job.data.fisher;
 
 import net.skyexcel.api.packet.Inventory.InventoryUpdate;
+import net.skyexcel.api.util.Items;
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.StatMeta;
-import net.skyexcel.server.job.data.stat.Statable;
 
-import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,6 +34,8 @@ public class WaterBucket extends StatMeta implements JobPlayerData {
 
     private String path = "job/";
 
+    private Items items = new Items();
+
 
     public WaterBucket(OfflinePlayer player) {
         super("특별한 물통", List.of("", "§6§l│ §9물고기§f를 §6보관§f할 수 있는 §9물통 ", "§6§l│ §6효과:", "§6§l│ §9물고기§f를 잡을 시 §9물통§f으로 이동됩니다.", "§6§l│ §9물통§f은 §6레벨당 §fGUI 1줄씩 추가됩니다. §7(페이지 존재)", "§6§l│ §f특정 §6레벨 §f달성 시, §9물통§f 안에서 §a판매 §f가능", "",
@@ -49,11 +49,11 @@ public class WaterBucket extends StatMeta implements JobPlayerData {
         inv = Bukkit.createInventory(null, 54, "[1] 특별한 물병 레벨 : " + level);
 
         for (double i = 9 * level; i < 45; i++) {
-            Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int) i, inv);
+            items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int) i, inv);
             System.out.println(i);
         }
 
-        Items.newItem("물병 레벨을 올리세요!", Material.EXPERIENCE_BOTTLE, 1, List.of(""), 53, inv);
+        items.newItem("물병 레벨을 올리세요!", Material.EXPERIENCE_BOTTLE, 1, List.of(""), 53, inv);
         player.openInventory(inv);
     }
 
@@ -81,14 +81,14 @@ public class WaterBucket extends StatMeta implements JobPlayerData {
                 slots.clear();
                 for (int i = 9 * (tempLevel + 1); i < 45; i++) {
                     slots.add(i);
-                    Items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int) i, inv);
+                    items.newItem("물병 레벨을 올리세요!", Material.BARRIER, 1, List.of(""), (int) i, inv);
                     System.out.println(i);
                 }
 
                 InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, "[" + pre + "] 특별한 물통 레벨 : " + ++level);
 
                 System.out.println(nextPage + "/ " + tempLevel);
-                Items.newItem("물병 레벨을 올리세요!", Material.EXPERIENCE_BOTTLE, 1, List.of(""), 53, inv);
+                items.newItem("물병 레벨을 올리세요!", Material.EXPERIENCE_BOTTLE, 1, List.of(""), 53, inv);
                 player.sendMessage("레벨업에 성공 하였습니다!");
             } else {
                 player.sendMessage("스텟 포인트가 부족합니다!");

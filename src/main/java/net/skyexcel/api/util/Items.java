@@ -14,6 +14,18 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.List;
 
 public class Items {
+
+
+    public ItemStack newItem(String name, Material type, int stack, List<String> lore) {
+        ItemStack item = new ItemStack(type, stack);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+
     public void newItem(String name, Material type, int stack, List<String> lore, int loc, Inventory inv) {
         ItemStack item = new ItemStack(type, stack);
         ItemMeta meta = item.getItemMeta();

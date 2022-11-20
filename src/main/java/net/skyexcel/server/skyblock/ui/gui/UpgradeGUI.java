@@ -1,8 +1,8 @@
 package net.skyexcel.server.skyblock.ui.gui;
 
+import net.skyexcel.api.util.Items;
 import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
-import net.skyexcel.server.trade.util.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ public class UpgradeGUI {
 
     private SkyBlock skyBlock;
 
-
+    private Items items = new Items();
     public UpgradeGUI(String name) {
         this.name = name;
         this.skyBlock = new SkyBlock(name);
@@ -31,11 +31,11 @@ public class UpgradeGUI {
     public void create(Player player) {
         Inventory inv = Bukkit.createInventory(null, 45, name + " 섬 레벨 " + skyBlock.getLevel());
 
-        Items.newItem("호퍼 늘리기", Material.HOPPER, 1, List.of(""), 10, inv);
+        items.newItem("호퍼 늘리기", Material.HOPPER, 1, List.of(""), 10, inv);
 
         playerSkull(player.getName(), "섬원 늘리기", List.of(), 12, inv);
 
-        Items.newItem("섬 크기 늘리기", Material.BARRIER, 1, List.of(""), 14, inv);
+        items.newItem("섬 크기 늘리기", Material.BARRIER, 1, List.of(""), 14, inv);
 
         ItemStack itemStack = SkyExcelNetworkMenuMain.hdb.getItemHead("36295");
 
