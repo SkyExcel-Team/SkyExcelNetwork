@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class QeustListener implements Listener {
+public class QuestListener implements Listener {
 
     @EventHandler
     public void onCaught(PlayerFishCaughtEvent event) {

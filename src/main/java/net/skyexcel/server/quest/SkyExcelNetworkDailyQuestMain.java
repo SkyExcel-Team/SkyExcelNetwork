@@ -3,7 +3,7 @@ package net.skyexcel.server.quest;
 import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import net.skyexcel.server.quest.cmd.QuestCmd;
 
-import net.skyexcel.server.quest.event.QeustListener;
+import net.skyexcel.server.quest.event.QuestListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,7 +20,7 @@ public class SkyExcelNetworkDailyQuestMain implements Listener{
         plugin = e.getPlugin();
 
         plugin.getCommand("일일퀘스트").setExecutor(new QuestCmd());
-        Listener[] listeners = {new QeustListener()};
+        Listener[] listeners = {new QuestListener()};
         Arrays.stream(listeners).forEach(listener -> {
                     Bukkit.getPluginManager().registerEvents(listener, plugin);
                 }

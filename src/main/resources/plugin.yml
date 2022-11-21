@@ -6,7 +6,7 @@ description: SkyExcel Network Plugin
 version: 0.1
 api-version: 1.19
 
-#의존성 추가
+#의존성
 softdepend:
   - WorldEdit
   - ProtocolLib
@@ -21,26 +21,38 @@ worlds:
     generator: SkyBlock
 
 commands:
+  #AlphaChest
+  창고:
+
   #CashShop
   캐시:
   test:
+  캐시상점:
+    aliases: [ cash ]
+    
+  #DailyQuest
   일일퀘스트:
     aliases: [ q,ㅋ,dlfdlfznptmxm,znptmxm,퀘스트 ]
 
-  캐시상점:
-    aliases: [ cash ]
-
+  #Menu
   메뉴:
     aliases: [ menu,m,ㅁ ]
+
+  #Mileage
   마일리지:
   마일리지상점:
+
+  #FlyTicket
   플라이:
 
+  #RegionAFK
   잠수:
   잠수상점:
 
+  #Job
   직업:
   물통:
+
   #ChatChannel
   채팅채널:
     aliases: [ c,ㅊ ]
@@ -64,9 +76,11 @@ commands:
   #PlayTime
   접속시간:
 
+  #Warp
   워프:
     aliases: [ w,warp ]
 
+  #PlayerProfile
   프로필:
   인기도:
 
