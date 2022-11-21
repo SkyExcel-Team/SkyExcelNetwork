@@ -13,7 +13,7 @@ public class CloseEvent implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
-        String title = e.getView().getTitle();
+
         if (StorageData.storageHashMap.containsKey(player.getUniqueId())) {
             Storage storage = StorageData.storageHashMap.get(player.getUniqueId());
             storage.saveStorage();
