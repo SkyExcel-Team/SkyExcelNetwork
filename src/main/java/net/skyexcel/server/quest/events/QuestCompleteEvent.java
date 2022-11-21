@@ -8,11 +8,8 @@ public class QuestCompleteEvent extends Event {
 
     private final HandlerList HANDLERS_LIST = new HandlerList();
 
-
-
-    @NotNull
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS_LIST;
     }
 }
