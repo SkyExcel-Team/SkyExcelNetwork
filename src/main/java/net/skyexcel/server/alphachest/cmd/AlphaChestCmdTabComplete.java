@@ -22,18 +22,18 @@ public class AlphaChestCmdTabComplete implements TabCompleter {
         if (!(sender instanceof Player p))
             return Collections.emptyList();
 
-//        if (args.length == 1)
-//            return p.isOp() ? List.of("열기", "확인") : List.of("열기");
-//        else if (args.length == 2)
-//            return args[0].equals("열기") ? List.of("일반", "후원") : (args[0].equals("확인") && p.isOp() ? getPlayers() : Collections.emptyList());
-//        else if (args.length == 3)
-//            return args[0].equals("열기") ? List.of("1", "2", "3", "4") : (args[0].equals("확인") && p.isOp() ? List.of("일반", "후원") : Collections.emptyList());
-//        else if (args.length == 4)
-//            return args[0].equals("확인") && p.isOp() ? List.of("1", "2", "3", "4") : Collections.emptyList();
-//        else
-//            return Collections.emptyList();
+        if (args.length == 1)
+            return p.isOp() ? List.of("열기", "확인") : List.of("열기");
+        else if (args.length == 2)
+            return args[0].equals("열기") ? List.of("일반", "후원") : (args[0].equals("확인") && p.isOp() ? getPlayers() : Collections.emptyList());
+        else if (args.length == 3)
+            return args[0].equals("열기") ? List.of("1", "2", "3", "4") : (args[0].equals("확인") && p.isOp() ? List.of("일반", "후원") : Collections.emptyList());
+        else if (args.length == 4)
+            return args[0].equals("확인") && p.isOp() ? List.of("1", "2", "3", "4") : Collections.emptyList();
+        else
+            return Collections.emptyList();
 
-        return args.length == 1 ? (p.isOp() ? List.of("열기", "확인") : List.of("열기")) : (args.length == 2 ? (args[0].equals("열기") ? List.of("일반", "후원") : (args[0].equals("확인") && p.isOp() ? getPlayers() : Collections.emptyList())) : (args.length == 3 ? (args[0].equals("열기") ? List.of("1", "2", "3", "4") : (args[0].equals("확인") && p.isOp() ? List.of("일반", "후원") : Collections.emptyList())) : (args.length == 4 ? (args[0].equals("확인") && p.isOp() ? List.of("1", "2", "3", "4") : Collections.emptyList()) : Collections.emptyList())));
+//        return args.length == 1 ? (p.isOp() ? List.of("열기", "확인") : List.of("열기")) : (args.length == 2 ? (args[0].equals("열기") ? List.of("일반", "후원") : (args[0].equals("확인") && p.isOp() ? getPlayers() : Collections.emptyList())) : (args.length == 3 ? (args[0].equals("열기") ? List.of("1", "2", "3", "4") : (args[0].equals("확인") && p.isOp() ? List.of("일반", "후원") : Collections.emptyList())) : (args.length == 4 ? (args[0].equals("확인") && p.isOp() ? List.of("1", "2", "3", "4") : Collections.emptyList()) : Collections.emptyList())));
     }
 
     private List<String> getPlayers() {

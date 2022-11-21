@@ -3,6 +3,7 @@ package net.skyexcel.server.essentials.events;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public class PluginEnableEvent extends Event {
     private final JavaPlugin plugin;
@@ -17,7 +18,7 @@ public class PluginEnableEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

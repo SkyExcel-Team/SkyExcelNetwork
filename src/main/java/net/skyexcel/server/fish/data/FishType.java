@@ -102,8 +102,11 @@ public enum FishType {
 
     private FishRank fishRank;
 
+    private FishType fishType;
+
 
     FishType() {
+
     }
 
     FishType(String translate, int modelData) {
@@ -118,16 +121,19 @@ public enum FishType {
     }
 
     public ItemStack item(int amount) {
+
         ItemStack itemStack = new ItemStack(material, amount);
 
         ItemMeta meta = itemStack.getItemMeta();
 
-        itemStack.addUnsafeEnchantment(Enchantment.CHANNELING, 1);
+        if (fishRank != null) {
+            itemStack.addUnsafeEnchantment(Enchantment.CHANNELING, 1);
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "§f[" + fishRank.getName() + "] " + translate + " §7(" + size + "cm)"));
-        meta.setCustomModelData(modelData);
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "§f[" + fishRank.getName() + "] " + translate + " §7(" + size + "cm)"));
+            meta.setCustomModelData(modelData);
 
-        itemStack.setItemMeta(meta);
+            itemStack.setItemMeta(meta);
+        }
 
         return itemStack;
     }

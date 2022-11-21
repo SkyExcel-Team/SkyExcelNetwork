@@ -19,8 +19,6 @@ public class PlayerProfileCmd implements CommandExecutor {
                     if (args.length > 2) {
                         OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
                         PlayerProfile playerProfile = new PlayerProfile(target);
-
-
                     }
                 }
             }

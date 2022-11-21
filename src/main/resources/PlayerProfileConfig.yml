@@ -1,0 +1,14 @@
+prefix: '&8[ &bSky&fExcel &8] '
+
+
+  // 플레이어
+increase_popularity: '%player%님의 인기도를 %amount%만큼 증가시켰습니다!'
+decline_popularity: '%player%님의 인기도를 %amount%만큼 감소시켰습니다!'
+
+
+  // 어드민
+reload_config: '&a콘피그를 성공적으로 리로드하였습니다!'
+
+set_popularity: '%player%님의 인기도를 %amount%로 설정하였습니다!'
+reset_popularity: '%player%님의 인기도를 초기화시켰습니다!'
+

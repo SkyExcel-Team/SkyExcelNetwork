@@ -1,6 +1,9 @@
 package net.skyexcel.server.alphachest.cmd;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
+import net.skyexcel.server.alphachest.struct.Storage;
+import net.skyexcel.server.alphachest.struct.StorageData;
+import net.skyexcel.server.alphachest.struct.StorageItem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,48 +16,26 @@ import skyexcel.data.file.GUI;
 public class AlphaChestCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player p)) {
-            sender.sendMessage("해당 명령어는 플레이어만 사용할 수 있습니다!");
-            return false;
-        }
 
-        if (args.length < 1) {
-            p.sendMessage("입력값이 부족합니다!");
-            return false;
-        }
-
-        if (args[0].equals("열기")) {
-            if (args.length > 3) {
-                p.sendMessage("입력값이 많습니다!");
-                return false;
-            } else if (args.length < 3) {
-                p.sendMessage("입력값이 부족합니다!");
-                return false;
-            }
-
-            if (Integer.parseInt(args[2]) < 1 || Integer.parseInt(args[2]) > 4) {
-                p.sendMessage("번호는 1~4번까지입니다!");
-                return false;
-            }
-
-            Config config = new Config("data/storages/" + p.getUniqueId());
-            config.setPlugin(SkyExcelNetworkMain.getPlugin());
-            config.loadDefualtConfig();
-
-            GUI gui = new GUI(config);
-            if (!config.isFileExist()) {
-                gui.saveInventory(args[2], Bukkit.createInventory(null, 54, p.getName() + "님의 가상창고"));
-            }
-
-            p.openInventory(gui.getInventory(args[2]));
-
-        } else if (args[0].equals("확인")) {
-            if (args.length > 4) {
-                p.sendMessage("입력값이 많습니다!");
-                return false;
-            } else if (args.length < 4) {
-                p.sendMessage("입력값이 부족합니다!");
-                return false;
+        if (sender instanceof Player player) {
+            if (args.length > 0) {
+                if ("열기".equalsIgnoreCase(args[0])) {
+                    if (args.length > 1) {
+                        if ("일반".equalsIgnoreCase(args[1])) {
+                            if (args.length > 2) {
+                                int index = Integer.parseInt(args[2]);
+                                if (index >= 1 && index <= 4) {
+                                    Storage storage = new Storage(player, index);
+                                    storage.open(player);
+                                    StorageData.storageHashMap.put(player.getUniqueId(), storage);
+                                }
+                            }
+                        } else if ("아이템".equalsIgnoreCase(args[1])) {
+                            StorageItem storageItem = new StorageItem();
+                            player.getInventory().addItem(storageItem.addItem());
+                        }
+                    }
+                }
             }
         }
         return true;

@@ -9,12 +9,15 @@ import net.skyexcel.server.job.data.JobType;
 import net.skyexcel.server.job.data.stat.Percent;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import skyexcel.data.file.Config;
@@ -114,7 +117,7 @@ public class FishEvent implements Listener, Percent {
             rankUpByUpgrade(item, upgrade, RankUpPercent, JobRankUp, DefaultRankUp, fishType);
         }
 
-        if (item != null || !fishType.equals(FishType.NULL)) {
+        if (item != null) {
             PlayerFishCaughtEvent playerFishCaughtEvent = new PlayerFishCaughtEvent(player, fishType);
             Bukkit.getPluginManager().callEvent(playerFishCaughtEvent);
 
@@ -131,16 +134,16 @@ public class FishEvent implements Listener, Percent {
     }
 
 
-//    @EventHandler
-//    public void onJoin(PlayerJoinEvent event) {
-//
-//        Player player = event.getPlayer();
-//
-//        ItemStack test = new ItemStack(Material.FISHING_ROD, 1);
-//        test.addUnsafeEnchantment(Enchantment.LURE, 255);
-//        player.getInventory().addItem(test);
-//
-//    }
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+
+        Player player = event.getPlayer();
+
+        ItemStack test = new ItemStack(Material.FISHING_ROD, 1);
+        test.addUnsafeEnchantment(Enchantment.LURE, 255);
+        player.getInventory().addItem(test);
+
+    }
 
     /**
      * Upgrade 변수값이 참이면, JobRankUp 의 변수에 따라 RankUpPercent 변수 값이 비교가 되고,

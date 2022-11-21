@@ -23,6 +23,17 @@ public class QuestData {
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
+    /**
+     *
+     *
+     * @param quest
+     * @return
+     */
+    public boolean hasQuest(Quest quest) {
+        return this.config.getConfig().getConfigurationSection("quest").getKeys(false).contains(quest.getName());
+    }
+
+
     public void resetQuest() {
         List<Quest> quests = List.of(new BreakDiamondQuest(), new BreakTreeQuest(), new BreakWheatQuest(), new FlyingQuest());
 

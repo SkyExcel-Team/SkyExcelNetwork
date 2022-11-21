@@ -2,6 +2,7 @@ package net.skyexcel.server.upgrade;
 
 import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
@@ -13,5 +14,6 @@ public class SkyExcelNetworkUpgradeMain implements Listener {
     @EventHandler
     public void onEnable(PluginEnableEvent e) {
         plugin = e.getPlugin();
+ 
     }
 }

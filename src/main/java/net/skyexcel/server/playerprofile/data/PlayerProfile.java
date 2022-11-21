@@ -14,9 +14,13 @@ public class PlayerProfile extends Flowable {
         setValuePath("popularlity");
     }
 
+
+
     @Override
     public boolean sub(double amount) {
         setAmount(getDouble() - amount);
         return true;
     }
+
+
 }

@@ -3,6 +3,7 @@ package net.skyexcel.server.alphachest;
 import net.skyexcel.server.alphachest.cmd.AlphaChestCmdTabComplete;
 import net.skyexcel.server.alphachest.cmd.AlphaChestCommand;
 import net.skyexcel.server.alphachest.event.CloseEvent;
+import net.skyexcel.server.alphachest.event.StorageListener;
 import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -20,5 +21,7 @@ public class SkyExcelNetworkAlphaChestMain implements Listener {
         Bukkit.getPluginCommand("창고").setTabCompleter(new AlphaChestCmdTabComplete());
 
         Bukkit.getPluginManager().registerEvents(new CloseEvent(), plugin);
+
+        Bukkit.getPluginManager().registerEvents(new StorageListener(), plugin);
     }
 }
