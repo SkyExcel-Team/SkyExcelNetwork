@@ -43,8 +43,6 @@ public class PlayTimeEvent extends Event implements Cancellable {
         this.isCancelled = cancel;
     }
 
-    @NotNull
-    @Override
     public HandlerList getHandlers() {
         return HANDLERS_LIST;
     }

@@ -47,8 +47,7 @@ public class SkyBlockDeleteEvent extends Event implements Cancellable {
         this.isCancelled = cancelled;
     }
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
+    public HandlerList getHandlers() {
         return HANDLERS_LIST;
     }
 

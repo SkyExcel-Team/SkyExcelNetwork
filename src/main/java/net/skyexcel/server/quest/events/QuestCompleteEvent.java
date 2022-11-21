@@ -6,10 +6,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class QuestCompleteEvent extends Event {
 
-    private final HandlerList HANDLERS_LIST = new HandlerList();
+    private static final HandlerList HANDLERS_LIST = new HandlerList();
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
+    public HandlerList getHandlers() {
+        return HANDLERS_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return HANDLERS_LIST;
     }
 }
