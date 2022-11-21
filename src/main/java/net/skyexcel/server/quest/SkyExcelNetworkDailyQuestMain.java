@@ -1,18 +1,29 @@
 package net.skyexcel.server.quest;
 
+import net.skyexcel.server.essentials.events.PluginEnableEvent;
+import net.skyexcel.server.quest.cmd.QuestCmd;
 
-
+import net.skyexcel.server.quest.event.QeustListener;
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SkyExcelNetworkDailyQuestMain {
+import java.util.Arrays;
+
+public class SkyExcelNetworkDailyQuestMain implements Listener{
     private JavaPlugin plugin;
 
-    public SkyExcelNetworkDailyQuestMain(JavaPlugin plugin) {
-        this.plugin = plugin;
-        init();
-    }
 
-    private void init() {
+    @EventHandler
+    public void onEnable(PluginEnableEvent e) {
+        plugin = e.getPlugin();
 
+        plugin.getCommand("일일퀘스트").setExecutor(new QuestCmd());
+        Listener[] listeners = {new QeustListener()};
+        Arrays.stream(listeners).forEach(listener -> {
+                    Bukkit.getPluginManager().registerEvents(listener, plugin);
+                }
+        );
     }
 }

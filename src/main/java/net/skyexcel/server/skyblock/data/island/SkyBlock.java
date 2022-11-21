@@ -68,6 +68,13 @@ public class SkyBlock extends SkyBlockMeta {
                 config.getConfig().set("SkyBlock.level.stand", 0);
                 config.getConfig().set("SkyBlock.level.hopper", 0);
 
+
+                config.getConfig().set("SkyBlock.meta.hopper", 0);
+                config.getConfig().set("SkyBlock.meta.armorstand", 0);
+                config.getConfig().set("SkyBlock.meta.speed", 1);
+                config.getConfig().set("SkyBlock.meta.frame", 0);
+
+
                 config.setString("SkyBlock.owner", player.getUniqueId().toString());
 
                 config.getConfig().set("SkyBlock.blacklist", new ArrayList<>());
@@ -132,7 +139,7 @@ public class SkyBlock extends SkyBlockMeta {
         }
     }
 
-    public void remove(Player player) {
+    public void remove(Player player, boolean reset) {
 
         SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
         playerData.setOriginLocation(getLocation());
@@ -170,25 +177,33 @@ public class SkyBlock extends SkyBlockMeta {
 
             org.bukkit.Location pos1 = getLocation(); //자신의 섬의 영역을 불러온다.
             org.bukkit.Location pos2 = getLocation(); //자신의 섬의 영역을 불러온다.
+
             int size = getSize() / 2;
             pos1.subtract(size, 63, size);
-            pos2.add(size, 63, size);
+            pos2.add(size, 256, size);
 
-            WorldManager.removeBlocks(pos1, pos2);
+            WorldManager worldManager = new WorldManager();
+            worldManager.removeBlocks(pos1, pos2);
+            if (!reset) {
+                playerData.getConfig().removeKey("island.name");
 
-            playerData.getConfig().removeKey("island.name");
+                Config folder = new Config("data/SkyBlock/SkyBlock/" + name);
+                folder.setPlugin(SkyExcelNetworkMain.getPlugin());
 
-            Config folder = new Config("data/SkyBlock/SkyBlock/" + name);
-            folder.setPlugin(SkyExcelNetworkMain.getPlugin());
+                folder.deleteDir("data/SkyBlock/SkyBlock/" + name + "/record");
+                folder.deleteDir("data/SkyBlock/SkyBlock/" + name + "/");
+            } else {
+                worldManager.create();
+            }
 
-            folder.deleteDir("data/SkyBlock/SkyBlock/" + name + "/record");
-            folder.deleteDir("data/SkyBlock/SkyBlock/" + name + "/");
         }
     }
 
 
     public void reset(Player player) {
         player.sendMessage("佳 섬 초기화를 진행합니다...");
+
+        remove(player, true);
     }
 
 
@@ -469,14 +484,17 @@ public class SkyBlock extends SkyBlockMeta {
                 SkyBlockPlayerData data = new SkyBlockPlayerData(Objects.requireNonNull(Bukkit.getPlayer(player)));
                 data.setName(name);
             }
-            String ownerUUID = getOwner();
-            Player owner = Bukkit.getPlayer(UUID.fromString(ownerUUID));
-            SkyBlockPlayerData data = new SkyBlockPlayerData(owner);
-            data.setName(name);
-            setName(name);
-            path = "SkyBlock/" + name + "/" + name;
-            config.renameFile(path);
         }
+        String ownerUUID = getOwner();
+        Player owner = Bukkit.getPlayer(UUID.fromString(ownerUUID));
+        SkyBlockPlayerData data = new SkyBlockPlayerData(owner);
+
+        data.setName(name);
+        setName(name);
+        path = "SkyBlock/" + name + "/" + name;
+        config.renameFile(path);
+
+
         config.saveConfig();
         return true;
     }

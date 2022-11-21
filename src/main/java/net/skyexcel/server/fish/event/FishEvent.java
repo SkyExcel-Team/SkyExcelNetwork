@@ -2,11 +2,13 @@ package net.skyexcel.server.fish.event;
 
 import net.skyexcel.server.fish.data.FishRank;
 import net.skyexcel.server.fish.data.FishType;
+import net.skyexcel.server.fish.events.PlayerFishCaughtEvent;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobType;
 import net.skyexcel.server.job.data.stat.Percent;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -113,6 +115,9 @@ public class FishEvent implements Listener, Percent {
         }
 
         if (item != null || !fishType.equals(FishType.NULL)) {
+            PlayerFishCaughtEvent playerFishCaughtEvent = new PlayerFishCaughtEvent(player, fishType);
+            Bukkit.getPluginManager().callEvent(playerFishCaughtEvent);
+
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName("(" + fishType.getFishRank().getName() + ") " + fishType.getTranslate() + " §7(" + size + "cm)");
             item.setItemMeta(meta);
@@ -120,6 +125,8 @@ public class FishEvent implements Listener, Percent {
 
             ActionBar.sendMessage(player, "[" + fishType.getFishRank().getName() + "] " + fishType.getTranslate() +
                     " 물고기를 잡았습니다! §7(" + size + "cm)");
+
+
         }
     }
 

@@ -47,9 +47,6 @@ public class SkyBlockCreateEvent extends Event implements Cancellable {
         return HANDLERS_LIST;
     }
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS_LIST;
-    }
 
     /**
      * @return 생성한 섬의 이름을 불러옵니다.

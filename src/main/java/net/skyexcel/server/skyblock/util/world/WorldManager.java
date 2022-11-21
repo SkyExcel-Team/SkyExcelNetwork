@@ -137,7 +137,7 @@ public class WorldManager {
         }
     }
 
-    public static void removeBlocks(Location start, Location end) {
+    public void removeBlocks(Location start, Location end) {
         int topBlockX = (Math.max(start.getBlockX(), end.getBlockX()));
         int bottomBlockX = (Math.min(start.getBlockX(), end.getBlockX()));
 

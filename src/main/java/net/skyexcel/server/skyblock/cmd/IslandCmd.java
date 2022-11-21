@@ -289,7 +289,7 @@ public class IslandCmd implements CommandExecutor {
                             SkyBlockData.delete.put(player.getUniqueId(), runnable);
 
                         } else {
-                            data.remove(player);
+                            data.remove(player, false);
                             SkyBlockData.delete.remove(player.getUniqueId());
                         }
 

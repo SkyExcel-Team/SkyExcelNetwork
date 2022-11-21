@@ -9,15 +9,14 @@ import net.skyexcel.server.skyblock.data.event.SkyBlockQuickEvent;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import net.skyexcel.server.skyblock.data.island.SkyBlockRecord;
 import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -200,6 +199,23 @@ public class SkyBlockListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        Block block = event.getBlock();
+        Player player = event.getPlayer();
+
+        SkyBlockPlayerData skyBlockPlayerData = new SkyBlockPlayerData(player);
+        SkyBlock skyBlock = new SkyBlock(skyBlockPlayerData.getIsland());
+
+        if (skyBlockPlayerData.hasIsland()) {
+            if (block.getType().equals(Material.HOPPER)) {
+
+            }
+        }
+
+
     }
 
     private boolean equalFileName(String name) {

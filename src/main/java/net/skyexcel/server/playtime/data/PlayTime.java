@@ -49,6 +49,16 @@ public class PlayTime {
         }
     }
 
+    public void addSecond(long sec) {
+        time.addSecond(sec);
+        config.setLong("playtime", time.SECOND_IN_MILLIS());
+    }
+
+
+    public Time getTime() {
+        return time;
+    }
+
     public long getPlayTime() {
         return config.getLong("playtime");
     }
