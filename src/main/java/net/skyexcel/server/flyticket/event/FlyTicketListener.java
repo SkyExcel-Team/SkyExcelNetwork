@@ -7,29 +7,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
+
 import skyexcel.util.ActionBar;
 
 public class FlyTicketListener implements org.bukkit.event.Listener {
-
-
-    @EventHandler
-    public void on(PlayerToggleFlightEvent event) {
-        Player player = event.getPlayer();
-
-
-    }
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-
+        PlayerFlyingEvent playerFlyingEvent = new PlayerFlyingEvent(player, PlayerFlyingEvent.Flying.FLYING);
         if (player.isFlying()) {
-            PlayerFlyingEvent playerFlyingEvent = new PlayerFlyingEvent(player, PlayerFlyingEvent.Flying.FLYING);
             Bukkit.getPluginManager().callEvent(playerFlyingEvent);
         } else {
-            PlayerFlyingEvent playerFlyingEvent = new PlayerFlyingEvent(player, PlayerFlyingEvent.Flying.GROUND);
+            playerFlyingEvent.setFlying(PlayerFlyingEvent.Flying.GROUND);
             Bukkit.getPluginManager().callEvent(playerFlyingEvent);
         }
     }

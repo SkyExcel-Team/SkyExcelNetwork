@@ -18,6 +18,10 @@ public class PlayerFlyingEvent extends Event {
     }
 
 
+    public void setFlying(Flying flying) {
+        this.flying = flying;
+    }
+
     public Player getPlayer() {
         return player;
     }
