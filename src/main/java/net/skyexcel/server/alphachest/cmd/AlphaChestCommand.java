@@ -18,7 +18,15 @@ public class AlphaChestCommand implements CommandExecutor {
                     if (args.length > 1) {
                         if ("일반".equalsIgnoreCase(args[1])) {
                             if (args.length > 2) {
-                                int index = Integer.parseInt(args[2]);
+                                int index;
+
+                                try {
+                                    index = Integer.parseInt(args[2]);
+                                } catch (Exception ex) {
+                                    player.sendMessage("창고 번호는 1~4 사이의 숫자여야합니다!");
+                                    return false;
+                                }
+
                                 if (index >= 1 && index <= 4) {
                                     Storage storage = new Storage(player, index);
                                     storage.open(player);

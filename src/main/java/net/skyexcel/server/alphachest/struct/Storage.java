@@ -67,7 +67,10 @@ public class Storage {
             this.inv = inv;
             player.openInventory(inv);
         } else {
-            player.sendMessage("인벤토리가 존재하지 않습니다.");
+            Inventory inv = Bukkit.createInventory(player, 54, player.getName() + "님의 가상창고 (" + index + ")");
+            gui.saveInventory(String.valueOf(index), inv);
+            this.inv = inv;
+            player.openInventory(inv);
         }
     }
 
