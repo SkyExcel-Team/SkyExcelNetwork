@@ -123,7 +123,10 @@ public class FishEvent implements Listener, Percent {
         if (item != null) {
             PlayerFishCaughtEvent playerFishCaughtEvent = new PlayerFishCaughtEvent(player, fishType);
             Bukkit.getPluginManager().callEvent(playerFishCaughtEvent);
-
+            // CM 를 추가하기 위해 이름 변경
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName("§8[" + fishType.getFishRank().getName() + "§8] " + fishType.getTranslate() + " §7(" + size + "cm)");
+            item.setItemMeta(meta);
             stack.setItemStack(item);
 
             ActionBar.sendMessage(player, "[" + fishType.getFishRank().getName() + "] " + fishType.getTranslate() +

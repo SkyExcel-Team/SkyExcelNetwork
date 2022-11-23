@@ -23,6 +23,7 @@ import net.skyexcel.server.playerprofile.SkyExcelNetworkPlayerProfileMain;
 import net.skyexcel.server.playtime.SkyExcelNetworkPlayTimeMain;
 
 import net.skyexcel.server.quest.SkyExcelNetworkDailyQuestMain;
+import net.skyexcel.server.quest.data.QuestData;
 import net.skyexcel.server.rank.SkyExcelNetworkRankMain;
 import net.skyexcel.server.regionafk.SkyExcelNetworkRegionAFKMain;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
@@ -33,6 +34,7 @@ import net.skyexcel.server.tutorial.SkyExcelNetworkTutorialMain;
 import net.skyexcel.server.upgrade.SkyExcelNetworkUpgradeMain;
 import net.skyexcel.server.warp.SkyExcelNetWorkWarpMain;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,6 +50,8 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
 
     public static LoadType loadType = LoadType.UNLOAD;
 
+
+    //TODO 시간 인식. 퀘스트에서 ADD 할때 시간이 00:00이라면, 초기화가 되어야함.
     @Override
     public void onEnable() {
         plugin = this;
@@ -55,6 +59,8 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
         //Load HeadDatabaseAPI
         hdb = new HeadDatabaseAPI();
 
+
+        System.out.println(ChatColor.GREEN + "" + System.currentTimeMillis() + " 테스트ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 
         //Register Listeners
         Listener[] listeners = {new SkyExcelNetworkAlphaChestMain(), new SkyExcelNetworkCashShopMain(), new SkyExcelNetworkChatChannelMain(), new SkyExcelNetworkDiscordMain(), new SkyExcelNetworkEssentialsMain(), new SkyExcelNetworkFishMain(),
@@ -64,6 +70,7 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
                 new SkyExcelNetworkTradeMain(), new SkyExcelNetworkTutorialMain(), new SkyExcelNetworkUpgradeMain(), new SkyExcelNetWorkWarpMain(), new SkyExcelNetworkDailyQuestMain()};
 
         Arrays.stream(listeners).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, plugin));
+
 
         //Call Event
         Bukkit.getPluginManager().callEvent(new PluginEnableEvent(plugin));
@@ -80,6 +87,8 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         Bukkit.getPluginManager().callEvent(new PluginDisableEvent());
+        QuestData questData = new QuestData();
+        questData.removeAllQuests();
     }
 
     public static WorldEditPlugin getWorldEditPlugin() {

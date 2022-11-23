@@ -38,9 +38,7 @@ public class TradeListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
         int slot = event.getSlot();
-
-
-        player.sendMessage(slot + "");
+        
         if (inv != null) {
 
             if (event.getAction().equals(InventoryAction.PLACE_ALL)) {

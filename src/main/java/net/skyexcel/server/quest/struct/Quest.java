@@ -1,19 +1,20 @@
 package net.skyexcel.server.quest.struct;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 public class Quest {
     private String name;
 
-    private Player player;
+    private OfflinePlayer player;
 
     private Config config;
 
     private int max;
 
-    public Quest(String name, Player player) {
+    public Quest(String name, OfflinePlayer player) {
         this.name = name;
         this.player = player;
         config = new Config("quest/" + player.getUniqueId());
@@ -85,7 +86,7 @@ public class Quest {
         return false;
     }
 
-    public Player getPlayer() {
+    public OfflinePlayer getPlayer() {
         return player;
     }
 }
