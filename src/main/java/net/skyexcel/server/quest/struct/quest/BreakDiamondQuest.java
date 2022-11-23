@@ -2,6 +2,7 @@ package net.skyexcel.server.quest.struct.quest;
 
 import net.skyexcel.server.quest.struct.Completable;
 import net.skyexcel.server.quest.struct.Quest;
+import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 public class BreakDiamondQuest extends Quest implements Completable {
@@ -11,8 +12,9 @@ public class BreakDiamondQuest extends Quest implements Completable {
 
     private Config config;
 
-    public BreakDiamondQuest() {
-        super("광물캐기");
+    public BreakDiamondQuest(Player player) {
+        super("광물캐기", player);
+        setMax(5);
     }
 
 

@@ -39,7 +39,10 @@ public class FishEvent implements Listener, Percent {
 
 
                 if (job.hasJob()) {
+
                     caught((Item) event.getCaught(), player, job.getType().equals(JobType.FISHERMAN));
+
+
                 }
             }
         }
@@ -190,11 +193,7 @@ public class FishEvent implements Listener, Percent {
      */
     private FishType selector(List<FishType> types) {
         Random random = new Random();
-        if (types.size() > 1) {
-            return types.get(random.nextInt(types.size() - 1));
-        } else {
-            return FishType.NULL;
-        }
+        return types.get(random.nextInt(types.size()));
     }
 
     /**

@@ -2,12 +2,13 @@ package net.skyexcel.server.quest.struct.quest;
 
 import net.skyexcel.server.quest.struct.Completable;
 import net.skyexcel.server.quest.struct.Quest;
+import org.bukkit.entity.Player;
 
 public class FlyingQuest extends Quest implements Completable {
 
 
-    public FlyingQuest() {
-        super("날기");
+    public FlyingQuest(Player player) {
+        super("날기", player);
     }
 
     @Override

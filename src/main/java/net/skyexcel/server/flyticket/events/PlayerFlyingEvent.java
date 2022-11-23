@@ -1,21 +1,20 @@
-package net.skyexcel.server.quest.events;
+package net.skyexcel.server.flyticket.events;
 
-import net.skyexcel.server.quest.struct.Quest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class QuestCompleteEvent extends Event {
-
+public class PlayerFlyingEvent extends Event {
     private static final HandlerList HANDLERS_LIST = new HandlerList();
 
     private Player player;
 
-    private Quest quest;
+    private Flying flying;
 
-    public QuestCompleteEvent(Player player, Quest quest) {
+
+    public PlayerFlyingEvent(Player player, Flying flying) {
         this.player = player;
-        this.quest = quest;
+        this.flying = flying;
     }
 
 
@@ -23,8 +22,8 @@ public class QuestCompleteEvent extends Event {
         return player;
     }
 
-    public Quest getQuest() {
-        return quest;
+    public Flying getFlying() {
+        return flying;
     }
 
     public HandlerList getHandlers() {
@@ -34,5 +33,8 @@ public class QuestCompleteEvent extends Event {
     public static HandlerList getHandlerList() {
         return HANDLERS_LIST;
     }
-}
 
+    public static enum Flying {
+        FLYING, GROUND
+    }
+}

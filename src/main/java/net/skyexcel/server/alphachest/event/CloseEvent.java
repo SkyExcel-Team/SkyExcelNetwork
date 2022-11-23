@@ -1,5 +1,6 @@
 package net.skyexcel.server.alphachest.event;
 
+import net.skyexcel.server.alphachest.struct.CashStorage;
 import net.skyexcel.server.alphachest.struct.Storage;
 import net.skyexcel.server.alphachest.struct.StorageData;
 import org.bukkit.entity.Player;
@@ -13,9 +14,12 @@ public class CloseEvent implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
-        String title = e.getView().getTitle();
+
         if (StorageData.storageHashMap.containsKey(player.getUniqueId())) {
             Storage storage = StorageData.storageHashMap.get(player.getUniqueId());
+            storage.saveStorage();
+        } else if (StorageData.cashStorageHashMap.containsKey(player.getUniqueId())) {
+            CashStorage storage = StorageData.cashStorageHashMap.get(player.getUniqueId());
             storage.saveStorage();
         }
     }

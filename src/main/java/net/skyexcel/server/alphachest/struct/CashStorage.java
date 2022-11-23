@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import skyexcel.data.file.Config;
 import skyexcel.data.file.GUI;
 
-public class Storage {
+public class CashStorage {
 
     private OfflinePlayer offlinePlayer;
 
@@ -22,16 +22,16 @@ public class Storage {
 
     private int index = 1;
 
-    public Storage(OfflinePlayer offlinePlayer) {
+    public CashStorage(OfflinePlayer offlinePlayer) {
         this.offlinePlayer = offlinePlayer;
-        this.config = new Config("data/storages/default/" + offlinePlayer.getUniqueId() + "/");
+        this.config = new Config("data/storages/cash/" + offlinePlayer.getUniqueId() + "/");
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
         gui = new GUI(config);
     }
 
-    public Storage(OfflinePlayer offlinePlayer, int index) {
+    public CashStorage(OfflinePlayer offlinePlayer, int index) {
         this.offlinePlayer = offlinePlayer;
-        this.config = new Config("data/storages/default/" + offlinePlayer.getUniqueId() + "/" + index);
+        this.config = new Config("data/storages/cash/" + offlinePlayer.getUniqueId() + "/" + index);
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
         gui = new GUI(config);
         this.index = index;
@@ -49,7 +49,7 @@ public class Storage {
 
         }
 
-        Config newConfig = new Config("data/storages/default/" + offlinePlayer.getUniqueId() + "/" + index);
+        Config newConfig = new Config("data/storages/cash/" + offlinePlayer.getUniqueId() + "/" + index);
         newConfig.setPlugin(SkyExcelNetworkMain.getPlugin());
         GUI newGUI = new GUI(newConfig);
         Inventory inv = Bukkit.createInventory(null, 54, index + " 번 창고");

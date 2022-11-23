@@ -28,8 +28,8 @@ public class SkyExcelNetworkFishMain implements Listener {
         Bukkit.getPluginCommand("낚시대회").setExecutor(new FishGameCmd());
         Bukkit.getPluginCommand("낚시").setExecutor(new FishCmd());
 
-        Bukkit.getPluginCommand("test").setExecutor(new test());
-        Bukkit.getPluginCommand("test").setTabCompleter(new testTab());
+//        Bukkit.getPluginCommand("test").setExecutor(new test());
+//        Bukkit.getPluginCommand("test").setTabCompleter(new testTab());
 
         Listener[] listeners = {new FishEvent()};
         Arrays.stream(listeners).forEach(listener -> {

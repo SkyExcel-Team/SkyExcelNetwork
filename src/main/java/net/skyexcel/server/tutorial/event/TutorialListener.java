@@ -12,11 +12,11 @@ public class TutorialListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Warp warp = new Warp("tutorial");
-
-        if (!player.hasPlayedBefore()) {
-            event.setJoinMessage(player.getDisplayName() + " 님이 처음으로 서버에 입장 하였습니다!");
-            player.teleport(warp.getLocation());
-        }
+//        Warp warp = new Warp("tutorial");
+//
+//        if (!player.hasPlayedBefore()) {
+//            event.setJoinMessage(player.getDisplayName() + " 님이 처음으로 서버에 입장 하였습니다!");
+//            player.teleport(warp.getLocation());
+//        }
     }
 }

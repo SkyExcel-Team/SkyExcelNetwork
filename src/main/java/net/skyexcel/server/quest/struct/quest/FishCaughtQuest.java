@@ -2,14 +2,13 @@ package net.skyexcel.server.quest.struct.quest;
 
 import net.skyexcel.server.quest.struct.Completable;
 import net.skyexcel.server.quest.struct.Quest;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class BreakTreeQuest extends Quest implements Completable {
-    public BreakTreeQuest(Player player) {
-        super("나부 베기", player);
+public class FishCaughtQuest extends Quest implements Completable {
+    public FishCaughtQuest(Player player) {
+        super("물고기 잡기", player);
+        setMax(2);
     }
-
 
     @Override
     public boolean isComplete() {

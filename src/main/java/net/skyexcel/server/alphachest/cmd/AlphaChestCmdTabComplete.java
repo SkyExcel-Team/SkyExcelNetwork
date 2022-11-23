@@ -32,22 +32,20 @@ public class AlphaChestCmdTabComplete implements TabCompleter {
             return args[0].equals("확인") && p.isOp() ? List.of("1", "2", "3", "4") : Collections.emptyList();
         else
             return Collections.emptyList();
-
-//        return args.length == 1 ? (p.isOp() ? List.of("열기", "확인") : List.of("열기")) : (args.length == 2 ? (args[0].equals("열기") ? List.of("일반", "후원") : (args[0].equals("확인") && p.isOp() ? getPlayers() : Collections.emptyList())) : (args.length == 3 ? (args[0].equals("열기") ? List.of("1", "2", "3", "4") : (args[0].equals("확인") && p.isOp() ? List.of("일반", "후원") : Collections.emptyList())) : (args.length == 4 ? (args[0].equals("확인") && p.isOp() ? List.of("1", "2", "3", "4") : Collections.emptyList()) : Collections.emptyList())));
     }
 
     private List<String> getPlayers() {
-        Config config = new Config("data/storages");
+        Config config = new Config("data/storages/");
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.loadDefualtConfig();
 
         List<String> players = new ArrayList<>();
         for (String fileName : config.fileListName()) {
-            Config configFile = new Config("data/storages/" + fileName);
-            configFile.setPlugin(SkyExcelNetworkMain.getPlugin());
-            configFile.loadDefualtConfig();
-
-            players.add(Bukkit.getPlayer(UUID.fromString(configFile.getString("owner.uuid"))).getName());
+            if (fileName != null) {
+                Config configFile = new Config("data/storages/" + fileName);
+                configFile.setPlugin(SkyExcelNetworkMain.getPlugin());
+                players.add(Bukkit.getPlayer(fileName).getName());
+            }
         }
 
         return players;
