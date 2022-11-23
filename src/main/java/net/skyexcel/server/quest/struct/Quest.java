@@ -80,7 +80,7 @@ public class Quest {
         if (config.getConfig().get(path) != null) {
             int value = config.getInteger(path);
 
-            return value < max;
+            return value <= max;
         }
         return false;
     }

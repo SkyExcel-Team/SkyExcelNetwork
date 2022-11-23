@@ -36,12 +36,14 @@ public class AlphaChestCommand implements CommandExecutor {
                         } else if ("아이템".equalsIgnoreCase(args[1])) {
 
                             StorageItem storageItem = new StorageItem();
-                            player.getInventory().addItem(storageItem.addItem());
+                            StorageItem testItem = new StorageItem();
+
+                            player.getInventory().addItem(testItem.getItemStack());
 
                         } else if ("후원아이템".equalsIgnoreCase(args[1])) {
 
                             CashStorageItem storageItem = new CashStorageItem();
-                            player.getInventory().addItem(storageItem.addItem());
+                            player.getInventory().addItem(storageItem.getItemStack());
 
                         } else if ("후원".equalsIgnoreCase(args[1])) {
                             if (args.length > 2) {

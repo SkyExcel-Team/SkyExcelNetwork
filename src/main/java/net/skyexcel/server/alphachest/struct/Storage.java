@@ -46,8 +46,8 @@ public class Storage {
                 return;
             }
             index = this.config.getFileList().length + 1;
-
         }
+
 
         Config newConfig = new Config("data/storages/default/" + offlinePlayer.getUniqueId() + "/" + index);
         newConfig.setPlugin(SkyExcelNetworkMain.getPlugin());

@@ -1,9 +1,6 @@
 package net.skyexcel.server.alphachest.event;
 
-import net.skyexcel.server.alphachest.struct.CashStorage;
-import net.skyexcel.server.alphachest.struct.CashStorageItem;
-import net.skyexcel.server.alphachest.struct.Storage;
-import net.skyexcel.server.alphachest.struct.StorageItem;
+import net.skyexcel.server.alphachest.struct.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,16 +21,16 @@ public class StorageListener implements Listener {
             assert slot != null;
 
             if (!player.getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
-                StorageItem storageItem = new StorageItem();
 
+                StorageItem testItem = new StorageItem();
 
                 CashStorageItem cashStorageItem = new CashStorageItem();
                 ItemStack item = player.getInventory().getItemInMainHand();
 
-                if (item.isSimilar(storageItem.getItem())) {
+                if (item.isSimilar(testItem.getItemStack())) {
                     Storage storage = new Storage(player);
                     storage.setIndex(player, item);
-                } else if (item.isSimilar(cashStorageItem.getItem())) {
+                } else if (item.isSimilar(cashStorageItem.getItemStack())) {
                     CashStorage storage = new CashStorage(player);
                     storage.setIndex(player, item);
                 }

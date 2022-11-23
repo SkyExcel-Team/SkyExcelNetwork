@@ -1,6 +1,7 @@
 package net.skyexcel.server.skyblock.ui.gui;
 
 import net.skyexcel.api.util.Items;
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.menu.SkyExcelNetworkMenuMain;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
 import org.bukkit.Bukkit;
@@ -37,7 +38,7 @@ public class UpgradeGUI {
 
         items.newItem("섬 크기 늘리기", Material.BARRIER, 1, List.of(""), 14, inv);
 
-        ItemStack itemStack = SkyExcelNetworkMenuMain.hdb.getItemHead("36295");
+        ItemStack itemStack = SkyExcelNetworkMain.hdb.getItemHead("36295");
 
         ItemMeta meta = itemStack.getItemMeta();
         meta.setDisplayName("섬 워프 늘리기");

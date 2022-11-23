@@ -1,6 +1,7 @@
 package net.skyexcel.server;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import net.skyexcel.server.alphachest.SkyExcelNetworkAlphaChestMain;
 import net.skyexcel.server.essentials.events.PluginDisableEvent;
@@ -32,17 +33,20 @@ import net.skyexcel.server.tutorial.SkyExcelNetworkTutorialMain;
 import net.skyexcel.server.upgrade.SkyExcelNetworkUpgradeMain;
 import net.skyexcel.server.warp.SkyExcelNetWorkWarpMain;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 
-public class SkyExcelNetworkMain extends JavaPlugin {
+public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
     private static JavaPlugin plugin;
     public static HeadDatabaseAPI hdb;
     public static WorldEditPlugin WorldEdit;
 
+    public static LoadType loadType = LoadType.UNLOAD;
 
     @Override
     public void onEnable() {
@@ -50,6 +54,7 @@ public class SkyExcelNetworkMain extends JavaPlugin {
 
         //Load HeadDatabaseAPI
         hdb = new HeadDatabaseAPI();
+
 
         //Register Listeners
         Listener[] listeners = {new SkyExcelNetworkAlphaChestMain(), new SkyExcelNetworkCashShopMain(), new SkyExcelNetworkChatChannelMain(), new SkyExcelNetworkDiscordMain(), new SkyExcelNetworkEssentialsMain(), new SkyExcelNetworkFishMain(),
@@ -62,6 +67,8 @@ public class SkyExcelNetworkMain extends JavaPlugin {
 
         //Call Event
         Bukkit.getPluginManager().callEvent(new PluginEnableEvent(plugin));
+
+        Bukkit.getPluginManager().registerEvents(this, this);
 
         //WorldEdit
         if (Bukkit.getServer().getPluginManager().getPlugin("WorldEdit") != null)
@@ -83,5 +90,19 @@ public class SkyExcelNetworkMain extends JavaPlugin {
 
     public static JavaPlugin getPlugin() {
         return plugin;
+    }
+
+    @EventHandler
+    public void loadHeadDatabase(DatabaseLoadEvent event) {
+        loadType = LoadType.LOAD;
+    }
+
+    public static boolean isLoaded(Player player) {
+        if (SkyExcelNetworkMain.loadType.equals(LoadType.UNLOAD)) {
+            player.sendMessage("아직 로드 안함 ㅅㄱ");
+            return false;
+        }
+
+        return SkyExcelNetworkMain.loadType.equals(LoadType.LOAD);
     }
 }

@@ -9,12 +9,12 @@ public class Rank {
     private int second = 2;
     private int third = 1;
 
-    private Items[] items = {new Items("금메달"),new Items("은메달"),new Items("동메달")};
+//    private Items[] items = {new Items("금메달"),new Items("은메달"),new Items("동메달")};
     public Rank(){
 
     }
     public void giveReward(Player player, int rank){
 
-        player.getInventory().addItem(items[rank].getItemStack());
+//        player.getInventory().addItem(items[rank].getItemStack());
     }
 }

@@ -1,5 +1,6 @@
 package net.skyexcel.server.job.data.farmer;
 
+import net.skyexcel.server.LoadType;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
 import net.skyexcel.server.job.data.StatMeta;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 import org.bukkit.util.EulerAngle;
 import skyexcel.data.file.Config;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -118,9 +120,10 @@ public class Scarecrow extends StatMeta {
     }
 
     public void run(Player player) {
-        Scarecrow scarecrow = new Scarecrow(player.getLocation(), 1, player);
-        scarecrow.spawn(player);
-
+        if (SkyExcelNetworkMain.isLoaded(player)) {
+            Scarecrow scarecrow = new Scarecrow(player.getLocation(), 1, player);
+            scarecrow.spawn(player);
+        }
     }
 
 

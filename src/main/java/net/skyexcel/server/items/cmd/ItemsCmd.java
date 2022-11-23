@@ -18,9 +18,9 @@ public class ItemsCmd implements CommandExecutor {
                 case "제작" -> {
                     if (args.length > 1) {
                         name = args[1];
-                        items = new Items(name);
+
                         if (player.hasPermission("items.*")) {
-                            items.create(player);
+
                         }
 
                     }
@@ -28,9 +28,9 @@ public class ItemsCmd implements CommandExecutor {
                 case "제거" -> {
                     if (args.length > 1) {
                         name = args[1];
-                        items = new Items(name);
+
                         if (player.hasPermission("items.*")) {
-                            items.delete(player);
+
                         }
                     }
                 }

@@ -13,8 +13,7 @@ public class ItemsListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (player.getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
-            TestItem testItem = new TestItem();
-            System.out.println(testItem.getItemStack());
+
         }
     }
 }

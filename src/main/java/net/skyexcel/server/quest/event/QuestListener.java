@@ -41,10 +41,10 @@ public class QuestListener implements Listener {
 
             FishCaughtQuest quest = new FishCaughtQuest(player);
             if (QuestData.hasQuest(quest)) {
-                if (!quest.isComplete()) {
-                    if (quest.isNotMax()) {
-                        quest.add(1);
-                    }
+
+                if (quest.isNotMax()) {
+                    quest.add(1);
+
                 } else {
                     QuestCompleteEvent questCompleteEvent = new QuestCompleteEvent(player, quest);
                     Bukkit.getPluginManager().callEvent(questCompleteEvent);
@@ -105,7 +105,7 @@ public class QuestListener implements Listener {
     public void onFlying(PlayerFlyingEvent event) {
         Player player = event.getPlayer();
         if (PlayerFlyingEvent.Flying.FLYING.equals(event.getFlying())) {
-            player.sendMessage("");
+
         }
     }
 
@@ -113,10 +113,8 @@ public class QuestListener implements Listener {
     public void completeQuest(QuestCompleteEvent event) {
         Player player = event.getPlayer();
         Quest quest = event.getQuest();
-        if (quest.isNotMax()) {
-            quest.complete();
-            player.sendMessage(quest.getName() + " 퀘스트를 완료하였습니다!");
-        }
+        quest.complete();
+        player.sendMessage(quest.getName() + " 퀘스트를 완료하였습니다!");
     }
 
     @EventHandler

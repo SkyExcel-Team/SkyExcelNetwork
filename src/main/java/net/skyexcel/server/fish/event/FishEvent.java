@@ -124,13 +124,10 @@ public class FishEvent implements Listener, Percent {
             PlayerFishCaughtEvent playerFishCaughtEvent = new PlayerFishCaughtEvent(player, fishType);
             Bukkit.getPluginManager().callEvent(playerFishCaughtEvent);
 
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName("(" + fishType.getFishRank().getName() + ") " + fishType.getTranslate() + " §7(" + size + "cm)");
-            item.setItemMeta(meta);
             stack.setItemStack(item);
 
             ActionBar.sendMessage(player, "[" + fishType.getFishRank().getName() + "] " + fishType.getTranslate() +
-                    " 물고기를 잡았습니다! §7(" + size + "cm)");
+                    " §f물고기를 잡았습니다! §7(" + size + "cm)");
 
 
         }

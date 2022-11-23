@@ -17,14 +17,14 @@ public class SkyExcelNetworkMenuMain implements Listener {
     private static JavaPlugin plugin;
 
     public static Config defaultConfig;
-    public static HeadDatabaseAPI hdb;
+
 
     @EventHandler
     public void onEnable(PluginEnableEvent e) {
         plugin = e.getPlugin();
 
         new MenuCommand();
-        hdb = new HeadDatabaseAPI();
+
 
         defaultConfig = new Config("Menu-defualt");
         defaultConfig.setPlugin(plugin);

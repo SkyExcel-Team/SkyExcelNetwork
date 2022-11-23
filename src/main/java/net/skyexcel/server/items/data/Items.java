@@ -2,8 +2,8 @@ package net.skyexcel.server.items.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import skyexcel.data.file.Config;
@@ -12,7 +12,7 @@ import skyexcel.data.file.GUI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Items {
+public abstract class Items {
 
 
     private ItemStack itemStack = new ItemStack(Material.AIR);
@@ -27,6 +27,8 @@ public class Items {
     private List<String> lore = new ArrayList<>();
 
     private Config config;
+
+    private int CustomModelData;
 
 
     public Items(String name) {
@@ -60,6 +62,17 @@ public class Items {
     public void setMaterial(Material material, int amount) {
         itemStack = new ItemStack(material, amount);
         this.material = material;
+        this.Amount = amount;
+    }
+
+
+    public void setCustomModelData(int customModelData) {
+        if (itemStack != null) {
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.setCustomModelData(customModelData);
+            itemStack.setItemMeta(meta);
+            CustomModelData = customModelData;
+        }
     }
 
     public void setLore(List<String> lore) {
@@ -96,11 +109,36 @@ public class Items {
 
     }
 
+    public void saveItemStack(ItemStack itemStack) {
+
+    }
+
     public ItemStack getItemStack() {
         return itemStack;
     }
 
+
+    public void getHeadItemFromHDB(String id) {
+        this.itemStack = SkyExcelNetworkMain.hdb.getItemHead(id);
+    }
+
     public void setDisplay(String display) {
-        config.setString(name + ".display", display);
+        if (itemStack != null) {
+            this.display = display;
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.setDisplayName(display);
+            itemStack.setItemMeta(meta);
+        }
+    }
+
+    public void setInventory(int slot, Inventory inv) {
+        inv.setItem(slot, getItemStack());
+    }
+    public ItemMeta getItemMeta() {
+        return itemStack.getItemMeta();
+    }
+
+    public int getAmount() {
+        return Amount;
     }
 }

@@ -1,6 +1,7 @@
 package net.skyexcel.server.quest.cmd;
 
 import net.skyexcel.server.quest.data.QuestData;
+import net.skyexcel.server.quest.gui.gui.QuestCheckGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,6 +30,9 @@ public class QuestCmd implements CommandExecutor {
                     QuestData questData = new QuestData(player);
                     questData.resetQuest();
                 }
+            } else {
+                QuestCheckGUI questCheckGUI = new QuestCheckGUI();
+                questCheckGUI.open(player);
             }
         }
 

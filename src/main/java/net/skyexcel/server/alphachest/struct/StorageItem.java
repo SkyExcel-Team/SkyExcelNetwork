@@ -1,45 +1,16 @@
 package net.skyexcel.server.alphachest.struct;
 
+import net.skyexcel.server.items.data.Items;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class StorageItem {
-
-    private String name;
-
-    private Material material;
-
-
+public class StorageItem extends Items {
     public StorageItem() {
-        name = "가상창고권";
-        material = Material.PAPER;
+        super("가상창고 이용권");
+        setMaterial(Material.PAPER, 1);
+        setDisplay("§a가상창고 이용권");
+        setLore(List.of("§7우클릭시 아이템이 사용됩니다."));
     }
 
-
-    public ItemStack addItem() {
-        ItemStack item = new ItemStack(material, 1);
-
-        ItemMeta meta = item.getItemMeta();
-
-        meta.setDisplayName(name);
-        meta.setLore(List.of("§7우클릭시 가상창고를 한개 얻습니다!"));
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    public ItemStack getItem() {
-        ItemStack item = new ItemStack(material);
-
-        ItemMeta meta = item.getItemMeta();
-
-        meta.setDisplayName(name);
-        meta.setLore(List.of("§7우클릭시 가상창고를 한개 얻습니다!"));
-        item.setItemMeta(meta);
-
-        return item;
-    }
 }

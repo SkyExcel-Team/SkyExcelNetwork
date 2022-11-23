@@ -100,7 +100,7 @@ public enum FishType {
 
     private FishRank fishRank;
 
-    private FishType fishType;
+
 
 
     FishType() {
@@ -126,10 +126,8 @@ public enum FishType {
 
         if (fishRank != null) {
             itemStack.addUnsafeEnchantment(Enchantment.CHANNELING, 1);
-
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "§8[" + fishRank.getName() + "§8] " + translate + " §7(" + size + "cm)"));
+            meta.setDisplayName("§8[" + fishRank.getName() + "§8] " + translate + " §7(" + size + "cm)");
             meta.setCustomModelData(modelData);
-
             itemStack.setItemMeta(meta);
         }
 

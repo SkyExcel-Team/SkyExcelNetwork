@@ -128,8 +128,6 @@ public class test {
             } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
                 System.out.println(namespace + "(\"" + translate + "\"," + modelData + "),");
             }
-
-
         }
     }
 }
