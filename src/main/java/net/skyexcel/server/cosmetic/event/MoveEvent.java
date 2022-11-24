@@ -14,7 +14,7 @@ public class MoveEvent implements Listener {
         if (!SkyExcelNetworkCosmeticMain.armorStandManager.containsPlayer(player))
             SkyExcelNetworkCosmeticMain.armorStandManager.addPlayerArmorStand(player);
 
-        if (true) //등 치장 있는지 확인
+        if (true) //TODO - 등 치장 있는지 확인
             SkyExcelNetworkCosmeticMain.armorStandManager.getPlayerArmorStand(player).teleport(player.getLocation());
     }
 }
