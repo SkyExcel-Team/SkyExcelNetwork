@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class GiftBoxListener implements Listener {
@@ -24,10 +23,7 @@ public class GiftBoxListener implements Listener {
         if (GiftBoxData.giftBoxHashMap.containsKey(player.getUniqueId())) {
             GiftBox giftBox = GiftBoxData.giftBoxHashMap.get(player.getUniqueId());
             int slot = event.getSlot();
-            List<Integer> slots =Arrays.stream(giftBox.black_glass).boxed().toList();
-            if(slots.contains(slot)){
-                event.setCancelled(true);
-            }
+
 
         }
     }
@@ -47,10 +43,10 @@ public class GiftBoxListener implements Listener {
         if (GiftBoxData.giftBoxHashMap.containsKey(player.getUniqueId())) {
             GiftBox giftBox = GiftBoxData.giftBoxHashMap.get(player.getUniqueId());
 
-            if(inv.equals(giftBox.getInv())){
-                giftBox.save(inv);
-                GiftBoxData.giftBoxHashMap.remove(player.getUniqueId());
-            }
+//            if(inv.equals(giftBox.getInv())){
+//                giftBox.save(inv);
+//                GiftBoxData.giftBoxHashMap.remove(player.getUniqueId());
+//            }
         }
     }
     @EventHandler

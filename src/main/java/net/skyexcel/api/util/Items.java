@@ -68,4 +68,21 @@ public class Items {
         return stack;
     }
 
+
+
+
+    public static void playerSkull(String name, String display, List<String> lore, int slot, Inventory inv) {
+        OfflinePlayer owner = Bukkit.getOfflinePlayer(name);
+
+
+        ItemStack stack = new ItemStack(Material.PLAYER_HEAD, 1, (byte) 3);
+
+        SkullMeta meta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.PLAYER_HEAD);
+
+        meta.setOwner(owner.getName());
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', display));
+        meta.setLore(lore);
+        stack.setItemMeta(meta);
+        inv.setItem(slot,stack);
+    }
 }
