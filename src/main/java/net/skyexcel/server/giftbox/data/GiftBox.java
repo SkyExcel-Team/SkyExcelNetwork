@@ -9,6 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import skyexcel.data.file.Config;
 import skyexcel.data.file.GUI;
 import skyexcel.data.file.util.Stockable;
@@ -61,6 +62,7 @@ public class GiftBox extends Stockable {
         this.inv = inv;
         player.openInventory(inv);
     }
+
 
 
     public Inventory getInv() {
