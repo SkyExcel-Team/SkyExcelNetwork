@@ -88,8 +88,6 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         Bukkit.getPluginManager().callEvent(new PluginDisableEvent());
-        QuestData questData = new QuestData();
-        questData.removeAllQuests();
     }
 
     public static WorldEditPlugin getWorldEditPlugin() {
