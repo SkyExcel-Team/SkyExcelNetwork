@@ -37,4 +37,9 @@ public class FlyTime {
         Time newTime = new Time(Year, Month, Day, Hour, Minutes, Second);
         System.out.println(newTime.SECOND_IN_MILLIS());
     }
+
+
+    public Time getTime() {
+        return time;
+    }
 }

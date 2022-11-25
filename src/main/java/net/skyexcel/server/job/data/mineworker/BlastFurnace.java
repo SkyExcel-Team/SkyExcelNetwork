@@ -141,7 +141,7 @@ public class BlastFurnace extends StatMeta implements Percent, JobPlayerData, Le
     }
 
     @Override
-    public double getLevel(Player player) {
+    public int getLevel(Player player) {
         return JobPlayerData.super.getLevel(player);
     }
 

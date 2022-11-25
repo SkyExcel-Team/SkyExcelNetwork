@@ -5,9 +5,9 @@ import org.bukkit.Material;
 
 import java.util.List;
 
-public class FlyingQuestButton extends Items {
+public class FlyingQuestButton extends Button {
     public FlyingQuestButton() {
-        super("추천안함");
+        super(14);
         setMaterial(Material.ELYTRA, 1);
         setDisplay("날기");
         setCustomModelData(1);

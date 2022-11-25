@@ -5,11 +5,11 @@ import net.skyexcel.server.items.data.Items;
 
 import java.util.List;
 
-public class NotVoteButton extends Items {
+public class NotVoteButton extends Button {
 
 
     public NotVoteButton() {
-        super("추천안함");
+        super(10);
         getHeadItemFromHDB("9382");
         setDisplay("§c아직 추천안함");
         setCustomModelData(1);

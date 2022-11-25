@@ -7,6 +7,20 @@ import skyexcel.data.file.Config;
 
 public interface JobPlayerData {
 
+
+    default int getStatLevel(Player player, String name) {
+        Config config = new Config("job/" + player.getUniqueId() + "/" + name);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
+        return config.getInteger("level");
+    }
+
+    default void setStatLevel(Player player, String name, int level) {
+        Config config = new Config("job/" + player.getUniqueId() + "/" + name);
+        config.setPlugin(SkyExcelNetworkMain.getPlugin());
+        config.setInteger("level", level);
+    }
+
+
     default void setStatPoint(Player player, String name, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
@@ -87,11 +101,11 @@ public interface JobPlayerData {
         return config.getDouble("level");
     }
 
-    default double getLevel(Player player) {
+    default int getLevel(Player player) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
 
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
-        return config.getDouble("level");
+        return config.getInteger("level");
     }
 }

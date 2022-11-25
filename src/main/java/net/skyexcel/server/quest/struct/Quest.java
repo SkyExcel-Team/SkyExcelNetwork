@@ -1,9 +1,13 @@
 package net.skyexcel.server.quest.struct;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
+import net.skyexcel.server.quest.gui.button.Button;
+import net.skyexcel.server.trade.data.Data;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
+
+import java.util.Date;
 
 public class Quest {
     private String name;
@@ -14,12 +18,16 @@ public class Quest {
 
     private int max;
 
-    public Quest(String name, OfflinePlayer player) {
+    private Button button;
+
+    public Quest(String name, OfflinePlayer player, Button button) {
         this.name = name;
         this.player = player;
         config = new Config("quest/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
+        this.button = button;
     }
+
 
     public void setMax(int max) {
         this.max = max;
@@ -36,6 +44,10 @@ public class Quest {
      */
     public void add(int amount) {
         String path = "quest." + name;
+
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(date.getHours());
+
         if (config.getConfig().get(path) != null) {
             if (config.getConfig().get(path) instanceof Integer) {
                 int value = config.getInteger(path);
@@ -71,6 +83,15 @@ public class Quest {
         return config.getBoolean(path);
     }
 
+
+    public int getNow() {
+        String path = "quest." + name;
+        if (config.getConfig().get(path) != null) {
+            return config.getInteger(path);
+        }
+        return -1;
+    }
+
     /**
      * 플레이어가 퀘스트에 대한 행동을 취할 시, 해당 액션이 퀘스트 조건과 맞는지 확인하는 메소드
      *
@@ -88,5 +109,9 @@ public class Quest {
 
     public OfflinePlayer getPlayer() {
         return player;
+    }
+
+    public Button getButton() {
+        return button;
     }
 }

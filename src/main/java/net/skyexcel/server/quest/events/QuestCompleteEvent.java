@@ -13,6 +13,12 @@ public class QuestCompleteEvent extends Event {
 
     private Quest quest;
 
+
+
+    public QuestCompleteEvent(Player player) {
+        this.player = player;
+    }
+
     public QuestCompleteEvent(Player player, Quest quest) {
         this.player = player;
         this.quest = quest;
@@ -34,5 +40,7 @@ public class QuestCompleteEvent extends Event {
     public static HandlerList getHandlerList() {
         return HANDLERS_LIST;
     }
+
+
 }
 

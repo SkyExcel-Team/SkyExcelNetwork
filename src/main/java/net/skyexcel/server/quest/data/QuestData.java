@@ -4,93 +4,80 @@ import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.quest.struct.quest.*;
 import net.skyexcel.server.quest.struct.Quest;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 public class QuestData {
-    private Player player;
+    private OfflinePlayer player;
 
 
     private static Config config;
 
-    public QuestData(Player player) {
+
+    public QuestData(OfflinePlayer player) {
         this.player = player;
         config = new Config("quest/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
-    }
-
-    public QuestData() {
-        config = new Config("quest/");
-        config.setPlugin(SkyExcelNetworkMain.getPlugin());
-
     }
 
     /**
      * @param quest
      * @return
      */
-    public static boolean hasQuest(Quest quest) {
+    public  boolean hasQuest(Quest quest) {
 
         config = new Config("quest/" + quest.getPlayer().getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
-        if (config.getConfig().get("quest ") != null)
+        if (config.getConfig().get("quest") != null)
             return config.getConfig().getConfigurationSection("quest").getKeys(false).contains(quest.getName());
         return false;
     }
 
 
-    public void removeAllQuests() {
-//        List<String> names = new ArrayList<>();
-//        for (File files : config.getFileList()) {
-//            files.delete();
-//            names.add(files.getName().replace(".yml", ""));
-//        }
-
-//        config.removeKey("quest");
-//        if (!names.isEmpty()) {
-//            for (String name : names) {
-//                Config config = new Config("quest/" + name);
-//                config.setPlugin(SkyExcelNetworkMain.getPlugin());
-//                resetQuest(config, name);
-//            }
-//        }
+    public List<Quest> getQuests() {
+        List<Quest> newArray = new ArrayList<>();
+        if (config != null) {
+            ConfigurationSection section = config.getConfig().getConfigurationSection("quest");
+            for (String name : section.getKeys(false)) {
+                FlyingQuest flyingQuest = new FlyingQuest(player);
+                if (flyingQuest.getName().equalsIgnoreCase(name)) {
+                    newArray.add(flyingQuest);
+                }
+            }
+            return newArray;
+        }
+        return Collections.emptyList();
     }
 
 
-    public void resetQuest(Config config, String name) {
-        List<Quest> quests = (List.of(new BreakDiamondQuest(name),
-                new BreakTreeQuest(name),
-                new BreakWheatQuest(name),
-                new FlyingQuest(name),
-                new FishCaughtQuest(name), new BlockPlaceQuest(name)));
+    /**
+     * @return 모든 퀘스트를 깻을때 참이 반환된다.
+     */
+    public boolean isAllComplete() {
+        List<Boolean> booleans = new ArrayList<>();
+        ConfigurationSection section = config.getConfig().getConfigurationSection("quest");
 
-
-        int[] size = new int[4];
-        for (int i = 0; i < 4; i++) {
-            Random random = new Random();
-            size[i] = random.nextInt(4);
-            for (int j = 0; j < i; j++) {
-                if (size[i] == size[j])
-                    i--;
+        for (String name : section.getKeys(false)) {
+            if (config.getConfig().get(name) instanceof Boolean) {
+                boolean result = config.getBoolean("quest." + name);
+                if (result)
+                    booleans.add(true);
             }
         }
-        for (int index = 0; index < 4; index++) {
-            Quest quest = quests.get(size[index]);
-            config.setInteger("quest." + quest.getName(), 1);
-        }
 
-        config.setInteger("quest." + new VoteQuest(name).getName(), 1);
+        return booleans.size() == 4;
     }
 
+
     public void resetQuest() {
+        config.removeKey("quest");
         List<Quest> quests = (List.of(new BreakDiamondQuest(player),
                 new BreakTreeQuest(player),
                 new BreakWheatQuest(player),
@@ -98,10 +85,10 @@ public class QuestData {
                 new FishCaughtQuest(player), new BlockPlaceQuest(player)));
 
 
-        int[] size = new int[4];
-        for (int i = 0; i < 4; i++) {
+        int[] size = new int[quests.size()];
+        for (int i = 0; i < quests.size(); i++) {
             Random random = new Random();
-            size[i] = random.nextInt(4);
+            size[i] = random.nextInt(quests.size());
             for (int j = 0; j < i; j++) {
                 if (size[i] == size[j])
                     i--;

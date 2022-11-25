@@ -2,6 +2,8 @@ package net.skyexcel.server.quest.cmd;
 
 import net.skyexcel.server.quest.data.QuestData;
 import net.skyexcel.server.quest.gui.gui.QuestCheckGUI;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,9 +28,16 @@ public class QuestCmd implements CommandExecutor {
 
         if (sender instanceof Player player) {
             if (args.length > 0) {
-                if ("지급".equalsIgnoreCase(args[0])) {
-                    QuestData questData = new QuestData(player);
-                    questData.resetQuest();
+                if ("초기화".equalsIgnoreCase(args[0])) {
+                    if (player.isOp()) {
+                        if (args.length > 1) {
+                            OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+                            QuestData questData = new QuestData(target);
+                            questData.resetQuest();
+                        }
+
+                    }
+
                 }
             } else {
                 QuestCheckGUI questCheckGUI = new QuestCheckGUI();

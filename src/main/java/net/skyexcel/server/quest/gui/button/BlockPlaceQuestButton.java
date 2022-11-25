@@ -5,11 +5,19 @@ import org.bukkit.Material;
 
 import java.util.List;
 
-public class BlockPlaceQuestButton extends Items {
+public class BlockPlaceQuestButton extends Button {
+
+
+    private int now;
+
     public BlockPlaceQuestButton() {
-        super("밀 캐기");
-        setMaterial(Material.DIAMOND_PICKAXE, 1);
-        setDisplay("밀 캐기");
-        setLore(List.of("§7밀 64개 캐기"));
+        super(13);
+        setMaterial(Material.GRASS_BLOCK, 1);
+        setDisplay("블록 설치하기");
+        setLore(List.of("§7320블록 설치", now + " / 320"));
+    }
+
+    public void setNow(int now) {
+        this.now = now;
     }
 }

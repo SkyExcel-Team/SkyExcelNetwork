@@ -1,6 +1,7 @@
 package net.skyexcel.server.job.listener;
 
 
+import net.skyexcel.server.items.data.Items;
 import net.skyexcel.server.job.data.Job;
 import net.skyexcel.server.job.data.JobData;
 import net.skyexcel.server.job.data.JobPlayerData;
@@ -106,8 +107,10 @@ public class JobListener implements Listener, JobPlayerData {
                 WaterBucket waterBucket = JobData.waterBucket.get(player.getUniqueId());
 
                 if (waterBucket.getInv().equals(inv)) {
-                    if (waterBucket.getSlots().contains(slot)) {
-                        event.setCancelled(true);
+                    for (ItemStack items : event.getNewItems().values()) {
+                        if (!items.getType().equals(Material.COD)) {
+                            event.setCancelled(true);
+                        }
                     }
                 }
             }
@@ -152,7 +155,7 @@ public class JobListener implements Listener, JobPlayerData {
                             if (event.isShiftClick()) {
                                 WaterBucket waterBucket = new WaterBucket(player);
                                 if (waterBucket.getStatPoint(player, "StatPoint") == -1) {
-                                    waterBucket.onGUI(player);
+                                    waterBucket.onGUI(player, 1);
                                 }
 
                             }
@@ -162,15 +165,25 @@ public class JobListener implements Listener, JobPlayerData {
                 event.setCancelled(true);
             } else if (JobData.waterBucket.containsKey(player.getUniqueId())) {
                 WaterBucket waterBucket = JobData.waterBucket.get(player.getUniqueId());
-
-                if (waterBucket.getInv().equals(inv)) {
-                    if (waterBucket.getSlots().contains(slot)) {
-                        event.setCancelled(true);
-                    } else if (slot == 53) {
-                        waterBucket.levelUp(player);
+                if (event.getCurrentItem() != null) {
+                    if (!event.getCurrentItem().getType().equals(Material.COD)) {
                         event.setCancelled(true);
                     }
                 }
+
+                if (waterBucket.getSlots().contains(slot)) {
+                    event.setCancelled(true);
+                } else if (slot == 53) {
+                    waterBucket.levelUp(player);
+                    event.setCancelled(true);
+                } else if (slot == waterBucket.getNextSlot()) {
+                    waterBucket.nextPage();
+                    event.setCancelled(true);
+                } else if (slot == waterBucket.getPreviousSlot()) {
+                    waterBucket.previousPage();
+                    event.setCancelled(true);
+                }
+
             } else if (JobData.selectGUI.containsKey(player.getUniqueId())) { // 직업 선택
                 JobSelectGUI jobSelectGUI = JobData.selectGUI.get(player.getUniqueId());
 
@@ -201,23 +214,19 @@ public class JobListener implements Listener, JobPlayerData {
                         jobSelectGUI.setSelect(false);
                     }
                 }
-
                 event.setCancelled(true);
             }
         }
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-
-
-    }
-
-    @EventHandler
     public void onClose(InventoryCloseEvent event) {
         if (event.getPlayer() instanceof Player player) {
             if (JobData.waterBucket.containsKey(player.getUniqueId())) {
+
+                WaterBucket waterBucket = JobData.waterBucket.get(player.getUniqueId());
+                waterBucket.saveInventory(waterBucket.getPre());
+
                 JobData.waterBucket.remove(player.getUniqueId());
             } else if (JobData.selectGUI.containsKey(player.getUniqueId())) {
                 JobData.selectGUI.remove(player.getUniqueId());

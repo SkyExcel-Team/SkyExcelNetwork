@@ -66,7 +66,7 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
         Listener[] listeners = {new SkyExcelNetworkAlphaChestMain(), new SkyExcelNetworkCashShopMain(), new SkyExcelNetworkChatChannelMain(), new SkyExcelNetworkDiscordMain(), new SkyExcelNetworkEssentialsMain(), new SkyExcelNetworkFishMain(),
                 new SkyExcelNetworkFlyTicketMain(), new SkyExcelNetworkGiftBoxMain(), new SkyExcelNetworkGlowMain(), new SkyExcelNetworkItemsMain(), new SkyExcelNetworkJobMain(),
                 new SkyExcelNetworkLockManagerMain(), new SkyExcelNetworkMenuMain(), new SkyExcelNetworkMileageMain(), new SkyExcelNetworkPlayerProfileMain(), new SkyExcelNetworkPlayTimeMain(),
-                new SkyExcelNetworkRankMain(), new SkyExcelNetworkRegionAFKMain(), new SkyExcelNetworkSEconomyMain(), new SkyExcelNetworkSkyBlockMain(), new SkyExcelSnowyMain(),
+                new SkyExcelNetworkRankMain(), new SkyExcelNetworkRegionAFKMain(), new SkyExcelNetworkSEconomyMain(), new SkyExcelNetworkSkyBlockMain(),
                 new SkyExcelNetworkTradeMain(), new SkyExcelNetworkTutorialMain(), new SkyExcelNetworkUpgradeMain(), new SkyExcelNetWorkWarpMain(), new SkyExcelNetworkDailyQuestMain()};
 
         Arrays.stream(listeners).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, plugin));
@@ -87,8 +87,6 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         Bukkit.getPluginManager().callEvent(new PluginDisableEvent());
-        QuestData questData = new QuestData();
-        questData.removeAllQuests();
     }
 
     public static WorldEditPlugin getWorldEditPlugin() {

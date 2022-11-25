@@ -1,7 +1,11 @@
 package net.skyexcel.server.quest.gui.gui;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
+import net.skyexcel.server.quest.data.QuestData;
 import net.skyexcel.server.quest.gui.button.*;
+import net.skyexcel.server.quest.struct.Quest;
+import net.skyexcel.server.quest.struct.quest.BlockPlaceQuest;
+import net.skyexcel.server.quest.struct.quest.BreakWheatQuest;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -13,24 +17,20 @@ public class QuestCheckGUI {
     public void open(Player player) {
         if (SkyExcelNetworkMain.isLoaded(player)) {
             Inventory inv = Bukkit.createInventory(null, 27, "퀘스트");
+            QuestData questData = new QuestData(player);
+//            for (Quest quest : questData.getQuests()) {
+            BlockPlaceQuest blockPlaceQuest = new BlockPlaceQuest(player);
+            BreakWheatQuest breakWheatQuest = new BreakWheatQuest(player);
 
-            NotVoteButton notVoteButton = new NotVoteButton();
-            notVoteButton.setInventory(10, inv);
+            if (questData.hasQuest(blockPlaceQuest)) {
+                blockPlaceQuest.getButton().setInventory(blockPlaceQuest.getButton().getSlot(), inv);
+            } else if (questData.hasQuest(breakWheatQuest)) {
+                breakWheatQuest.getButton().setInventory(breakWheatQuest.getButton().getSlot(), inv);
+            }
 
-            FishQuestButton fishQuestButton = new FishQuestButton();
-            fishQuestButton.setInventory(12, inv);
 
-            BlockPlaceQuestButton placeQuestButton = new BlockPlaceQuestButton();
-            placeQuestButton.setInventory(13, inv);
+//                int slot = button.getSlot();
 
-            WheatQuestButton wheatQuestButton = new WheatQuestButton();
-            wheatQuestButton.setInventory(14, inv);
-
-            WoodQuestButton woodQuestButton = new WoodQuestButton();
-            woodQuestButton.setInventory(15, inv);
-
-            FlyingQuestButton flyingQuestButton = new FlyingQuestButton();
-            flyingQuestButton.setInventory(16, inv);
 
             player.openInventory(inv);
         }
@@ -39,10 +39,4 @@ public class QuestCheckGUI {
     public Inventory getInv() {
         return inv;
     }
-
-    public void buttonChange() {
-        VoteButton voteButton = new VoteButton();
-        voteButton.setInventory(10, inv);
-    }
-
 }
