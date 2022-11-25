@@ -17,13 +17,13 @@ public class BreakTreeQuest extends Quest implements Completable {
     public BreakTreeQuest(OfflinePlayer player) {
         super("나부 베기", player, new BreakTreeButton());
         breakTreeButton = new BreakTreeButton();
-        setMax(5);
+        setMax(32);
     }
 
 
     public BreakTreeQuest(String name) {
         super("나부 베기", Bukkit.getOfflinePlayer(name), new BreakTreeButton());
-        setMax(5);
+        setMax(32);
     }
 
 

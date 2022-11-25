@@ -3,14 +3,11 @@ package net.skyexcel.server.quest.data;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.quest.struct.quest.*;
 import net.skyexcel.server.quest.struct.Quest;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 
-import java.io.File;
 import java.util.*;
 
 
@@ -72,7 +69,7 @@ public class QuestData {
             }
         }
 
-        return booleans.size() == 4;
+        return booleans.size() != 5;
     }
 
 

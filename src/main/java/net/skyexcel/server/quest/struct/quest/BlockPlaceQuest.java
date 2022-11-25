@@ -17,14 +17,14 @@ public class BlockPlaceQuest extends Quest {
 
     public BlockPlaceQuest(OfflinePlayer player) {
         super("블록 설치하기", player, new BlockPlaceQuestButton());
-        setMax(5);
+        setMax(320);
         this.player = player;
 
     }
 
     public BlockPlaceQuest(String name) {
         super("블록 설치하기", Bukkit.getOfflinePlayer(name), new BlockPlaceQuestButton());
-        setMax(5);
+        setMax(320);
     }
 
 

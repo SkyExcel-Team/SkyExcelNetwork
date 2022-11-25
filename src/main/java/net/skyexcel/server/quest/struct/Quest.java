@@ -29,6 +29,8 @@ public class Quest {
     }
 
 
+
+
     public void setMax(int max) {
         this.max = max;
     }

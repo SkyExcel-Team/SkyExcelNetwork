@@ -13,6 +13,7 @@ public class BreakWheatQuest extends Quest {
 
     public BreakWheatQuest(OfflinePlayer player) {
         super("밀 캐기", player, new WheatQuestButton());
+        setMax(64);
     }
 
     public BreakWheatQuest(String name) {
