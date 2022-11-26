@@ -5,10 +5,7 @@ import net.skyexcel.server.cosmetic.cmd.CosmeticCommand;
 import net.skyexcel.server.cosmetic.cmd.CosmeticTestCommand;
 import net.skyexcel.server.cosmetic.data.ArmorStand;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
-import net.skyexcel.server.cosmetic.event.DeathEvent;
-import net.skyexcel.server.cosmetic.event.InventoryEvent;
-import net.skyexcel.server.cosmetic.event.PlayerListener;
-import net.skyexcel.server.cosmetic.event.JoinQuitEvent;
+import net.skyexcel.server.cosmetic.event.*;
 import net.skyexcel.server.cosmetic.manager.ArmorStandManager;
 import net.skyexcel.server.cosmetic.scheduler.ArmorStandMoveListenScheduler;
 import net.skyexcel.server.cosmetic.util.GuiUtil;
@@ -35,6 +32,7 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
         Bukkit.getPluginCommand("코스튬").setExecutor(new CosmeticCommand());
         Bukkit.getPluginCommand("코스튬").setTabCompleter(new CosmeticCmdTabComplete());
 
+        Bukkit.getPluginManager().registerEvents(new GuiInventoryListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new InventoryEvent(), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new JoinQuitEvent(), plugin);
@@ -49,10 +47,7 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
 
         armorstandManager = new ArmorStandManager();
         guiUtil = new GuiUtil();
-    }
 
-    @EventHandler
-    public void onDisable(PluginDisableEvent e) {
         Bukkit.getOnlinePlayers().forEach(player -> player.getPassengers().forEach(player::removePassenger));
     }
 }

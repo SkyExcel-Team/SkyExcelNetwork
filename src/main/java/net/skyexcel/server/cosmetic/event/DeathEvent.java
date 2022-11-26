@@ -11,9 +11,6 @@ import java.util.List;
 public class DeathEvent implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        for (ItemStack drop : e.getDrops()) {
-            if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(drop.getType()) && drop.getItemMeta().hasCustomModelData())
-                e.getDrops().remove(drop);
-        }
+        e.getDrops().removeIf(drop -> List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(drop.getType()) && drop.getItemMeta().hasCustomModelData());
     }
 }
