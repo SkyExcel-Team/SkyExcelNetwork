@@ -132,7 +132,7 @@ public class PlayerCosmeticData {
         data = new Config("data/" + this.player.getUniqueId());
         data.setPlugin(SkyExcelNetworkMain.getPlugin());
 
-        if (!data.isFileExist()) {
+        if (data.getConfig().getConfigurationSection("cosmetics") == null) {
             data.setString("cosmetics.wear.back", "none");
             data.setString("cosmetics.wear.hat", "none");
             data.setString("cosmetics.wear.offhand", "none");
