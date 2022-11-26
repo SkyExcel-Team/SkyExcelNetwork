@@ -2,10 +2,13 @@ package net.skyexcel.server.items.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import skyexcel.data.file.Config;
 import skyexcel.data.file.GUI;
 
@@ -30,6 +33,8 @@ public abstract class Items {
 
     private int CustomModelData;
 
+    public Items() {
+    }
 
     public Items(String name) {
         this.name = name;
@@ -92,24 +97,8 @@ public abstract class Items {
         }
     }
 
-    public void setItemStack(ItemStack itemStack) {
-        this.itemStack = itemStack;
-    }
-
-    public void delete(Player player) {
-
-    }
-
     public void setName(String name) {
         this.name = name;
-
-    }
-
-    public void func() {
-
-    }
-
-    public void saveItemStack(ItemStack itemStack) {
 
     }
 
@@ -117,10 +106,20 @@ public abstract class Items {
         return itemStack;
     }
 
-
     public void getHeadItemFromHDB(String id) {
         this.itemStack = SkyExcelNetworkMain.hdb.getItemHead(id);
+
+        ItemMeta meta = itemStack.getItemMeta();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+        NamespacedKey namespacedKey = new NamespacedKey(SkyExcelNetworkMain.getPlugin(), "hdb");
+        pdc.set(namespacedKey, PersistentDataType.STRING, id);
+        itemStack.setItemMeta(meta);
     }
+
+    public void toHDB(ItemStack itemStack) {
+        
+    }
+
 
     public void setDisplay(String display) {
         if (itemStack != null) {
@@ -134,6 +133,7 @@ public abstract class Items {
     public void setInventory(int slot, Inventory inv) {
         inv.setItem(slot, getItemStack());
     }
+
     public ItemMeta getItemMeta() {
         return itemStack.getItemMeta();
     }

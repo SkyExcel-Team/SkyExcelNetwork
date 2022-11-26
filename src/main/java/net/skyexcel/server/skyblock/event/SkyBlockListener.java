@@ -138,7 +138,7 @@ public class SkyBlockListener implements Listener {
                     owner.getPlayer().sendMessage("家 §6" + player.getDisplayName() + "§f님이 섬에 §e입장§f하였습니다!");
             }
 
-            if (data.getMembers() != null) {
+            if (!data.getMembers().isEmpty()) {
                 for (String uuid : data.getMembers()) {
                     Player member = Bukkit.getPlayer(UUID.fromString(uuid));
                     if (!data.getMembers().contains(player.getUniqueId().toString())) {
@@ -148,12 +148,16 @@ public class SkyBlockListener implements Listener {
             }
 //            data.teleportSkyBlock(player, owner);
 
-            if (owner != null) {
-                if (!player.equals(owner)) {
-                    if (owner.isOnline())
-                        owner.getPlayer().sendMessage("家 §6" + player.getDisplayName() + "§f님이 서버 §e입장§f하였습니다!");
-                }
-            }
+
+//            if (event.getJoinCause().equals(SkyBlockJoinEvent.JoinCause.ISLAND)) {
+//                if (owner != null) {
+//                    if (!player.equals(owner)) {
+//                        if (owner.isOnline())
+//                            owner.getPlayer().sendMessage("家 §6" + player.getDisplayName() + "§f님이 서버 §e입장§f하였습니다!");
+//                    }
+//                }
+//            }
+
 
 
         } else if (event.getCancelCause().equals(SkyBlockJoinEvent.CancelCause.LOCK)) {
