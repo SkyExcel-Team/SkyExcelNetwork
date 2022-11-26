@@ -32,17 +32,28 @@ public class ArmorStand {
     }
 
     public void teleport() {
-        if (!armorstand.isValid())
-            spawnArmorStand();
-        else if (!(owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && !owner.getPassengers().contains(armorstand))
-            owner.addPassenger(armorstand);
-
-        if (owner.isSwimming())
-            armorstand.setRotation(owner.getLocation().getYaw(), 180);
-        else if ((owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && owner.getPassengers().contains(armorstand))
+        if (armorstand == null)
             SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
-        else
+
+        if (!armorstand.isValid()) {
+            spawnArmorStand();
+        }
+        else if (!(owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && !owner.getPassengers().contains(armorstand)) {
+            owner.addPassenger(armorstand);
+        }
+
+        reloadHelmet();
+
+        if (owner.isSwimming()) {
+            armorstand.setRotation(owner.getLocation().getYaw(), 180);
+        }
+        else if ((owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && owner.getPassengers().contains(armorstand)) {
+            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+        }
+        else {
             armorstand.setRotation(owner.getLocation().getYaw(), owner.getLocation().getPitch());
+        }
+
     }
 
     public void remove() {
@@ -52,6 +63,26 @@ public class ArmorStand {
     public void reload() {
         remove();
         spawnArmorStand();
+    }
+
+    public void reloadHelmet() {
+        if (armorstand != null) {
+            if (getBackCosmetic() == null) {
+                SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+                return;
+            }
+            if (getBackCosmetic().getType() == Material.AIR) {
+                SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+                return;
+            }
+
+            ItemStack item = new ItemStack(getBackCosmetic().getType(), 1); //TODO
+            ItemMeta meta = item.getItemMeta();
+            meta.setCustomModelData(getBackCosmetic().getCustomModelData()); //TODO
+            item.setItemMeta(meta);
+
+            armorstand.getEquipment().setHelmet(item);
+        }
     }
 
     private void spawnArmorStand() {

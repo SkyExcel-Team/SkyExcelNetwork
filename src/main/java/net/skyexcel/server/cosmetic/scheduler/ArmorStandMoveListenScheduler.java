@@ -14,8 +14,11 @@ public class ArmorStandMoveListenScheduler extends BukkitRunnable {
     @Override
     public void run() {
         SkyExcelNetworkCosmeticMain.armorstandManager.getArmorStands().forEach(armorstand -> {
-            if (armorstand.getArmorStandEntity() == null)
+            if (armorstand.getArmorStandEntity() == null) {
                 armorStandLocationMap.remove(armorstand);
+                return;
+            }
+
             if (!armorStandLocationMap.containsKey(armorstand))
                 armorStandLocationMap.put(armorstand, armorstand.getArmorStandEntity().getLocation());
 
