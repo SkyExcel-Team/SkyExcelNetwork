@@ -4,6 +4,7 @@ import org.bukkit.Material;
 
 public class Cosmetic {
     public enum BACK {
+        NONE(Material.AIR, 0),
         TEST(Material.GOLD_INGOT, 1);
 
         private final Material material;
@@ -27,7 +28,9 @@ public class Cosmetic {
         }
     }
 
+
     public enum HAT {
+        NONE(Material.AIR, 0),
         TEST(Material.IRON_INGOT, 1);
 
         private final Material material;
@@ -52,6 +55,7 @@ public class Cosmetic {
     }
 
     public enum OFFHAND {
+        NONE(Material.AIR, 0),
         TEST(Material.COPPER_INGOT, 1);
 
         private final Material material;

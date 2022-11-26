@@ -133,13 +133,13 @@ public class PlayerCosmeticData {
         data.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         if (data.getConfig().getConfigurationSection("cosmetics") == null) {
-            data.setString("cosmetics.wear.back", "none");
-            data.setString("cosmetics.wear.hat", "none");
-            data.setString("cosmetics.wear.offhand", "none");
+            data.setString("cosmetics.wear.back", "NONE");
+            data.setString("cosmetics.wear.hat", "NONE");
+            data.setString("cosmetics.wear.offhand", "NONE");
 
-            data.setList("cosmetics.own.back", List.of("none"));
-            data.setList("cosmetics.own.hat", List.of("none"));
-            data.setList("cosmetics.own.offhand", List.of("none"));
+            data.setList("cosmetics.own.back", List.of("NONE"));
+            data.setList("cosmetics.own.hat", List.of("NONE"));
+            data.setList("cosmetics.own.offhand", List.of("NONE"));
         }
     }
 }
