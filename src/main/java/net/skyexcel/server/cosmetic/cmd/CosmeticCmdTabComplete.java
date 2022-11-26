@@ -32,7 +32,7 @@ public class CosmeticCmdTabComplete implements TabCompleter {
             else if (List.of("목록", "list", "장착", "wear", "제거", "remove", "주기", "give", "뺏기", "take").contains(args[0].toLowerCase()))
                 return List.of("등", "모자", "왼손");
         } else if (args.length == 3) {
-            if (List.of("목록", "list", "장착", "wear", "제거", "remove", "주기", "give", "뺏기", "take").contains(args[0].toLowerCase())) {
+            if (List.of("목록", "list", "장착", "wear", "제거", "remove").contains(args[0].toLowerCase())) {
                 if (List.of("장착", "wear").contains(args[0].toLowerCase())) {
                     if (List.of("등", "back").contains(args[1].toLowerCase())) {
                         List<String> cosmeticNames = new ArrayList<>();
@@ -70,6 +70,31 @@ public class CosmeticCmdTabComplete implements TabCompleter {
                     }
                 } else if (player.isOp() && List.of("목록", "list", "제거", "remove").contains(args[0].toLowerCase()))
                     return null;
+            } else if (List.of("주기", "give", "뺏기", "take").contains(args[0].toLowerCase())) {
+                if (player.isOp()) {
+                    if (List.of("등", "back").contains(args[1].toLowerCase())) {
+                        List<String> cosmeticNames = new ArrayList<>();
+                        Arrays.asList(Cosmetic.BACK.values()).forEach(cosmetic -> cosmeticNames.add(cosmetic.name()));
+
+                        cosmeticNames.remove("NONE");
+
+                        return cosmeticNames;
+                    } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
+                        List<String> cosmeticNames = new ArrayList<>();
+                        Arrays.asList(Cosmetic.HAT.values()).forEach(cosmetic -> cosmeticNames.add(cosmetic.name()));
+
+                        cosmeticNames.remove("NONE");
+
+                        return cosmeticNames;
+                    } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
+                        List<String> cosmeticNames = new ArrayList<>();
+                        Arrays.asList(Cosmetic.OFFHAND.values()).forEach(cosmetic -> cosmeticNames.add(cosmetic.name()));
+
+                        cosmeticNames.remove("NONE");
+
+                        return cosmeticNames;
+                    }
+                }
             }
         } else if (args.length == 4) {
             if (player.isOp() && List.of("장착", "wear", "주기", "give", "뺏기", "take").contains(args[0].toLowerCase()))

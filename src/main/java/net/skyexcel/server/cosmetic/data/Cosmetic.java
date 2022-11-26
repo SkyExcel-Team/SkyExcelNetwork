@@ -40,19 +40,21 @@ public class Cosmetic {
 
 
     public enum HAT {
-        NONE(Material.AIR, 0),
-        TEST1(Material.IRON_INGOT, 1),
-        TEST2(Material.IRON_INGOT, 2),
-        TEST3(Material.IRON_INGOT, 3),
-        TEST4(Material.IRON_INGOT, 4),
-        TEST5(Material.IRON_INGOT, 5);
+        NONE(Material.AIR, 0, "'"),
+        TEST1(Material.IRON_INGOT, 1, "Test1"),
+        TEST2(Material.IRON_INGOT, 2, "Test2"),
+        TEST3(Material.IRON_INGOT, 3, "Test3"),
+        TEST4(Material.IRON_INGOT, 4, "Test4"),
+        TEST5(Material.IRON_INGOT, 5, "Test5");
 
         private final Material material;
         private final Integer customModelData;
+        private final String name;
 
-        private HAT(Material material, Integer customModelData) {
+        private HAT(Material material, Integer customModelData, String name) {
             this.material = material;
             this.customModelData = customModelData;
+            this.name = name;
         }
 
         public Material getType() {
@@ -65,6 +67,10 @@ public class Cosmetic {
 
         public Integer getCustomModelData() {
             return this.customModelData;
+        }
+
+        public String getName() {
+            return this.name;
         }
     }
 

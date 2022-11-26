@@ -11,6 +11,7 @@ import net.skyexcel.server.cosmetic.event.PlayerListener;
 import net.skyexcel.server.cosmetic.event.JoinQuitEvent;
 import net.skyexcel.server.cosmetic.manager.ArmorStandManager;
 import net.skyexcel.server.cosmetic.scheduler.ArmorStandMoveListenScheduler;
+import net.skyexcel.server.cosmetic.util.GuiUtil;
 import net.skyexcel.server.essentials.events.PluginDisableEvent;
 import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import org.bukkit.Bukkit;
@@ -23,6 +24,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class SkyExcelNetworkCosmeticMain implements Listener {
     private static JavaPlugin plugin;
     public static ArmorStandManager armorstandManager;
+    public static GuiUtil guiUtil;
 
     @EventHandler
     public void onEnable(PluginEnableEvent e) {
@@ -46,5 +48,11 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
         }.runTaskAsynchronously(plugin);
 
         armorstandManager = new ArmorStandManager();
+        guiUtil = new GuiUtil();
+    }
+
+    @EventHandler
+    public void onDisable(PluginDisableEvent e) {
+        Bukkit.getOnlinePlayers().forEach(player -> player.getPassengers().forEach(player::removePassenger));
     }
 }

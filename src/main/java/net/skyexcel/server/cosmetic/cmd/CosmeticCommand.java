@@ -378,6 +378,11 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
+                if (new PlayerCosmeticData(player).getBackCosmetics().contains(cosmetic)) {
+                    player.sendMessage("해당 플레이어는 이미 이 치장을 가지고 있습니다.");
+                    return false;
+                }
+
                 new PlayerCosmeticData(player).addCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 등 치장을 지급했습니다.");
@@ -393,6 +398,11 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
+                if (new PlayerCosmeticData(player).getHatCosmetics().contains(cosmetic)) {
+                    player.sendMessage("해당 플레이어는 이미 이 치장을 가지고 있습니다.");
+                    return false;
+                }
+
                 new PlayerCosmeticData(player).addCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 모자 치장을 지급했습니다.");
@@ -405,6 +415,11 @@ public class CosmeticCommand implements CommandExecutor {
                     cosmetic = Cosmetic.OFFHAND.valueOf(args[2]);
                 } catch (Exception ignored) {
                     player.sendMessage("입력된 치장은 존재하지 않습니다.");
+                    return false;
+                }
+
+                if (new PlayerCosmeticData(player).getOffhandCosmetics().contains(cosmetic)) {
+                    player.sendMessage("해당 플레이어는 이미 이 치장을 가지고 있습니다.");
                     return false;
                 }
 
@@ -447,6 +462,11 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
+                if (!new PlayerCosmeticData(player).getBackCosmetics().contains(cosmetic)) {
+                    player.sendMessage("해당 플레이어는 이미 이 치장을 가지고 있지 않습니다.");
+                    return false;
+                }
+
                 new PlayerCosmeticData(player).removeCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 등 치장을 빼앗았습니다.");
@@ -462,6 +482,11 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
+                if (!new PlayerCosmeticData(player).getHatCosmetics().contains(cosmetic)) {
+                    player.sendMessage("해당 플레이어는 이미 이 치장을 가지고 있지 않습니다.");
+                    return false;
+                }
+
                 new PlayerCosmeticData(player).removeCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 등 치장을 빼앗았습니다.");
@@ -474,6 +499,11 @@ public class CosmeticCommand implements CommandExecutor {
                     cosmetic = Cosmetic.OFFHAND.valueOf(args[2]);
                 } catch (Exception ignored) {
                     player.sendMessage("입력된 치장은 존재하지 않습니다.");
+                    return false;
+                }
+
+                if (!new PlayerCosmeticData(player).getOffhandCosmetics().contains(cosmetic)) {
+                    player.sendMessage("해당 플레이어는 이미 이 치장을 가지고 있지 않습니다.");
                     return false;
                 }
 

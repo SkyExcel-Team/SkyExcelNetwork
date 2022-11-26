@@ -1,7 +1,10 @@
 package net.skyexcel.server.cosmetic.cmd;
 
+import net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain;
 import net.skyexcel.server.cosmetic.data.Cosmetic;
+import net.skyexcel.server.cosmetic.data.CosmeticType;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
+import net.skyexcel.server.cosmetic.util.GuiUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,17 +17,11 @@ public class CosmeticTestCommand implements CommandExecutor {
         if (!(sender instanceof Player player)) return false;
 
         if (args[0].equalsIgnoreCase("BACK")) {
-            new PlayerCosmeticData(player).setWearBackCosmetic(Cosmetic.BACK.valueOf(args[1]));
-
-            new PlayerCosmeticData(player).refreshBack();
+            SkyExcelNetworkCosmeticMain.guiUtil.openGui(player, CosmeticType.BACK);
         } else if (args[0].equalsIgnoreCase("HAT")) {
-            new PlayerCosmeticData(player).setWearHatCosmetic(Cosmetic.HAT.valueOf(args[1]));
-
-            new PlayerCosmeticData(player).refreshHat();
+            SkyExcelNetworkCosmeticMain.guiUtil.openGui(player, CosmeticType.HAT);
         } else if (args[0].equalsIgnoreCase("OFFHAND")) {
-            new PlayerCosmeticData(player).setWearOffhandCosmetic(Cosmetic.OFFHAND.valueOf(args[1]));
-
-            new PlayerCosmeticData(player).refreshOffhand();
+            SkyExcelNetworkCosmeticMain.guiUtil.openGui(player, CosmeticType.OFFHAND);
         }
 
         return true;
