@@ -4,12 +4,12 @@ import org.bukkit.Material;
 
 public class Cosmetic {
     public enum BACK {
-        TEST(Material.GOLD_INGOT, "1");
+        TEST(Material.GOLD_INGOT, 1);
 
-        final Material material;
-        final String customModelData;
+        private final Material material;
+        private final Integer customModelData;
 
-        BACK(Material material, String customModelData) {
+        BACK(Material material, Integer customModelData) {
             this.material = material;
             this.customModelData = customModelData;
         }
@@ -22,18 +22,18 @@ public class Cosmetic {
             return CosmeticType.BACK;
         }
 
-        public String getCustomModelData() {
+        public Integer getCustomModelData() {
             return this.customModelData;
         }
     }
 
     public enum HAT {
-        TEST(Material.IRON_INGOT, "1");
+        TEST(Material.IRON_INGOT, 1);
 
-        final Material material;
-        final String customModelData;
+        private final Material material;
+        private final Integer customModelData;
 
-        HAT(Material material, String customModelData) {
+        HAT(Material material, Integer customModelData) {
             this.material = material;
             this.customModelData = customModelData;
         }
@@ -46,18 +46,18 @@ public class Cosmetic {
             return CosmeticType.HAT;
         }
 
-        public String getCustomModelData() {
+        public Integer getCustomModelData() {
             return this.customModelData;
         }
     }
 
     public enum OFFHAND {
-        TEST(Material.COPPER_INGOT, "1");
+        TEST(Material.COPPER_INGOT, 1);
 
-        final Material material;
-        final String customModelData;
+        private final Material material;
+        private final Integer customModelData;
 
-        OFFHAND(Material material, String customModelData) {
+        OFFHAND(Material material, Integer customModelData) {
             this.material = material;
             this.customModelData = customModelData;
         }
@@ -70,7 +70,7 @@ public class Cosmetic {
             return CosmeticType.OFFHAND;
         }
 
-        public String getCustomModelData() {
+        public Integer getCustomModelData() {
             return this.customModelData;
         }
     }
