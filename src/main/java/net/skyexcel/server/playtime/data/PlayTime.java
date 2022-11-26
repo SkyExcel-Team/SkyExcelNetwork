@@ -2,13 +2,14 @@ package net.skyexcel.server.playtime.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.playtime.SkyExcelNetworkPlayTimeMain;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import skyexcel.data.Time;
 import skyexcel.data.file.Config;
 
 public class PlayTime {
 
-    private Player player;
+    private OfflinePlayer player;
 
     private Time time;
 
@@ -17,7 +18,7 @@ public class PlayTime {
     private Long playtime;
 
 
-    public PlayTime(Player player) {
+    public PlayTime(OfflinePlayer player) {
         this.player = player;
 
         this.config = new Config("data/playtime/" + player.getUniqueId());
@@ -63,7 +64,7 @@ public class PlayTime {
         return config.getLong("playtime");
     }
 
-    public Player getPlayer() {
+    public OfflinePlayer getPlayer() {
         return player;
     }
 }
