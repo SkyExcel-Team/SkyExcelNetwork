@@ -1,6 +1,8 @@
 package net.skyexcel.server.cosmetic.data;
 
+import net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +19,8 @@ public class ArmorStand {
         this.data = new PlayerCosmeticData(owner);
 
         spawnArmorStand();
-        owner.addPassenger(armorstand);
+        if (armorstand != null)
+            owner.addPassenger(armorstand);
     }
 
     public Player getOwner() {
@@ -35,9 +38,9 @@ public class ArmorStand {
             owner.addPassenger(armorstand);
 
         if (owner.isSwimming())
-            armorstand.setRotation(owner.getLocation().getYaw(), 90);
+            armorstand.setRotation(owner.getLocation().getYaw(), 180);
         else if ((owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && owner.getPassengers().contains(armorstand))
-            remove();
+            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
         else
             armorstand.setRotation(owner.getLocation().getYaw(), owner.getLocation().getPitch());
     }
@@ -52,8 +55,16 @@ public class ArmorStand {
     }
 
     private void spawnArmorStand() {
-        if (getBackCosmetic() == null)
+        if (armorstand != null)
+            remove();
+        if (getBackCosmetic() == null) {
+            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
             return;
+        }
+        if (getBackCosmetic().getType() == Material.AIR) {
+            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+            return;
+        }
 
         armorstand = (org.bukkit.entity.ArmorStand) owner.getWorld().spawnEntity(owner.getLocation(), EntityType.ARMOR_STAND);
 
@@ -72,10 +83,12 @@ public class ArmorStand {
     private Cosmetic.BACK getBackCosmetic() {
         Cosmetic.BACK backCosmetic = new PlayerCosmeticData(owner).getWearBackCosmetic();
 
-        if (backCosmetic != null) {
+        if (backCosmetic != null)
             return backCosmetic;
-        } else {
-            remove();
+        else {
+            try {
+                remove();
+            } catch(Exception ignored) {}
             return null;
         }
     }

@@ -57,14 +57,18 @@ public class ArmorStandManager {
     }
 
     public void removePlayerArmorStand(Player player) {
-        armorstandMap.get(player.getUniqueId()).remove();
-        armorstandMap.remove(player.getUniqueId());
-        entityMap.remove(player.getUniqueId());
+        try {
+            armorstandMap.get(player.getUniqueId()).remove();
+            armorstandMap.remove(player.getUniqueId());
+            entityMap.remove(player.getUniqueId());
+        } catch(Exception ignored) {}
     }
 
     public void removePlayerArmorStand(UUID uuid) {
-        armorstandMap.get(uuid).remove();
-        armorstandMap.remove(uuid);
-        entityMap.remove(uuid);
+        try {
+            armorstandMap.get(uuid).remove();
+            armorstandMap.remove(uuid);
+            entityMap.remove(uuid);
+        } catch(Exception ignored) {}
     }
 }
