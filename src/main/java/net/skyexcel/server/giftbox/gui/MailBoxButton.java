@@ -6,10 +6,9 @@ import java.util.List;
 
 public class MailBoxButton extends Items {
     public MailBoxButton() {
-        super("");
-        getHeadItemFromHDB("18061");
-        setCustomModelData(2);
-        setDisplay("이전 페이지");
-        setLore(List.of("§7클릭시 이전 페이지로 넘어감."));
+        getHeadItemFromHDB("2873");
+        setCustomModelData(1);
+        setDisplay("선물함");
+        setLore(List.of("§7아이템을 우클릭시, 보상이 받아집니다."));
     }
 }

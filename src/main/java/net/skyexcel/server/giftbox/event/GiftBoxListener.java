@@ -11,30 +11,40 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class GiftBoxListener implements Listener {
 
 
     @EventHandler
-    public void onClick(InventoryClickEvent event){
+    public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         if (GiftBoxData.giftBoxHashMap.containsKey(player.getUniqueId())) {
             GiftBox giftBox = GiftBoxData.giftBoxHashMap.get(player.getUniqueId());
             int slot = event.getSlot();
 
+            if (giftBox.getNextButton() == slot) {
+                giftBox.nextPage(player);
+            } else if (giftBox.getPreviousButton() == slot) {
 
+            } else if (giftBox.getMailBox() == slot) {
+
+            } else if (giftBox.getCheckBox() == slot) {
+                giftBox.receiveReward(player, event.getClickedInventory());
+            }
+
+            event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onDrag(InventoryDragEvent event){
+    public void onDrag(InventoryDragEvent event) {
         Player player = (Player) event.getWhoClicked();
         if (GiftBoxData.giftBoxHashMap.containsKey(player.getUniqueId())) {
-
+            GiftBoxData.giftBoxHashMap.remove(player.getUniqueId());
         }
     }
+
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
@@ -42,17 +52,15 @@ public class GiftBoxListener implements Listener {
 
         if (GiftBoxData.giftBoxHashMap.containsKey(player.getUniqueId())) {
             GiftBox giftBox = GiftBoxData.giftBoxHashMap.get(player.getUniqueId());
-
-//            if(inv.equals(giftBox.getInv())){
-//                giftBox.save(inv);
-//                GiftBoxData.giftBoxHashMap.remove(player.getUniqueId());
-//            }
+            giftBox.saveInventory(inv);
+            GiftBoxData.giftBoxHashMap.remove(player.getUniqueId());
         }
     }
+
     @EventHandler
-    public void onQuit(PlayerQuitEvent event){
+    public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if(GiftBoxData.giftBoxHashMap.containsKey(player.getUniqueId()))
+        if (GiftBoxData.giftBoxHashMap.containsKey(player.getUniqueId()))
             GiftBoxData.giftBoxHashMap.remove(player.getUniqueId());
     }
 }

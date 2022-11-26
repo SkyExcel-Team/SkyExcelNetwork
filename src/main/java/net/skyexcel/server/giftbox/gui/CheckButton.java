@@ -6,9 +6,8 @@ import java.util.List;
 
 public class CheckButton extends Items {
     public CheckButton() {
-        super("");
         getHeadItemFromHDB("56787");
-        setCustomModelData(2);
+        setCustomModelData(1);
         setDisplay("모든 아이템 받기");
         setLore(List.of("§7클릭시 모든 아이템 받아짐"));
     }
