@@ -5,7 +5,11 @@ import org.bukkit.Material;
 public class Cosmetic {
     public enum BACK {
         NONE(Material.AIR, 0),
-        TEST(Material.GOLD_INGOT, 1);
+        TEST1(Material.GOLD_INGOT, 1),
+        TEST2(Material.GOLD_INGOT, 2),
+        TEST3(Material.GOLD_INGOT, 3),
+        TEST4(Material.GOLD_INGOT, 4),
+        TEST5(Material.GOLD_INGOT, 5);
 
         private final Material material;
         private final Integer customModelData;
@@ -31,7 +35,11 @@ public class Cosmetic {
 
     public enum HAT {
         NONE(Material.AIR, 0),
-        TEST(Material.IRON_INGOT, 1);
+        TEST1(Material.IRON_INGOT, 1),
+        TEST2(Material.IRON_INGOT, 2),
+        TEST3(Material.IRON_INGOT, 3),
+        TEST4(Material.IRON_INGOT, 4),
+        TEST5(Material.IRON_INGOT, 5);
 
         private final Material material;
         private final Integer customModelData;
@@ -56,7 +64,11 @@ public class Cosmetic {
 
     public enum OFFHAND {
         NONE(Material.AIR, 0),
-        TEST(Material.COPPER_INGOT, 1);
+        TEST1(Material.COPPER_INGOT, 1),
+        TEST2(Material.COPPER_INGOT, 2),
+        TEST3(Material.COPPER_INGOT, 3),
+        TEST4(Material.COPPER_INGOT, 4),
+        TEST5(Material.COPPER_INGOT, 5);
 
         private final Material material;
         private final Integer customModelData;
