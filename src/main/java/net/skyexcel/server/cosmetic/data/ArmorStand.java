@@ -32,12 +32,15 @@ public class ArmorStand {
     }
 
     public void teleport() {
-        if (armorstand == null)
+        if (armorstand == null) {
             SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+            return;
+        }
 
         if (!armorstand.isValid()) {
             spawnArmorStand();
         }
+
         else if (!(owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && !owner.getPassengers().contains(armorstand)) {
             owner.addPassenger(armorstand);
         }
@@ -46,11 +49,9 @@ public class ArmorStand {
 
         if (owner.isSwimming()) {
             armorstand.setRotation(owner.getLocation().getYaw(), 180);
-        }
-        else if ((owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && owner.getPassengers().contains(armorstand)) {
+        } else if ((owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && owner.getPassengers().contains(armorstand)) {
             SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
-        }
-        else {
+        } else {
             armorstand.setRotation(owner.getLocation().getYaw(), owner.getLocation().getPitch());
         }
 
@@ -58,11 +59,6 @@ public class ArmorStand {
 
     public void remove() {
         armorstand.remove();
-    }
-
-    public void reload() {
-        remove();
-        spawnArmorStand();
     }
 
     public void reloadHelmet() {

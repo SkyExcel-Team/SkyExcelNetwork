@@ -1,6 +1,7 @@
 package net.skyexcel.server.cosmetic.event;
 
 import net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain;
+import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +16,12 @@ public class JoinQuitEvent implements Listener {
         Player player = e.getPlayer();
 
         armorstandManager.addPlayerArmorStand(player);
+
+        PlayerCosmeticData playerData = new PlayerCosmeticData(player);
+
+        playerData.refreshBack();
+        playerData.refreshHat();
+        playerData.refreshOffhand();
     }
 
     @EventHandler

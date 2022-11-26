@@ -112,4 +112,6 @@ commands:
     aliases: [ s, ㄴ, 확성기 ]
 
   #Cosmetic
+  코스튬:
+    aliases: [ cosmetic, 치장 ]
   cosmt:

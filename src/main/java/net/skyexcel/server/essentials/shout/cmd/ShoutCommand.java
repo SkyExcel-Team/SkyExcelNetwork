@@ -3,6 +3,7 @@ package net.skyexcel.server.essentials.shout.cmd;
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
 import net.skyexcel.server.seconomy.data.SEConomy;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,7 +41,10 @@ public class ShoutCommand implements CommandExecutor {
         }
 
         String message = "§l>§r §c[§6확성기§c] §f" + p.getDisplayName() + " : " + String.join(" ", args);
-        Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(message));
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.sendMessage(message);
+            player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+        });
 
         SkyExcelNetworkEssentialsMain.chatCoolDown.coolDown(p, SkyExcelNetworkEssentialsMain.config.getConfig().getLong("shout.coolTick"));
 

@@ -14,10 +14,6 @@ public class ArmorStandManager {
         return armorstandMap.containsKey(player.getUniqueId());
     }
 
-    public boolean containsPlayer(UUID uuid) {
-        return armorstandMap.containsKey(uuid);
-    }
-
     public boolean containsArmorStandEntity(org.bukkit.entity.ArmorStand armorstand) {
         return entityMap.containsValue(armorstand);
     }
@@ -34,16 +30,8 @@ public class ArmorStandManager {
         return armorstandMap.get(player.getUniqueId());
     }
 
-    public ArmorStand getPlayerArmorStand(UUID uuid) {
-        return armorstandMap.get(uuid);
-    }
-
     public org.bukkit.entity.ArmorStand getPlayerArmorStandEntity(Player player) {
         return entityMap.get(player.getUniqueId());
-    }
-
-    public org.bukkit.entity.ArmorStand getPlayerArmorStandEntity(UUID uuid) {
-        return entityMap.get(uuid);
     }
 
     public void addPlayerArmorStand(Player player) {
@@ -51,24 +39,11 @@ public class ArmorStandManager {
         entityMap.put(player.getUniqueId(), armorstandMap.get(player.getUniqueId()).getArmorStandEntity());
     }
 
-    public void addPlayerArmorStand(UUID uuid) {
-        armorstandMap.put(uuid, new ArmorStand(Bukkit.getPlayer(uuid)));
-        entityMap.put(uuid, armorstandMap.get(uuid).getArmorStandEntity());
-    }
-
     public void removePlayerArmorStand(Player player) {
         try {
             armorstandMap.get(player.getUniqueId()).remove();
             armorstandMap.remove(player.getUniqueId());
             entityMap.remove(player.getUniqueId());
-        } catch(Exception ignored) {}
-    }
-
-    public void removePlayerArmorStand(UUID uuid) {
-        try {
-            armorstandMap.get(uuid).remove();
-            armorstandMap.remove(uuid);
-            entityMap.remove(uuid);
         } catch(Exception ignored) {}
     }
 }

@@ -4,19 +4,21 @@ import org.bukkit.Material;
 
 public class Cosmetic {
     public enum BACK {
-        NONE(Material.AIR, 0),
-        TEST1(Material.GOLD_INGOT, 1),
-        TEST2(Material.GOLD_INGOT, 2),
-        TEST3(Material.GOLD_INGOT, 3),
-        TEST4(Material.GOLD_INGOT, 4),
-        TEST5(Material.GOLD_INGOT, 5);
+        NONE(Material.AIR, 0, ""),
+        TEST1(Material.GOLD_INGOT, 1, "Test1"),
+        TEST2(Material.GOLD_INGOT, 2, "Test2"),
+        TEST3(Material.GOLD_INGOT, 3, "Test3"),
+        TEST4(Material.GOLD_INGOT, 4, "Test4"),
+        TEST5(Material.GOLD_INGOT, 5, "Test5");
 
         private final Material material;
         private final Integer customModelData;
+        private final String name;
 
-        BACK(Material material, Integer customModelData) {
+        private BACK(Material material, Integer customModelData, String name) {
             this.material = material;
             this.customModelData = customModelData;
+            this.name = name;
         }
 
         public Material getType() {
@@ -29,6 +31,10 @@ public class Cosmetic {
 
         public Integer getCustomModelData() {
             return this.customModelData;
+        }
+
+        public String getName() {
+            return this.name;
         }
     }
 
@@ -44,7 +50,7 @@ public class Cosmetic {
         private final Material material;
         private final Integer customModelData;
 
-        HAT(Material material, Integer customModelData) {
+        private HAT(Material material, Integer customModelData) {
             this.material = material;
             this.customModelData = customModelData;
         }
@@ -63,19 +69,17 @@ public class Cosmetic {
     }
 
     public enum OFFHAND {
-        NONE(Material.AIR, 0),
-        TEST1(Material.COPPER_INGOT, 1),
-        TEST2(Material.COPPER_INGOT, 2),
-        TEST3(Material.COPPER_INGOT, 3),
-        TEST4(Material.COPPER_INGOT, 4),
-        TEST5(Material.COPPER_INGOT, 5);
+        NONE(Material.AIR, 0, ""),
+        TEST1(Material.COPPER_INGOT, 1, "Test1");
 
         private final Material material;
         private final Integer customModelData;
+        private final String name;
 
-        OFFHAND(Material material, Integer customModelData) {
+        private OFFHAND(Material material, Integer customModelData, String name) {
             this.material = material;
             this.customModelData = customModelData;
+            this.name = name;
         }
 
         public Material getType() {
@@ -88,6 +92,10 @@ public class Cosmetic {
 
         public Integer getCustomModelData() {
             return this.customModelData;
+        }
+
+        public String getName() {
+            return this.name;
         }
     }
 }

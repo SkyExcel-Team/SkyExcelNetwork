@@ -14,11 +14,17 @@ public class CosmeticTestCommand implements CommandExecutor {
         if (!(sender instanceof Player player)) return false;
 
         if (args[0].equalsIgnoreCase("BACK")) {
-            new PlayerCosmeticData(player).setWearBack(Cosmetic.BACK.valueOf(args[1]));
+            new PlayerCosmeticData(player).setWearBackCosmetic(Cosmetic.BACK.valueOf(args[1]));
+
+            new PlayerCosmeticData(player).refreshBack();
         } else if (args[0].equalsIgnoreCase("HAT")) {
-            new PlayerCosmeticData(player).setWearHat(Cosmetic.HAT.valueOf(args[1]));
+            new PlayerCosmeticData(player).setWearHatCosmetic(Cosmetic.HAT.valueOf(args[1]));
+
+            new PlayerCosmeticData(player).refreshHat();
         } else if (args[0].equalsIgnoreCase("OFFHAND")) {
-            new PlayerCosmeticData(player).setWearOffhand(Cosmetic.OFFHAND.valueOf(args[1]));
+            new PlayerCosmeticData(player).setWearOffhandCosmetic(Cosmetic.OFFHAND.valueOf(args[1]));
+
+            new PlayerCosmeticData(player).refreshOffhand();
         }
 
         return true;

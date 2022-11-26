@@ -1,5 +1,6 @@
 package net.skyexcel.server.cosmetic.event;
 
+import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,6 +56,10 @@ public class PlayerListener implements Listener {
 
         if (!armorstandManager.containsPlayer(player))
             armorstandManager.addPlayerArmorStand(player);
+
+        PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+        playerCosmeticData.refreshOffhand();
+        playerCosmeticData.refreshHat();
     }
 
     @EventHandler

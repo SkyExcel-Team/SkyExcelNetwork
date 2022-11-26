@@ -17,6 +17,7 @@ public class InventoryEvent implements Listener {
     public void onClick(InventoryClickEvent e) {
         if (e.getWhoClicked().isOp()) return;
 
+        if (e.getCurrentItem() == null) return;
         if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(e.getCurrentItem().getType()) && e.getCurrentItem().getItemMeta().hasCustomModelData()) {
             e.setCancelled(true);
             e.setCursor(null);
@@ -26,6 +27,7 @@ public class InventoryEvent implements Listener {
     @EventHandler
     public void onSwap(PlayerSwapHandItemsEvent e) {
         if (e.getPlayer().isOp()) return;
+        if (e.getMainHandItem() == null && e.getOffHandItem() == null) return;
 
         if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(e.getMainHandItem().getType()) && e.getMainHandItem().getItemMeta().hasCustomModelData()) {
             e.setCancelled(true);

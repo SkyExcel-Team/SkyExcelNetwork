@@ -1,8 +1,11 @@
 package net.skyexcel.server.cosmetic;
 
+import net.skyexcel.server.cosmetic.cmd.CosmeticCmdTabComplete;
+import net.skyexcel.server.cosmetic.cmd.CosmeticCommand;
 import net.skyexcel.server.cosmetic.cmd.CosmeticTestCommand;
 import net.skyexcel.server.cosmetic.data.ArmorStand;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
+import net.skyexcel.server.cosmetic.event.DeathEvent;
 import net.skyexcel.server.cosmetic.event.InventoryEvent;
 import net.skyexcel.server.cosmetic.event.PlayerListener;
 import net.skyexcel.server.cosmetic.event.JoinQuitEvent;
@@ -27,9 +30,13 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
 
         Bukkit.getPluginCommand("cosmt").setExecutor(new CosmeticTestCommand());
 
+        Bukkit.getPluginCommand("코스튬").setExecutor(new CosmeticCommand());
+        Bukkit.getPluginCommand("코스튬").setTabCompleter(new CosmeticCmdTabComplete());
+
         Bukkit.getPluginManager().registerEvents(new InventoryEvent(), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new JoinQuitEvent(), plugin);
+        Bukkit.getPluginManager().registerEvents(new DeathEvent(), plugin);
 
         new BukkitRunnable() {
             @Override
@@ -39,10 +46,5 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
         }.runTaskAsynchronously(plugin);
 
         armorstandManager = new ArmorStandManager();
-    }
-
-    @EventHandler
-    public void onDisable(PluginDisableEvent e) {
-        armorstandManager.getArmorStandEntities().forEach(Entity::remove);
     }
 }
