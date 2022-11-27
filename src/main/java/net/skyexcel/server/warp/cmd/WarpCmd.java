@@ -5,6 +5,7 @@ import net.skyexcel.server.warp.data.Warp;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,13 +36,7 @@ public class WarpCmd implements CommandExecutor {
                     Player target = Bukkit.getPlayer(args[1]);
 
                     Warp warp = new Warp(name);
-                    Location location = warp.getLocation();
-                    if (location != null) {
-                        target.teleport(location);
-                        player.sendMessage("家 " + target.getDisplayName() + " 님을 " + name + "(으)로 이동하였습니다!");
-                    } else {
-                        player.sendMessage("응 꺼쪄~");
-                    }
+                    warp.teleport(target);
 
                 }
             }

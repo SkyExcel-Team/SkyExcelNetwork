@@ -4,6 +4,7 @@ package net.skyexcel.server.warp.data;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -53,8 +54,9 @@ public class Warp {
         if (location != null) {
             player.teleport(location);
             player.sendMessage("家 " + name + "(으)로 이동하였습니다!");
+            player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
         } else {
-            player.sendMessage("§c워프가 존재하지 않습니다.");
+            player.sendMessage("强 §c워프가 존재하지 않습니다.");
         }
     }
 

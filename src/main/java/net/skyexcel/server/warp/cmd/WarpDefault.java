@@ -5,6 +5,7 @@ import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import net.skyexcel.server.warp.data.Warp;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import skyexcel.command.function.Cmd;
 
@@ -40,6 +41,8 @@ public class WarpDefault {
             Location location = warp.getLocation();
             player.teleport(location);
             player.sendMessage("家 " + name + " 워프로 이동합니다!");
+            player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+
         });
         cmd.action("삭제", 0, action -> {
             Player player = (Player) action.getSender();

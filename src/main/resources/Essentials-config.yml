@@ -1,6 +1,6 @@
 # 쓰레기통
 trash_bin:
-  title: "%player%님의 쓰레기통"
+  title: "쓰레기통"
   lines: 3
 
 # 귓속말
@@ -31,15 +31,15 @@ shift_f:
 auto_clean:
   period: 1800
   messages:
-    20MinRemains: "家 20분 후에 모든 아이템 청소됩니다!"
-    10MinRemains: "家 10분 후에 모든 아이템 청소됩니다!"
-    5MinRemains: "家 5분 후에 모든 아이템 청소됩니다!"
-    1MinRemains: "家 60초 후에 모든 아이템 청소됩니다!"
-    30SecRemains: "家 30초 후에 모든 아이템 청소됩니다!"
-    10SecRemains: "家 10초 후에 모든 아이템 청소됩니다!"
-    5SecRemains: "家 5초 후에 모든 아이템 청소됩니다!"
-    4SecRemains: "家 4초 후에 모든 아이템 청소됩니다!"
-    3SecRemains: "家 3초 후에 모든 아이템 청소됩니다!"
-    2SecRemains: "家 2초 후에 모든 아이템 청소됩니다!"
-    1SecRemains: "家 1초 후에 모든 아이템 청소됩니다!"
-    removed: "架 모든 아이템이 청소되었습니다 "
+    20MinRemains: "佳 §620분§f 후에 §c모든 아이템§f이 청소됩니다!"
+    10MinRemains: "佳 §610분§f 후에 §c모든 아이템§f이 청소됩니다!"
+    5MinRemains: "佳 §65분§f 후에 §c모든 아이템§f이 청소됩니다!"
+    1MinRemains: "佳 §660초§f 후에 §c모든 아이템§f이 청소됩니다!"
+    30SecRemains: "佳 §630초§f 후에 §c모든 아이템§f이 청소됩니다!"
+    10SecRemains: "佳 §610초§f 후에 §c모든 아이템§f이 청소됩니다!"
+    5SecRemains: "佳 §65초§f 후에 §c모든 아이템§f이 청소됩니다!"
+    4SecRemains: "佳 §64초§f 후에 §c모든 아이템§f이 청소됩니다!"
+    3SecRemains: "佳 §63초§f 후에 §c모든 아이템§f이 청소됩니다!"
+    2SecRemains: "佳 §62초§f 후에 §c모든 아이템§f이 청소됩니다!"
+    1SecRemains: "佳 §61초§f 후에 §c모든 아이템§f이 청소됩니다!"
+    removed: "架 §c모든 아이템§f이 청소되었습니다 "
