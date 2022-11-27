@@ -20,7 +20,7 @@ public class PlayerProfileCmd implements CommandExecutor {
                 if ("열기".equalsIgnoreCase(args[0])) {
                     if (args.length > 1) {
                         OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
-                        player.sendMessage(target.getName());
+
                         PlayerProfile playerProfile = new PlayerProfile(target);
                         PlayerProfileGUI playerProfileGUI = new PlayerProfileGUI(target);
                         playerProfileGUI.onGUI(player);

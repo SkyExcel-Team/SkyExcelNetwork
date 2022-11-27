@@ -1,9 +1,7 @@
 package net.skyexcel.server.chatchannel.cmd;
 
-import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
 import net.skyexcel.server.chatchannel.data.ChatChannel;
 import net.skyexcel.server.chatchannel.data.ChatData;
-import net.skyexcel.server.chatchannel.event.Chat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ChatCmd implements CommandExecutor, TabExecutor {
 
