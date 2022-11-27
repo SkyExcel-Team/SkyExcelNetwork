@@ -94,7 +94,7 @@ public class GiftBox {
             });
 
             addItem(itemStack, inv, 9, 45);
-            player.sendMessage("성공적으로 아이템을 보냈습니다!");
+            player.sendMessage("架 §6" + this.offlinePlayer.getName() + "§f님에게 성공적으로 §6아이템§f을 §a보냈습니다!");
 
             gui.saveInventory(invPath, inv, title);
         } else {
@@ -103,12 +103,11 @@ public class GiftBox {
             if (inv != null) {
                 //TODO 마지막 페이지의 인벤토리가 꽉 찼을때를 인식해서 추가를 해야함.
                 if (isInventoryFull(inv)) {
-                    player.sendMessage("페이지 추가됨.");
                     addPage(itemStack);
                 } else {
 
                     addItem(itemStack, inv, 9, 45);
-                    player.sendMessage("성공적으로 아이템을 보냈습니다!");
+                    player.sendMessage("架 §6" + this.offlinePlayer.getName() + "§f님에게 성공적으로 §6아이템§f을 §a보냈습니다!");
                 }
             }
             gui.saveInventory(invPath, inv, title);
@@ -150,10 +149,10 @@ public class GiftBox {
                 player.getInventory().addItem(itemStack);
                 itemStack.setAmount(0);
             }
-            player.sendMessage("§e모든 보상을 수령하였습니다.");
+            player.sendMessage("强 §e모든 §6아이템§f을 §a수령§f하였습니다.");
             player.closeInventory();
         } else {
-            player.sendMessage("§c보상이 존재하지 않습니다.");
+            player.sendMessage("强 §c선물함§f에 §6아이템§f이 §c존재§f하지 않습니다.");
             player.closeInventory();
         }
     }
@@ -187,11 +186,11 @@ public class GiftBox {
 
                 player.openInventory(inv);
             } else {
-                player.sendMessage("다음 페이지가 없습니다.");
+                player.sendMessage("强 §6페이지§f가 §c존재§f하지 않습니다.");
             }
 
         } else {
-            player.sendMessage("다음 페이지가 없습니다.");
+            player.sendMessage("强 §6다음 페이지§f가 §c존재§f하지 않습니다.");
         }
     }
 

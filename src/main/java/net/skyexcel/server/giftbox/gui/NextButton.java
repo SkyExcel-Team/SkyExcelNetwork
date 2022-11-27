@@ -6,9 +6,9 @@ import java.util.List;
 
 public class NextButton extends Items {
     public NextButton() {
-        getHeadItemFromHDB("31813");
+        getHeadItemFromHDB("700");
         setCustomModelData(1);
-        setDisplay("다음 페이지");
-        setLore(List.of("§7클릭시 다음 페이지로 넘어감."));
+        setDisplay("§8[ §7다음페이지 §8] §c→");
+        setLore(List.of("§f架 §7클릭시 다음 페이지로 넘어갑니다"));
     }
 }
