@@ -5,7 +5,7 @@ trash_bin:
 
 # 귓속말
 whisper:
-  message: "[%from%] -> [%to%] : %message%"
+  message: "家 [%from%] → [%to%] : %message%"
 
 # 도배 방지
 no_spam:
@@ -24,23 +24,22 @@ farm_protect:
 # Shift + F
 shift_f:
   execute:
-    - '[player] say HI'
-    - '[server] say HI'
+    - '[player] 메뉴 열기 메인메뉴'
     - '[sound] ENTITY_SHULKER_SHOOT'
 
 # 자동청소
 auto_clean:
   period: 1800
   messages:
-    20MinRemains: "20분후에 아이템 삭제됨 ㅅㄱ"
-    10MinRemains: "10분후에 아이템 삭제됨 ㅅㄱ"
-    5MinRemains: "5분후에 아이템 삭제됨 ㅅㄱ"
-    1MinRemains: "1분후에 아이템 삭제됨 ㅅㄱ"
-    30SecRemains: "30초후에 아이템 삭제됨 ㅅㄱ"
-    10SecRemains: "10초후에 아이템 삭제됨 ㅅㄱ"
-    5SecRemains: "5초후에 아이템 삭제됨 ㅅㄱ"
-    4SecRemains: "4초후에 아이템 삭제됨 ㅅㄱ"
-    3SecRemains: "3초후에 아이템 삭제됨 ㅅㄱ"
-    2SecRemains: "2초후에 아이템 삭제됨 ㅅㄱ"
-    1SecRemains: "1초후에 아이템 삭제됨 ㅅㄱ"
-    removed: "응 아이템 %removed%개 증발함 ㅅㄱ"
+    20MinRemains: "家 20분 후에 모든 아이템 청소됩니다!"
+    10MinRemains: "家 10분 후에 모든 아이템 청소됩니다!"
+    5MinRemains: "家 5분 후에 모든 아이템 청소됩니다!"
+    1MinRemains: "家 60초 후에 모든 아이템 청소됩니다!"
+    30SecRemains: "家 30초 후에 모든 아이템 청소됩니다!"
+    10SecRemains: "家 10초 후에 모든 아이템 청소됩니다!"
+    5SecRemains: "家 5초 후에 모든 아이템 청소됩니다!"
+    4SecRemains: "家 4초 후에 모든 아이템 청소됩니다!"
+    3SecRemains: "家 3초 후에 모든 아이템 청소됩니다!"
+    2SecRemains: "家 2초 후에 모든 아이템 청소됩니다!"
+    1SecRemains: "家 1초 후에 모든 아이템 청소됩니다!"
+    removed: "架 모든 아이템이 청소되었습니다 "
