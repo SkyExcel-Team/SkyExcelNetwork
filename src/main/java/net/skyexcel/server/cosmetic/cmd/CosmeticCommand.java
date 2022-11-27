@@ -1,6 +1,7 @@
 package net.skyexcel.server.cosmetic.cmd;
 
 import net.skyexcel.server.cosmetic.data.Cosmetic;
+import net.skyexcel.server.cosmetic.data.CosmeticType;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -103,44 +104,44 @@ public class CosmeticCommand implements CommandExecutor {
             }
 
             if (List.of("등", "back").contains(args[1].toLowerCase())) {
-                List<Cosmetic.BACK> backs = new PlayerCosmeticData(player).getBackCosmetics();
-                backs.remove(Cosmetic.BACK.NONE);
+                List<Cosmetic.BACK> cosmetics = new PlayerCosmeticData(player).getBackCosmetics();
+                cosmetics.remove(Cosmetic.BACK.NONE);
 
-                if (backs.size() == 0) {
+                if (cosmetics.size() == 0) {
                     player.sendMessage("등 치장 하나 없노;");
                     return true;
                 }
 
                 List<String> backNames = new ArrayList<>();
-                backs.forEach(back -> backNames.add(back.name()));
+                cosmetics.forEach(back -> backNames.add(back.getName()));
 
                 player.sendMessage("[등 치장 목록]\n" + String.join(", ", backNames));
                 return true;
             } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
-                List<Cosmetic.HAT> hats = new PlayerCosmeticData(player).getHatCosmetics();
-                hats.remove(Cosmetic.HAT.NONE);
+                List<Cosmetic.HAT> cosmetics = new PlayerCosmeticData(player).getHatCosmetics();
+                cosmetics.remove(Cosmetic.HAT.NONE);
 
-                if (hats.size() == 0) {
+                if (cosmetics.size() == 0) {
                     player.sendMessage("모자 하나 없노;");
                     return true;
                 }
 
                 List<String> hatNames = new ArrayList<>();
-                hats.forEach(hat -> hatNames.add(hat.name()));
+                cosmetics.forEach(hat -> hatNames.add(hat.getName()));
 
                 player.sendMessage("[등 치장 목록]\n" + String.join(", ", hatNames));
                 return true;
             } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
-                List<Cosmetic.OFFHAND> offhands = new PlayerCosmeticData(player).getOffhandCosmetics();
-                offhands.remove(Cosmetic.OFFHAND.NONE);
+                List<Cosmetic.OFFHAND> cosmetics = new PlayerCosmeticData(player).getOffhandCosmetics();
+                cosmetics.remove(Cosmetic.OFFHAND.NONE);
 
-                if (offhands.size() == 0) {
+                if (cosmetics.size() == 0) {
                     player.sendMessage("왼손 치장 하나 없노;");
                     return true;
                 }
 
                 List<String> offhandNames = new ArrayList<>();
-                offhands.forEach(offhand -> offhandNames.add(offhand.name()));
+                cosmetics.forEach(offhand -> offhandNames.add(offhand.getName()));
 
                 player.sendMessage("[등 치장 목록]\n" + String.join(", ", offhandNames));
                 return true;
@@ -236,12 +237,13 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (!player.isOp() && !new PlayerCosmeticData(player).getBackCosmetics().contains(cosmetic)) {
-                    if (!player.isOp()) {
-                        player.sendMessage("보유하고 있는 치장 아니네;");
-                        return true;
-                    } else
+                if (!new PlayerCosmeticData(player).getBackCosmetics().contains(cosmetic)) {
+                    if (player.isOp())
                         player.sendMessage("치장을 강제 적용합니다.. (미보유 치장, OP전용)");
+                    else {
+                        player.sendMessage("보유하고 있는 치장 아니네;");
+                        return false;
+                    }
                 }
 
                 new PlayerCosmeticData(player).setWearBackCosmetic(cosmetic);
@@ -257,12 +259,13 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (!player.isOp() && !new PlayerCosmeticData(player).getHatCosmetics().contains(cosmetic)) {
-                    if (!player.isOp()) {
-                        player.sendMessage("보유하고 있는 치장 아니네;");
-                        return true;
-                    } else
+                if (!new PlayerCosmeticData(player).getHatCosmetics().contains(cosmetic)) {
+                    if (player.isOp())
                         player.sendMessage("치장을 강제 적용합니다.. (미보유 치장, OP전용)");
+                    else {
+                        player.sendMessage("보유하고 있는 치장 아니네;");
+                        return false;
+                    }
                 }
 
                 new PlayerCosmeticData(player).setWearHatCosmetic(cosmetic);
@@ -386,7 +389,7 @@ public class CosmeticCommand implements CommandExecutor {
                 new PlayerCosmeticData(player).addCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 등 치장을 지급했습니다.");
-                target.sendMessage(player.getDisplayName() + "님이 등 치장(" + cosmetic.name() + ")을 지급했습니다!");
+                target.sendMessage(player.getDisplayName() + "님이 등 치장(" + cosmetic.getName() + ")을 지급했습니다!");
                 return true;
             } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
                 Cosmetic.HAT cosmetic;
@@ -406,7 +409,7 @@ public class CosmeticCommand implements CommandExecutor {
                 new PlayerCosmeticData(player).addCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 모자 치장을 지급했습니다.");
-                target.sendMessage(player.getDisplayName() + "님이 모자 치장(" + cosmetic.name() + ")을 지급했습니다!");
+                target.sendMessage(player.getDisplayName() + "님이 모자 치장(" + cosmetic.getName() + ")을 지급했습니다!");
                 return true;
             } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
                 Cosmetic.OFFHAND cosmetic;
@@ -426,7 +429,7 @@ public class CosmeticCommand implements CommandExecutor {
                 new PlayerCosmeticData(player).addCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 왼손 치장을 지급했습니다.");
-                target.sendMessage(player.getDisplayName() + "님이 왼손 치장(" + cosmetic.name() + ")을 지급했습니다!");
+                target.sendMessage(player.getDisplayName() + "님이 왼손 치장(" + cosmetic.getName() + ")을 지급했습니다!");
                 return true;
             } else {
                 player.sendMessage("입력된 치장 종류는 존재하지 않습니다.");
@@ -470,7 +473,7 @@ public class CosmeticCommand implements CommandExecutor {
                 new PlayerCosmeticData(player).removeCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 등 치장을 빼앗았습니다.");
-                target.sendMessage(player.getDisplayName() + "님이 등 치장(" + cosmetic.name() + ")을 빼앗았습니다!");
+                target.sendMessage(player.getDisplayName() + "님이 등 치장(" + cosmetic.getName() + ")을 빼앗았습니다!");
                 return true;
             } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
                 Cosmetic.HAT cosmetic;
@@ -490,7 +493,7 @@ public class CosmeticCommand implements CommandExecutor {
                 new PlayerCosmeticData(player).removeCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 등 치장을 빼앗았습니다.");
-                target.sendMessage(player.getDisplayName() + "님이 등 치장(" + cosmetic.name() + ")을 빼앗았습니다!");
+                target.sendMessage(player.getDisplayName() + "님이 등 치장(" + cosmetic.getName() + ")을 빼앗았습니다!");
                 return true;
             } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
                 Cosmetic.OFFHAND cosmetic;
@@ -510,7 +513,7 @@ public class CosmeticCommand implements CommandExecutor {
                 new PlayerCosmeticData(player).removeCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 등 치장을 빼앗았습니다.");
-                target.sendMessage(player.getDisplayName() + "님이 등 치장(" + cosmetic.name() + ")을 빼앗았습니다!");
+                target.sendMessage(player.getDisplayName() + "님이 등 치장(" + cosmetic.getName() + ")을 빼앗았습니다!");
                 return true;
             } else {
                 player.sendMessage("입력된 치장 종류는 존재하지 않습니다.");

@@ -67,18 +67,45 @@ public class PlayerCosmeticData {
             data.setList("cosmetics.own.offhand", List.of("NONE"));
         }
 
-        if (data.getConfig().getList("cosmetics.own.back") != null)
+        if (data.getConfig().getList("cosmetics.own.back") != null) {
+            List<Object> cosmetics = new ArrayList<>(data.getConfig().getList("cosmetics.own.back"));
+
             data.getConfig().getList("cosmetics.own.back").forEach(key -> {
-                BACK.add(Cosmetic.BACK.valueOf((String) key));
+                try {
+                    BACK.add(Cosmetic.BACK.valueOf((String) key));
+                } catch (Exception ignored) {
+                    cosmetics.remove(key);
+                }
             });
-        if (data.getConfig().getList("cosmetics.own.hat") != null)
+
+            data.setList("cosmetics.own.back", cosmetics);
+        }
+        if (data.getConfig().getList("cosmetics.own.hat") != null) {
+            List<Object> cosmetics = new ArrayList<>(data.getConfig().getList("cosmetics.own.hat"));
+
             data.getConfig().getList("cosmetics.own.hat").forEach(key -> {
-                HAT.add(Cosmetic.HAT.valueOf((String) key));
+                try {
+                    HAT.add(Cosmetic.HAT.valueOf((String) key));
+                } catch (Exception ignored) {
+                    cosmetics.remove(key);
+                }
             });
-        if (data.getConfig().getList("cosmetics.own.offhand") != null)
+
+            data.setList("cosmetics.own.hat", cosmetics);
+        }
+        if (data.getConfig().getList("cosmetics.own.offhand") != null) {
+            List<Object> cosmetics = new ArrayList<>(data.getConfig().getList("cosmetics.own.offhand"));
+
             data.getConfig().getList("cosmetics.own.offhand").forEach(key -> {
-                OFFHAND.add(Cosmetic.OFFHAND.valueOf((String) key));
+                try {
+                    OFFHAND.add(Cosmetic.OFFHAND.valueOf((String) key));
+                } catch (Exception ignored) {
+                    cosmetics.remove(key);
+                }
             });
+
+            data.setList("cosmetics.own.offhand", cosmetics);
+        }
     }
 
     public void saveConfig() {

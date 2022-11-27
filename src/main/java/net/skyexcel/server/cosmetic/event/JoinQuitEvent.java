@@ -22,6 +22,8 @@ public class JoinQuitEvent implements Listener {
         playerData.refreshBack();
         playerData.refreshHat();
         playerData.refreshOffhand();
+
+        armorstandManager.getPlayerArmorStand(player).teleport();
     }
 
     @EventHandler
