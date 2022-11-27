@@ -1,6 +1,7 @@
 package net.skyexcel.server.chatchannel;
 
 import net.skyexcel.server.chatchannel.cmd.ChatCmd;
+import net.skyexcel.server.chatchannel.cmd.ChatTab;
 import net.skyexcel.server.chatchannel.event.Chat;
 import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import org.bukkit.Bukkit;
@@ -17,6 +18,7 @@ public class SkyExcelNetworkChatChannelMain implements Listener {
         plugin = e.getPlugin();
 
         Bukkit.getPluginCommand("채팅채널").setExecutor(new ChatCmd());
+        Bukkit.getPluginCommand("채팅채널").setTabCompleter(new ChatTab());
 
         Bukkit.getPluginManager().registerEvents(new Chat(), plugin);
     }

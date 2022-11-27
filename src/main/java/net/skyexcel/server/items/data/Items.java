@@ -1,12 +1,12 @@
 package net.skyexcel.server.items.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import skyexcel.data.file.Config;
@@ -106,6 +106,26 @@ public abstract class Items {
         return itemStack;
     }
 
+
+    public void setPlayerSkull(OfflinePlayer player) {
+        this.itemStack = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+        skullMeta.setOwner(player.getName());
+        itemStack.setItemMeta(skullMeta);
+    }
+
+    public void playerSkull(String name, String display, List<String> lore) {
+        OfflinePlayer owner = Bukkit.getOfflinePlayer(name);
+
+        itemStack = new ItemStack(Material.PLAYER_HEAD, 1, (byte) 3);
+        SkullMeta meta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.PLAYER_HEAD);
+
+        meta.setOwner(owner.getName());
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', display));
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+    }
+
     public void getHeadItemFromHDB(String id) {
         this.itemStack = SkyExcelNetworkMain.hdb.getItemHead(id);
 
@@ -117,7 +137,7 @@ public abstract class Items {
     }
 
     public void toHDB(ItemStack itemStack) {
-        
+
     }
 
 

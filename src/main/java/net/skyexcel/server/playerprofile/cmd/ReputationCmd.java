@@ -43,15 +43,13 @@ public class ReputationCmd implements CommandExecutor {
                         player.sendMessage(target.getName() + "님의 인기도를 내렸습니다");
                     }
                     case "보기" -> {
-                        try {
-                            OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-                            PlayerProfile playerProfile = new PlayerProfile(target);
+                        OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-                            player.sendMessage(target.getName() + "님의 인기도는 " + playerProfile.getDouble() + " 입니다.");
-                        } catch (NumberFormatException e) {
-                            player.sendMessage("정수를 입력해 주세요!");
-                        }
+                        PlayerProfile playerProfile = new PlayerProfile(target);
+
+                        player.sendMessage(target.getName() + "님의 인기도는 " + playerProfile.getDouble() + " 입니다.");
+
 
                     }
                     case "설정" -> {

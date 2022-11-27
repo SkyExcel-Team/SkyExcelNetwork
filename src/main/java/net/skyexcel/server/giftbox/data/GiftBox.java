@@ -39,7 +39,9 @@ public class GiftBox {
     private String title = "선물함";
     private final String invPath = "inv";
 
-    private final int[] BLACK_STAINED_GLASS_PANE = {0, 1, 2, 3, 5, 6, 7, 8,
+    private Material ORANGE_STAINED_GLASS_PANE = Material.ORANGE_STAINED_GLASS_PANE;
+
+    private final int[] ORANGE_STAINED_GLASS_PANE_SLOT = {0, 1, 2, 3, 5, 6, 7, 8,
             45, 46, 47, 51, 52, 53};
 
     private final int nextButton = 50;
@@ -58,9 +60,10 @@ public class GiftBox {
         }
 
         this.config = new Config("giftbox/" + offlinePlayer.getUniqueId() + "/" + page);
-
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
+
         this.gui = new GUI(config);
+
         if (offlinePlayer.isOnline())
             this.player = offlinePlayer.getPlayer();
     }
@@ -68,10 +71,13 @@ public class GiftBox {
 
     public GiftBox(OfflinePlayer offlinePlayer, int page) {
         this.offlinePlayer = offlinePlayer;
+
         this.config = new Config("giftbox/" + offlinePlayer.getUniqueId() + "/" + page);
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
+
         this.page = page;
         this.gui = new GUI(config);
+
         if (offlinePlayer.isOnline())
             this.player = offlinePlayer.getPlayer();
     }
@@ -83,7 +89,7 @@ public class GiftBox {
         if (getInventory().isEmpty()) {
             Inventory inv = Bukkit.createInventory(null, 54, title);
 
-            Arrays.stream(BLACK_STAINED_GLASS_PANE).forEach(slot -> {
+            Arrays.stream(ORANGE_STAINED_GLASS_PANE_SLOT).forEach(slot -> {
                 inv.setItem(slot, new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1));
             });
 
@@ -124,7 +130,7 @@ public class GiftBox {
         } else {
             inv = Bukkit.createInventory(null, 54, title);
 
-            Arrays.stream(BLACK_STAINED_GLASS_PANE).forEach(slot -> {
+            Arrays.stream(ORANGE_STAINED_GLASS_PANE_SLOT).forEach(slot -> {
                 inv.setItem(slot, new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1));
             });
 
@@ -166,10 +172,10 @@ public class GiftBox {
     public void nextPage(Player player) {
         List<Inventory> invArray = getInventory();
         if (invArray.size() > 1) {
-
             int nextPage = 0;
             ++nextPage;
 
+            System.out.println(nextPage);
             Inventory inv = invArray.get(nextPage);
 
             if (inv != null) {
@@ -287,13 +293,14 @@ public class GiftBox {
     public void addPage(ItemStack itemStack) {
 
         ++page;
+
         Config newConfig = new Config("giftbox/" + offlinePlayer.getUniqueId() + "/" + page);
         newConfig.setPlugin(SkyExcelNetworkMain.getPlugin());
         GUI newGUI = new GUI(newConfig);
 
         Inventory newInv = Bukkit.createInventory(null, 54, title);
 
-        Arrays.stream(BLACK_STAINED_GLASS_PANE).forEach(slot -> {
+        Arrays.stream(ORANGE_STAINED_GLASS_PANE_SLOT).forEach(slot -> {
             newInv.setItem(slot, new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1));
         });
         addItem(itemStack, newInv, 9, 45);
