@@ -1,6 +1,9 @@
 package net.skyexcel.server.chatchannel.cmd;
 
 import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
+import net.skyexcel.server.chatchannel.data.ChatChannel;
+import net.skyexcel.server.chatchannel.data.ChatData;
+import net.skyexcel.server.chatchannel.event.Chat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,19 +25,12 @@ public class ChatCmd implements CommandExecutor, TabExecutor {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            ChatData chatData = new ChatData(player);
             if (args.length > 0) {
                 switch (args[0]) {
-                    case "전체":
-
-                        player.sendMessage("전체 채팅 채널에 입장 하셨습니다!");
-                        break;
-
-                    case "지역":
-                        player.sendMessage("지역 채팅 채널에 입장 하셨습니다!");
-                        break;
-                    case "섬":
-                        player.sendMessage("섬 채팅 채널에 입장 하셨습니다!");
-                        break;
+                    case "전체" -> chatData.setChannel(player, ChatChannel.GLOBAL);
+                    case "지역" -> chatData.setChannel(player, ChatChannel.LOCAL);
+                    case "섬" -> chatData.setChannel(player, ChatChannel.SKYBLOCK);
                 }
             }
         }
