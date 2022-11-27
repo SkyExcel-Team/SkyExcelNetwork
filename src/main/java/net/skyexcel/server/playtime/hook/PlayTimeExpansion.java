@@ -1,25 +1,24 @@
-package net.skyexcel.server.cashshop.hook;
+package net.skyexcel.server.playtime.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.skyexcel.api.util.Translate;
-import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
-import net.skyexcel.server.cashshop.data.Cash;
-
+import net.skyexcel.server.mileage.data.Mileage;
+import net.skyexcel.server.mileage.util.Translate;
+import net.skyexcel.server.playtime.data.PlayTime;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class CashExpansion extends PlaceholderExpansion {
+public class PlayTimeExpansion extends PlaceholderExpansion {
     private JavaPlugin plugin; // The instance is created in the constructor and won't be modified, so it can be final
 
-    public CashExpansion(JavaPlugin plugin) {
+    public PlayTimeExpansion(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return "Cash";
+        return "PlayTime";
     }
 
     @Override
@@ -50,13 +49,8 @@ public class CashExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-        Cash cash = new Cash(player);
-        Translate translate = new Translate();
-        if (params.equalsIgnoreCase("Cash")) {
-            return String.valueOf(cash.getLong());
-        } else if (params.equalsIgnoreCase("Cash_fixed")) {
-            return translate.decal(cash.getLong());
-        }
+        PlayTime playTime = new PlayTime(player);
+
         return null; // Placeholder is unknown by the expansion
     }
 }

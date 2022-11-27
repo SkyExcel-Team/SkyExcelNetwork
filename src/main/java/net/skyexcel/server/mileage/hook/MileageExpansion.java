@@ -17,7 +17,7 @@ public class MileageExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "Cash";
+        return "Mileage";
     }
 
     @Override
@@ -38,7 +38,7 @@ public class MileageExpansion extends PlaceholderExpansion {
 
     @Override
     public String getRequiredPlugin() {
-        return "CashShop";
+        return "SkyExcelNetwork";
     }
 
     @Override
@@ -50,9 +50,9 @@ public class MileageExpansion extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, String params) {
         Mileage cash = new Mileage(player);
         Translate translate = new Translate();
-        if (params.equalsIgnoreCase("Cash")) {
+        if (params.equalsIgnoreCase("Mileage")) {
             return String.valueOf(cash.getLong());
-        } else if (params.equalsIgnoreCase("Cash_fixed")) {
+        } else if (params.equalsIgnoreCase("Mileage_fixed")) {
             return translate.decal(cash.getLong());
         }
         return null; // Placeholder is unknown by the expansion

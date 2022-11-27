@@ -41,7 +41,7 @@ public class SkyBlockVaultExpansion extends PlaceholderExpansion {
 
     @Override
     public String getRequiredPlugin() {
-        return "SkyBlock";
+        return "SkyExcelNetwork";
     }
 
     @Override

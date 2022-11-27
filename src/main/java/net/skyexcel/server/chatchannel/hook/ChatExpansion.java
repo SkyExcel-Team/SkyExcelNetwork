@@ -1,25 +1,24 @@
-package net.skyexcel.server.cashshop.hook;
+package net.skyexcel.server.chatchannel.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.skyexcel.api.util.Translate;
-import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
-import net.skyexcel.server.cashshop.data.Cash;
-
+import net.skyexcel.server.chatchannel.data.ChatData;
+import net.skyexcel.server.skyblock.data.island.rank.Ranking;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class CashExpansion extends PlaceholderExpansion {
+public class ChatExpansion extends PlaceholderExpansion {
     private JavaPlugin plugin; // The instance is created in the constructor and won't be modified, so it can be final
 
-    public CashExpansion(JavaPlugin plugin) {
+    public ChatExpansion(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return "Cash";
+        return "Type";
     }
 
     @Override
@@ -45,18 +44,14 @@ public class CashExpansion extends PlaceholderExpansion {
 
     @Override
     public boolean canRegister() {
-        return (plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin(getRequiredPlugin())) != null;
+        return (plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin((getRequiredPlugin()))) != null;
     }
 
     @Override
-    public String onRequest(OfflinePlayer player, String params) {
-        Cash cash = new Cash(player);
-        Translate translate = new Translate();
-        if (params.equalsIgnoreCase("Cash")) {
-            return String.valueOf(cash.getLong());
-        } else if (params.equalsIgnoreCase("Cash_fixed")) {
-            return translate.decal(cash.getLong());
-        }
-        return null; // Placeholder is unknown by the expansion
+    public String onRequest(OfflinePlayer player, @NotNull String params) {
+
+        ChatData chatData = new ChatData(player);
+
+        return chatData.getChatChannel().getName(); // Placeholder is unknown by the expansion
     }
 }

@@ -17,7 +17,7 @@ public class SEconomyExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "Cash";
+        return "SEconomy";
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SEconomyExpansion extends PlaceholderExpansion {
 
     @Override
     public String getRequiredPlugin() {
-        return "CashShop";
+        return "SkyExcelNetwork";
     }
 
     @Override
@@ -50,9 +50,9 @@ public class SEconomyExpansion extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, String params) {
         SEConomy cash = new SEConomy(player);
         Translate translate = new Translate();
-        if (params.equalsIgnoreCase("Cash")) {
+        if (params.equalsIgnoreCase("SEConomy")) {
             return String.valueOf(cash.getLong());
-        } else if (params.equalsIgnoreCase("Cash_fixed")) {
+        } else if (params.equalsIgnoreCase("SEconomy_fixed")) {
             return translate.decal(cash.getLong());
         }
         return null; // Placeholder is unknown by the expansion

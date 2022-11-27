@@ -40,7 +40,7 @@ public class RankNameExpansion extends PlaceholderExpansion {
 
     @Override
     public String getRequiredPlugin() {
-        return "SkyBlock";
+        return "SkyExcelNetwork";
     }
 
     @Override
