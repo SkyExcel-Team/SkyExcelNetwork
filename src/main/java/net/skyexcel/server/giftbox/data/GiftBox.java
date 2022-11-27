@@ -46,9 +46,19 @@ public class GiftBox {
 
     private final int previousButton = 48;
 
+    private CloseType closeType = CloseType.CLOSE;
+
     public GiftBox(OfflinePlayer offlinePlayer) {
         this.offlinePlayer = offlinePlayer;
+
+        Inventory inv = getInventory(getInventory().size() - 1);
+
+        if (inv != null) {
+            page = getInventory().size();
+        }
+
         this.config = new Config("giftbox/" + offlinePlayer.getUniqueId() + "/" + page);
+
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
         this.gui = new GUI(config);
         if (offlinePlayer.isOnline())
@@ -88,7 +98,7 @@ public class GiftBox {
                 //TODO 마지막 페이지의 인벤토리가 꽉 찼을때를 인식해서 추가를 해야함.
                 if (isInventoryFull(inv)) {
                     player.sendMessage("페이지 추가됨.");
-                    addPage();
+                    addPage(itemStack);
                 } else {
 
                     addItem(itemStack, inv, 9, 45);
@@ -156,10 +166,14 @@ public class GiftBox {
     public void nextPage(Player player) {
         List<Inventory> invArray = getInventory();
         if (invArray.size() > 1) {
+
             int nextPage = 0;
             ++nextPage;
+
             Inventory inv = invArray.get(nextPage);
+
             if (inv != null) {
+
                 new MailBoxButton().setInventory(mailBox, inv);
                 new CheckButton().setInventory(checkBox, inv);
                 new NextButton().setInventory(nextButton, inv);
@@ -270,12 +284,10 @@ public class GiftBox {
     }
 
 
-    public void addPage() {
-        Config path = new Config("giftbox/" + offlinePlayer.getUniqueId() + "/");
-        path.setPlugin(SkyExcelNetworkMain.getPlugin());
-        int size = path.fileListName().size();
-        ++size;
-        Config newConfig = new Config("giftbox/" + offlinePlayer.getUniqueId() + "/" + size);
+    public void addPage(ItemStack itemStack) {
+
+        ++page;
+        Config newConfig = new Config("giftbox/" + offlinePlayer.getUniqueId() + "/" + page);
         newConfig.setPlugin(SkyExcelNetworkMain.getPlugin());
         GUI newGUI = new GUI(newConfig);
 
@@ -284,10 +296,18 @@ public class GiftBox {
         Arrays.stream(BLACK_STAINED_GLASS_PANE).forEach(slot -> {
             newInv.setItem(slot, new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1));
         });
-
+        addItem(itemStack, newInv, 9, 45);
         newGUI.saveInventory(invPath, newInv, title);
     }
 
+
+    public void setCloseType(CloseType closeType) {
+        this.closeType = closeType;
+    }
+
+    public CloseType getCloseType() {
+        return closeType;
+    }
 
     public int getMailBox() {
         return mailBox;

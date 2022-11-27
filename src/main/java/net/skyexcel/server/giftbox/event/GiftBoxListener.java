@@ -1,5 +1,6 @@
 package net.skyexcel.server.giftbox.event;
 
+import net.skyexcel.server.giftbox.data.CloseType;
 import net.skyexcel.server.giftbox.data.GiftBox;
 import net.skyexcel.server.giftbox.data.GiftBoxData;
 import org.bukkit.entity.Player;
@@ -24,8 +25,10 @@ public class GiftBoxListener implements Listener {
             int slot = event.getSlot();
 
             if (giftBox.getNextButton() == slot) {
+                giftBox.setCloseType(CloseType.NEXT_PAGE);
                 giftBox.nextPage(player);
             } else if (giftBox.getPreviousButton() == slot) {
+                giftBox.setCloseType(CloseType.PREVIOUS_PAGE);
 
             } else if (giftBox.getMailBox() == slot) {
 
@@ -52,8 +55,10 @@ public class GiftBoxListener implements Listener {
 
         if (GiftBoxData.giftBoxHashMap.containsKey(player.getUniqueId())) {
             GiftBox giftBox = GiftBoxData.giftBoxHashMap.get(player.getUniqueId());
-            giftBox.saveInventory(inv);
-            GiftBoxData.giftBoxHashMap.remove(player.getUniqueId());
+            if (giftBox.getCloseType().equals(CloseType.CLOSE)) {
+                giftBox.saveInventory(inv);
+                GiftBoxData.giftBoxHashMap.remove(player.getUniqueId());
+            }
         }
     }
 

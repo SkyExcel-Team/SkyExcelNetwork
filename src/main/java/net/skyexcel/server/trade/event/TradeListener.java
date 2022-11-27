@@ -47,13 +47,13 @@ public class TradeListener implements Listener {
 
                     PlayerInfo playerInfo = Data.playerInfo.get(player.getUniqueId());
                     TargetInfo targetInfo = Data.targetInfo.get(playerInfo.getTarget().getUniqueId());
-                    System.out.println(targetInfo.getPlayer());
+
                     playerInfo.updateInventory(slot, inv, targetInfo.getInv());
 
                 } else if (Data.targetInfo.containsKey(player.getUniqueId())) {
                     TargetInfo targetInfo = Data.targetInfo.get(player.getUniqueId());
 
-                    System.out.println(targetInfo.getTarget());
+
                     if (slot == 10) {
                         targetInfo.setItem(16, event.getCurrentItem());
                     }
