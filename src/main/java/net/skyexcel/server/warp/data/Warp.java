@@ -49,6 +49,16 @@ public class Warp {
         return new ArrayList<>();
     }
 
+    public void teleport(Player player) {
+        if (location != null) {
+            player.teleport(location);
+            player.sendMessage("家 " + name + "(으)로 이동하였습니다!");
+        } else {
+            player.sendMessage("§c워프가 존재하지 않습니다.");
+        }
+    }
+
+
     public Config getConfig() {
         return config;
     }
