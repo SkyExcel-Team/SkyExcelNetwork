@@ -2,6 +2,7 @@ package net.skyexcel.server.lockmanager.event;
 
 import com.google.common.collect.Lists;
 import net.skyexcel.server.lockmanager.data.SignData;
+import net.skyexcel.server.lockmanager.gui.MemberGUI;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -34,13 +35,12 @@ public class SignListener implements Listener {
         Block block = event.getClickedBlock();
 
 
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (Arrays.asList(materials).contains(block.getType())) {
-                Sign sign = (Sign) event.getClickedBlock().getState();
-
-                player.openSign(sign);
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
+            if (block.getType().equals(Material.CHEST)) {
+                MemberGUI memberGUI = new MemberGUI();
+                memberGUI.open(player);
+                event.setCancelled(true);
             }
-
         }
     }
 

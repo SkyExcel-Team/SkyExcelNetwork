@@ -35,7 +35,6 @@ public class FlyTime {
 
     public void addTimeAsYear(int Year, int Month, int Day, int Hour, int Minutes, int Second) {
         Time newTime = new Time(Year, Month, Day, Hour, Minutes, Second);
-        System.out.println(newTime.SECOND_IN_MILLIS());
     }
 
 

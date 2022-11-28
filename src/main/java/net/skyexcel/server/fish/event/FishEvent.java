@@ -129,10 +129,8 @@ public class FishEvent implements Listener, Percent {
             item.setItemMeta(meta);
             stack.setItemStack(item);
 
-            ActionBar.sendMessage(player, "[" + fishType.getFishRank().getName() + "] " + fishType.getTranslate() +
+            ActionBar.sendMessage(player, "§8[" + fishType.getFishRank().getName() + "§8] " + fishType.getTranslate() +
                     " §f물고기를 잡았습니다! §7(" + size + "cm)");
-
-
         }
     }
 

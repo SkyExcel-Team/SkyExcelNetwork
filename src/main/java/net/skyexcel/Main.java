@@ -11,7 +11,7 @@ public class Main {
 
 
         double oneTotalValue = 44;
-        double oneNowValue = 25;
+        double oneNowValue = 29;
         double onePerc = (double) oneNowValue / (double) oneTotalValue * 100.0;
 
         System.out.println("oneTotalValue : " + onePerc);

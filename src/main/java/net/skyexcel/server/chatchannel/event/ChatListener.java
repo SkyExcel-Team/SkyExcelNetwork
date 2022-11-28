@@ -75,10 +75,9 @@ public class ChatListener implements Listener {
                 SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
                 if (playerData.hasIsland()) {
                     SkyBlock skyBlock = new SkyBlock(playerData.getIsland());
+                    sendMessage(player, event.getMessage(), player);
                     for (String name : skyBlock.getMembers()) {
                         Player member = Bukkit.getPlayer(UUID.fromString(name));
-
-                        sendMessage(player, event.getMessage(), player);
 
                         if (member.isOnline()) {
                             sendMessage(player, event.getMessage(), member);

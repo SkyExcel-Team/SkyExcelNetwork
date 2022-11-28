@@ -28,138 +28,52 @@
 # │                                                                                              │ #
 # +----------------------------------------------------------------------------------------------+ #
 
-rankup_gui_settings:
+rankup_settings:
 
-  # GUI 타이틀
-  title: "랭크업"
+  # Luckperm 랭크 이름
+  default:
 
-  # GUI 사이즈 1 ~ 6
-  size: 6
+    # 다음 랭크
+    next: 'rank_1'
 
-  # 아이템
-  items:
+    # 승급을 하기 위한 조건
+    conditions:
 
-    # 플레이어 정보
-    'playerInfo':
+      # 돈
+      money: 150000
 
-      # 아이템
-      material: PLAYER_HEAD
+      # 초 단위
+      playtime: 3600
 
-      # 아이템 갯수
-      amount: 1
+  rank_1:
+    next: 'rank_2'
+    conditions:
+      money: 350000
+      playtime: 43200
 
-      # 커스텀 모델 데이터
-      custommodeldata: 1
+  rank_2:
+    next: 'rank_3'
+    conditions:
+      money: 700000
+      playtime: 86400
 
-      # 아이템 이름
-      name: "%player%님의 정보"
-
-      # 아이템 슬롯
-      slot: 13
-
-
-      # 로어
-      lore:
-        - ""
-        - "현재 랭크: %luckperms_prefix%
-        - "다음 랭크: %next_rank%"
-        - ""
-        - "보유중인 금액: %money%"
-        - "플레이타임: %playtime%"
-        - ""
-
-    # 럭펌 랭크 이름
-    'rank_1':
-
-      # 아이템
-      material: RED_STAINED_GLASS_PANE
-
-      # 아이템 갯수
-      amount: 1
-
-      # 아이템 이름
-      name: "랭크 1"
-
-      # 아이템 슬롯
-      slot: 28
-
-      # 로어
-      lore:
-        - ""
-        - "필요한 랭크: %need_rank%"
-        - "필요한 금액: 150,000원 (%need_money%)"
-        - "필요한 플탐: %need_playtime%"
-        - ""
-
-    # 럭펌 랭크 이름
-    'rank_2':
-
-      # 아이템
-      material: ORANGE_STAINED_GLASS_PANE
-
-      # 아이템 갯수
-      amount: 1
-
-      # 아이템 이름
-      name: "랭크 2"
-
-      # 아이템 슬롯
-      slot: 29
-
-      # 로어
-      lore:
-        - ""
-        - "필요한 랭크: %need_rank%"
-        - "필요한 금액: 350,000원 (%need_money%)"
-        - "필요한 플탐: %need_playtime%"
-        - ""
+  rank_3:
+    next: 'rank_4'
+    conditions:
+      money: 1400000
+      playtime: 259200
+  rank_4:
+    next: 'rank_5'
+    conditions:
+      money: 1400000
+      playtime: 259200
 
 
-    # 럭펌 랭크 이름
-    'rank_3':
 
-      # 아이템
-      material: YELLOW_STAINED_GLASS_PANE
+rankup_other_settings:
 
-      # 아이템 갯수
-      amount: 1
-
-      # 아이템 이름
-      name: "랭크 3"
-
-      # 아이템 슬롯
-      slot: 30
-
-      # 로어
-      lore:
-        - ""
-        - "필요한 랭크: %need_rank%"
-        - "필요한 금액: 700,000원 (%need_money%)"
-        - "필요한 플탐: %need_playtime%"
-        - ""
-
-      # 럭펌 랭크 이름
-    'rank_4':
-
-      # 아이템
-      material: LIME_STAINED_GLASS_PANE
-
-      # 아이템 갯수
-      amount: 1
-
-      # 아이템 이름
-      name: "랭크 4"
-
-      # 아이템 슬롯
-      slot: 31
-
-      # 로어
-      lore:
-        - ""
-        - "필요한 랭크: %need_rank%"
-        - "필요한 금액: 1,400,000원 (%need_money%)"
-        - "필요한 플탐: %need_playtime%"
-        - ""
+  # 최대 랭크
+  highestRank: 'rank_4'
 
 
 
@@ -175,10 +89,4 @@ rankup_gui_settings:
 
 
 
-
-
-
-
-
-
-
+   

@@ -37,9 +37,8 @@ public class GiftBox {
     private final int checkBox = 49;
 
     private String title = "선물함";
-    private final String invPath = "inv";
 
-    private Material ORANGE_STAINED_GLASS_PANE = Material.ORANGE_STAINED_GLASS_PANE;
+    private final String invPath = "inv";
 
     private final int[] ORANGE_STAINED_GLASS_PANE_SLOT = {0, 1, 2, 3, 5, 6, 7, 8,
             45, 46, 47, 51, 52, 53};
@@ -174,7 +173,7 @@ public class GiftBox {
             int nextPage = 0;
             ++nextPage;
 
-            System.out.println(nextPage);
+
             Inventory inv = invArray.get(nextPage);
 
             if (inv != null) {

@@ -29,8 +29,6 @@ public class Quest {
     }
 
 
-
-
     public void setMax(int max) {
         this.max = max;
     }
@@ -48,7 +46,7 @@ public class Quest {
         String path = "quest." + name;
 
         Date date = new Date(System.currentTimeMillis());
-        System.out.println(date.getHours());
+//        System.out.println(date.getHours());
 
         if (config.getConfig().get(path) != null) {
             if (config.getConfig().get(path) instanceof Integer) {

@@ -28,7 +28,7 @@ public class QuestData {
      * @param quest
      * @return
      */
-    public  boolean hasQuest(Quest quest) {
+    public boolean hasQuest(Quest quest) {
 
         config = new Config("quest/" + quest.getPlayer().getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
@@ -61,15 +61,18 @@ public class QuestData {
         List<Boolean> booleans = new ArrayList<>();
         ConfigurationSection section = config.getConfig().getConfigurationSection("quest");
 
-        for (String name : section.getKeys(false)) {
-            if (config.getConfig().get(name) instanceof Boolean) {
-                boolean result = config.getBoolean("quest." + name);
-                if (result)
-                    booleans.add(true);
+        if (config.getConfig().get("quest") != null) {
+            for (String name : section.getKeys(false)) {
+                if (config.getConfig().get(name) instanceof Boolean) {
+                    boolean result = config.getBoolean("quest." + name);
+                    if (result)
+                        booleans.add(true);
+                }
             }
-        }
 
-        return booleans.size() != 5;
+            return booleans.size() != 5;
+        }
+        return false;
     }
 
 
