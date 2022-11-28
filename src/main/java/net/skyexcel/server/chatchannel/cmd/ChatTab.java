@@ -1,9 +1,11 @@
 package net.skyexcel.server.chatchannel.cmd;
 
 import net.skyexcel.server.chatchannel.data.ChatChannel;
+import net.skyexcel.server.skyblock.data.player.SkyBlockPlayerData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,11 +31,19 @@ public class ChatTab implements TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         List<String> result = new ArrayList<>();
-        if (args.length == 1) {
-            for (ChatChannel chatChannel : ChatChannel.values()) {
-                result.add(chatChannel.getName());
+        if (sender instanceof Player player) {
+            if (args.length == 1) {
+                SkyBlockPlayerData skyBlockPlayerData = new SkyBlockPlayerData(player);
+                if (skyBlockPlayerData.hasIsland()) {
+                    result.add(ChatChannel.SKYBLOCK.getName());
+                } else {
+                    result = List.of(ChatChannel.GLOBAL.getName(), ChatChannel.LOCAL.getName());
+
+                }
             }
         }
+
+
         return result;
     }
 }
