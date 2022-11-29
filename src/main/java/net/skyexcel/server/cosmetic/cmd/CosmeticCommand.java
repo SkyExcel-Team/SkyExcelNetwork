@@ -1,7 +1,6 @@
 package net.skyexcel.server.cosmetic.cmd;
 
 import net.skyexcel.server.cosmetic.data.Cosmetic;
-import net.skyexcel.server.cosmetic.data.CosmeticType;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -22,14 +21,7 @@ public class CosmeticCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            player.sendMessage("§8■ §7══════°• §8[ §6코스튬 §f도움말 §8] §7•°══════ §8■");
-            player.sendMessage("§6> §f家 §6코스튬§f을 꾸밉니다.");
-            player.sendMessage("");
-            player.sendMessage("§6> §f/코스튬 도움말 §8- §f도움말을 확인합니다.");
-            player.sendMessage("§6> §f/코스튬 목록 §8- §f보유중인 코스튬을 확인합니다.");
-            player.sendMessage("§6> §f/코스튬 장착 §8- §6코스튬§f을 장착합니다.");
-            player.sendMessage("§6> §f/코스튬 제거 §8- §6코스튬§f을 해제합니다.");
-            player.sendMessage("§8■ §7══════°• ═════════════════════ §7•°══════ §8■");
+            sendHelp(player);
             return false;
         }
 
@@ -39,7 +31,7 @@ public class CosmeticCommand implements CommandExecutor {
                 return false;
             }
 
-            player.sendMessage("/코스튬 [도움말|목록|장착|제거]");
+            sendHelp(player);
             return true;
         } else if (List.of("목록", "list").contains(args[0])) {
             if (args.length > 2) {
@@ -55,8 +47,9 @@ public class CosmeticCommand implements CommandExecutor {
                         return false;
                     }
 
+                    PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(target);
                     if (List.of("등", "back").contains(args[1].toLowerCase())) {
-                        List<Cosmetic.BACK> backs = new PlayerCosmeticData(target).getBackCosmetics();
+                        List<Cosmetic.BACK> backs = playerCosmeticData.getBackCosmetics();
                         backs.remove(Cosmetic.BACK.NONE);
 
                         if (backs.size() == 0) {
@@ -70,7 +63,7 @@ public class CosmeticCommand implements CommandExecutor {
                         player.sendMessage("[등 코스튬 목록]\n" + String.join(", ", backNames));
                         return true;
                     } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
-                        List<Cosmetic.HAT> hats = new PlayerCosmeticData(target).getHatCosmetics();
+                        List<Cosmetic.HAT> hats = playerCosmeticData.getHatCosmetics();
                         hats.remove(Cosmetic.HAT.NONE);
 
                         if (hats.size() == 0) {
@@ -84,7 +77,7 @@ public class CosmeticCommand implements CommandExecutor {
                         player.sendMessage("[등 코스튬 목록]\n" + String.join(", ", hatNames));
                         return true;
                     } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
-                        List<Cosmetic.OFFHAND> offhands = new PlayerCosmeticData(target).getOffhandCosmetics();
+                        List<Cosmetic.OFFHAND> offhands = playerCosmeticData.getOffhandCosmetics();
                         offhands.remove(Cosmetic.OFFHAND.NONE);
 
                         if (offhands.size() == 0) {
@@ -110,8 +103,9 @@ public class CosmeticCommand implements CommandExecutor {
                 return false;
             }
 
+            PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
             if (List.of("등", "back").contains(args[1].toLowerCase())) {
-                List<Cosmetic.BACK> cosmetics = new PlayerCosmeticData(player).getBackCosmetics();
+                List<Cosmetic.BACK> cosmetics = playerCosmeticData.getBackCosmetics();
                 cosmetics.remove(Cosmetic.BACK.NONE);
 
                 if (cosmetics.size() == 0) {
@@ -125,7 +119,7 @@ public class CosmeticCommand implements CommandExecutor {
                 player.sendMessage("[등 코스튬 목록]\n" + String.join(", ", backNames));
                 return true;
             } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
-                List<Cosmetic.HAT> cosmetics = new PlayerCosmeticData(player).getHatCosmetics();
+                List<Cosmetic.HAT> cosmetics = playerCosmeticData.getHatCosmetics();
                 cosmetics.remove(Cosmetic.HAT.NONE);
 
                 if (cosmetics.size() == 0) {
@@ -139,7 +133,7 @@ public class CosmeticCommand implements CommandExecutor {
                 player.sendMessage("[등 코스튬 목록]\n" + String.join(", ", hatNames));
                 return true;
             } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
-                List<Cosmetic.OFFHAND> cosmetics = new PlayerCosmeticData(player).getOffhandCosmetics();
+                List<Cosmetic.OFFHAND> cosmetics = playerCosmeticData.getOffhandCosmetics();
                 cosmetics.remove(Cosmetic.OFFHAND.NONE);
 
                 if (cosmetics.size() == 0) {
@@ -180,11 +174,12 @@ public class CosmeticCommand implements CommandExecutor {
                             return false;
                         }
 
-                        if (!new PlayerCosmeticData(target).getBackCosmetics().contains(cosmetic)) {
+                        PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(target);
+                        if (!playerCosmeticData.getBackCosmetics().contains(cosmetic)) {
                             player.sendMessage("架 §6" + target.getDisplayName() + "§f님에게 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                         }
 
-                        new PlayerCosmeticData(target).setWearBackCosmetic(cosmetic);
+                        playerCosmeticData.setWearBackCosmetic(cosmetic);
                         player.sendMessage("架 성공적으로 §6" + target.getDisplayName() + "§f님에게 §6등 코스튬§f을 §a적용§f했습니다!");
                         return true;
                     } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
@@ -197,11 +192,12 @@ public class CosmeticCommand implements CommandExecutor {
                             return false;
                         }
 
-                        if (!new PlayerCosmeticData(target).getHatCosmetics().contains(cosmetic)) {
+                        PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(target);
+                        if (!playerCosmeticData.getHatCosmetics().contains(cosmetic)) {
                             player.sendMessage("架 §6" + target.getDisplayName() + "§f님에게 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                         }
 
-                        new PlayerCosmeticData(target).setWearHatCosmetic(cosmetic);
+                        playerCosmeticData.setWearHatCosmetic(cosmetic);
                         player.sendMessage("架 성공적으로 §6" + target.getDisplayName() + "§f님에게 §6모자 코스튬§f을 §a적용§f했습니다!");
                         return true;
                     } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
@@ -214,11 +210,12 @@ public class CosmeticCommand implements CommandExecutor {
                             return false;
                         }
 
-                        if (!new PlayerCosmeticData(target).getOffhandCosmetics().contains(cosmetic)) {
+                        PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(target);
+                        if (!playerCosmeticData.getOffhandCosmetics().contains(cosmetic)) {
                             player.sendMessage("架 §6" + target.getDisplayName() + "§f님에게 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                         }
 
-                        new PlayerCosmeticData(target).setWearOffhandCosmetic(cosmetic);
+                        playerCosmeticData.setWearOffhandCosmetic(cosmetic);
                         player.sendMessage("架 성공적으로 §6" + target.getDisplayName() + "§f님에게 §6왼손 코스튬§f을 §a적용§f했습니다!");
                         return true;
                     } else {
@@ -244,7 +241,8 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (!new PlayerCosmeticData(player).getBackCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (!playerCosmeticData.getBackCosmetics().contains(cosmetic)) {
                     if (player.isOp())
                         player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                     else {
@@ -253,7 +251,7 @@ public class CosmeticCommand implements CommandExecutor {
                     }
                 }
 
-                new PlayerCosmeticData(player).setWearBackCosmetic(cosmetic);
+                playerCosmeticData.setWearBackCosmetic(cosmetic);
                 player.sendMessage("架 성공적으로 §6등 코스튬§f을 §a적용§f했습니다!");
                 return true;
             } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
@@ -266,7 +264,8 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (!new PlayerCosmeticData(player).getHatCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (!playerCosmeticData.getHatCosmetics().contains(cosmetic)) {
                     if (player.isOp())
                         player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                     else {
@@ -275,7 +274,7 @@ public class CosmeticCommand implements CommandExecutor {
                     }
                 }
 
-                new PlayerCosmeticData(player).setWearHatCosmetic(cosmetic);
+                playerCosmeticData.setWearHatCosmetic(cosmetic);
                 player.sendMessage("架 성공적으로 §6모자 코스튬§f을 §a적용§f했습니다!");
                 return true;
             } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
@@ -288,7 +287,8 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (!new PlayerCosmeticData(player).getOffhandCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (!playerCosmeticData.getOffhandCosmetics().contains(cosmetic)) {
                     if (!player.isOp()) {
                         player.sendMessage("强 보유하지 않은 §6코스튬§f입니다.");
                         return true;
@@ -296,7 +296,7 @@ public class CosmeticCommand implements CommandExecutor {
                         player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                 }
 
-                new PlayerCosmeticData(player).setWearOffhandCosmetic(cosmetic);
+                playerCosmeticData.setWearOffhandCosmetic(cosmetic);
                 player.sendMessage("架 성공적으로 §6왼손 코스튬§f을 §a적용§f했습니다!");
                 return true;
             } else {
@@ -317,16 +317,17 @@ public class CosmeticCommand implements CommandExecutor {
                         return false;
                     }
 
+                    PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(target);
                     if (List.of("등", "back").contains(args[1].toLowerCase())) {
-                        new PlayerCosmeticData(target).setWearBackCosmetic(Cosmetic.BACK.NONE);
+                        playerCosmeticData.setWearBackCosmetic(Cosmetic.BACK.NONE);
                         player.sendMessage("架 성공적으로 §6" + target.getDisplayName() + "§f님에게 §6등 코스튬§f을 §c제거§f하였습니다!");
                         return true;
                     } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
-                        new PlayerCosmeticData(target).setWearHatCosmetic(Cosmetic.HAT.NONE);
+                        playerCosmeticData.setWearHatCosmetic(Cosmetic.HAT.NONE);
                         player.sendMessage("架 성공적으로 §6" + target.getDisplayName() + "§f님에게 §6모자 코스튬§f을 §c제거§f하였습니다!");
                         return true;
                     } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
-                        new PlayerCosmeticData(target).setWearOffhandCosmetic(Cosmetic.OFFHAND.NONE);
+                        playerCosmeticData.setWearOffhandCosmetic(Cosmetic.OFFHAND.NONE);
                         player.sendMessage("架 성공적으로 §6" + target.getDisplayName() + "§f님에게 §6왼손 코스튬§f을 §c제거§f하였습니다!");
                         return true;
                     } else {
@@ -342,16 +343,17 @@ public class CosmeticCommand implements CommandExecutor {
                 return false;
             }
 
+            PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
             if (List.of("등", "back").contains(args[1].toLowerCase())) {
-                new PlayerCosmeticData(player).setWearBackCosmetic(Cosmetic.BACK.NONE);
+                playerCosmeticData.setWearBackCosmetic(Cosmetic.BACK.NONE);
                 player.sendMessage("架 성공적으로 §6등 코스튬§f을 §c제거§f하였습니다!");
                 return true;
             } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
-                new PlayerCosmeticData(player).setWearHatCosmetic(Cosmetic.HAT.NONE);
+                playerCosmeticData.setWearHatCosmetic(Cosmetic.HAT.NONE);
                 player.sendMessage("架 성공적으로 §6모자 코스튬§f을 §c제거§f하였습니다!");
                 return true;
             } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
-                new PlayerCosmeticData(player).setWearOffhandCosmetic(Cosmetic.OFFHAND.NONE);
+                playerCosmeticData.setWearOffhandCosmetic(Cosmetic.OFFHAND.NONE);
                 player.sendMessage("架 성공적으로 §6왼손 코스튬§f을 §c제거§f하였습니다!");
                 return true;
             } else {
@@ -388,12 +390,13 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (new PlayerCosmeticData(player).getBackCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (playerCosmeticData.getBackCosmetics().contains(cosmetic)) {
                     player.sendMessage("强 해당 플레이어는 이미 해당 §6코스튬§f을 가지고 있습니다!");
                     return false;
                 }
 
-                new PlayerCosmeticData(player).addCosmetic(cosmetic);
+                playerCosmeticData.addCosmetic(cosmetic);
 
                 player.sendMessage("架 성공적으로 §6등 코스튬§f을 §a지급§f했습니다.");
                 target.sendMessage(player.getDisplayName() + "님이 등 코스튬(" + cosmetic.getName() + ")을 지급했습니다!");
@@ -408,12 +411,13 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (new PlayerCosmeticData(player).getHatCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (playerCosmeticData.getHatCosmetics().contains(cosmetic)) {
                     player.sendMessage("强 해당 플레이어는 이미 해당 §6코스튬§f을 가지고 있습니다!");
                     return false;
                 }
 
-                new PlayerCosmeticData(player).addCosmetic(cosmetic);
+                playerCosmeticData.addCosmetic(cosmetic);
 
                 player.sendMessage("架 성공적으로 §6모자 코스튬§f을 §a지급§f했습니다.");
                 target.sendMessage("佳 §6" + player.getDisplayName() + "§f님이 §6모자 코스튬 §8(§7" + cosmetic.getName() + "§8)§f을 §a지급§f했습니다!");
@@ -428,12 +432,13 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (new PlayerCosmeticData(player).getOffhandCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (playerCosmeticData.getOffhandCosmetics().contains(cosmetic)) {
                     player.sendMessage("强 해당 플레이어는 이미 해당 §6코스튬§f을 가지고 있습니다!");
                     return false;
                 }
 
-                new PlayerCosmeticData(player).addCosmetic(cosmetic);
+                playerCosmeticData.addCosmetic(cosmetic);
 
                 player.sendMessage("성공적으로 왼손 코스튬을 지급했습니다.");
                 target.sendMessage("佳 §6" + player.getDisplayName() + "§f님이 §6왼손 코스튬 §8(§7" + cosmetic.getName() + "§8)§f을 §a지급§f했습니다!");
@@ -472,12 +477,13 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (!new PlayerCosmeticData(player).getBackCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (!playerCosmeticData.getBackCosmetics().contains(cosmetic)) {
                     player.sendMessage("强 보유중이지 않은 §6코스튬§f입니다.");
                     return false;
                 }
 
-                new PlayerCosmeticData(player).removeCosmetic(cosmetic);
+                playerCosmeticData.removeCosmetic(cosmetic);
 
                 player.sendMessage("架 성공적으로 §6등 코스튬§f을 §c빼앗았습니다.");
                 target.sendMessage("佳 §6" + player.getDisplayName() + "§f님이 §6등 코스튬 §8(§7" + cosmetic.getName() + "§8)§f을 §c빼앗았습니다!");
@@ -492,12 +498,13 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (!new PlayerCosmeticData(player).getHatCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (!playerCosmeticData.getHatCosmetics().contains(cosmetic)) {
                     player.sendMessage("强 보유중이지 않은 §6코스튬§f입니다.");
                     return false;
                 }
 
-                new PlayerCosmeticData(player).removeCosmetic(cosmetic);
+                playerCosmeticData.removeCosmetic(cosmetic);
 
                 player.sendMessage("架 성공적으로 §6모자 코스튬§f을 §c빼앗았습니다.");
                 target.sendMessage("佳 §6" + player.getDisplayName() + "§f님이 §6모자 코스튬 §8(§7" + cosmetic.getName() + "§8)§f을 §c빼앗았습니다!");
@@ -512,12 +519,13 @@ public class CosmeticCommand implements CommandExecutor {
                     return false;
                 }
 
-                if (!new PlayerCosmeticData(player).getOffhandCosmetics().contains(cosmetic)) {
+                PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+                if (!playerCosmeticData.getOffhandCosmetics().contains(cosmetic)) {
                     player.sendMessage("强 보유중이지 않은 §6코스튬§f입니다.");
                     return false;
                 }
 
-                new PlayerCosmeticData(player).removeCosmetic(cosmetic);
+                playerCosmeticData.removeCosmetic(cosmetic);
 
                 player.sendMessage("架 성공적으로 §6왼손 코스튬§f을 §c빼앗았습니다.");
                 target.sendMessage("佳 §6" + player.getDisplayName() + "§f님이 §6왼손 코스튬 §8(§7" + cosmetic.getName() + "§8)§f을 §c빼앗았습니다!");
@@ -528,14 +536,18 @@ public class CosmeticCommand implements CommandExecutor {
             }
         }
 
+        sendHelp(player);
+        return false;
+    }
+
+    private void sendHelp(Player player) {
         player.sendMessage("§8■ §7══════°• §8[ §6코스튬 §f도움말 §8] §7•°══════ §8■");
         player.sendMessage("§6> §f家 §6코스튬§f을 꾸밉니다.");
         player.sendMessage("");
         player.sendMessage("§6> §f/코스튬 도움말 §8- §f도움말을 확인합니다.");
-        player.sendMessage("§6> §f/코스튬 목록 §8- §f보유중인 코스튬을 확인합니다.");
-        player.sendMessage("§6> §f/코스튬 장착 §8- §6코스튬§f을 장착합니다.");
-        player.sendMessage("§6> §f/코스튬 제거 §8- §6코스튬§f을 해제합니다.");
+        player.sendMessage("§6> §f/코스튬 목록 <등|모자|왼손> §8- §f보유중인 코스튬을 확인합니다.");
+        player.sendMessage("§6> §f/코스튬 장착 <등|모자|왼손> <코스튬>§8- §6코스튬§f을 장착합니다.");
+        player.sendMessage("§6> §f/코스튬 제거 <등|모자|왼손>§8- §6코스튬§f을 해제합니다.");
         player.sendMessage("§8■ §7══════°• ═════════════════════ §7•°══════ §8■");
-        return false;
     }
 }
