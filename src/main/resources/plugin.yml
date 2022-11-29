@@ -26,7 +26,6 @@ commands:
 
   #CashShop
   캐시:
-  test:
   캐시상점:
     aliases: [ cash ]
     
@@ -116,3 +115,6 @@ commands:
     aliases: [ cosmetic, 치장 ]
   cosmt:
   hat:
+
+  #Etc
+  test:
