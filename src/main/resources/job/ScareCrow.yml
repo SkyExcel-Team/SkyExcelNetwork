@@ -1,0 +1,13 @@
+HOE_LEVEL:
+  WOOD_HOE:
+    level: 1
+  STONE_HOE:
+    level: 10
+  GOLDEN_HOE:
+    level: 50
+  IRON_HOE:
+    level: 100
+  DIAMOND_HOE:
+    level: 200
+  NETHERITE_HOE:
+    level: 300

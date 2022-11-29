@@ -2,26 +2,27 @@ package net.skyexcel.server.job.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 public interface JobPlayerData {
 
 
-    default int getStatLevel(Player player, String name) {
+    default int getStatLevel(OfflinePlayer player, String name) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + name);
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
         return config.getInteger("level");
     }
 
-    default void setStatLevel(Player player, String name, int level) {
+    default void setStatLevel(OfflinePlayer player, String name, int level) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + name);
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.setInteger("level", level);
     }
 
 
-    default void setStatPoint(Player player, String name, double value) {
+    default void setStatPoint(OfflinePlayer player, String name, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.setDouble(name, value);
@@ -34,7 +35,7 @@ public interface JobPlayerData {
      * @param name   스텟 포인트
      * @param value
      */
-    default void increase(Player player, String name, double value) {
+    default void increase(OfflinePlayer player, String name, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
@@ -54,7 +55,7 @@ public interface JobPlayerData {
      * @param value
      * @param save
      */
-    default void increase(Player player, String name, double value, boolean save) {
+    default void increase(OfflinePlayer player, String name, double value, boolean save) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
@@ -66,20 +67,20 @@ public interface JobPlayerData {
 
     }
 
-    default void decrease(Player player, String name, double value) {
+    default void decrease(OfflinePlayer player, String name, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
         config.setDouble(name, getStatPoint(player, name) - value);
     }
 
-    default double getStatPoint(Player player, String name) {
+    default double getStatPoint(OfflinePlayer player, String name) {
         Config config = new Config("job/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         return config.getDouble(name);
     }
 
-    default double getStatPoint(Player player) {
+    default double getStatPoint(OfflinePlayer player) {
         Config config = new Config("job/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
@@ -87,21 +88,21 @@ public interface JobPlayerData {
     }
 
 
-    default void setLevel(Player player, double value) {
+    default void setLevel(OfflinePlayer player, double value) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         config.setDouble("level", value);
     }
 
-    default double getLevel(Player player, String name) {
+    default double getLevel(OfflinePlayer player, String name) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + name);
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
 
         return config.getDouble("level");
     }
 
-    default int getLevel(Player player) {
+    default int getLevel(OfflinePlayer player) {
         Config config = new Config("job/" + player.getUniqueId() + "/" + player.getUniqueId());
 
         config.setPlugin(SkyExcelNetworkMain.getPlugin());

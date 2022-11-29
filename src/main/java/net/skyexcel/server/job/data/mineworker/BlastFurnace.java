@@ -10,6 +10,7 @@ import net.skyexcel.server.job.data.stat.Leveling;
 import net.skyexcel.server.job.data.stat.Percent;
 import org.bukkit.Material;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -86,7 +87,7 @@ public class BlastFurnace extends StatMeta implements Percent, JobPlayerData, Le
     }
 
     @Override
-    public void setStatPoint(Player player, String name, double value) {
+    public void setStatPoint(OfflinePlayer player, String name, double value) {
         JobPlayerData.super.setStatPoint(player, name, value);
     }
 
@@ -98,7 +99,7 @@ public class BlastFurnace extends StatMeta implements Percent, JobPlayerData, Le
      * @param value
      */
     @Override
-    public void increase(Player player, String name, double value) {
+    public void increase(OfflinePlayer player, String name, double value) {
         JobPlayerData.super.increase(player, name, value);
     }
 
@@ -111,37 +112,37 @@ public class BlastFurnace extends StatMeta implements Percent, JobPlayerData, Le
      * @param save
      */
     @Override
-    public void increase(Player player, String name, double value, boolean save) {
+    public void increase(OfflinePlayer player, String name, double value, boolean save) {
         JobPlayerData.super.increase(player, name, value, save);
     }
 
     @Override
-    public void decrease(Player player, String name, double value) {
+    public void decrease(OfflinePlayer player, String name, double value) {
         JobPlayerData.super.decrease(player, name, value);
     }
 
     @Override
-    public double getStatPoint(Player player, String name) {
+    public double getStatPoint(OfflinePlayer player, String name) {
         return JobPlayerData.super.getStatPoint(player, name);
     }
 
     @Override
-    public double getStatPoint(Player player) {
+    public double getStatPoint(OfflinePlayer player) {
         return JobPlayerData.super.getStatPoint(player);
     }
 
     @Override
-    public void setLevel(Player player, double value) {
+    public void setLevel(OfflinePlayer player, double value) {
         JobPlayerData.super.setLevel(player, value);
     }
 
     @Override
-    public double getLevel(Player player, String name) {
+    public double getLevel(OfflinePlayer player, String name) {
         return JobPlayerData.super.getLevel(player, name);
     }
 
     @Override
-    public int getLevel(Player player) {
+    public int getLevel(OfflinePlayer player) {
         return JobPlayerData.super.getLevel(player);
     }
 
