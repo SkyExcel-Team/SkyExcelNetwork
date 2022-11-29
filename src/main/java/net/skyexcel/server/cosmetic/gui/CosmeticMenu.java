@@ -89,7 +89,7 @@ public class CosmeticMenu {
 
                     List<String> lore = new ArrayList<>();
                     lore.add("§r§7==[ 치장 아이템 정보 ]==");
-                    lore.add("§r§6분류 : 등");
+                    lore.add("§r§6분류 : §7등");
                     lore.add("§r§6이름 : §7" + cosmetic.name()); // 변경 시, GuiInventoryListener.java의 46 ~ 47번째 줄도 변경해야 합니다.
                     lore.add("");
                     lore.add(ownCosmetics.contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
@@ -117,7 +117,7 @@ public class CosmeticMenu {
 
                     List<String> lore = new ArrayList<>();
                     lore.add("§r§b==[ 치장 아이템 정보 ]==");
-                    lore.add("§r§6분류 : 모자");
+                    lore.add("§r§6분류 : §7모자");
                     lore.add("§r§6이름 : §7" + cosmetic.name()); // 변경 시, GuiInventoryListener.java의 46 ~ 47번째 줄도 변경해야 합니다.
                     lore.add("");
                     lore.add(ownCosmetics.contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
@@ -145,7 +145,7 @@ public class CosmeticMenu {
 
                     List<String> lore = new ArrayList<>();
                     lore.add("§r§b==[ 치장 아이템 정보 ]==");
-                    lore.add("§r§6분류 : 왼손");
+                    lore.add("§r§6분류 : §7왼손");
                     lore.add("§r§6이름 : §7" + cosmetic.name()); // 변경 시, GuiInventoryListener.java의 46 ~ 47번째 줄도 변경해야 합니다.
                     lore.add("");
                     lore.add(ownCosmetics.contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
