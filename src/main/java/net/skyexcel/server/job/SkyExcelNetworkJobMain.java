@@ -5,6 +5,7 @@ import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import net.skyexcel.server.job.cmd.FisherCmd;
 import net.skyexcel.server.job.cmd.JobCmd;
 import net.skyexcel.server.job.cmd.JobTab;
+import net.skyexcel.server.job.data.farmer.Scarecrow;
 import net.skyexcel.server.job.listener.JobListener;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -18,6 +19,8 @@ public class SkyExcelNetworkJobMain implements Listener {
     private static JavaPlugin plugin;
 
     public static Config config;
+
+    public static Config ScareCrow;
 
     @EventHandler
     public void onEnable(PluginEnableEvent e) {
@@ -36,5 +39,9 @@ public class SkyExcelNetworkJobMain implements Listener {
         config = new Config("Job-Config");
         config.setPlugin(plugin);
         config.loadDefaultPluginConfig();
+
+        ScareCrow = new Config("job/ScareCrow");
+        ScareCrow.setPlugin(plugin);
+        ScareCrow.loadDefaultPluginConfig();
     }
 }

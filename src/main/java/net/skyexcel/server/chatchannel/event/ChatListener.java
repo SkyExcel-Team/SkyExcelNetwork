@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.chatchannel.data.ChatChannel;
 import net.skyexcel.server.chatchannel.data.ChatData;
+import net.skyexcel.server.chatchannel.data.ChatLog;
 import net.skyexcel.server.chatchannel.data.ChatRecord;
 import net.skyexcel.server.chatchannel.util.Translate;
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
@@ -21,6 +22,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -37,11 +39,22 @@ public class ChatListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
         ChatData chatData = new ChatData(player);
         player.sendMessage(chatData.getChatChannel().getName() + " 채팅 채널에 입장하였습니다!");
 
+
+        ChatLog chatLog = new ChatLog(player);
+        chatLog.load();
+
     }
 
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event){
+        Player player = event.getPlayer();
+        ChatLog chatLog = new ChatLog(player);
+        chatLog.save();
+    }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChat(AsyncPlayerChatEvent event) {
@@ -94,6 +107,7 @@ public class ChatListener implements Listener {
         ChatRecord record = new ChatRecord(player.getUniqueId().toString());
         TextComponent tPrefix = new TextComponent(prefix);
 
+
         TextComponent tPlayer = new TextComponent(player.getDisplayName());
         tPlayer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a클릭하여 프로필을 열어~").create()));
 
@@ -108,6 +122,11 @@ public class ChatListener implements Listener {
         tPrefix.addExtra(tPlayer);
         tPrefix.addExtra(tSplit);
         tPrefix.addExtra(message);
+        ChatData chatData = new ChatData(player);
+        Bukkit.getConsoleSender().sendMessage(chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg);
+
+        ChatLog chatLog = new ChatLog(player);
+        chatLog.addLog(chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg);
 
         target.spigot().sendMessage(tPrefix);
         record.record(player, msg);
@@ -128,6 +147,8 @@ public class ChatListener implements Listener {
         TextComponent message = new TextComponent(msg);
         message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GRAY + Translate.getDate()).create()));
 
+        ChatData chatData = new ChatData(player);
+        Bukkit.getConsoleSender().sendMessage(chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg);
 
         tPrefix.addExtra(tPlayer);
         tPrefix.addExtra(tSplit);
@@ -137,6 +158,10 @@ public class ChatListener implements Listener {
             online.spigot().sendMessage(tPrefix);
         });
         record.record(player, msg);
+
+
+        ChatLog chatLog = new ChatLog(player);
+        chatLog.addLog(chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg);
     }
 
 

@@ -35,7 +35,8 @@ public class ChatTab implements TabCompleter {
             if (args.length == 1) {
                 SkyBlockPlayerData skyBlockPlayerData = new SkyBlockPlayerData(player);
                 if (skyBlockPlayerData.hasIsland()) {
-                    result.add(ChatChannel.SKYBLOCK.getName());
+
+                    result = List.of(ChatChannel.SKYBLOCK.getName(), ChatChannel.GLOBAL.getName(), ChatChannel.LOCAL.getName());
                 } else {
                     result = List.of(ChatChannel.GLOBAL.getName(), ChatChannel.LOCAL.getName());
 

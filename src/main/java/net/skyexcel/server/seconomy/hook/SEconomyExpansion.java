@@ -50,11 +50,11 @@ public class SEconomyExpansion extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, String params) {
         SEConomy cash = new SEConomy(player);
         Translate translate = new Translate();
-        if (params.equalsIgnoreCase("SEConomy")) {
-            return String.valueOf(cash.getLong());
-        } else if (params.equalsIgnoreCase("SEconomy_fixed")) {
+
+
+        if (params.equalsIgnoreCase("_fixed")) {
             return translate.decal(cash.getLong());
         }
-        return null; // Placeholder is unknown by the expansion
+        return String.valueOf(cash.getLong());// Placeholder is unknown by the expansion
     }
 }

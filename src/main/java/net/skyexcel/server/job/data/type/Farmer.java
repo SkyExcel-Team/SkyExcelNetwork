@@ -19,7 +19,7 @@ public class Farmer extends JobMeta implements JobPlayerData {
 
     public void run(Player player) {
         if (!JobData.scarecrow.containsKey(player.getUniqueId())) {
-            scarecrow = new Scarecrow(player.getLocation(), 1, player);
+            scarecrow = new Scarecrow(player);
             scarecrow.spawn(player);
             JobData.scarecrow.put(player.getUniqueId(), scarecrow);
         }

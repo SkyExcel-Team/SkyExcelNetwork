@@ -3,6 +3,7 @@ package net.skyexcel.server.job.data.farmer;
 import net.skyexcel.server.LoadType;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.job.SkyExcelNetworkJobMain;
+import net.skyexcel.server.job.data.JobPlayerData;
 import net.skyexcel.server.job.data.StatMeta;
 import net.skyexcel.server.job.data.farmer.scheduler.coolTime;
 
@@ -21,7 +22,7 @@ import skyexcel.data.file.Config;
 import java.util.List;
 import java.util.Objects;
 
-public class Scarecrow extends StatMeta {
+public class Scarecrow extends StatMeta implements JobPlayerData {
 
     private Location location;
 
@@ -46,8 +47,9 @@ public class Scarecrow extends StatMeta {
     public Scarecrow(Location location, int level, OfflinePlayer player) {
         super("허수아비", List.of("", "§6§l│ §6허수아비§f를 소환해, 주변의 §6농작물§f을 빠르게 자라게 해줍니다. ", "§6§l│ §f사용 방법:", "§6§l│ §f괭이를 들고 §6쉬프트 §f+ §6우클릭", ""));
         this.location = location;
-        this.level = level;
-        this.player = player;
+
+        this.level = getStatLevel(player, "Scarecrow");
+
     }
 
     public Scarecrow(OfflinePlayer offlinePlayer) {
@@ -55,6 +57,8 @@ public class Scarecrow extends StatMeta {
         this.player = offlinePlayer;
         this.config = new Config("job/" + offlinePlayer.getUniqueId() + "/Scarecrow");
         this.config.setPlugin(SkyExcelNetworkMain.getPlugin());
+        this.level = getStatLevel(player, "Scarecrow");
+        System.out.println(level);
     }
 
     public void setDefault() {
@@ -63,8 +67,12 @@ public class Scarecrow extends StatMeta {
         this.config.saveConfig();
     }
 
+
     public void spawn(OfflinePlayer player) {
 
+        level = getStatLevel(player, "Scarecrow");
+
+        this.location = player.getPlayer().getLocation();
 
         //TODO 아머스탠드 중복 소환 방지 해야함.
         if (armorStand == null) {
@@ -78,25 +86,28 @@ public class Scarecrow extends StatMeta {
             armorStand.setCustomNameVisible(true);
             armorStand.setCustomName("허수아비");
 
+            int WOOD_HOE = SkyExcelNetworkJobMain.ScareCrow.getInteger("HOE_LEVEL.WOOD_HOE.level");
+            int STONE_HOE = SkyExcelNetworkJobMain.ScareCrow.getInteger("HOE_LEVEL.STONE_HOE.level");
+            int GOLDEN_HOE = SkyExcelNetworkJobMain.ScareCrow.getInteger("HOE_LEVEL.STONE_HOE.level");
+            int IRON_HOE = SkyExcelNetworkJobMain.ScareCrow.getInteger("HOE_LEVEL.IRON_HOE.level");
+            int DIAMOND_HOE = SkyExcelNetworkJobMain.ScareCrow.getInteger("HOE_LEVEL.DIAMOND_HOE.level");
+            int NETHERITE_HOE = SkyExcelNetworkJobMain.ScareCrow.getInteger("HOE_LEVEL.NETHERITE_HOE.level");
 
-            switch (level) {
-                case 2 -> {
-                    this.hoeLevel = HoeLevel.STONE_HOE;
-                }
-                case 3 -> {
-                    this.hoeLevel = HoeLevel.GOLDEN_HOE;
-
-                }
-                case 4 -> {
-                    this.hoeLevel = HoeLevel.IRON_HOE;
-                }
-                case 5 -> {
-                    this.hoeLevel = HoeLevel.DIAMOND_HOE;
-                }
-                case 6 -> {
-                    this.hoeLevel = HoeLevel.NETHERITE_HOE;
-                }
+            System.out.println(WOOD_HOE);
+            if (level <= WOOD_HOE) {
+                this.hoeLevel = HoeLevel.WOODEN_HOE;
+            } else if (level <= STONE_HOE) {
+                this.hoeLevel = HoeLevel.STONE_HOE;
+            } else if (level <= GOLDEN_HOE) {
+                this.hoeLevel = HoeLevel.GOLDEN_HOE;
+            } else if (level <= IRON_HOE) {
+                this.hoeLevel = HoeLevel.IRON_HOE;
+            } else if (level <= DIAMOND_HOE) {
+                this.hoeLevel = HoeLevel.DIAMOND_HOE;
+            } else if (level <= NETHERITE_HOE) {
+                this.hoeLevel = HoeLevel.NETHERITE_HOE;
             }
+
 
             equipmentSlot.setItemInHand(new ItemStack(Material.valueOf(hoeLevel.name())));
             equipmentSlot.setHelmet(head);
