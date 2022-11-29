@@ -30,12 +30,7 @@ public class Cosmetic {
         CRYSTAL_WINGS(Material.GOLD_INGOT, 23, "Crystal Wings [수정의 날개]"),
         DARKNESS_WINGS(Material.GOLD_INGOT, 24, "Darkness Wings [암흑의 날개]"),
         FAIRY_WINGS(Material.GOLD_INGOT, 25, "Fairy Wings [정령의 날개]"),
-        PINK_WINGS(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개]"),
-        TEST1(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개1]"),
-        TEST2(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개2]"),
-        TEST3(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개3]"),
-        TEST4(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개4]"),
-        TEST5(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개5]");
+        PINK_WINGS(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개]");
 
         private final Material material;
         private final Integer customModelData;
