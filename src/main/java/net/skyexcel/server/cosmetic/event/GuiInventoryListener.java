@@ -4,6 +4,7 @@ import net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain;
 import net.skyexcel.server.cosmetic.data.Cosmetic;
 import net.skyexcel.server.cosmetic.data.CosmeticType;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
+import net.skyexcel.server.cosmetic.gui.CosmeticMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +19,7 @@ public class GuiInventoryListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
 
-        if (!SkyExcelNetworkCosmeticMain.guiUtil.pageMap.containsKey(player) || !SkyExcelNetworkCosmeticMain.guiUtil.typeMap.containsKey(player))
+        if (!CosmeticMenu.pageMap.containsKey(player) || !CosmeticMenu.typeMap.containsKey(player))
             return;
 
         e.setCancelled(true);
@@ -28,11 +29,11 @@ public class GuiInventoryListener implements Listener {
         if (item == null) return;
 
         if (item.getItemMeta().getDisplayName().equals("§c이전 페이지")) {
-            SkyExcelNetworkCosmeticMain.guiUtil.openGui(player, SkyExcelNetworkCosmeticMain.guiUtil.typeMap.get(player), SkyExcelNetworkCosmeticMain.guiUtil.pageMap.get(player) - 1);
+            new CosmeticMenu.Menu(player, CosmeticMenu.typeMap.get(player), CosmeticMenu.pageMap.get(player) - 1).openInventory();
 
             return;
         } else if (item.getItemMeta().getDisplayName().equals("§a다음 페이지")) {
-            SkyExcelNetworkCosmeticMain.guiUtil.openGui(player, SkyExcelNetworkCosmeticMain.guiUtil.typeMap.get(player), SkyExcelNetworkCosmeticMain.guiUtil.pageMap.get(player) + 1);
+            new CosmeticMenu.Menu(player, CosmeticMenu.typeMap.get(player), CosmeticMenu.pageMap.get(player) + 1).openInventory();
 
             return;
         }
@@ -51,7 +52,7 @@ public class GuiInventoryListener implements Listener {
 
             if (key == null) return;
 
-            CosmeticType type = SkyExcelNetworkCosmeticMain.guiUtil.typeMap.get(player);
+            CosmeticType type = CosmeticMenu.typeMap.get(player);
 
             if (type == CosmeticType.BACK) {
                 Cosmetic.BACK cosmetic;
@@ -145,9 +146,9 @@ public class GuiInventoryListener implements Listener {
     public void onClose(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
 
-        if (SkyExcelNetworkCosmeticMain.guiUtil.pageMap.containsKey(player))
-            SkyExcelNetworkCosmeticMain.guiUtil.pageMap.remove(player);
-        if (SkyExcelNetworkCosmeticMain.guiUtil.typeMap.containsKey(player))
-            SkyExcelNetworkCosmeticMain.guiUtil.typeMap.remove(player);
+        if (CosmeticMenu.pageMap.containsKey(player))
+            CosmeticMenu.pageMap.remove(player);
+        if (CosmeticMenu.typeMap.containsKey(player))
+            CosmeticMenu.typeMap.remove(player);
     }
 }

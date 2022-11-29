@@ -1,7 +1,9 @@
 package net.skyexcel.server.cosmetic.cmd;
 
 import net.skyexcel.server.cosmetic.data.Cosmetic;
+import net.skyexcel.server.cosmetic.data.CosmeticType;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
+import net.skyexcel.server.cosmetic.gui.CosmeticMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -529,6 +531,31 @@ public class CosmeticCommand implements CommandExecutor {
 
                 player.sendMessage("架 성공적으로 §6왼손 코스튬§f을 §c빼앗았습니다.");
                 target.sendMessage("佳 §6" + player.getDisplayName() + "§f님이 §6왼손 코스튬 §8(§7" + cosmetic.getName() + "§8)§f을 §c빼앗았습니다!");
+                return true;
+            } else {
+                player.sendMessage("强 존재하지 않는 §6코스튬§f입니다.");
+                return false;
+            }
+        } else if (List.of("메뉴", "menu").contains(args[0].toLowerCase())) {
+            if (args.length > 2) {
+                player.sendMessage("强 §c잘못된 명령어 입니다!");
+                return false;
+            } else if (args.length < 2) {
+                player.sendMessage("强 §c잘못된 명령어 입니다!");
+                return false;
+            }
+
+            if (List.of("등", "back").contains(args[1].toLowerCase())) {
+                new CosmeticMenu.Menu(player, CosmeticType.BACK, 1).openInventory();
+
+                return true;
+            } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
+                new CosmeticMenu.Menu(player, CosmeticType.HAT, 1).openInventory();
+
+                return true;
+            } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
+                new CosmeticMenu.Menu(player, CosmeticType.OFFHAND, 1).openInventory();
+
                 return true;
             } else {
                 player.sendMessage("强 존재하지 않는 §6코스튬§f입니다.");

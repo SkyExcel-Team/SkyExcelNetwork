@@ -2,10 +2,8 @@ package net.skyexcel.server.cosmetic;
 
 import net.skyexcel.server.cosmetic.cmd.CosmeticCmdTabComplete;
 import net.skyexcel.server.cosmetic.cmd.CosmeticCommand;
-import net.skyexcel.server.cosmetic.cmd.CosmeticTestCommand;
 import net.skyexcel.server.cosmetic.event.*;
 import net.skyexcel.server.cosmetic.manager.ArmorStandManager;
-import net.skyexcel.server.cosmetic.util.GuiUtil;
 import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -16,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SkyExcelNetworkCosmeticMain implements Listener {
     private static JavaPlugin plugin;
     public static ArmorStandManager armorstandManager;
-    public static GuiUtil guiUtil;
 
     @EventHandler
     public void onEnable(PluginEnableEvent e) {
@@ -26,8 +23,6 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
         Bukkit.getOnlinePlayers().forEach(player -> player.getPassengers().forEach(Entity::remove));
 
         //Commands
-        Bukkit.getPluginCommand("cosmt").setExecutor(new CosmeticTestCommand());
-
         Bukkit.getPluginCommand("코스튬").setExecutor(new CosmeticCommand());
         Bukkit.getPluginCommand("코스튬").setTabCompleter(new CosmeticCmdTabComplete());
 
@@ -40,6 +35,5 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
 
         //Set utils.
         armorstandManager = new ArmorStandManager();
-        guiUtil = new GuiUtil();
     }
 }
