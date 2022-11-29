@@ -21,21 +21,28 @@ repositories {
 }
 
 dependencies {
+    // Java Dependencies
     compileOnly("org.jetbrains:annotations:23.0.0")
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
+    // SPIGOT API
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
 
+    // MINECRAFT APIs
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
     compileOnly("me.clip:placeholderapi:2.11.2")
+    compileOnly 'net.luckperms:api:5.4'
+
+    // NMS•Packet APIs
     compileOnly(group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0");
     compileOnly("com.github.yannicklamprecht:worldborderapi:1.180.0")
     implementation 'xyz.xenondevs:particle:1.8.1'
 
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-
+    // Discord APIs
     api "net.dv8tion:JDA:5.0.0-alpha.22"
 
+    // FILE Dependencies
     compileOnly fileTree(dir: 'api', include: ['*.jar'])
     api fileTree(dir: 'api/shadows', include: ['*.jar'])
 }

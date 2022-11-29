@@ -1,12 +1,13 @@
 package net.skyexcel.server.cosmetic.data;
 
-import net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import static net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain.armorstandManager;
 
 public class ArmorStand {
     private final Player owner;
@@ -33,7 +34,7 @@ public class ArmorStand {
 
     public void teleport() {
         if (armorstand == null) {
-            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+            armorstandManager.removePlayerArmorStand(owner);
             return;
         }
 
@@ -45,12 +46,10 @@ public class ArmorStand {
             owner.addPassenger(armorstand);
         }
 
-        reloadHelmet();
-
         if (owner.isSwimming()) {
             armorstand.setRotation(owner.getLocation().getYaw(), 180);
         } else if ((owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && owner.getPassengers().contains(armorstand)) {
-            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+            armorstandManager.removePlayerArmorStand(owner);
         } else {
             armorstand.setRotation(owner.getLocation().getYaw(), owner.getLocation().getPitch());
         }
@@ -63,48 +62,55 @@ public class ArmorStand {
 
     public void reloadHelmet() {
         if (armorstand != null) {
-            if (getBackCosmetic() == null) {
-                SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
-                return;
-            }
-            if (getBackCosmetic().getType() == Material.AIR) {
-                SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+            Cosmetic.BACK cosmetic = getBackCosmetic();
+
+            if (cosmetic == Cosmetic.BACK.NONE || cosmetic == null) {
+                armorstandManager.removePlayerArmorStand(owner);
                 return;
             }
 
-            ItemStack item = new ItemStack(getBackCosmetic().getType(), 1); //TODO
+            if (!armorstandManager.containsPlayer(owner)) {
+                armorstandManager.addPlayerArmorStand(owner);
+                armorstandManager.getPlayerArmorStand(owner).reloadHelmet();
+                return;
+            }
+
+            ItemStack item = new ItemStack(getBackCosmetic().getType(), 1);
             ItemMeta meta = item.getItemMeta();
-            meta.setCustomModelData(getBackCosmetic().getCustomModelData()); //TODO
+            meta.setCustomModelData(getBackCosmetic().getCustomModelData());
+            meta.setDisplayName(getBackCosmetic().getName());
             item.setItemMeta(meta);
 
             armorstand.getEquipment().setHelmet(item);
-        }
+        } else
+            armorstandManager.removePlayerArmorStand(owner);
     }
 
     private void spawnArmorStand() {
         if (armorstand != null)
             remove();
         if (getBackCosmetic() == null) {
-            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+            armorstandManager.removePlayerArmorStand(owner);
             return;
         }
         if (getBackCosmetic().getType() == Material.AIR) {
-            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(owner);
+            armorstandManager.removePlayerArmorStand(owner);
             return;
         }
 
         armorstand = (org.bukkit.entity.ArmorStand) owner.getWorld().spawnEntity(owner.getLocation(), EntityType.ARMOR_STAND);
-
-        ItemStack item = new ItemStack(getBackCosmetic().getType(), 1); //TODO
-        ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(getBackCosmetic().getCustomModelData()); //TODO
-        item.setItemMeta(meta);
-
-        armorstand.getEquipment().setHelmet(item);
         armorstand.setBasePlate(false);
         armorstand.setGravity(false);
         armorstand.setVisible(false);
         armorstand.setMarker(true);
+
+        ItemStack item = new ItemStack(getBackCosmetic().getType(), 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(getBackCosmetic().getCustomModelData());
+        meta.setDisplayName(getBackCosmetic().getName());
+        item.setItemMeta(meta);
+
+        armorstand.getEquipment().setHelmet(item);
     }
 
     private Cosmetic.BACK getBackCosmetic() {

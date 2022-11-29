@@ -25,7 +25,6 @@ import net.skyexcel.server.playerprofile.SkyExcelNetworkPlayerProfileMain;
 import net.skyexcel.server.playtime.SkyExcelNetworkPlayTimeMain;
 
 import net.skyexcel.server.quest.SkyExcelNetworkDailyQuestMain;
-import net.skyexcel.server.quest.data.QuestData;
 import net.skyexcel.server.rank.SkyExcelNetworkRankMain;
 import net.skyexcel.server.regionafk.SkyExcelNetworkRegionAFKMain;
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
@@ -36,7 +35,6 @@ import net.skyexcel.server.tutorial.SkyExcelNetworkTutorialMain;
 import net.skyexcel.server.upgrade.SkyExcelNetworkUpgradeMain;
 import net.skyexcel.server.warp.SkyExcelNetWorkWarpMain;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -64,7 +62,7 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
         //Load HeadDatabaseAPI
         hdb = new HeadDatabaseAPI();
 
-        SetUpLuckPerms();
+        setUpLuckPerms();
 
         //Register Listeners
         Listener[] listeners = {new SkyExcelNetworkAlphaChestMain(), new SkyExcelNetworkCashShopMain(), new SkyExcelNetworkChatChannelMain(), new SkyExcelNetworkDiscordMain(), new SkyExcelNetworkEssentialsMain(), new SkyExcelNetworkFishMain(),
@@ -91,7 +89,6 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         Bukkit.getPluginManager().callEvent(new PluginDisableEvent());
-
     }
 
     public static WorldEditPlugin getWorldEditPlugin() {
@@ -100,12 +97,7 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
         else return null;
     }
 
-    public static JavaPlugin getPlugin() {
-        return plugin;
-    }
-
-
-    public void SetUpLuckPerms() {
+    public void setUpLuckPerms() {
         if (getServer().getPluginManager().getPlugin("LuckPerms") != null) {
             RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
 
@@ -113,9 +105,13 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
                 luckPerms = provider.getProvider();
             }
         } else {
-            Bukkit.getConsoleSender().sendMessage("§cLuckPerms 플러그인 연동에 실패하였습니다! API 없음.");
+            Bukkit.getLogger().warning("LuckPerms 플러그인 연동에 실패하였습니다! API 없음.");
         }
 
+    }
+
+    public static JavaPlugin getPlugin() {
+        return plugin;
     }
 
     @EventHandler

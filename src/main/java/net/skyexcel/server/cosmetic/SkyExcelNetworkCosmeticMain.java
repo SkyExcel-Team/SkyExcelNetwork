@@ -34,7 +34,7 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
         //Event
         Bukkit.getPluginManager().registerEvents(new GuiInventoryListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new InventoryEvent(), plugin);
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(), plugin);
+        Bukkit.getPluginManager().registerEvents(new EntityListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new JoinQuitEvent(), plugin);
         Bukkit.getPluginManager().registerEvents(new DeathEvent(), plugin);
 

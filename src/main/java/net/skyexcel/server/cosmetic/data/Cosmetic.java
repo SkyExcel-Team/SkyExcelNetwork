@@ -7,8 +7,8 @@ public class Cosmetic {
         NONE(Material.AIR, 0, ""),
         BUNNY_BACKPACK(Material.GOLD_INGOT, 1, "Bunny Backpack [토끼 가방]"),
         COLORFUL_BACKPACK(Material.GOLD_INGOT, 2, "Colorful Backpack [화려한 가방]"),
-        NOCSY_FRUIT_BASKET(Material.GOLD_INGOT, 3, "Fruit Basket [과일 바스켓]"),
-        NOCSY_WARRIOR_BELT(Material.GOLD_INGOT, 4, "Warrior Belt [전사의 허리띠]"),
+        FRUIT_BASKET(Material.GOLD_INGOT, 3, "Fruit Basket [과일 바스켓]"),
+        WARRIOR_BELT(Material.GOLD_INGOT, 4, "Warrior Belt [전사의 허리띠]"),
         MERCY_WINGS(Material.GOLD_INGOT, 5, "Mercy Wings [메르시의 날개]"),
         ANGEL_WINGS(Material.GOLD_INGOT, 6, "Angel Wings [천사의 날개]"),
         CYBER_MACHINE(Material.GOLD_INGOT, 7, "Cyber Machine [사이버 머신]"),
@@ -30,7 +30,12 @@ public class Cosmetic {
         CRYSTAL_WINGS(Material.GOLD_INGOT, 23, "Crystal Wings [수정의 날개]"),
         DARKNESS_WINGS(Material.GOLD_INGOT, 24, "Darkness Wings [암흑의 날개]"),
         FAIRY_WINGS(Material.GOLD_INGOT, 25, "Fairy Wings [정령의 날개]"),
-        PINK_WINGS(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개]");
+        PINK_WINGS(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개]"),
+        TEST1(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개1]"),
+        TEST2(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개2]"),
+        TEST3(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개3]"),
+        TEST4(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개4]"),
+        TEST5(Material.GOLD_INGOT, 26, "Pink Wings [분홍 날개5]");
 
         private final Material material;
         private final Integer customModelData;
@@ -71,34 +76,7 @@ public class Cosmetic {
 
 
     public enum HAT {
-        NONE(Material.AIR, 0, "");
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 1, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 2, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 3, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 4, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 5, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 6, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 7, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 8, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 9, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 10, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 11, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 12, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 13, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 14, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 15, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 16, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 17, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 18, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 19, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 20, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 21, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 22, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 23, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 24, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 25, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 26, ""),
-//        NOCSY_PIRATE_HAT(Material.IRON_INGOT, 27, "");
+        NONE(Material.AIR, 0, ""); //TODO
 
         private final Material material;
         private final Integer customModelData;

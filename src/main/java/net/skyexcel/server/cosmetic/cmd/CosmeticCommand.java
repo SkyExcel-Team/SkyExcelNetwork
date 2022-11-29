@@ -297,7 +297,7 @@ public class CosmeticCommand implements CommandExecutor {
                 }
 
                 new PlayerCosmeticData(player).setWearOffhandCosmetic(cosmetic);
-                player.sendMessage("架 성공적으로 §6모자 코스튬§f을 §a적용§f했습니다!");
+                player.sendMessage("架 성공적으로 §6왼손 코스튬§f을 §a적용§f했습니다!");
                 return true;
             } else {
                 player.sendMessage("强 존재하지 않는 §6코스튬§f입니다.");

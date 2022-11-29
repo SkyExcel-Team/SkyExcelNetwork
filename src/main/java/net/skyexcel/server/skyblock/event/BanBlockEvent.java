@@ -111,14 +111,10 @@ public class BanBlockEvent implements Listener {
         SkyBlock islandData = new SkyBlock(playerData.getIsland());
 
         if (!player.isOp()) {
-            if (!islandData.isInIsland(player)) {
-                for (Entity entity : player.getWorld().getEntities()) {
-                    if (entity instanceof Player) {
-                        Player players = (Player) entity;
-                        SkyBlockPlayerData playersData = new SkyBlockPlayerData(players);
-                        player.sendMessage("强 다른 섬의 블록은 부술 수 없습니다!");
-                        break;
-                    }
+            if (!islandData.isInIsland(player)) { //TODO - FUCK THIS CODE. @바람#9629 NEED TO FIX THIS CODE.
+                for (Player players : player.getWorld().getPlayers()) {
+                    player.sendMessage("强 다른 섬의 블록은 부술 수 없습니다!");
+                    break;
                 }
 
                 event.setCancelled(true);
