@@ -25,11 +25,15 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class ChatListener implements Listener {
 
     private final String prefix = "> §7";
+
+    private static Map<UUID,ChatLog> chatLogMap = new HashMap<>();
 
     private final String split = " : ";
 
@@ -47,13 +51,18 @@ public class ChatListener implements Listener {
         ChatLog chatLog = new ChatLog(player);
         chatLog.load();
 
+        chatLogMap.put(player.getUniqueId(),chatLog);
+
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
-        ChatLog chatLog = new ChatLog(player);
-        chatLog.save();
+        if(chatLogMap.containsKey(player.getUniqueId())){
+            ChatLog chatLog = chatLogMap.get(player.getUniqueId());
+            chatLog.save();
+        }
+
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -123,10 +132,16 @@ public class ChatListener implements Listener {
         tPrefix.addExtra(tSplit);
         tPrefix.addExtra(message);
         ChatData chatData = new ChatData(player);
-        Bukkit.getConsoleSender().sendMessage(chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg);
+        String newMsg = chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg;
 
-        ChatLog chatLog = new ChatLog(player);
-        chatLog.addLog(chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg);
+        Bukkit.getConsoleSender().sendMessage(newMsg);
+
+        if(chatLogMap.containsKey(player.getUniqueId())) {
+            ChatLog chatLog = chatLogMap.get(player.getUniqueId());
+            chatLog.addLog(newMsg);
+        }
+
+
 
         target.spigot().sendMessage(tPrefix);
         record.record(player, msg);
@@ -160,8 +175,14 @@ public class ChatListener implements Listener {
         record.record(player, msg);
 
 
-        ChatLog chatLog = new ChatLog(player);
-        chatLog.addLog(chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg);
+        String newMsg = chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg;
+
+        Bukkit.getConsoleSender().sendMessage(newMsg);
+
+        if(chatLogMap.containsKey(player.getUniqueId())) {
+            ChatLog chatLog = chatLogMap.get(player.getUniqueId());
+            chatLog.addLog(newMsg);
+        }
     }
 
 
