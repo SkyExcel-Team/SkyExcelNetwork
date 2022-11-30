@@ -1,6 +1,7 @@
 package net.skyexcel.server.cosmetic.event;
 
 import net.skyexcel.server.cosmetic.data.ArmorStand;
+import net.skyexcel.server.cosmetic.data.Cosmetic;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
@@ -16,17 +17,22 @@ import org.spigotmc.event.entity.EntityDismountEvent;
 
 import static net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain.armorstandManager;
 
-public class PlayerListener implements Listener {
+public class EntityListener implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         Player player = e.getPlayer();
 
         if (player.getGameMode() == GameMode.SPECTATOR) return;
+        PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+        if (playerCosmeticData.getWearBackCosmetic() == Cosmetic.BACK.NONE) {
+            armorstandManager.removePlayerArmorStand(player);
+            return;
+        }
 
         if (!armorstandManager.containsPlayer(player))
             armorstandManager.addPlayerArmorStand(player);
 
-        if (true) //TODO - 등 치장 있는지 확인
+        if (playerCosmeticData.getWearBackCosmetic() != Cosmetic.BACK.NONE)
             armorstandManager.getPlayerArmorStand(player).teleport();
     }
 
@@ -35,11 +41,16 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
 
         if (player.getGameMode() == GameMode.SPECTATOR) return;
+        PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
+        if (playerCosmeticData.getWearBackCosmetic() == Cosmetic.BACK.NONE) {
+            armorstandManager.removePlayerArmorStand(player);
+            return;
+        }
 
         if (!armorstandManager.containsPlayer(player))
             armorstandManager.addPlayerArmorStand(player);
 
-        if (true) //TODO - 등 치장 있는지 확인
+        if (playerCosmeticData.getWearBackCosmetic() != Cosmetic.BACK.NONE)
             armorstandManager.getPlayerArmorStand(player).teleport();
     }
 
@@ -63,8 +74,9 @@ public class PlayerListener implements Listener {
             armorstandManager.addPlayerArmorStand(player);
 
         PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
-        playerCosmeticData.refreshOffhand();
+        playerCosmeticData.refreshBack();
         playerCosmeticData.refreshHat();
+        playerCosmeticData.refreshOffhand();
     }
 
     @EventHandler

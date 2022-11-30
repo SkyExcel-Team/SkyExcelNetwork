@@ -16,14 +16,12 @@ public class JoinQuitEvent implements Listener {
         Player player = e.getPlayer();
 
         armorstandManager.addPlayerArmorStand(player);
+        armorstandManager.getPlayerArmorStand(player).teleport();
 
         PlayerCosmeticData playerData = new PlayerCosmeticData(player);
-
         playerData.refreshBack();
         playerData.refreshHat();
         playerData.refreshOffhand();
-
-        armorstandManager.getPlayerArmorStand(player).teleport();
     }
 
     @EventHandler
@@ -31,6 +29,6 @@ public class JoinQuitEvent implements Listener {
         Player player = e.getPlayer();
 
         if (armorstandManager.containsPlayer(player))
-            SkyExcelNetworkCosmeticMain.armorstandManager.removePlayerArmorStand(player);
+            armorstandManager.removePlayerArmorStand(player);
     }
 }

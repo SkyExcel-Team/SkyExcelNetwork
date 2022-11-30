@@ -11,6 +11,8 @@ import skyexcel.data.file.Config;
 
 import java.util.*;
 
+import static net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain.armorstandManager;
+
 public class PlayerCosmeticData {
     private final Player player;
     private Config data = null;
@@ -68,43 +70,25 @@ public class PlayerCosmeticData {
         }
 
         if (data.getConfig().getList("cosmetics.own.back") != null) {
-            List<Object> cosmetics = new ArrayList<>(data.getConfig().getList("cosmetics.own.back"));
-
             data.getConfig().getList("cosmetics.own.back").forEach(key -> {
                 try {
                     BACK.add(Cosmetic.BACK.valueOf((String) key));
-                } catch (Exception ignored) {
-                    cosmetics.remove(key);
-                }
+                } catch (Exception ignored) {}
             });
-
-            data.setList("cosmetics.own.back", cosmetics);
         }
         if (data.getConfig().getList("cosmetics.own.hat") != null) {
-            List<Object> cosmetics = new ArrayList<>(data.getConfig().getList("cosmetics.own.hat"));
-
             data.getConfig().getList("cosmetics.own.hat").forEach(key -> {
                 try {
                     HAT.add(Cosmetic.HAT.valueOf((String) key));
-                } catch (Exception ignored) {
-                    cosmetics.remove(key);
-                }
+                } catch (Exception ignored) {}
             });
-
-            data.setList("cosmetics.own.hat", cosmetics);
         }
         if (data.getConfig().getList("cosmetics.own.offhand") != null) {
-            List<Object> cosmetics = new ArrayList<>(data.getConfig().getList("cosmetics.own.offhand"));
-
             data.getConfig().getList("cosmetics.own.offhand").forEach(key -> {
                 try {
                     OFFHAND.add(Cosmetic.OFFHAND.valueOf((String) key));
-                } catch (Exception ignored) {
-                    cosmetics.remove(key);
-                }
+                } catch (Exception ignored) {}
             });
-
-            data.setList("cosmetics.own.offhand", cosmetics);
         }
     }
 
@@ -122,10 +106,9 @@ public class PlayerCosmeticData {
     }
 
     public void refreshBack() {
-        if (!SkyExcelNetworkCosmeticMain.armorstandManager.containsPlayer(player))
-            SkyExcelNetworkCosmeticMain.armorstandManager.addPlayerArmorStand(player);
-
-        SkyExcelNetworkCosmeticMain.armorstandManager.getPlayerArmorStand(player).reloadHelmet();
+        armorstandManager.removePlayerArmorStand(player);
+        armorstandManager.addPlayerArmorStand(player);
+        armorstandManager.getPlayerArmorStand(player).reloadHelmet();
     }
 
     public void refreshHat() {

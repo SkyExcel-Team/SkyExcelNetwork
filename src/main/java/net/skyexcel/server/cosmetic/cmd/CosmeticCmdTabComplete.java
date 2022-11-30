@@ -23,13 +23,13 @@ public class CosmeticCmdTabComplete implements TabCompleter {
 
         if (args.length == 1) {
             if (player.isOp())
-                return List.of("도움말", "목록", "장착", "제거", "주기", "뺏기");
+                return List.of("도움말", "목록", "장착", "제거", "메뉴", "주기", "뺏기");
             else
-                return List.of("도움말", "목록", "장착", "제거");
+                return List.of("도움말", "목록", "장착", "제거", "메뉴");
         } else if (args.length == 2) {
             if (List.of("도움말", "help", "?").contains(args[0].toLowerCase()))
                 return Collections.emptyList();
-            else if (List.of("목록", "list", "장착", "wear", "제거", "remove", "주기", "give", "뺏기", "take").contains(args[0].toLowerCase()))
+            else if (List.of("목록", "list", "장착", "wear", "제거", "remove", "메뉴", "menu", "주기", "give", "뺏기", "take").contains(args[0].toLowerCase()))
                 return List.of("등", "모자", "왼손");
         } else if (args.length == 3) {
             if (List.of("목록", "list", "장착", "wear", "제거", "remove").contains(args[0].toLowerCase())) {
@@ -75,21 +75,21 @@ public class CosmeticCmdTabComplete implements TabCompleter {
                     List<String> cosmeticNames = new ArrayList<>();
                     Arrays.asList(Cosmetic.BACK.values()).forEach(cosmetic -> cosmeticNames.add(cosmetic.name()));
 
-                    cosmeticNames.remove("");
+                    cosmeticNames.remove("NONE");
 
                     return cosmeticNames;
                 } else if (List.of("모자", "hat").contains(args[1].toLowerCase())) {
                     List<String> cosmeticNames = new ArrayList<>();
                     Arrays.asList(Cosmetic.HAT.values()).forEach(cosmetic -> cosmeticNames.add(cosmetic.name()));
 
-                    cosmeticNames.remove("");
+                    cosmeticNames.remove("NONE");
 
                     return cosmeticNames;
                 } else if (List.of("왼손", "offhand").contains(args[1].toLowerCase())) {
                     List<String> cosmeticNames = new ArrayList<>();
                     Arrays.asList(Cosmetic.OFFHAND.values()).forEach(cosmetic -> cosmeticNames.add(cosmetic.name()));
 
-                    cosmeticNames.remove("");
+                    cosmeticNames.remove("NONE");
 
                     return cosmeticNames;
                 }
