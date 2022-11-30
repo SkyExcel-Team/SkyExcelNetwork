@@ -1,9 +1,7 @@
-package net.skyexcel.server.playtime.hook;
+package net.skyexcel.server.essentials.playtime.hook;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.skyexcel.server.mileage.data.Mileage;
-import net.skyexcel.server.mileage.util.Translate;
-import net.skyexcel.server.playtime.data.PlayTime;
+import net.skyexcel.server.essentials.playtime.data.PlayTime;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,10 +1,9 @@
-package net.skyexcel.server.playtime.events;
+package net.skyexcel.server.essentials.playtime.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 public class PlayTimeEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS_LIST = new HandlerList();

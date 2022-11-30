@@ -1,6 +1,6 @@
-package net.skyexcel.server.playtime.scheduler;
+package net.skyexcel.server.essentials.playtime.scheduler;
 
-import net.skyexcel.server.playtime.data.PlayTime;
+import net.skyexcel.server.essentials.playtime.data.PlayTime;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 

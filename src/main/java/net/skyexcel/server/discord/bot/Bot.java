@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
@@ -55,19 +54,19 @@ public class Bot {
     private void initJDA() {
         if (token.equals("YOUR_TOKEN")) {
             log.warning("봇 토큰을 설정해주세요!");
-            disableIt();
+            disablePlugin();
             return;
         } else if (SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.richPresence.name").equals("YOUR_STATUS")) {
             log.warning("봇 상태 메세지를 설정해주세요.");
-            disableIt();
+            disablePlugin();
             return;
         } else if (SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.roles.verifiedRole").equals("YOUR_ROLE_ID")) {
             log.warning("인증 완료시 지급될 역할 ID를 설정해주세요.");
-            disableIt();
+            disablePlugin();
             return;
         } else if (SkyExcelNetworkDiscordMain.botConfig.getString("bot_settings.guildId").equals("YOUR_ROLE_ID")) {
             log.warning("봇이 작동할 서버 ID를 설정해주세요.");
-            disableIt();
+            disablePlugin();
             return;
         }
 
@@ -90,7 +89,7 @@ public class Bot {
         } catch (Exception e) {
             e.printStackTrace();
             log.warning("봇 로딩중에 오류가 발생했습니다!");
-            disableIt();
+            disablePlugin();
             return;
         }
 
@@ -106,7 +105,7 @@ public class Bot {
             case "dnd" -> st = OnlineStatus.DO_NOT_DISTURB;
             default -> {
                 log.warning("봇 상태 설정중에 오류가 발생했습니다!");
-                disableIt();
+                disablePlugin();
                 return;
             }
         }
@@ -118,7 +117,7 @@ public class Bot {
             case "listening" -> act = Activity.ActivityType.LISTENING;
             default -> {
                 log.warning("봇 상태 설정중에 오류가 발생했습니다!");
-                disableIt();
+                disablePlugin();
                 return;
             }
         }
@@ -143,7 +142,7 @@ public class Bot {
         ).queue();
     }
 
-    private void disableIt() {
+    private void disablePlugin() {
         log.info("플러그인을 비활성화합니다.");
         Bukkit.getPluginManager().disablePlugin(plugin);
     }

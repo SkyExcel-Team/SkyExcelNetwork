@@ -50,7 +50,7 @@ public class SkyExcelNetworkSkyBlockMain implements Listener {
         if (worldBorderApiRegisteredServiceProvider == null) {
             Bukkit.getLogger().warning("WorldBorderAPI가 감지되지 않았습니다.");
             Bukkit.getLogger().warning("플러그인을 비활성화 합니다.");
-            Bukkit.getServer().getPluginManager().disablePlugin(plugin);
+            Bukkit.getPluginManager().disablePlugin(plugin);
             return;
         }
 

@@ -5,10 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelNetworkFarmProtectMain {
-    public static JavaPlugin plugin;
+    private static JavaPlugin plugin;
 
-    public SkyExcelNetworkFarmProtectMain(JavaPlugin plugin) {
-        SkyExcelNetworkFarmProtectMain.plugin = plugin;
+    public SkyExcelNetworkFarmProtectMain(JavaPlugin plugin1) {
+        plugin = plugin1;
 
         onEnable();
     }

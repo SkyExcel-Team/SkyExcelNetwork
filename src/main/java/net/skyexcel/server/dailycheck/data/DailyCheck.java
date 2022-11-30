@@ -1,7 +1,7 @@
 package net.skyexcel.server.dailycheck.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.playtime.data.PlayTime;
+import net.skyexcel.server.essentials.playtime.data.PlayTime;
 import org.bukkit.OfflinePlayer;
 import skyexcel.data.Time;
 import skyexcel.data.file.Config;

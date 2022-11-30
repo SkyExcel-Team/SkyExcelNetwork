@@ -6,11 +6,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelNetworkAutoCleanMain {
-    public static JavaPlugin plugin;
+    private static JavaPlugin plugin;
     private int taskId = 0;
 
-    public SkyExcelNetworkAutoCleanMain(JavaPlugin plugin) {
-        SkyExcelNetworkAutoCleanMain.plugin = plugin;
+    public SkyExcelNetworkAutoCleanMain(JavaPlugin plugin1) {
+        plugin = plugin1;
 
         onEnable();
     }
@@ -20,7 +20,7 @@ public class SkyExcelNetworkAutoCleanMain {
                 taskId = new AutoCleanScheduler().runTaskTimer(plugin, SkyExcelNetworkEssentialsMain.config.getLong("auto_clean.period"), 20L).getTaskId());
     }
 
-    public void disable() {
+    public void onDisable() {
         if (taskId != 0)
             Bukkit.getScheduler().cancelTask(taskId);
     }

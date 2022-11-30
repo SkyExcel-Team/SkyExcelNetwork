@@ -6,10 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelNetworkWhisperMain {
-    public static JavaPlugin plugin;
+    private static JavaPlugin plugin;
 
-    public SkyExcelNetworkWhisperMain(JavaPlugin plugin) {
-        SkyExcelNetworkWhisperMain.plugin = plugin;
+    public SkyExcelNetworkWhisperMain(JavaPlugin plugin1) {
+        plugin = plugin1;
 
         onEnable();
     }

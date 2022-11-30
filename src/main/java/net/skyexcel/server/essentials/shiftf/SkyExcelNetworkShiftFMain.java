@@ -5,10 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelNetworkShiftFMain {
-    public static JavaPlugin plugin;
+    private static JavaPlugin plugin;
 
-    public SkyExcelNetworkShiftFMain(JavaPlugin plugin) {
-        SkyExcelNetworkShiftFMain.plugin = plugin;
+    public SkyExcelNetworkShiftFMain(JavaPlugin plugin1) {
+        plugin = plugin1;
 
         onEnable();
     }

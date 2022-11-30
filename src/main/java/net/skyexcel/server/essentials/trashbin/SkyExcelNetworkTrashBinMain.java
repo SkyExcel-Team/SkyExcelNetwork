@@ -5,10 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SkyExcelNetworkTrashBinMain {
-    public static JavaPlugin plugin;
+    private static JavaPlugin plugin;
 
-    public SkyExcelNetworkTrashBinMain(JavaPlugin plugin) {
-        SkyExcelNetworkTrashBinMain.plugin = plugin;
+    public SkyExcelNetworkTrashBinMain(JavaPlugin plugin1) {
+        plugin = plugin1;
 
         onEnable();
     }

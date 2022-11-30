@@ -1,6 +1,6 @@
-package net.skyexcel.server.playtime.cmd;
+package net.skyexcel.server.essentials.playtime.cmd;
 
-import net.skyexcel.server.playtime.data.PlayTime;
+import net.skyexcel.server.essentials.playtime.data.PlayTime;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

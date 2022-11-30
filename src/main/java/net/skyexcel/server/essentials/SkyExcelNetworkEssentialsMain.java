@@ -4,6 +4,7 @@ import net.skyexcel.server.essentials.autoclean.SkyExcelNetworkAutoCleanMain;
 import net.skyexcel.server.essentials.events.PluginDisableEvent;
 import net.skyexcel.server.essentials.events.PluginEnableEvent;
 import net.skyexcel.server.essentials.farmprotect.SkyExcelNetworkFarmProtectMain;
+import net.skyexcel.server.essentials.playtime.SkyExcelNetworkPlayTimeMain;
 import net.skyexcel.server.essentials.shiftf.SkyExcelNetworkShiftFMain;
 import net.skyexcel.server.essentials.shout.SkyExcelNetworkShoutMain;
 import net.skyexcel.server.essentials.trashbin.SkyExcelNetworkTrashBinMain;
@@ -37,6 +38,7 @@ public class SkyExcelNetworkEssentialsMain implements Listener, CommandExecutor 
 
         autoclean = new SkyExcelNetworkAutoCleanMain(plugin);
         new SkyExcelNetworkFarmProtectMain(plugin);
+        new SkyExcelNetworkPlayTimeMain(plugin);
         new SkyExcelNetworkShiftFMain(plugin);
         new SkyExcelNetworkShoutMain(plugin);
         new SkyExcelNetworkTrashBinMain(plugin);
@@ -47,7 +49,7 @@ public class SkyExcelNetworkEssentialsMain implements Listener, CommandExecutor 
 
     @EventHandler
     public void onDisable(PluginDisableEvent e) {
-        autoclean.disable();
+        autoclean.onDisable();
     }
 
     @Override
