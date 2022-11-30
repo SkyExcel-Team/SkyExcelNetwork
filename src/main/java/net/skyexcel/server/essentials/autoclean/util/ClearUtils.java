@@ -9,9 +9,10 @@ public class ClearUtils {
         int removed = 0;
 
         for (Entity entity : world.getEntities()) {
-            if (!(entity instanceof Item)) continue;
-            entity.remove();
-            removed++;
+            if (entity instanceof Item) {
+                entity.remove();
+                removed++;
+            }
         }
 
         return removed;
