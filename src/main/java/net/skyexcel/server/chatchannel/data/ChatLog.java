@@ -1,5 +1,6 @@
 package net.skyexcel.server.chatchannel.data;
 
+import lombok.Getter;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.OfflinePlayer;
 import skyexcel.data.file.Config;
@@ -15,19 +16,13 @@ public class ChatLog {
 
     private String log;
 
+    @Getter
     private List<String> logs = new ArrayList<>();
 
 
     public ChatLog(OfflinePlayer offlinePlayer) {
         this.offlinePlayer = offlinePlayer;
         config = new Config("chat/log/" + offlinePlayer.getUniqueId());
-        config.setPlugin(SkyExcelNetworkMain.getPlugin());
-    }
-
-    public ChatLog(OfflinePlayer offlinePlayer, String log) {
-        this.offlinePlayer = offlinePlayer;
-        config = new Config("chat/log" + offlinePlayer.getUniqueId());
-        this.log = log;
         config.setPlugin(SkyExcelNetworkMain.getPlugin());
     }
 
@@ -40,7 +35,7 @@ public class ChatLog {
             config.getConfig().set("logs", logs);
             config.saveConfig();
         } else {
-            logs = config.getConfig().getStringList("log");
+            logs = config.getConfig().getStringList("logs");
         }
     }
 
@@ -49,12 +44,12 @@ public class ChatLog {
      * 플레이어가 서버를 나갈때, 채팅 로그를 저장합니다.
      */
     public void save() {
-        config.getConfig().set("log", logs);
+        config.getConfig().set("logs", logs);
         config.saveConfig();
     }
 
 
     public void addLog(String msg) {
-        System.out.println(logs.add(msg));
+        logs.add(msg);
     }
 }

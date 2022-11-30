@@ -5,10 +5,9 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.chatchannel.data.ChatChannel;
-import net.skyexcel.server.chatchannel.data.ChatData;
-import net.skyexcel.server.chatchannel.data.ChatLog;
-import net.skyexcel.server.chatchannel.data.ChatRecord;
+import net.skyexcel.server.chatchannel.SkyExcelNetworkChatChannelMain;
+import net.skyexcel.server.chatchannel.data.*;
+import net.skyexcel.server.chatchannel.gui.ChatLogGUI;
 import net.skyexcel.server.chatchannel.util.Translate;
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
 import net.skyexcel.server.skyblock.data.island.SkyBlock;
@@ -20,9 +19,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,13 +39,28 @@ public class ChatListener implements Listener {
 
     private final String prefix = "> §7";
 
-    private static Map<UUID,ChatLog> chatLogMap = new HashMap<>();
 
     private final String split = " : ";
 
     private boolean isCancelled = false;
 
 
+    @EventHandler
+    public void onClick(InventoryClickEvent event) {
+        if (event.getWhoClicked() instanceof Player player) {
+
+            if (ChatPlayerData.chatLogGUIMap.containsKey(player.getUniqueId())) {
+
+                ChatLogGUI chatLogGUI = ChatPlayerData.chatLogGUIMap.get(player.getUniqueId());
+                int slot = event.getSlot();
+
+                if (slot == chatLogGUI.getNEXT_PAGE()) {
+                    chatLogGUI.nextPage(player);
+                }
+                event.setCancelled(true);
+            }
+        }
+    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -57,15 +73,15 @@ public class ChatListener implements Listener {
         ChatLog chatLog = new ChatLog(player);
         chatLog.load();
 
-        chatLogMap.put(player.getUniqueId(),chatLog);
+        ChatPlayerData.chatLogMap.put(player.getUniqueId(), chatLog);
 
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event){
+    public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if(chatLogMap.containsKey(player.getUniqueId())){
-            ChatLog chatLog = chatLogMap.get(player.getUniqueId());
+        if (ChatPlayerData.chatLogMap.containsKey(player.getUniqueId())) {
+            ChatLog chatLog = ChatPlayerData.chatLogMap.get(player.getUniqueId());
             chatLog.save();
         }
 
@@ -137,16 +153,15 @@ public class ChatListener implements Listener {
         tPrefix.addExtra(tPlayer);
         tPrefix.addExtra(tSplit);
         tPrefix.addExtra(message);
+
         ChatData chatData = new ChatData(player);
-        String newMsg = chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg;
 
-        Bukkit.getConsoleSender().sendMessage(newMsg);
+        String newMsg = "" + Translate.getDate() + SkyExcelNetworkChatChannelMain.split + chatData.getChatChannel().getName() + SkyExcelNetworkChatChannelMain.split + player.getDisplayName() +SkyExcelNetworkChatChannelMain.split + msg;
 
-        if(chatLogMap.containsKey(player.getUniqueId())) {
-            ChatLog chatLog = chatLogMap.get(player.getUniqueId());
+        if (ChatPlayerData.chatLogMap.containsKey(player.getUniqueId())) {
+            ChatLog chatLog = ChatPlayerData.chatLogMap.get(player.getUniqueId());
             chatLog.addLog(newMsg);
         }
-
 
 
         target.spigot().sendMessage(tPrefix);
@@ -169,7 +184,6 @@ public class ChatListener implements Listener {
         message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GRAY + Translate.getDate()).create()));
 
         ChatData chatData = new ChatData(player);
-        Bukkit.getConsoleSender().sendMessage(chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg);
 
         tPrefix.addExtra(tPlayer);
         tPrefix.addExtra(tSplit);
@@ -178,15 +192,14 @@ public class ChatListener implements Listener {
         players.forEach(online -> {
             online.spigot().sendMessage(tPrefix);
         });
+
         record.record(player, msg);
 
-
-        String newMsg = chatData.getChatChannel().getName() + " : " + player.getDisplayName() + "> " + msg;
-
+        String newMsg = "" + Translate.getDate() + "::>" + chatData.getChatChannel().getName() + " ::> " + player.getDisplayName() + " ::> " + msg;
         Bukkit.getConsoleSender().sendMessage(newMsg);
 
-        if(chatLogMap.containsKey(player.getUniqueId())) {
-            ChatLog chatLog = chatLogMap.get(player.getUniqueId());
+        if (ChatPlayerData.chatLogMap.containsKey(player.getUniqueId())) {
+            ChatLog chatLog = ChatPlayerData.chatLogMap.get(player.getUniqueId());
             chatLog.addLog(newMsg);
         }
     }

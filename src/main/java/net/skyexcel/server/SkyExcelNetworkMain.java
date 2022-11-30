@@ -4,6 +4,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import net.luckperms.api.LuckPerms;
+import net.skyexcel.server.afkregion.SkyExcelNetworkRegionAFKMain;
 import net.skyexcel.server.alphachest.SkyExcelNetworkAlphaChestMain;
 import net.skyexcel.server.cosmetic.SkyExcelNetworkCosmeticMain;
 import net.skyexcel.server.essentials.events.PluginDisableEvent;
@@ -25,7 +26,7 @@ import net.skyexcel.server.playerprofile.SkyExcelNetworkPlayerProfileMain;
 
 import net.skyexcel.server.quest.SkyExcelNetworkDailyQuestMain;
 import net.skyexcel.server.rank.SkyExcelNetworkRankMain;
-import net.skyexcel.server.regionafk.SkyExcelNetworkRegionAFKMain;
+
 import net.skyexcel.server.seconomy.SkyExcelNetworkSEconomyMain;
 import net.skyexcel.server.skyblock.SkyExcelNetworkSkyBlockMain;
 import net.skyexcel.server.snowy.SkyExcelSnowyMain;
