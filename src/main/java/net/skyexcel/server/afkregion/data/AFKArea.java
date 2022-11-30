@@ -1,4 +1,4 @@
-package net.skyexcel.server.regionafk.data;
+package net.skyexcel.server.afkregion.data;
 
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.math.BlockVector3;

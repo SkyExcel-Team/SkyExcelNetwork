@@ -29,6 +29,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/***
+ * 채팅을 칠때마다 파일 입출력을 하면 너무 많은 메모리와 자원이 낭비됨.
+ * 그러므로, 접속하고 나갈때만 입출력을 하여 입출력을 최소화 시킴
+ *
+ */
 public class ChatListener implements Listener {
 
     private final String prefix = "> §7";
@@ -38,6 +43,7 @@ public class ChatListener implements Listener {
     private final String split = " : ";
 
     private boolean isCancelled = false;
+
 
 
     @EventHandler

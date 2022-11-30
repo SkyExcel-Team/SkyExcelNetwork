@@ -1,4 +1,4 @@
-package net.skyexcel.server.regionafk.cmd;
+package net.skyexcel.server.afkregion.cmd;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

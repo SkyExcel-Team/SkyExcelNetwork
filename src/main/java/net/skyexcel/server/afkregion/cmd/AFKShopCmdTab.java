@@ -1,7 +1,6 @@
-package net.skyexcel.server.regionafk.cmd;
+package net.skyexcel.server.afkregion.cmd;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.cashshop.SkyExcelNetworkCashShopMain;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

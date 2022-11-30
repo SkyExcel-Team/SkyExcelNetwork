@@ -1,4 +1,4 @@
-package net.skyexcel.server.regionafk.data;
+package net.skyexcel.server.afkregion.data;
 
 import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.OfflinePlayer;

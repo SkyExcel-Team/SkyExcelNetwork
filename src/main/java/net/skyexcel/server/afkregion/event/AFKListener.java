@@ -1,11 +1,11 @@
-package net.skyexcel.server.regionafk.event;
+package net.skyexcel.server.afkregion.event;
 
 
 import net.skyexcel.server.SkyExcelNetworkMain;
-import net.skyexcel.server.regionafk.data.AFK;
+import net.skyexcel.server.afkregion.data.AFK;
 
-import net.skyexcel.server.regionafk.data.AFKData;
-import net.skyexcel.server.regionafk.data.AFKShop;
+import net.skyexcel.server.afkregion.data.AFKData;
+import net.skyexcel.server.afkregion.data.AFKShop;
 import net.skyexcel.server.cashshop.data.StringData;
 import org.bukkit.Bukkit;
 
@@ -52,15 +52,15 @@ public class AFKListener implements Listener {
                 if (inv != null) {
                     if (inv.equals(AFKShop.getEditGUI())) {
                         if (event.isRightClick()) {
-                            AFKShop.setType(net.skyexcel.server.regionafk.data.AFKShop.Type.SELL);
+                            AFKShop.setType(net.skyexcel.server.afkregion.data.AFKShop.Type.SELL);
                             player.closeInventory();
                         } else if (event.isLeftClick()) {
-                            AFKShop.setType(net.skyexcel.server.regionafk.data.AFKShop.Type.BUY);
+                            AFKShop.setType(net.skyexcel.server.afkregion.data.AFKShop.Type.BUY);
                             player.closeInventory();
                         }
                         event.setCancelled(true);
                     } else {
-                        if (AFKShop.getType().equals(net.skyexcel.server.regionafk.data.AFKShop.Type.OPEN)) {
+                        if (AFKShop.getType().equals(net.skyexcel.server.afkregion.data.AFKShop.Type.OPEN)) {
                             if (event.isLeftClick()) {
                                 if (event.isShiftClick()) {
                                     AFKShop.purchase(player, slot, 64);
@@ -75,12 +75,12 @@ public class AFKListener implements Listener {
                                 }
                             }
                             event.setCancelled(true);
-                        } else if (AFKShop.getType().equals(net.skyexcel.server.regionafk.data.AFKShop.Type.EDIT)) {
+                        } else if (AFKShop.getType().equals(net.skyexcel.server.afkregion.data.AFKShop.Type.EDIT)) {
                             if (event.getClickedInventory().equals(event.getView().getTopInventory())) { // 클릭한 인벤토리가 아래일 경우, 해당 아이템의 로어는 사라진다,
                                 if (event.getCurrentItem() != null) {
                                     if (event.isShiftClick()) {
                                         AFKShop.setSlot(slot);
-                                        AFKShop.setType(net.skyexcel.server.regionafk.data.AFKShop.Type.SET);
+                                        AFKShop.setType(net.skyexcel.server.afkregion.data.AFKShop.Type.SET);
                                         AFKShop.editGUI(player);
 
                                         AFKShop.setItemStack(event.getCurrentItem());
@@ -161,7 +161,7 @@ public class AFKListener implements Listener {
                         long amount = Long.parseLong(finalMessage);
                         AFKShop AFKShop = AFKData.shop.get(player.getUniqueId());
                         AFKShop.setAmount(amount);
-                        AFKShop.setType(net.skyexcel.server.regionafk.data.AFKShop.Type.EDIT);
+                        AFKShop.setType(net.skyexcel.server.afkregion.data.AFKShop.Type.EDIT);
                         AFKShop.load(player);
                     }
                 }, 0);

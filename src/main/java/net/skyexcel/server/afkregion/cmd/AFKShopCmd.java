@@ -1,10 +1,9 @@
-package net.skyexcel.server.regionafk.cmd;
+package net.skyexcel.server.afkregion.cmd;
 
 import net.skyexcel.api.util.Translate;
 
-import net.skyexcel.server.regionafk.data.AFK;
-import net.skyexcel.server.regionafk.data.AFKData;
-import net.skyexcel.server.regionafk.data.AFKShop;
+import net.skyexcel.server.afkregion.data.AFKData;
+import net.skyexcel.server.afkregion.data.AFKShop;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
