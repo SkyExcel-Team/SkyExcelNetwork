@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,8 +20,11 @@ public class InventoryEvent implements Listener {
 
         if (e.getCurrentItem() == null) return;
         if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(e.getCurrentItem().getType()) && e.getCurrentItem().getItemMeta().hasCustomModelData()) {
+            e.getWhoClicked().sendMessage("强 §c코스튬은 클릭할 수 없습니다!");
             e.setCancelled(true);
+
             e.setCursor(null);
+            e.getWhoClicked().closeInventory();
         }
     }
 
@@ -30,29 +34,35 @@ public class InventoryEvent implements Listener {
         if (e.getMainHandItem() == null && e.getOffHandItem() == null) return;
 
         if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(e.getMainHandItem().getType()) && e.getMainHandItem().getItemMeta().hasCustomModelData()) {
+            e.getPlayer().sendMessage("强 §c코스튬은 옮길 수 없습니다!");
             e.setCancelled(true);
         } else if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(e.getOffHandItem().getType()) && e.getOffHandItem().getItemMeta().hasCustomModelData()) {
+            e.getPlayer().sendMessage("强 §c코스튬은 옮길 수 없습니다!");
             e.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onDrag(InventoryDragEvent e) {
-        if (e.getWhoClicked().isOp()) return;
+    public void onDrop(PlayerDropItemEvent e) {
+        if (e.getPlayer().isOp()) return;
 
-        Map<Integer, ItemStack> newItems = e.getNewItems();
-
-        newItems.forEach((key, value) -> {
-            if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(value.getType()) && value.getItemMeta().hasCustomModelData()) {
-                e.setCancelled(true);
-                e.setCursor(null);
-            }
-        });
+        if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(e.getItemDrop().getType()) && e.getItemDrop().getItemStack().getItemMeta().hasCustomModelData()) {
+            e.getPlayer().sendMessage("强 §c코스튬은 버릴 수 없습니다!");
+            e.getItemDrop().remove();
+            e.setCancelled(true);
+        } else if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(e.getItemDrop().getType()) && e.getItemDrop().getItemStack().getItemMeta().hasCustomModelData()) {
+            e.getPlayer().sendMessage("强 §c코스튬은 버릴 수 없습니다!");
+            e.getItemDrop().remove();
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler
     public void onMoveItem(InventoryMoveItemEvent e) {
+        if (e.getSource().getViewers().get(0).isOp()) return;
+
         if (List.of(Material.COPPER_INGOT, Material.IRON_INGOT, Material.GOLD_INGOT).contains(e.getItem().getType()) && e.getItem().getItemMeta().hasCustomModelData()) {
+            e.getSource().getViewers().get(0).sendMessage("强 §c코스튬은 옮길 수 없습니다!");
             e.setCancelled(true);
         }
     }

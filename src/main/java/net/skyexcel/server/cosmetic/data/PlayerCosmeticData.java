@@ -126,7 +126,7 @@ public class PlayerCosmeticData {
             ItemStack hat = new ItemStack(getWearHatCosmetic().getType(), 1);
             ItemMeta meta = hat.getItemMeta();
             meta.setCustomModelData(getWearHatCosmetic().getCustomModelData());
-            meta.setDisplayName(getWearBackCosmetic().getName());
+            meta.setDisplayName("§r" + getWearHatCosmetic().getName());
             hat.setItemMeta(meta);
 
             if (player.getInventory().getHelmet() == null) {
@@ -164,7 +164,7 @@ public class PlayerCosmeticData {
             ItemStack hat = new ItemStack(getWearOffhandCosmetic().getType(), 1);
             ItemMeta meta = hat.getItemMeta();
             meta.setCustomModelData(getWearOffhandCosmetic().getCustomModelData());
-            meta.setDisplayName(getWearOffhandCosmetic().getName());
+            meta.setDisplayName("§r" + getWearOffhandCosmetic().getName());
             hat.setItemMeta(meta);
 
             if (player.getInventory().getItemInOffHand() == null) {
