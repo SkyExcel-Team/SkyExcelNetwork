@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CosmeticMenu {
+public class  CosmeticMenu {
     public static final Map<Player, Integer> pageMap = new HashMap<>();
     public static final Map<Player, CosmeticType> typeMap = new HashMap<>();
 

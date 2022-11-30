@@ -1,4 +1,4 @@
-package net.skyexcel.server.essentials.autoclean.util;
+package net.skyexcel.server.essentials.autoclean.Util;
 
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
