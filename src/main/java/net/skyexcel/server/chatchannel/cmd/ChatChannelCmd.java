@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ChatCmd implements CommandExecutor, TabExecutor {
+public class ChatChannelCmd implements CommandExecutor, TabExecutor {
 
     private static final String cmd = "채팅채널";
 

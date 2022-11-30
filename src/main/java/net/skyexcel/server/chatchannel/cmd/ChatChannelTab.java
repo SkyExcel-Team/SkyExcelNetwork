@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatTab implements TabCompleter {
+public class ChatChannelTab implements TabCompleter {
     /**
      * Requests a list of possible completions for a command argument.
      *
