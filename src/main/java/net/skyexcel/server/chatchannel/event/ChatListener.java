@@ -56,6 +56,11 @@ public class ChatListener implements Listener {
 
                 if (slot == chatLogGUI.getNEXT_PAGE()) {
                     chatLogGUI.nextPage(player);
+                    chatLogGUI.setClickType(ChatLogGUI.ClickType.NEXT_PAGE);
+                } else if (slot == chatLogGUI.getPREVIOUS_PAGE()) {
+                    chatLogGUI.setClickType(ChatLogGUI.ClickType.PREVIOUS_PAGE);
+                    chatLogGUI.open(player);
+                    System.out.println("test");
                 }
                 event.setCancelled(true);
             }
@@ -156,7 +161,7 @@ public class ChatListener implements Listener {
 
         ChatData chatData = new ChatData(player);
 
-        String newMsg = "" + Translate.getDate() + SkyExcelNetworkChatChannelMain.split + chatData.getChatChannel().getName() + SkyExcelNetworkChatChannelMain.split + player.getDisplayName() +SkyExcelNetworkChatChannelMain.split + msg;
+        String newMsg = "" + Translate.getDate() + SkyExcelNetworkChatChannelMain.split + chatData.getChatChannel().getName() + SkyExcelNetworkChatChannelMain.split + player.getDisplayName() + SkyExcelNetworkChatChannelMain.split + msg;
 
         if (ChatPlayerData.chatLogMap.containsKey(player.getUniqueId())) {
             ChatLog chatLog = ChatPlayerData.chatLogMap.get(player.getUniqueId());

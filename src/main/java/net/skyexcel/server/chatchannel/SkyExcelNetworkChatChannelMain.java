@@ -15,7 +15,7 @@ public class SkyExcelNetworkChatChannelMain implements Listener {
     private static JavaPlugin plugin;
 
 
-    public static final String split = " `$№$` ";
+    public static final String split = "::::::::";
 
     @EventHandler
     public void onEnable(PluginEnableEvent e) {

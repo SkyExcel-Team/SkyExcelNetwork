@@ -1,7 +1,8 @@
 package net.skyexcel.server.essentials.autoclean.scheduler;
 
 import net.skyexcel.server.essentials.SkyExcelNetworkEssentialsMain;
-import net.skyexcel.server.essentials.autoclean.util.ClearUtils;
+
+import net.skyexcel.server.essentials.autoclean.Util.ClearUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;

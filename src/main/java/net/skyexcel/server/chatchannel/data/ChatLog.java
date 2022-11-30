@@ -14,8 +14,6 @@ public class ChatLog {
 
     private OfflinePlayer offlinePlayer;
 
-    private String log;
-
     @Getter
     private List<String> logs = new ArrayList<>();
 
@@ -47,7 +45,6 @@ public class ChatLog {
         config.getConfig().set("logs", logs);
         config.saveConfig();
     }
-
 
     public void addLog(String msg) {
         logs.add(msg);
