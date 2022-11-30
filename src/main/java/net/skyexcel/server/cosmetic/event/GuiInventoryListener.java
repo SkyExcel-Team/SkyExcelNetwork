@@ -19,8 +19,7 @@ public class GuiInventoryListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
 
-        if (!CosmeticMenu.pageMap.containsKey(player) || !CosmeticMenu.typeMap.containsKey(player))
-            return;
+        if (!CosmeticMenu.pageMap.containsKey(player) || !CosmeticMenu.typeMap.containsKey(player)) return;
 
         e.setCancelled(true);
         e.setCursor(null);

@@ -119,12 +119,15 @@ public class SkyExcelNetworkMain extends JavaPlugin implements Listener {
         loadType = LoadType.LOAD;
     }
 
+    public static boolean isLoaded() {
+        return SkyExcelNetworkMain.loadType == LoadType.LOAD;
+    }
     public static boolean isLoaded(Player player) {
-        if (SkyExcelNetworkMain.loadType.equals(LoadType.UNLOAD)) {
+        if (SkyExcelNetworkMain.loadType == LoadType.UNLOAD) {
             player.sendMessage("아직 로드 안함 ㅅㄱ");
             return false;
         }
 
-        return SkyExcelNetworkMain.loadType.equals(LoadType.LOAD);
+        return SkyExcelNetworkMain.loadType == LoadType.LOAD;
     }
 }

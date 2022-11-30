@@ -1,5 +1,6 @@
 package net.skyexcel.server.cosmetic.cmd;
 
+import net.skyexcel.server.SkyExcelNetworkMain;
 import net.skyexcel.server.cosmetic.data.Cosmetic;
 import net.skyexcel.server.cosmetic.data.CosmeticType;
 import net.skyexcel.server.cosmetic.data.PlayerCosmeticData;
@@ -542,6 +543,11 @@ public class CosmeticCommand implements CommandExecutor {
                 return false;
             } else if (args.length < 2) {
                 player.sendMessage("强 §c잘못된 명령어 입니다!");
+                return false;
+            }
+
+            if (!SkyExcelNetworkMain.isLoaded(player)) {
+                player.sendMessage("佳 §c잠시 후 다시 시도해주세요!");
                 return false;
             }
 
