@@ -60,7 +60,6 @@ public class ChatListener implements Listener {
                 } else if (slot == chatLogGUI.getPREVIOUS_PAGE()) {
                     chatLogGUI.setClickType(ChatLogGUI.ClickType.PREVIOUS_PAGE);
                     chatLogGUI.open(player);
-                    System.out.println("test");
                 }
                 event.setCancelled(true);
             }
@@ -200,7 +199,7 @@ public class ChatListener implements Listener {
 
         record.record(player, msg);
 
-        String newMsg = "" + Translate.getDate() + "::>" + chatData.getChatChannel().getName() + " ::> " + player.getDisplayName() + " ::> " + msg;
+        String newMsg = "" + Translate.getDate() + SkyExcelNetworkChatChannelMain.split + chatData.getChatChannel().getName() + SkyExcelNetworkChatChannelMain.split + player.getDisplayName() + SkyExcelNetworkChatChannelMain.split + msg;
         Bukkit.getConsoleSender().sendMessage(newMsg);
 
         if (ChatPlayerData.chatLogMap.containsKey(player.getUniqueId())) {

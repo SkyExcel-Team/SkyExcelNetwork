@@ -36,7 +36,9 @@ public class ChatLogGUI {
 
     @Getter
     private final int PREVIOUS_PAGE = 48;
-    private final int MAX = 44;
+    private final int MAX = 45;
+
+    private int MAX_PAGE;
 
 
     public ChatLogGUI(OfflinePlayer offlinePlayer) {
@@ -46,30 +48,42 @@ public class ChatLogGUI {
         } else {
             chatLog = new ChatLog(offlinePlayer);
             this.chatLog.load();
+            MAX_PAGE = this.chatLog.getLogs().size() / MAX;
+            System.out.println("MAXPAGE:  " + MAX_PAGE);
         }
     }
 
+    //TODO 최대 로그 페이지를 초과 했을 경우 예외처리
     public void open(Player player) {
-
-        if (clickType == ClickType.PREVIOUS_PAGE) {
-            if (page == 1) {
-                player.sendMessage("§c이전 페이지가 존재하지 않습니다.");
-                return;
-            }
-            page--;
-        }
 
         Inventory inv = Bukkit.createInventory(null, 54, offlinePlayer.getName() + " 님의 채팅 로그 " + page + " 페이지");
 
-        //값 초기화 .
-        int i = 0;
 
+        if (clickType == ClickType.PREVIOUS_PAGE) {
+
+            page--;
+            if (page == 0) {
+                player.sendMessage("§c이전 페이지가 존재하지 않습니다.");
+                return;
+            } else {
+                inv = Bukkit.createInventory(null, 54, offlinePlayer.getName() + " 님의 채팅 로그 " + page + " 페이지");
+                new PreviousButton().setInventory(PREVIOUS_PAGE, inv);
+            }
+        }
+
+        int i = 0;
+        int slot = 0;
+        System.out.println(page);
         for (String log : chatLog.getLogs()) {
             i++;
-            new LogButton(log).addItem(inv);
+
+            new LogButton(log).setInventory(slot, inv);
 
             if (page != 1 && i <= (page - 1) * MAX) continue;
-            if (i > page * 44) break;
+            if (i >= page * MAX) break;
+            if (slot < MAX) {
+                slot++;
+            }
         }
 
         if (chatLog.getLogs().size() > MAX * page) {
@@ -81,22 +95,28 @@ public class ChatLogGUI {
     }
 
     public void nextPage(Player player) {
+        inv.clear();
         if (chatLog.getLogs().size() > 44 * page) {
             page++;
 
-            inv.clear();
+            System.out.println(page);
             InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, offlinePlayer.getName() + " 님의 채팅 로그 " + page + " 페이지");
 
             int i = 0;
+            int slot = 0;
 
             for (String log : chatLog.getLogs()) {
                 i++;
-                new LogButton(log).addItem(inv);
+
+                new LogButton(log).setInventory(slot, inv);
 
                 if (page != 1 && i <= (page - 1) * MAX) continue;
-                if (i > page * MAX) break;
+                if (i >= page * MAX) break;
+                if (slot < MAX) {
+                    slot++;
+                }
             }
-
+            new NextButton().setInventory(NEXT_PAGE, inv);
             new PreviousButton().setInventory(PREVIOUS_PAGE, inv);
 
         } else {
