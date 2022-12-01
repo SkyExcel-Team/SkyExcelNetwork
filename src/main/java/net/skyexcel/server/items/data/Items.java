@@ -154,6 +154,10 @@ public abstract class Items {
         inv.setItem(slot, getItemStack());
     }
 
+    public void addItem(Inventory inv) {
+        inv.addItem(itemStack);
+    }
+
     public ItemMeta getItemMeta() {
         return itemStack.getItemMeta();
     }

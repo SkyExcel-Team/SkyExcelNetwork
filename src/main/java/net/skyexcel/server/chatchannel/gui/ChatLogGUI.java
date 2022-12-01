@@ -51,8 +51,8 @@ public class ChatLogGUI {
 
     public void open(Player player) {
 
-        if (clickType == ClickType.PREVIOUS_PAGE){
-            if(page == 1){
+        if (clickType == ClickType.PREVIOUS_PAGE) {
+            if (page == 1) {
                 player.sendMessage("§c이전 페이지가 존재하지 않습니다.");
                 return;
             }
@@ -60,14 +60,19 @@ public class ChatLogGUI {
         }
 
         Inventory inv = Bukkit.createInventory(null, 54, offlinePlayer.getName() + " 님의 채팅 로그 " + page + " 페이지");
-        int i = -1;
+
+        //값 초기화 .
+        int i = 0;
+
         for (String log : chatLog.getLogs()) {
             i++;
-            new LogButton(log).setInventory(i, inv);
-            if (i == 44) break;
+            new LogButton(log).addItem(inv);
+
+            if (page != 1 && i <= (page - 1) * MAX) continue;
+            if (i > page * 44) break;
         }
 
-        if (chatLog.getLogs().size() > 44 * page) {
+        if (chatLog.getLogs().size() > MAX * page) {
             new NextButton().setInventory(NEXT_PAGE, inv);
         }
 
@@ -81,13 +86,19 @@ public class ChatLogGUI {
 
             inv.clear();
             InventoryUpdate.updateInventory(SkyExcelNetworkMain.getPlugin(), player, offlinePlayer.getName() + " 님의 채팅 로그 " + page + " 페이지");
-            int i = -1;
+
+            int i = 0;
+
             for (String log : chatLog.getLogs()) {
                 i++;
-                new LogButton(log).setInventory(i, inv);
-                if (i == chatLog.getLogs().size() / MAX) break;
+                new LogButton(log).addItem(inv);
+
+                if (page != 1 && i <= (page - 1) * MAX) continue;
+                if (i > page * MAX) break;
             }
+
             new PreviousButton().setInventory(PREVIOUS_PAGE, inv);
+
         } else {
             player.sendMessage("다음 페이지가 존재하지 않습니다.");
         }

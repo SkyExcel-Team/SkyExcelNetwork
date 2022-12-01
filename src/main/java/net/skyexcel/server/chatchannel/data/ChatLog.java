@@ -3,6 +3,7 @@ package net.skyexcel.server.chatchannel.data;
 import lombok.Getter;
 import net.skyexcel.server.SkyExcelNetworkMain;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import skyexcel.data.file.Config;
 
 import java.util.ArrayList;
@@ -48,5 +49,27 @@ public class ChatLog {
 
     public void addLog(String msg) {
         logs.add(msg);
+    }
+
+    public void removeAtIndex(Player player, int index){
+        if(this.logs.get(index) == null) {
+            player.sendMessage("해당 번호의 로그가 존재하지 않습니다.");
+            return;
+        }
+        this.logs.remove(index);
+
+        config.getConfig().set("logs", logs);
+        config.saveConfig();
+    }
+
+    public void clearLog(Player player){
+        if(logs.isEmpty()){
+            player.sendMessage("해당 플레이어는 채팅을 친 적이 없습니다!");
+            return;
+        }
+
+        logs.clear();
+        config.getConfig().set("logs", logs);
+        config.saveConfig();
     }
 }
