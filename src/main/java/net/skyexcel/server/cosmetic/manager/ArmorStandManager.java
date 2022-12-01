@@ -43,6 +43,7 @@ public class ArmorStandManager {
             armorstandMap.get(player.getUniqueId()).remove();
             armorstandMap.remove(player.getUniqueId());
             entityMap.remove(player.getUniqueId());
-        } catch(Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 }

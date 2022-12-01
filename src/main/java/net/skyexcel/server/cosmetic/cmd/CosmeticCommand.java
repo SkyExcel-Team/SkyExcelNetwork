@@ -246,8 +246,7 @@ public class CosmeticCommand implements CommandExecutor {
 
                 PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
                 if (!playerCosmeticData.getBackCosmetics().contains(cosmetic)) {
-                    if (player.isOp())
-                        player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
+                    if (player.isOp()) player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                     else {
                         player.sendMessage("强 보유하지 않은 §6코스튬§f입니다.");
                         return false;
@@ -269,8 +268,7 @@ public class CosmeticCommand implements CommandExecutor {
 
                 PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
                 if (!playerCosmeticData.getHatCosmetics().contains(cosmetic)) {
-                    if (player.isOp())
-                        player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
+                    if (player.isOp()) player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                     else {
                         player.sendMessage("强 보유하지 않은 §6코스튬§f입니다.");
                         return false;
@@ -295,8 +293,7 @@ public class CosmeticCommand implements CommandExecutor {
                     if (!player.isOp()) {
                         player.sendMessage("强 보유하지 않은 §6코스튬§f입니다.");
                         return true;
-                    } else
-                        player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
+                    } else player.sendMessage("架 §6코스튬§f을 §c강제 §a적용§f하였습니다!");
                 }
 
                 playerCosmeticData.setWearOffhandCosmetic(cosmetic);
