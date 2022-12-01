@@ -83,16 +83,18 @@ public class BanBlockEvent implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
 
-        SkyBlock islandData = new SkyBlock(playerData.getIsland());
-        if (!player.isOp()) {
-            if (!islandData.isInIsland(player)) {
-                player.sendMessage("强 다른 섬에 블록을 설치할 수 없습니다!");
-                event.setCancelled(true);
+        if (player.getWorld().getName().equalsIgnoreCase("SkyBlock")) {
+            SkyBlockPlayerData playerData = new SkyBlockPlayerData(player);
+
+            SkyBlock islandData = new SkyBlock(playerData.getIsland());
+            if (!player.isOp()) {
+                if (!islandData.isInIsland(player)) {
+                    player.sendMessage("强 다른 섬에 블록을 설치할 수 없습니다!");
+                    event.setCancelled(true);
+                }
             }
         }
-
     }
 
     @EventHandler
@@ -111,36 +113,37 @@ public class BanBlockEvent implements Listener {
         SkyBlock islandData = new SkyBlock(playerData.getIsland());
 
         if (!player.isOp()) {
-            if (!islandData.isInIsland(player)) { //TODO - FUCK THIS CODE. @바람#9629 NEED TO FIX THIS CODE.
-                for (Player players : player.getWorld().getPlayers()) {
-                    player.sendMessage("强 다른 섬의 블록은 부술 수 없습니다!");
-                    break;
-                }
+            if (player.getWorld().getName().equalsIgnoreCase("SkyBlock")) {
+                if (!islandData.isInIsland(player)) { //TODO - FUCK THIS CODE. @바람#9629 NEED TO FIX THIS CODE.
+                    for (Player players : player.getWorld().getPlayers()) {
+                        player.sendMessage("强 다른 섬의 블록은 부술 수 없습니다!");
+                        break;
+                    }
 
-                event.setCancelled(true);
-            } else { //자신의 섬 일때
-                if (islandData.getOwner() != null) {
-                    if (islandData.getMembers().contains(player.getUniqueId().toString())) {
-                        //플레이어가 섬 주인이 아닐 경우
-                        if (!islandData.getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
-                            if (islandData.getMembers().contains(player.getUniqueId().toString())) {
+                    event.setCancelled(true);
+                } else { //자신의 섬 일때
+                    if (islandData.getOwner() != null) {
+                        if (islandData.getMembers().contains(player.getUniqueId().toString())) {
+                            //플레이어가 섬 주인이 아닐 경우
+                            if (!islandData.getOwner().equalsIgnoreCase(player.getUniqueId().toString())) {
+                                if (islandData.getMembers().contains(player.getUniqueId().toString())) {
 
-                                if (islandData.getBanBlockMember().contains(block.getType())) {
-                                    event.setCancelled(true);
+                                    if (islandData.getBanBlockMember().contains(block.getType())) {
+                                        event.setCancelled(true);
+                                    }
                                 }
                             }
                         }
-                    }
-                } else { // 블록을 부슨 플레이어의 섬이 자신의 섬의 Owner의 월드 이름과 다를 경우, 즉 다른 월드에서 블록을 부슬 경우
-                    if (islandData.getPartTime().contains(player.getUniqueId().toString())) { //알바 밴 블록을 캘 시
-                        if (islandData.getBanBlockPartTime().contains(block.getType())) { //알바가 블록을 캘 시
-                            event.setCancelled(true);
+                    } else { // 블록을 부슨 플레이어의 섬이 자신의 섬의 Owner의 월드 이름과 다를 경우, 즉 다른 월드에서 블록을 부슬 경우
+                        if (islandData.getPartTime().contains(player.getUniqueId().toString())) { //알바 밴 블록을 캘 시
+                            if (islandData.getBanBlockPartTime().contains(block.getType())) { //알바가 블록을 캘 시
+                                event.setCancelled(true);
+                            }
                         }
+                        event.setCancelled(true); //모든 월드에서의 블록 부스는것을 캔슬 시킨다.
                     }
-                    event.setCancelled(true); //모든 월드에서의 블록 부스는것을 캔슬 시킨다.
                 }
             }
-
         }
     }
 }
