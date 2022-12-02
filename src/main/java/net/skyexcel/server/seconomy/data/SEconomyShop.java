@@ -39,10 +39,12 @@ public class SEconomyShop extends Stockable {
     private Translate translate;
 
     private Items items = new Items();
+
     public SEconomyShop() {
         super("", "", SkyExcelNetworkMain.getPlugin());
 
     }
+
     public SEconomyShop(String name) {
         super("shop/money", name, SkyExcelNetworkMain.getPlugin());
         this.name = name;
@@ -125,10 +127,15 @@ public class SEconomyShop extends Stockable {
         return lore;
     }
 
+    //TODO 가격 설정을 하면 로어가추가되는 현상을 고쳐야됨. (기존 로어를 저장 후, 추가하는 방식으로 해야됨)
     private List<String> addLore(LoreType type, List<String> lore, long buy, long sell) {
 
-        List<String> add = getLore(type, lore, buy, sell);
+        List<String> original = lore;
 
+        List<String> add = getLore(type, lore, buy, sell);
+        lore.clear();
+        if (!original.isEmpty())
+            lore.addAll(original);
         if (!new HashSet<>(lore).containsAll(add)) {
             lore.addAll(add);
         }
@@ -176,7 +183,6 @@ public class SEconomyShop extends Stockable {
         }
 
     }
-
 
 
     public void purchase(Player player, int slot, int amount) {
