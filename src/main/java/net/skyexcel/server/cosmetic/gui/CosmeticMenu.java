@@ -88,7 +88,7 @@ public class CosmeticMenu {
                 }
 
                 if (type == CosmeticType.BACK) {
-                    List<Cosmetic.BACK> ownCosmetics = new ArrayList<>(new PlayerCosmeticData(player).getBackCosmetics());
+                    PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
 
                     int i = 0;
                     for (Cosmetic.BACK cosmetic : Cosmetic.BACK.values()) {
@@ -101,14 +101,14 @@ public class CosmeticMenu {
                         ItemStack item = new ItemStack(cosmetic.getType(), 1);
                         ItemMeta meta = item.getItemMeta();
                         meta.setCustomModelData(cosmetic.getCustomModelData());
-                        meta.setDisplayName("§r" + cosmetic.getName());
+                        meta.setDisplayName("§r" + cosmetic.getName() + (playerCosmeticData.getWearBackCosmetic() == cosmetic ? " §a(착용중)" : ""));
 
                         List<String> lore = new ArrayList<>();
                         lore.add("§r§7==[ 치장 아이템 정보 ]==");
                         lore.add("§r§6분류 : §7등");
                         lore.add("§r§6이름 : §7" + cosmetic.name()); // 변경 시, GuiInventoryListener.java의 46 ~ 47번째 줄도 변경해야 합니다.
                         lore.add("");
-                        lore.add(ownCosmetics.contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
+                        lore.add(playerCosmeticData.getBackCosmetics().contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
 
                         meta.setLore(lore);
                         item.setItemMeta(meta);
@@ -116,7 +116,7 @@ public class CosmeticMenu {
                         inv.addItem(item);
                     }
                 } else if (type == CosmeticType.HAT) {
-                    List<Cosmetic.HAT> ownCosmetics = new ArrayList<>(new PlayerCosmeticData(player).getHatCosmetics());
+                    PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
 
                     int i = 0;
                     for (Cosmetic.HAT cosmetic : Cosmetic.HAT.values()) {
@@ -129,14 +129,14 @@ public class CosmeticMenu {
                         ItemStack item = new ItemStack(cosmetic.getType(), 1);
                         ItemMeta meta = item.getItemMeta();
                         meta.setCustomModelData(cosmetic.getCustomModelData());
-                        meta.setDisplayName("§r" + cosmetic.getName());
+                        meta.setDisplayName("§r" + cosmetic.getName() + (playerCosmeticData.getWearHatCosmetic() == cosmetic ? " §a(착용중)" : ""));
 
                         List<String> lore = new ArrayList<>();
                         lore.add("§r§b==[ 치장 아이템 정보 ]==");
                         lore.add("§r§6분류 : §7모자");
                         lore.add("§r§6이름 : §7" + cosmetic.name()); // 변경 시, GuiInventoryListener.java의 46 ~ 47번째 줄도 변경해야 합니다.
                         lore.add("");
-                        lore.add(ownCosmetics.contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
+                        lore.add(playerCosmeticData.getHatCosmetics().contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
 
                         meta.setLore(lore);
                         item.setItemMeta(meta);
@@ -144,7 +144,7 @@ public class CosmeticMenu {
                         inv.addItem(item);
                     }
                 } else if (type == CosmeticType.OFFHAND) {
-                    List<Cosmetic.OFFHAND> ownCosmetics = new ArrayList<>(new PlayerCosmeticData(player).getOffhandCosmetics());
+                    PlayerCosmeticData playerCosmeticData = new PlayerCosmeticData(player);
 
                     int i = 0;
                     for (Cosmetic.OFFHAND cosmetic : Cosmetic.OFFHAND.values()) {
@@ -157,14 +157,14 @@ public class CosmeticMenu {
                         ItemStack item = new ItemStack(cosmetic.getType(), 1);
                         ItemMeta meta = item.getItemMeta();
                         meta.setCustomModelData(cosmetic.getCustomModelData());
-                        meta.setDisplayName("§r" + cosmetic.getName());
+                        meta.setDisplayName("§r" + cosmetic.getName() + (playerCosmeticData.getWearOffhandCosmetic() == cosmetic ? " §a(착용중)" : ""));
 
                         List<String> lore = new ArrayList<>();
                         lore.add("§r§b==[ 치장 아이템 정보 ]==");
                         lore.add("§r§6분류 : §7왼손");
                         lore.add("§r§6이름 : §7" + cosmetic.name()); // 변경 시, GuiInventoryListener.java의 46 ~ 47번째 줄도 변경해야 합니다.
                         lore.add("");
-                        lore.add(ownCosmetics.contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
+                        lore.add(playerCosmeticData.getOffhandCosmetics().contains(cosmetic) ? "§r§aUNLOCKED (우클릭 장착)" : "§r§cLOCKED");
 
                         meta.setLore(lore);
                         item.setItemMeta(meta);
