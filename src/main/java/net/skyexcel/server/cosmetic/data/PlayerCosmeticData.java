@@ -27,25 +27,89 @@ public class PlayerCosmeticData {
         loadConfig();
     }
 
-    public List<Cosmetic.BACK> getBackCosmetics() { reloadConfig(); return BACK; }
-    public List<Cosmetic.HAT> getHatCosmetics() { reloadConfig(); return HAT; }
-    public List<Cosmetic.OFFHAND> getOffhandCosmetics() { reloadConfig(); return OFFHAND; }
+    public List<Cosmetic.BACK> getBackCosmetics() {
+        reloadConfig();
+        return BACK;
+    }
 
-    public void addCosmetic(Cosmetic.BACK cosmetic) { reloadConfig(); BACK.add(cosmetic); saveConfig(); }
-    public void addCosmetic(Cosmetic.HAT cosmetic) { reloadConfig(); HAT.add(cosmetic); saveConfig(); }
-    public void addCosmetic(Cosmetic.OFFHAND cosmetic) { reloadConfig(); OFFHAND.add(cosmetic); saveConfig(); }
+    public List<Cosmetic.HAT> getHatCosmetics() {
+        reloadConfig();
+        return HAT;
+    }
 
-    public void removeCosmetic(Cosmetic.BACK cosmetic) { reloadConfig(); BACK.remove(cosmetic); saveConfig(); }
-    public void removeCosmetic(Cosmetic.HAT cosmetic) { reloadConfig(); HAT.remove(cosmetic); saveConfig(); }
-    public void removeCosmetic(Cosmetic.OFFHAND cosmetic) { reloadConfig(); OFFHAND.remove(cosmetic); saveConfig(); }
+    public List<Cosmetic.OFFHAND> getOffhandCosmetics() {
+        reloadConfig();
+        return OFFHAND;
+    }
 
-    public void setWearBackCosmetic(Cosmetic.BACK cosmetic) { reloadConfig(); data.setString("cosmetics.wear.back", cosmetic.name()); refreshBack(); }
-    public void setWearHatCosmetic(Cosmetic.HAT cosmetic) { reloadConfig(); data.setString("cosmetics.wear.hat", cosmetic.name()); refreshHat(); }
-    public void setWearOffhandCosmetic(Cosmetic.OFFHAND cosmetic) { reloadConfig(); data.setString("cosmetics.wear.offhand", cosmetic.name()); refreshOffhand(); }
+    public void addCosmetic(Cosmetic.BACK cosmetic) {
+        reloadConfig();
+        BACK.add(cosmetic);
+        saveConfig();
+    }
 
-    public Cosmetic.BACK getWearBackCosmetic() { reloadConfig(); return Cosmetic.BACK.valueOf(data.getString("cosmetics.wear.back")); }
-    public Cosmetic.HAT getWearHatCosmetic() { reloadConfig(); return Cosmetic.HAT.valueOf(data.getString("cosmetics.wear.hat")); }
-    public Cosmetic.OFFHAND getWearOffhandCosmetic() { reloadConfig(); return Cosmetic.OFFHAND.valueOf(data.getString("cosmetics.wear.offhand")); }
+    public void addCosmetic(Cosmetic.HAT cosmetic) {
+        reloadConfig();
+        HAT.add(cosmetic);
+        saveConfig();
+    }
+
+    public void addCosmetic(Cosmetic.OFFHAND cosmetic) {
+        reloadConfig();
+        OFFHAND.add(cosmetic);
+        saveConfig();
+    }
+
+    public void removeCosmetic(Cosmetic.BACK cosmetic) {
+        reloadConfig();
+        BACK.remove(cosmetic);
+        saveConfig();
+    }
+
+    public void removeCosmetic(Cosmetic.HAT cosmetic) {
+        reloadConfig();
+        HAT.remove(cosmetic);
+        saveConfig();
+    }
+
+    public void removeCosmetic(Cosmetic.OFFHAND cosmetic) {
+        reloadConfig();
+        OFFHAND.remove(cosmetic);
+        saveConfig();
+    }
+
+    public void setWearBackCosmetic(Cosmetic.BACK cosmetic) {
+        reloadConfig();
+        data.setString("cosmetics.wear.back", cosmetic.name());
+        refreshBack();
+    }
+
+    public void setWearHatCosmetic(Cosmetic.HAT cosmetic) {
+        reloadConfig();
+        data.setString("cosmetics.wear.hat", cosmetic.name());
+        refreshHat();
+    }
+
+    public void setWearOffhandCosmetic(Cosmetic.OFFHAND cosmetic) {
+        reloadConfig();
+        data.setString("cosmetics.wear.offhand", cosmetic.name());
+        refreshOffhand();
+    }
+
+    public Cosmetic.BACK getWearBackCosmetic() {
+        reloadConfig();
+        return Cosmetic.BACK.valueOf(data.getString("cosmetics.wear.back"));
+    }
+
+    public Cosmetic.HAT getWearHatCosmetic() {
+        reloadConfig();
+        return Cosmetic.HAT.valueOf(data.getString("cosmetics.wear.hat"));
+    }
+
+    public Cosmetic.OFFHAND getWearOffhandCosmetic() {
+        reloadConfig();
+        return Cosmetic.OFFHAND.valueOf(data.getString("cosmetics.wear.offhand"));
+    }
 
     private void reloadConfig() {
         BACK.clear();
@@ -73,21 +137,24 @@ public class PlayerCosmeticData {
             data.getConfig().getList("cosmetics.own.back").forEach(key -> {
                 try {
                     BACK.add(Cosmetic.BACK.valueOf((String) key));
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             });
         }
         if (data.getConfig().getList("cosmetics.own.hat") != null) {
             data.getConfig().getList("cosmetics.own.hat").forEach(key -> {
                 try {
                     HAT.add(Cosmetic.HAT.valueOf((String) key));
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             });
         }
         if (data.getConfig().getList("cosmetics.own.offhand") != null) {
             data.getConfig().getList("cosmetics.own.offhand").forEach(key -> {
                 try {
                     OFFHAND.add(Cosmetic.OFFHAND.valueOf((String) key));
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             });
         }
     }

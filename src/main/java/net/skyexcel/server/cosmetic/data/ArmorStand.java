@@ -40,9 +40,7 @@ public class ArmorStand {
 
         if (!armorstand.isValid()) {
             spawnArmorStand();
-        }
-
-        else if (!(owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && !owner.getPassengers().contains(armorstand)) {
+        } else if (!(owner.isSleeping() || owner.getGameMode() == GameMode.SPECTATOR) && !owner.getPassengers().contains(armorstand)) {
             owner.addPassenger(armorstand);
         }
 
@@ -121,7 +119,8 @@ public class ArmorStand {
         else {
             try {
                 remove();
-            } catch(Exception ignored) {}
+            } catch (Exception ignored) {
+            }
             return null;
         }
     }

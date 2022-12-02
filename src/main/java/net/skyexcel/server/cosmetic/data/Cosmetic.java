@@ -59,8 +59,8 @@ public class Cosmetic {
         }
 
         public static BACK valueOfName(String name) {
-            for(BACK e: BACK.values()) {
-                if(e.name.equalsIgnoreCase(name)) {
+            for (BACK e : BACK.values()) {
+                if (e.name.equalsIgnoreCase(name)) {
                     return e;
                 }
             }
@@ -127,8 +127,8 @@ public class Cosmetic {
         }
 
         public static HAT valueOfName(String name) {
-            for(HAT e: HAT.values()) {
-                if(e.name.equalsIgnoreCase(name)) {
+            for (HAT e : HAT.values()) {
+                if (e.name.equalsIgnoreCase(name)) {
                     return e;
                 }
             }
