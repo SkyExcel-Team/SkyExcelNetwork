@@ -33,7 +33,7 @@ public class SkyExcelNetworkCosmeticMain implements Listener {
         Bukkit.getPluginManager().registerEvents(new JoinQuitEvent(), plugin);
         Bukkit.getPluginManager().registerEvents(new DeathEvent(), plugin);
 
-        //Set utils.
+        //Initialize Util
         armorstandManager = new ArmorStandManager();
     }
 }

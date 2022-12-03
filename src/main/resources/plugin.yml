@@ -104,6 +104,7 @@ commands:
   거래:
 
   #Essentials
+  essentials:
   trashbin:
     aliases: [ 쓰레기통, trash ]
   w:
