@@ -22,16 +22,16 @@ public class SwapEvent implements Listener {
         }
     }
 
-    private void runCommand(Player p, String cmd) {
-        if (cmd.contains("[player]")) {
-            p.performCommand(cmd.replace("[player] ", ""));
-        } else if (cmd.contains("[server]")) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd
+    private void runCommand(Player player, String commandLine) {
+        if (commandLine.contains("[player]")) {
+            player.performCommand(commandLine.replace("[player] ", ""));
+        } else if (commandLine.contains("[server]")) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), commandLine
                     .replace("[server] ", "")
-                    .replace("%player%", p.getName()));
-        } else if (cmd.contains("[sound]")) {
-            String sound = cmd.replace("[sound] ", "");
-            p.playSound(p.getLocation(), Sound.valueOf(sound), 1, 1);
+                    .replace("%player%", player.getName()));
+        } else if (commandLine.contains("[sound]")) {
+            String sound = commandLine.replace("[sound] ", "");
+            player.playSound(player.getLocation(), Sound.valueOf(sound), 1, 1);
         }
     }
 }
