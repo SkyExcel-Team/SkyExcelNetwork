@@ -37,15 +37,17 @@ public class AFKDetectListener implements Listener {
         if (fromX == toX && fromZ == toZ && fromY == toY) return;
 
         Player player = event.getPlayer();
-
-        AFKDetectData afkDetectData = detectDataHashMap.get(player.getUniqueId());
-        afkDetectData.setLastMoved(System.currentTimeMillis());
-
         if (detectDataHashMap.containsKey(player.getUniqueId())) {
+            AFKDetectData afkDetectData = detectDataHashMap.get(player.getUniqueId());
+            afkDetectData.setLastMoved(System.currentTimeMillis());
 
-            detectDataHashMap.put(player.getUniqueId(), afkDetectData);
-            player.sendMessage("움직임");
+            if (detectDataHashMap.containsKey(player.getUniqueId())) {
+
+                detectDataHashMap.put(player.getUniqueId(), afkDetectData);
+                player.sendMessage("움직임");
+            }
         }
+
     }
 
     @EventHandler

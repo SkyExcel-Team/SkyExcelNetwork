@@ -4,6 +4,7 @@ import net.skyexcel.api.util.Items;
 import net.skyexcel.api.util.Translate;
 import net.skyexcel.server.SkyExcelNetworkMain;
 
+import net.skyexcel.server.seconomy.data.SEconomyShop;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -176,8 +177,12 @@ public class CashShop extends Stockable {
 
     private List<String> addLore(LoreType type, List<String> lore, long buy, long sell) {
 
-        List<String> add = getLore(type, lore, buy, sell);
+        List<String> original = lore;
 
+        List<String> add = getLore(type, lore, buy, sell);
+        lore.clear();
+        if (!original.isEmpty())
+            lore.addAll(original);
         if (!new HashSet<>(lore).containsAll(add)) {
             lore.addAll(add);
         }
