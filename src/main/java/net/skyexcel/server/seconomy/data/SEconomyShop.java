@@ -63,6 +63,8 @@ public class SEconomyShop extends Stockable {
         super.open(player);
     }
 
+
+
     @Override
     public void load(Player player) {
         super.load(player);
@@ -91,6 +93,7 @@ public class SEconomyShop extends Stockable {
                     } else if (sell != -1 && buy != -1) { //구매와 판매 둘다 가능할 경우
                         type = LoreType.CANBOTH;
                     } else if (sell != -1) { //판매가 가능할 경우
+
                         type = LoreType.CANSELL;
                     } else { //구매가 가능할 경우
                         type = LoreType.CANBUY;
@@ -127,7 +130,6 @@ public class SEconomyShop extends Stockable {
         return lore;
     }
 
-    //TODO 가격 설정을 하면 로어가추가되는 현상을 고쳐야됨. (기존 로어를 저장 후, 추가하는 방식으로 해야됨)
     private List<String> addLore(LoreType type, List<String> lore, long buy, long sell) {
 
         List<String> original = lore;
@@ -165,15 +167,18 @@ public class SEconomyShop extends Stockable {
 
             List<String> canBuy = stringData.canBuy(buy);
 
-            if (new HashSet<>(lore).containsAll(canBoth)) {
-                lore.removeAll(canBoth);
-            } else if (new HashSet<>(lore).containsAll(canBuy)) {
-                lore.removeAll(canBuy);
-            } else if (new HashSet<>(lore).containsAll(canSell)) {
-                lore.removeAll(canSell);
-            } else if (new HashSet<>(lore).containsAll(cantBoth)) {
-                lore.removeAll(cantBoth);
+            if (!lore.isEmpty()) {
+                if (new HashSet<>(lore).containsAll(canBoth)) {
+                    lore.removeAll(canBoth);
+                } else if (new HashSet<>(lore).containsAll(canBuy)) {
+                    lore.removeAll(canBuy);
+                } else if (new HashSet<>(lore).containsAll(canSell)) {
+                    lore.removeAll(canSell);
+                } else if (new HashSet<>(lore).containsAll(cantBoth)) {
+                    lore.removeAll(cantBoth);
+                }
             }
+
 
             pdc.remove(buy_Key);
             pdc.remove(sell_key);
@@ -181,7 +186,6 @@ public class SEconomyShop extends Stockable {
             meta.setLore(lore);
             itemStack.setItemMeta(meta);
         }
-
     }
 
 
@@ -342,7 +346,7 @@ public class SEconomyShop extends Stockable {
             if (is == null) continue;
             if (type == is.getType()) {
                 int newAmount = is.getAmount() - amount;
-                if (newAmount > 0) {
+                if (newAmount > amount) {
                     is.setAmount(newAmount);
                     break;
                 } else {
