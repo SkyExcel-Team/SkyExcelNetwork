@@ -102,8 +102,12 @@ public class SkyExcelNetworkEssentialsMain implements Listener, CommandExecutor 
 
             if (args[0].equals("reload")) {
                 config.reloadConfig();
-
                 player.sendMessage("§a설정 파일을 다시 불러왔습니다!");
+
+                autoclean.onDisable();
+                autoclean = new SkyExcelNetworkAutoCleanMain(plugin);
+                player.sendMessage("§a스케줄러를 다시 불러왔습니다!");
+
                 return true;
             } else {
                 player.sendMessage("强 §c잘못된 명령어 입니다!");
